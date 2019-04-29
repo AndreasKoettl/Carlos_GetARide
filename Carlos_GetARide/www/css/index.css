@@ -60,7 +60,8 @@ body {
 }
 
 h1 {
-    font-size:24px;
+    font-family: "Roboto Slab";
+    font-size:18px;
     font-weight:normal;
     margin:0px;
     overflow:visible;
@@ -102,4 +103,42 @@ h1 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+}
+
+#sliding-nav {
+    width: 80vw;
+    height: 6vh;
+    margin: 0 auto;
+    position: relative;
+    top: -3vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #fff;
+    background-color: var(--color-primary-light);
+    border-radius: 50px;
+    box-shadow: 0px 2px 6px var(--color-grey-middle);
+}
+
+.menu {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 3.2vw;
+    font-weight: 500;
+    text-transform: uppercase;
+    z-index: 100;
+}
+
+.slider {
+    background-color: #fff;
+    color: #fff;
+    border-radius: 50px;
+    box-shadow: 0px 0px 6px var(--color-grey-middle);
+    position: absolute;
+    left: 0vw;
+    height: 6vh;
+    width: 50%;
+    z-index: 0;
 }
