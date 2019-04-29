@@ -1,27 +1,38 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../css/meine_fahrten.css">
     <title>Meine Fahrten</title>
 </head>
-<body>
+<body class="firstPage">
     <header>
         <h1>Meine Fahrten</h1>
     </header>
-    <img src="../images/illustrationen/meineFahrten_forGreyBG.svg" />
+    <img src="../images/illustrationen/meineFahrten_forGreyBG.svg" class="start_illustration">
     <nav id="sliding-nav">
         <div class="slider"></div>
-        <p class="menu">Fahrer</p>
+        <p class="menu active_menu">Fahrer</p>
         <p class="menu">Mitfahrer</p>
     </nav>
     <section>
-        <p>Kommende Fahrten</p>
-        <div class="fahrt_overview">
-            <h3>Linz - Wien</h3>
-            <p class="dateTime">Fr. 06.04.2019, 17:00 Uhr</p>
-        </div>
+        <h4>Kommende Fahrten</h4>
+        <ul>
+            <li class="fahrt_overview">
+                <p class="start_end">Linz - Wien</p>
+                <p class="date_time">Fr. 06.04.2019, 17:00 Uhr</p>
+            </li>
+        </ul>
     </section>
-    <p>Kommende Fahrten</p>
+    <section>
+        <h4>Vergangene Fahrten</h4>
+        <ul>
+            <li class="fahrt_overview">
+                <p class="start_end">Linz - Wien</p>
+                <p class="date_time">Fr. 06.04.2019, 17:00 Uhr</p>
+            </li>
+        </ul>
+    </section>
 </body>
 </html>
