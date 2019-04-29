@@ -71,7 +71,7 @@ body.firstPage {
 
 .date_time {
     font-family: Montserrat, sans-serif;
-    font-size: 1.7vh;
+    font-size: 1.2vh !important;
     color: var(--grey-light);
     text-align: left;
 }
