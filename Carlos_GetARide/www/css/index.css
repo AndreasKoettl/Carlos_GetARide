@@ -2,6 +2,14 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+:root {
+    --red: #BC483A;
+    --blue-dark: #3B4275;
+    --blue-light: #F0F4F6;
+    --green: #A5C03C;
+}
+
+
 body {
     -webkit-touch-callout: none;
     -webkit-text-size-adjust: none;
