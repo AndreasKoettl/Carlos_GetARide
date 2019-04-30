@@ -4,6 +4,7 @@
         $("#login-button", this).attr("disabled", "disabled");
         var u = $("#email", this).val();
         var p = $("#password", this).val();
+        $("#errorMessage").html("in jquery");
         if (u != '' && p != '') {
             $.post("https://www.coldfusionjedi.com/demos/2011/nov/10/service.cfc?method=login&returnformat=json", { username: u, password: p }, function (res) {
                 if (res == true) {
@@ -15,5 +16,7 @@
             }, "json");
         } else {
             console.log('username or password empty!');
+            $("#errorMessage").html("username or password empty!");
         }
+    });
 });
