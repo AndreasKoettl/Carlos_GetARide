@@ -1,10 +1,38 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../../css/index.css" />
+    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../scripts/auth.js"></script>
+    <title>Register</title>
 </head>
 <body>
-    <div>Hier Inhalt einfügen</div>
+    <h1 id="h1">Registrier' dich</h1>
+    <form id="register-form">
+
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" value="" placeholder="Name" />
+        </div>
+
+        <div>
+            <label for="email">E-Mail:</label>
+            <input type="text" name="email" id="username" value="" placeholder="E-Mail" />
+        </div>
+
+        <div>
+            <label for="password">Passwort:</label>
+            <input type="text" name="password" id="password" value="" placeholder="Passwort" />
+        </div>
+
+        <div>
+            <label for="password_repeat">Passwort wiederholen:</label>
+            <input type="text" name="password_repeat" id="password_repeat" value="" placeholder="Passwort" />
+        </div>
+
+        <button class="red-button" id="register-button">Registrieren</button>
+
+    </form>
 </body>
 </html>
