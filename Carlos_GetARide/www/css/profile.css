@@ -78,28 +78,3 @@ h2{
     padding: 6vw;
 }
 
-label {
-    display:block;
-    margin: 3vh 1vw 1vh 1vw;
-    color: var(--grey-light);
-    font-size: 4vw;
-    font-weight: 400;
-    
-}
-
-input{
-    border: 2px solid var(--grey-extralight);
-    border-radius: 50px;
-    padding: 2vw;   
-    box-sizing:border-box;
-    width: 100%;
-}
-
-form{
-    margin:0 auto;
-    width:80vw;
-}
-
-.textinput{
-    margin: 2vh 0 0 0;
-}
