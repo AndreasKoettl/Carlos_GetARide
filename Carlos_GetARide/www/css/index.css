@@ -16,11 +16,15 @@
     --grey-light: #C3C3C3;
 }
 
+body.main {
+    background-color: var(--blue-light);
+}
+
 h1 {
     font-family: Roboto Slab, serif;
     font-size: 3vh;
     font-weight: normal;
     color: var(--red);
-    margin: 5vh auto;
+    margin: 3vh auto;
     text-align: center;
 }

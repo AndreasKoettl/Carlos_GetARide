@@ -1,5 +1,10 @@
+.illustration_meineFahrten {
+    width: 80vw;
+    margin: 10vh auto;
+    display: flex;
+}
 
-#sliding-nav {
+#tabs_meineFahrten {
     width: 80vw;
     height: 6vh;
     margin: 0 auto;
@@ -7,12 +12,10 @@
     top: -3vh;
     display: flex;
     flex-direction: row;
-    /*justify-content: space-evenly;*/
     align-items: center;
     color: #fff;
     background-color: var(--red);
     border-radius: 50px;
-    /*box-shadow: 0px 2px 6px var(--color-grey-middle);*/
 }
 
 .menu {
@@ -20,8 +23,6 @@
     margin: 0 auto;
     text-align: center;
     font-size: 2.7vh;
-    /*font-weight: 500;
-    text-transform: uppercase;*/
     z-index: 100;
     font-family: 'Roboto Slab', serif;
 }
@@ -34,7 +35,6 @@
     background-color: #fff;
     color: var(--red);
     border-radius: 50px;
-    /*box-shadow: 0px 0px 6px var(--color-grey-middle);*/
     position: absolute;
     left: 0vw;
     height: 6vh;
@@ -42,45 +42,37 @@
     z-index: 0;
 }
 
-body.firstPage {
-    background-color: var(--blue-light);
-}
-
-.fahrt_overview {
-    background-color: #fff;
-    width: 80vw;
-    border-radius: 35px;
-    padding:2vh 3vh;
-    list-style: none;
-}
-
-.start_illustration {
-    width: 80vw;
-    margin: 10vh auto;
-    display: flex;
-}
-
-.start_end {
-    font-family: Montserrat, sans-serif;
-    font-size: 5vw;
-    color: var(--red);
-    font-weight: bolder;
-    text-align: left;
-}
-
-.date_time {
-    font-family: Montserrat, sans-serif;
-    font-size: 2vw;
-    color: var(--grey-light);
-    text-align: left;
-}
-
-h4 {
+h6 {
     width: 80vw;
     font-family: Montserrat, sans-serif;
     font-size: 3vw;
     color: var(--red);
     text-transform: uppercase;
     margin: 5vw auto;
-    text-align: left;
+}
+
+.box_meineFahrten {
+    background-color: #fff;
+    width: 80vw;
+    border-radius: 35px;
+    padding: 3vh 3vh;
+    list-style: none;
+}
+
+.start_destination {
+    font-family: Montserrat, sans-serif;
+    font-size: 5vw;
+    color: var(--red);
+    font-weight: 900;
+    padding: 0px;
+    margin: 0px;
+}
+
+.datetime {
+    font-family: Montserrat, sans-serif;
+    font-size: 3.5vw;
+    color: var(--grey-light);
+    padding: 0px;
+    margin: 0px;
+    margin-top:2vw;
 }
