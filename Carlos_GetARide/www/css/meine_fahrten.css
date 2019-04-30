@@ -53,6 +53,7 @@ h6 {
 
 .box_meineFahrten {
     background-color: #fff;
+    box-sizing: border-box;
     width: 80vw;
     border-radius: 35px;
     padding: 3vh 3vh;
@@ -75,4 +76,13 @@ h6 {
     padding: 0px;
     margin: 0px;
     margin-top:2vw;
+}
+
+header {
+    display: flex;
+}
+
+.back {
+    width: 3vw;
+    margin: 3vh;
 }
