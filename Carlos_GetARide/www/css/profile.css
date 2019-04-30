@@ -11,6 +11,24 @@
     color: var(--grey-dark);
 }
 
+.settings{
+    width: 70vw;
+    margin: 10vh auto 0 auto;
+}
+
+h2{
+    font-size: 5vw;
+    font-weight: 400;
+}
+
+.yes, .no, .garbage-icon{
+    height: 6vw;
+}
+
+.yes{
+    margin-right: 3vw;
+}
+
 .profile-picture, .settings-picture, .edit-picture{
     display:block;
     width: 60vw;
@@ -58,4 +76,30 @@
     width: 70vw;
     margin: 7vh auto 0 auto;
     padding: 6vw;
+}
+
+label {
+    display:block;
+    margin: 3vh 1vw 1vh 1vw;
+    color: var(--grey-light);
+    font-size: 4vw;
+    font-weight: 400;
+    
+}
+
+input{
+    border: 2px solid var(--grey-extralight);
+    border-radius: 50px;
+    padding: 2vw;   
+    box-sizing:border-box;
+    width: 100%;
+}
+
+form{
+    margin:0 auto;
+    width:80vw;
+}
+
+.textinput{
+    margin: 2vh 0 0 0;
 }
