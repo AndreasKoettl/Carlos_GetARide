@@ -14,6 +14,7 @@
     --blue-light: #F0F4F6;
     --green: #A5C03C;
     --grey-light: #C3C3C3;
+    --grey: #858585;
 }
 
 body.main {
@@ -25,7 +26,7 @@ h1 {
     font-size: 3vh;
     font-weight: normal;
     color: var(--red);
-    margin: 3vh auto;
+    margin: 0 auto;
     text-align: center;
     z-index: 100;
 }
