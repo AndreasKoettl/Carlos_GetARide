@@ -2,11 +2,6 @@
 
 require_once ("error.php");
 
-// Represents Connection to database.
-// Operations with the database are only possible via this class.
-// It handles the statements, params, and results from queries.
-// Also returns status/errormessages.
-
 /**
  * Class DatabaseAccess
  *
@@ -14,8 +9,6 @@ require_once ("error.php");
  * Operations with the database are only possible via this class.
  * It handles the statements, params, and results from queries.
  * Also returns status/errormessages.
- *
- * @package voecklablech
  */
 class DatabaseAccess
 {
