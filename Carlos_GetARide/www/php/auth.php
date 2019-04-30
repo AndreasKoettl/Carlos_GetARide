@@ -1,10 +1,9 @@
-﻿require_once ../lib/limonade.php
+﻿<?php
+require_once '../lib/limonade-master/lib/limonade.php';
 
-
-// just an example
-dispatch('/', 'hello');
-        function hello()
-        {
-            return 'Hello world!';
-        }
+dispatch_post('/hello', 'hello');
+function hello() {
+	return 'asf';
+}
 run();
+?>
