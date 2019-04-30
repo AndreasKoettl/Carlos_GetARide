@@ -1,0 +1,80 @@
+﻿#profile-content {
+    background-color: var(--blue-light);
+    font-family: 'Roboto Slab', serif;
+    font-weight: 400;
+    color: var(--grey-dark);
+}
+
+#settings-content, #edit-content {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 400;
+    color: var(--grey-dark);
+}
+
+.settings{
+    width: 70vw;
+    margin: 10vh auto 0 auto;
+}
+
+h2{
+    font-size: 5vw;
+    font-weight: 400;
+}
+
+.yes, .no, .garbage-icon{
+    height: 6vw;
+}
+
+.yes{
+    margin-right: 3vw;
+}
+
+.profile-picture, .settings-picture, .edit-picture{
+    display:block;
+    width: 60vw;
+    margin:10vw auto;
+}
+
+.options img{
+    width: 6vw;
+    margin: 0 4vw 0;
+    position: relative;
+    top: 0.6vh;
+}
+
+.options a{
+    display:block;
+    font-size:2.5vh;
+}
+
+.options a:first-of-type{
+    margin-bottom: 3vh;
+}
+
+.data{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.name{
+    font-size: 10vw;
+    margin:0 auto;
+    font-weight:400;
+}
+.mail{
+    color: var(--grey-light);
+    font-size: 5vw;
+    margin:0 auto;
+}
+
+.options {
+    background-color: #FFF;
+    border-radius: 15px;
+    color: var(--red);
+
+    box-sizing:border-box;
+    width: 70vw;
+    margin: 7vh auto 0 auto;
+    padding: 6vw;
+}
+
