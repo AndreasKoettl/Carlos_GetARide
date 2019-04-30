@@ -3,5 +3,12 @@
 }
 
 .red-button {
+    background-color: var(--red);
+    color: #fff;
+    height: 30px;
+    padding: 20px 100px;
+    border-radius: 30px;
+    width:300px;
+    margin:auto;
 
 }
