@@ -27,4 +27,5 @@ h1 {
     color: var(--red);
     margin: 3vh auto;
     text-align: center;
+    z-index: 100;
 }

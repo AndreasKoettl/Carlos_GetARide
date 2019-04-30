@@ -1,6 +1,6 @@
 .illustration_meineFahrten {
     width: 80vw;
-    margin: 10vh auto;
+    margin: 5vh auto;
     display: flex;
 }
 
@@ -9,7 +9,6 @@
     height: 6vh;
     margin: 0 auto;
     position: relative;
-    top: -3vh;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -51,10 +50,15 @@ h6 {
     margin: 5vw auto;
 }
 
+ul {
+    padding: 0px;
+}
+
 .box_meineFahrten {
-    background-color: #fff;
-    box-sizing: border-box;
     width: 80vw;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background-color: #fff;
     border-radius: 35px;
     padding: 3vh 3vh;
     list-style: none;
@@ -85,4 +89,6 @@ header {
 .back {
     width: 3vw;
     margin: 3vh;
+    z-index: 0;
+    position: absolute;
 }
