@@ -1,6 +1,14 @@
-﻿$(document).ready(function () {
-    let url = window.location.href;
-    if (url.indexOf('fahrt-erstellen')) {
-        $('#fahrt-erstellen').addClass("active");
+﻿let id = "";
+$(document).ready(function () {
+    $('.icon').click(function () {
+        id = $(this).attr('id');
+        $("#" + id).addClass('active');
+    });
+
+    if (id != "") {
+        $("#"+ id).addClass('active');
+        alert($(this).attr('id'));
     }
 });
+
+
