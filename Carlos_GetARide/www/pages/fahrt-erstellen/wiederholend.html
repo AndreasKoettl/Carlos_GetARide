@@ -16,9 +16,14 @@
     <input type="text" value="Ziel" />
 
     <a class="red-button" href="wann.html">Weiter</a>
-    
-    <div id="nav-bar-container"></div>
-    <script src="/scripts/load-navbar.js"></script>
 
+    <div id="nav-bar-container"></div>
+
+    <script src="/scripts/load-navbar.js"></script>
+    <script>
+        $('#header-container').load("/pages/fahrt-erstellen/header-fahrt-erstellen.html");
+        $('#nav-bar-container').load("/pages/nav-bar.html");
+        $("#circle-wiederholend").addClass('circle-active');
+    </script>
 </body>
 </html>
