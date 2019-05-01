@@ -4,27 +4,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script src="../../lib/vue/vue.min.js"></script>
     <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    
 </head>
 <body>
-    <div id="header-container"></div>
+    <div id="app">
+        <!-- includes header and navigation bar -->
+        <div id="header-container"></div>
+        <div id="nav-bar-container"></div>
 
-    <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
-    <div id="form-wrapper">
-        <h1 class="fahrt-erstellen">Wohin fährst du?</h1>
-        <form>
-            <input class="textinput" type="text" placeholder="Start" />
-            <input class="textinput" type="text" placeholder="Ziel" />
-            <button class="red-button">Weiter</button>
-        </form>
+        <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" id="illustration-big" />
+        <div id="form-wrapper">
+            <h1 class="#fahrt-erstellen-heading">Wohin fährst du?</h1>
+            <form>
+                <input @click="placeInputClick" id="start" class="textinput" type="text" placeholder="Start" />
+                <input @click="placeInputClick" id="ziel" class="textinput" type="text" placeholder="Ziel" />
+                <button class="red-button">Weiter</button>
+            </form>
+        </div>
     </div>
-
-    <div id="nav-bar-container"></div>
-    <script>
-        $('#header-container').load("/pages/fahrt-erstellen/header-fahrt-erstellen.html");
-        $('#nav-bar-container').load("/pages/nav-bar.html");
-      
-    </script>
-    <script>  $("#circle-wohin").addClass('circle-active');</script>
+    <script src="../../scripts/inputHandling.js"></script>
 </body>
 </html>

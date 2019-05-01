@@ -1,4 +1,19 @@
-﻿<script src="/scripts/nav-bar.js"></script>
+﻿<script>
+    $('#nav-bar-container').load("/pages/nav-bar.html");
+    $(document).ready(function () {
+        $('.icon').click(function () {
+            let id = $(this).attr('id');
+            sessionStorage.setItem('active', id);
+        });
+
+        let id = sessionStorage.getItem('active');
+        $("#" + id).addClass('active');
+        let parent = $("#" + id).parent();
+        parent.addClass('active-border');
+    });
+</script>
+
+
 <div id="nav-bar">
     <a href="/pages/mein-fahrten/fahrten.html" class="menu-item"><img class="icon" id="meine-fahrten" src="/images/icons/hakerl_icon.svg" /></a>
     <a href="/pages/fahrt-suchen/suchen.html" class="menu-item"><img class="icon" id="fahrt-suchen" src="/images/icons/magnifying-glass.svg" /></a>
