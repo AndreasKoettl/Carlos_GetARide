@@ -9,11 +9,11 @@
         async: true,
         contentType: false,
         processData: false,
-        url: "http://localhost/Carlos_GetARide/www/php/auth.php?/loginUser",
+        url: "/Carlos_GetARide/www/php/auth.php?/loginUser",
         data: formData,
         success: function (data) {
             if (data["status"] === "success") {
-                window.location.href = "http://localhost/Carlos_GetARide/www/index.html";
+                window.location.href = "/Carlos_GetARide/www/index.html";
             }
             else {
                 $("#errorMessage").text("Login fehlgeschlagen!");
@@ -25,7 +25,6 @@
         }
     });
 }
-
 
 $(document).ready(function () {
     $("#login-form").submit(loginUser);

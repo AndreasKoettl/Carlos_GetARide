@@ -9,11 +9,11 @@
         async: true,
         contentType: false,
         processData: false,
-        url: "http://localhost/Carlos_GetARide/www/php/auth.php?/registerUser",
+        url: "/Carlos_GetARide/www/php/auth.php?/registerUser",
         data: formData,
         success: function (data) {
             if (data["status"] === "success") {
-                window.location.href = "http://localhost/Carlos_GetARide/www/pages/login/login.html";
+                window.location.href = "/Carlos_GetARide/www/pages/login/login.html";
             }
             else {
                 $("#errorMessage").text("Registrierung fehlgeschlagen: " + data["statusmessage"]);
