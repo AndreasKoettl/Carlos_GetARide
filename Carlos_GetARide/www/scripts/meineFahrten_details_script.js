@@ -13,7 +13,12 @@ carlos_meineFahrten_details.app3 = new Vue({
 
     methods: {
         switchToEditing: function () {
+            event.preventDefault();
             window.location.href = "/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_bearbeiten.html";
+        },
+        deleteRide: function () {
+            event.preventDefault();
+            window.location.href = "/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_fahrt_geloescht.html";
         }
     }
 });
