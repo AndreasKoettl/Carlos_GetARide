@@ -3,11 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script src="../../lib/vue/vue.min.js"></script>
+    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <title>Meine Fahrten Details</title>
 </head>
 <body>
-    <header class="row">
-        <img src="../../images/icons/back.svg" class="back">
+    <header class="row" id="app4">
+        <img src="../../images/icons/back.svg" class="header_icon" @click="backToOverview">
         <h1>Meine Fahrten</h1>
     </header>
     
@@ -99,11 +101,14 @@
             </div>
         </div>
 
-        <div class="row_noPadding">
-            <button class="button_red_half">Fahrt bearbeiten</button>
-            <button class="button_red_half">Fahrt löschen</button>
+        <div id="app3">
+            <button class="button_red_full" @click="switchToEditing">Fahrt bearbeiten</button>
+            <button class="button_red_full" @click="deleteRide">Fahrt löschen</button>
         </div>
-
+        
     </section>
+
+    <script src="../../scripts/meineFahrten_details_script.js"></script>
+
 </body>
 </html>

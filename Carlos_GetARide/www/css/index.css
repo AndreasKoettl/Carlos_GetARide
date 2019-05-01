@@ -1,5 +1,7 @@
+
 @import url('profile.css');
 @import url('suchen.css');
+@import url('profile.css');
 @import url('meine_fahrten.css');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:600,700,800');
@@ -23,12 +25,18 @@
     background-color: var(--blue-light);
 }
 
+.mainHeading {
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+}
+
 h1 {
     font-family: Roboto Slab, serif;
     font-size: 3vh;
     font-weight: normal;
     color: var(--red);
-    margin: 3vh auto;
+    margin: 0 auto;
+    padding: 0;
     text-align: center;
 }
 
