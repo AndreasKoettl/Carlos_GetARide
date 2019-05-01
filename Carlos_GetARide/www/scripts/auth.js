@@ -1,14 +1,33 @@
-﻿$(document).ready(function () {
-    $("#login-button").on("click", function (e) {
-        //disable the button so we can't resubmit while we wait
-        $("#login-button", this).attr("disabled", "disabled");
-        var u = $("#email").val();
-        var p = $("#password").val();
-  
-        $.post("http://localhost/carlos/Carlos_GetARide/www/php/auth.php/hello", function (data) {
-                alert(data);
-            }, "json");  
-       
-       
+﻿function loginUser() {
+    event.preventDefault();
+
+    let formData = new FormData($("#login-form")[0]);
+
+    $.post({
+        accepts: "application/json",
+        dataType: "json",
+        async: true,
+        contentType: false,
+        processData: false,
+        url: "http://localhost/Carlos_GetARide/www/php/auth.php?/loginUser",
+        data: formData,
+        success: function (data) {
+            if (data["status"] === "success") {
+                alert("Login erfolgreich!");
+                window.location.href = "http://localhost/Carlos_GetARide/www/index.html";
+            }
+            else {
+                $("#errorMessage").text("Login fehlgeschlagen!");
+                $("#password").val("");
+            }
+        },
+        error: function () {
+            $("#errorMessage").text("Server Verbindung fehlgeschlagen");
+        }
     });
+}
+
+
+$(document).ready(function () {
+    $("#login-form").submit(loginUser);
 });
