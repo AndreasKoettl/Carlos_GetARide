@@ -3,11 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script src="../../lib/vue/vue.min.js"></script>
+    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <title>Meine Fahrten bearbeiten</title>
 </head>
 <body>
-    <header class="row">
-        <img src="../../images/icons/back.svg" class="header_icon">
+    <header class="row" id="app5">
+        <img src="../../images/icons/back.svg" class="header_icon" @click="backToDetails">
         <h1>Fahrt bearbeiten</h1>
     </header>
 
@@ -50,11 +52,15 @@
                 </div>
             </div>
 
-            <button class="button_red_full">Änderungen speichern</button>
+            <div id="app6">
+                <button class="button_red_full" @click="saveData">Änderungen speichern</button>
+            </div>
 
         </form>
 
     </section>
+
+    <script src="../../scripts/meineFahrten_bearbeiten_script.js"></script>
 
 </body>
 </html>
