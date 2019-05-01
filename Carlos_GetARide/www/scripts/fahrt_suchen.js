@@ -2,21 +2,16 @@
 
 //var mtd280 = mtd280 || {};
 
-var options = {
-    type: 'date',         // 'date' or 'time', required
-    date: new Date(),     // date or timestamp, default: current date
-    minDate: new Date(),  // date or timestamp
-    maxDate: new Date()   // date or timestamp
+import DatePick from '../node_modules/vue-date-pick';
+import '../node_modules/vue-date-pick/dist/vueDatePick.css';
+
+
+export default {
+    components: { DatePick },
+    data: () => ({
+        date: '2019-01-01'
+    })
 };
-
-function myfunction() {
-    window.DateTimePicker.pick(options, function (timestamp) {
-        window.alert(timestamp);
-    });
-}
-
-
-
 //mtd280.app = new Vue({ //{ => Object literal
 //    el: "#app",
 
