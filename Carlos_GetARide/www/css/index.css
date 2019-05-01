@@ -14,10 +14,11 @@
     --blue-light: #F0F4F6;
     --green: #A5C03C;
     --grey-light: #C3C3C3;
+    --grey-extralight: #EAEAEA;
     --grey: #858585;
 }
 
-body.main {
+.main {
     background-color: var(--blue-light);
 }
 
@@ -30,3 +31,4 @@ h1 {
     text-align: center;
     z-index: 100;
 }
+
