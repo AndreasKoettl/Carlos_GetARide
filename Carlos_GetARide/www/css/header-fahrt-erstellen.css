@@ -37,8 +37,8 @@ header a img {
 }
 
 .circle {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
     border-radius: 25px;

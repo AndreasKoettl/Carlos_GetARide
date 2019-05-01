@@ -13,12 +13,16 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script src="lib/vue/vue.min.js"></script>
     <script src="lib/jquery/jquery-3.3.1.min.js"></script>
 
     <title>CarlosGetARide</title>
 </head>
     <body>
-        <div class="app">
+        <div id="app">
+            <app-menu></app-menu>
+            <header-fahrt-erstellen></header-fahrt-erstellen>
+            
             <h1>Test</h1>
             <a href="pages/meine_fahrten.html">Link zu Meine Fahrten</a>
             <div id="deviceready" class="blink">
@@ -27,8 +31,7 @@
             </div>
         </div>
 
-        <div id="nav-bar-container"></div>
-        <script src="/scripts/load-navbar.js"></script>
+        <script src="scripts/inputHandling.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="scripts/platformOverrides.js"></script>
         <script type="text/javascript" src="scripts/index.js"></script>
