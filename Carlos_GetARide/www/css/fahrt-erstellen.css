@@ -1,26 +1,10 @@
 body {
     background: #fff;
+    margin:0;
 }
 
 .illustration-big{
     width:100vw;
 }
 
-.red-button {
-    background-color: var(--red);
-    color: #fff;
-    height: 30px;
-    padding: 20px 100px;
-    border-radius: 30px;
-    width:300px;
-    margin:auto;
-}
 
-h1 {
-    font-family: Roboto Slab, serif;
-    font-size: 3vh;
-    font-weight: normal;
-    color: var(--red);
-    margin: 3vh auto;
-    text-align: center;
-}

@@ -9,14 +9,18 @@
 <body>
     <div id="header-container"></div>
 
-    <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
-    <h1>Wohin fährst du?</h1>
+    <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
+    <h1>Fährst du regelmäßig?</h1>
 
+    <div>
+        <input type="text" value="Start" />
+        <input type="text" value="Ziel" />
+    </div>
+
+    <a class="red-button" href="wann.html">Weiter</a>
+    
     <div id="nav-bar-container"></div>
-    <script>
-        $('#nav-bar-container').load("/pages/nav-bar.html");
-        $('#header-container').load("/pages/nav-bar.html");
-    </script>
+    <script src="/scripts/load-navbar.js"></script>
 
 </body>
 </html>

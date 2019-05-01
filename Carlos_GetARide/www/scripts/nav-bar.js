@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿$('#nav-bar-container').load("/pages/nav-bar.html");
+$(document).ready(function () {
     $('.icon').click(function () {
         let id = $(this).attr('id');
         sessionStorage.setItem('active', id);
