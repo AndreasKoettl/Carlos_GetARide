@@ -1,39 +1,24 @@
-﻿@import url('https://fonts.googleapis.com/css?family=Montserrat');
-
-body {
-    background-color: #F0F4F6;
-    text-align: center;
+﻿#search-content {
+font-family: 'Roboto Slab', serif;
+font-weight: 400;
+color: var(--grey-dark);
 }
 
 h1 {
     font-family: 'Roboto Slab', sans-serif;
+    font-weight:400;
+    font-size: 8vw;
+    text-align: center;
+
+    width: 70vw;
+    margin: 0 auto;
 }
 
-form { 
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-input { 
-    font-family: 'Montserrat', sans-serif;
-    border-radius: 24px;
-    padding: 8px;
-    margin: 6px;
-    box-sizing: content-box;
-    width: 160px;
-}
-
-input[type="text"] {
-    border: 2px solid lightgray;
-}
-
-input[type="submit"] {
-    border: none;
-}
-
-#backgroundImg {
-    width: 100%;
+#searchButton {
+    margin: 2vh 0;
+    border: 1px solid var(--red);
+    background-color: var(--red);
+    color: white;
 }
 
 .buttonEnabled {

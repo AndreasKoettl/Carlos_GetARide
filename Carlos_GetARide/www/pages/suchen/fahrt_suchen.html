@@ -16,14 +16,23 @@
     <script type="text/javascript" src="../../scripts/index.js"></script>
     <title>CarlosGetARide</title>
 </head>
-<body>
-    <img id="backgroundImg" src="/www/images/illustrationen/fahrt-suchen.png" />
-    <h1>Wohin möchtest du?</h1>
+<body id="search-content">
+    <img class="search-picture" src="/www/images/illustrationen/fahrt-suchen.png" />
+    <h1>Finde eine passende Fahrt!</h1>
     <form action="">
-        <input type="text" id="locationStart" name="locationStart" placeholder="Startort"/>
-        <input type="text" id="locationEnd" name="locationEnd" placeholder="Zielort"/>
-        <input type="text" id="dateDrive" name="dateDrive" placeholder="Datum/Uhrzeit"/>
-        <input type="datetime-local" id="dateDriveInput" name="dateDriveInput" hidden/>
+        <div class="textinput">
+            <input type="text" id="locationStart" name="locationStart" placeholder="Startort" />
+        </div>
+        <div class="textinput">
+            <input type="text" id="locationEnd" name="locationEnd" placeholder="Zielort" />
+        </div>
+        <div class="textinput">
+            <input type="text" id="dateDrive" name="dateDrive" placeholder="Datum" />
+        </div>
+        <div class="textinput">
+            <input type="text" id="timeDrive" name="timeDrive" placeholder="Uhrzeit" />
+        </div>
+        <input type="datetime-local" id="dateDriveInput" name="dateDriveInput" hidden />
         <input type="submit" id="searchButton" value="Suchen" />
     </form>
 </body>

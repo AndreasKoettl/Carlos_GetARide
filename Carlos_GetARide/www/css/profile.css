@@ -29,7 +29,7 @@ h2{
     margin-right: 3vw;
 }
 
-.profile-picture, .settings-picture, .edit-picture{
+.profile-picture, .settings-picture, .edit-picture, .search-picture{
     display:block;
     width: 60vw;
     margin:10vw auto;
