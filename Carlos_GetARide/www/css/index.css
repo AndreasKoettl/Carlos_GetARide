@@ -12,8 +12,22 @@
     --blue-light: #F0F4F6;
     --green: #A5C03C;
     --grey-dark: #707070;
+	--grey: #858585;
     --grey-light: #C3C3C3;
     --grey-extralight: #EAEAEA;
+}
+
+.main {
+    background-color: var(--blue-light);
+}
+
+h1 {
+    font-family: Roboto Slab, serif;
+    font-size: 3vh;
+    font-weight: normal;
+    color: var(--red);
+    margin: 3vh auto;
+    text-align: center;
 }
 
 label {
