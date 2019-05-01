@@ -82,25 +82,25 @@
     margin-top:2vw;
 }
 
-.col {
+.row {
     display: flex;
     justify-content: space-between;
     padding-top: 3vh;
     padding-bottom: 3vh;
 }
 
-.row {
+.col {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.col_noPadding {
+.row_noPadding {
     display: flex;
     justify-content: space-between;
 }
 
-.col_bottomPadding {
+.row_bottomPadding {
     display: flex;
     justify-content: space-between;
     padding-bottom: 2vh;
@@ -217,4 +217,13 @@
     font-family: 'Roboto Slab', serif;
     background-color: var(--red);
     border-radius: 50px;
+}
+
+.edit-content {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 400;
+    color: var(--grey-dark);
+    width: 70vw;
+    margin: 0 auto;
+    padding: 0;
 }
