@@ -1,5 +1,6 @@
 @import url(fahrt-erstellen.css);
 @import url(nav-bar.css);
+@import url(header-fahrt-erstellen.css);
 @import url('profile.css');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:600,700,800');
@@ -41,11 +42,13 @@ input {
     padding: 2vw 3.5vw;
     box-sizing: border-box;
     width: 100%;
+    height: 5vh;
+    font-size: 2vh;
 }
 
-    input:active, input:focus {
-        outline: none;
-    }
+input:active, input:focus {
+    outline: none;
+}
 
 form {
     margin: 0 auto;
@@ -55,14 +58,14 @@ form {
 .textinput {
     margin: 2vh 0 0 0;
 }
-
 .red-button {
-    width: 80vw;
-    height: 7vw;
-    margin: 3vh auto;
-    font-size: 4vw;
-    font-family: 'Roboto Slab', serif;
+    margin: 5vh auto 0 auto;
+    width: 100%;
+    height: 5vh;
+    text-align: center;
     color: #fff;
+    font-size: 2.5vh;
+    font-family: 'Roboto Slab', serif;
     background-color: var(--red);
     border-radius: 50px;
 }

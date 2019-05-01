@@ -7,17 +7,22 @@
     <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
 </head>
 <body>
+    <div id="header-container"></div>
+
     <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
-    <h1>Wohin fährst du?</h1>
-    <form>
-        <div>
+    <div id="form-wrapper">
+        <h1 class="fahrt-erstellen">Wohin fährst du?</h1>
+        <form>
             <input class="textinput" type="text" placeholder="Start" />
             <input class="textinput" type="text" placeholder="Ziel" />
-        </div>
-        <a class="red-button" href="wiederholend.html">Weiter</a>
-    </form>
-    <div id="nav-bar-container"></div>
-    <script src="/scripts/load-navbar.js"></script>
+            <button class="red-button">Weiter</button>
+        </form>
+    </div>
 
+    <div id="nav-bar-container"></div>
+    <script>
+        $('#header-container').load("/pages/fahrt-erstellen/header-fahrt-erstellen.html");
+        $('#nav-bar-container').load("/pages/nav-bar.html");
+    </script>
 </body>
 </html>
