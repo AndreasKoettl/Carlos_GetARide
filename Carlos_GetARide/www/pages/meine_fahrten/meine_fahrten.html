@@ -3,17 +3,19 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script src="../../lib/vue/vue.min.js"></script>
+    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <title>Meine Fahrten</title>
 </head>
-<body class="main">
+<body id="app" class="main">
     <header>
         <h1 class="mainHeading">Meine Fahrten</h1>
     </header>
     <img src="../../images/illustrationen/meineFahrten_forGreyBG.svg" class="illustration_meineFahrten">
     <nav id="tabs_meineFahrten">
-        <div class="slider"></div>
-        <p class="menu active_menu">Fahrer</p>
-        <p class="menu">Mitfahrer</p>
+        <div id="slider" onclick="switchMenu()"></div>
+        <p id="driver" class="menu active_menu" onclick="switchMenu()">Fahrer</p>
+        <p id="codriver" class="menu" onclick="switchMenu()">Mitfahrer</p>
     </nav>
 
     <section class="bottomPadding">
@@ -35,6 +37,7 @@
 
     </section>
 
+    <script src="../../scripts/meineFahrten_script.js"></script>
     
 </body>
 </html>

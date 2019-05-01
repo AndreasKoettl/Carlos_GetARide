@@ -34,7 +34,7 @@
     color: var(--red);
 }
 
-.slider {
+#slider {
     background-color: #fff;
     color: var(--red);
     border-radius: 50px;
