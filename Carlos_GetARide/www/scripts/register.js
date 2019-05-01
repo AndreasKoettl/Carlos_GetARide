@@ -1,7 +1,7 @@
-﻿function loginUser() {
+﻿function registerUser() {
     event.preventDefault();
 
-    let formData = new FormData($("#login-form")[0]);
+    let formData = new FormData($("#register-form")[0]);
 
     $.post({
         accepts: "application/json",
@@ -9,16 +9,16 @@
         async: true,
         contentType: false,
         processData: false,
-        url: "http://localhost/Carlos_GetARide/www/php/auth.php?/loginUser",
+        url: "http://localhost/Carlos_GetARide/www/php/auth.php?/registerUser",
         data: formData,
         success: function (data) {
             if (data["status"] === "success") {
-                alert("Login erfolgreich!");
-                window.location.href = "http://localhost/Carlos_GetARide/www/index.html";
+                window.location.href = "http://localhost/Carlos_GetARide/www/pages/login/login.html";
             }
             else {
-                $("#errorMessage").text("Login fehlgeschlagen!");
+                $("#errorMessage").text("Registrierung fehlgeschlagen: " + data["statusmessage"]);
                 $("#password").val("");
+                $("#passwordRepeat").val("");
             }
         },
         error: function () {
@@ -27,7 +27,6 @@
     });
 }
 
-
 $(document).ready(function () {
-    $("#login-form").submit(loginUser);
+    $("#register-form").submit(registerUser);
 });
