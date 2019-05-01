@@ -1,5 +1,5 @@
 .illustration-big{
-    width:100%;
+    width:100vw;
 }
 
 .red-button {
@@ -10,5 +10,4 @@
     border-radius: 30px;
     width:300px;
     margin:auto;
-
 }

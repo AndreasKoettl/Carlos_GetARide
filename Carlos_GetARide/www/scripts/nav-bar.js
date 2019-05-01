@@ -1,14 +1,13 @@
-﻿let id = "";
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('.icon').click(function () {
-        id = $(this).attr('id');
-        $("#" + id).addClass('active');
+        let id = $(this).attr('id');
+        localStorage.setItem('active', id);
     });
 
-    if (id != "") {
-        $("#"+ id).addClass('active');
-        alert($(this).attr('id'));
-    }
+    let id = localStorage.getItem('active');
+    $("#" + id).addClass('active');
+    let parent = $("#" + id).parent();
+    parent.addClass('active-border');
 });
 
 
