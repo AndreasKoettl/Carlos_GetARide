@@ -14,6 +14,10 @@
         success: function (data) {
             if (data["status"] === "success") {
                 window.location.href = "/Carlos_GetARide/www/index.html";
+
+                let userData = JSON.stringify(data["data"][0]);
+
+                localStorage.setItem( "carlosUser", userData);
             }
             else {
                 $("#errorMessage").text("Login fehlgeschlagen!");

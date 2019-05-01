@@ -4,6 +4,7 @@ require_once 'DatabaseAccess.php';
 
 dispatch_post('/loginUser', 'loginUser');
 dispatch_post('/registerUser', 'registerUser');
+dispatch_post('/deleteUser', 'deleteUser');
 
 define('MIN_PWD_LENGTH', 8);
 
@@ -69,6 +70,36 @@ function registerUser() {
         }
     } else {
         $result = setErrorMessage($result, "Email-Adresse ist bereits registriert.");
+    }
+
+    return json_encode($result);
+}
+
+function deleteUser() {
+    $result = array();
+
+    if (isset($_POST["password"]) && strlen($_POST["password"]) > 0) {
+        $dbConnection = new DatabaseAccess;
+
+        $dbConnection->prepareStatement("SELECT * FROM users WHERE email = :email AND active = '1'");
+        $dbConnection->bindParam(":email", htmlentities($_POST["email"], ENT_QUOTES));
+        $dbConnection->executeStatement();
+        $result = $dbConnection->fetchAll();
+
+        if ($dbConnection->getRowCount() > 0 && password_verify($_POST["password"], $result["data"][0]["password"])) {
+            session_unset();
+
+            $dbConnection->prepareStatement("DELETE FROM users WHERE idusers = :idusers");
+            $dbConnection->bindParam(":idusers", $result["data"][0]["idusers"]);
+            $dbConnection->executeStatement();
+
+            $result = setSuccessMessage($result, "Profil erfolgreich gelöscht.");
+        } else {
+            $result = setErrorMessage($result, "Passwort ungültig.");
+        }
+
+    } else {
+        $result = createErrorArray("Kein Passwort angegeben.");
     }
 
     return json_encode($result);
