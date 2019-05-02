@@ -10,12 +10,33 @@ body {
     margin-top:5vw;
 }
 
-.fahrtErstellenHeading {
+.fahrt-erstellen-heading {
     color: var(--grey-dark);
-    font-size: 8vw;
+    font-size: 7vw;
 }
 
 #form-wrapper {
     width: 80vw;
     margin:auto;
+}
+
+#wrapper-yes-no{
+    width: 50vw;
+    margin:5vh auto;
+    display:flex;
+    justify-content:space-around;
+    align-content:center;
+}
+
+.icon-yes-no {
+    filter: brightness(0) invert(47%) sepia(25%) saturate(0%) hue-rotate(155deg) brightness(87%) contrast(87%);
+    width: 15vw;
+    height: 15vw;
+}
+#yes.active {
+    filter: brightness(0) invert(89%) sepia(77%) saturate(23%) hue-rotate(400deg) brightness(63%) contrast(87%);
+}
+
+#no.active {
+    filter: brightness(0) invert(36%) sepia(27%) saturate(2113%) hue-rotate(327deg) brightness(93%) contrast(87%);
 }

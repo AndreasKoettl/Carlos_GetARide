@@ -12,12 +12,12 @@
         <header-fahrt-erstellen title="Fahrt erstellen"></header-fahrt-erstellen>
         <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" id="illustration-big" />
         <div id="form-wrapper">
-            <h1 class="fahrtErstellenHeading">Fährst du regelmäßig?</h1>
-            <form>
-                <place-input id="start" placeholder="Start"></place-input>
-                <place-input id="ziel" placeholder="Ziel"></place-input>
-                <button class="red-button" @click="submitWohin">Weiter</button>
-            </form>
+            <h1 class="fahrt-erstellen-heading">Fährst du regelmäßig?</h1>
+            <div id="wrapper-yes-no">
+                <img src="../../images/icons/hakerl_icon.svg" class="icon-yes-no active" id="yes" />
+                <img src="../../images/icons/x_icon_neu.svg" class="icon-yes-no active" id="no" />
+            </div>
+            <button class="red-button" @click="submitWohin">Weiter</button>
         </div>
         <nav-bar></nav-bar>
     </div>

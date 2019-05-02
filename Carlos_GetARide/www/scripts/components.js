@@ -8,7 +8,7 @@
 Vue.component('nav-bar', {
     template: `
     <div id="nav-bar">
-        <a href="/carlos/Carlos_GetARide/www/pages/meine-fahrten/fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/hakerl_icon.svg" /></a>
+        <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/hakerl_icon.svg" /></a>
         <a href="/Carlos_GetARide/www/pages/fahrt-suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/magnifying-glass.svg" /></a>
         <a href="/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wohin.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/plus-button.svg" /></a>
         <a href="/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/carlos/Carlos_GetARide/www/images/icons/speech-bubble.svg" /></a>
@@ -61,8 +61,6 @@ Vue.component('header-back', {
         }
     }
 });
-
-
 
 // Header with the process bar for "fahrt-erstellen"
 Vue.component('header-fahrt-erstellen', {
