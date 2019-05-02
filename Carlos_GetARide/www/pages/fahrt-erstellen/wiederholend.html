@@ -4,26 +4,24 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
-    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../lib/vue/vue.min.js"></script>
+
 </head>
 <body>
-    <div id="header-container"></div>
+    <div id="app">
+        <header-fahrt-erstellen></header-fahrt-erstellen>
+        <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" id="illustration-big" />
+        <div id="form-wrapper">
+            <h1 class="fahrt-erstellen">Fährst du regelmäßig?</h1>
+            <form>
+                <place-input id="start" placeholder="Start"></place-input>
+                <place-input id="ziel" placeholder="Ziel"></place-input>
+                <button class="red-button" @click="submitWohin">Weiter</button>
+            </form>
+        </div>
+        <nav-bar></nav-bar>
+    </div>
+    <script src="../../scripts/components.js"></script>
 
-    <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
-    <h1>Fährst du regelmäßig?</h1>
-
-    <input type="text" value="Start" />
-    <input type="text" value="Ziel" />
-
-    <a class="red-button" href="wann.html">Weiter</a>
-
-    <div id="nav-bar-container"></div>
-
-    <script src="/scripts/load-navbar.js"></script>
-    <script>
-        $('#header-container').load("/pages/fahrt-erstellen/header-fahrt-erstellen.html");
-        $('#nav-bar-container').load("/pages/nav-bar.html");
-        $("#circle-wiederholend").addClass('circle-active');
-    </script>
 </body>
 </html>

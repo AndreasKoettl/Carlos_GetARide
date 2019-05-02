@@ -8,8 +8,7 @@ header {
 }
 
     header > div {
-        width: 60vw;
-        margin-left: 1vw;
+        width: 60vw;      
     }
 
 header h3 {
@@ -33,7 +32,6 @@ header a img {
     width:50px;
     height: 50px;
     margin: auto;
-   
 }
 
 .circle {
@@ -59,4 +57,12 @@ header a img {
 
 .placeInputActive {
     margin-top: 25vw !important;
+}
+
+.backButtonInvisible {
+    justify-content:center;
+}
+
+.backButtonInvisible #back{
+    display:none !important;
 }

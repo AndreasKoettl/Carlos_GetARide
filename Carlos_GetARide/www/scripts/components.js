@@ -28,10 +28,14 @@ Vue.component('nav-bar', {
     mounted: function () {
         // highlight active Menu-Item
         let id = sessionStorage.getItem('active');
+        if (id != null) {
         let target = document.getElementById(id);
         target.className += ' active-border';
         let child = target.childNodes[0];
         child.className += ' active';  
+
+        }
+        
     }
 });
 
@@ -73,10 +77,13 @@ Vue.component('place-input', {
     methods: {
         placeInputClicked: function () {
             // change back button
+            this.header.classList.toggle("backButtonInvisible");
             document.querySelector('#back').onclick = function () {
                 // adjust so that changes dont disappear
-                location.reload();
+            location.reload();
+                
             }
+
 
             // change styles
             if (this.clickCounter == 0) {
@@ -96,6 +103,12 @@ Vue.component('place-input', {
             this.clickCounter++;
             }
         }
+    }, 
+    mounted: function () {
+        this.header = document.querySelector('header');
+        if (window.location.href.includes('wohin')) {
+            this.header.classList.add("backButtonInvisible");
+        }
     }
 });
 
@@ -103,8 +116,11 @@ var carlos = carlos || {};
 
 carlos.app = new Vue({
     el: "#app",
-    data: {clickCounter:0},
+    data: {},
     methods: {
-       
+        submitWohin: function () {
+            event.preventDefault();
+            window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt-erstellen/wiederholend.html";
+        }
     }
 });
