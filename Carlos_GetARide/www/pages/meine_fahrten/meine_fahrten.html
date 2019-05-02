@@ -4,36 +4,37 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
     <script src="../../lib/vue/vue.min.js"></script>
+    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <title>Meine Fahrten</title>
 </head>
 <body class="main">
     <div id="app">
         <header>
-            <h1 class="mainHeading">Meine Fahrten</h1>
+            <h1 class="main-heading">Meine Fahrten</h1>
         </header>
         <img src="../../images/illustrationen/meineFahrten_forGreyBG.svg" class="illustration_meineFahrten">
-        <nav id="nav_bar">
+        <nav id="nav-bar">
             <div id="slider" @click="switchMenu"></div>
             <p id="driver" class="menu active_menu" @click="switchMenu">Fahrer</p>
             <p id="codriver" class="menu" @click="switchMenu">Mitfahrer</p>
         </nav>
 
-        <section class="bottomPadding">
+        <section class="bottom-padding">
 
-            <h6 class="timing_meineFahrten">Kommende Fahrten</h6>
-            <div class="list">
+            <h6 class="timing-meine-Fahrten">Kommende Fahrten</h6>
+            <div id="rides-upcoming" class="list_meineFahrten">
                 <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_details.html">
-                    <div class="box_meineFahrten">
-                        <p class="start_destination">Linz - Wien</p>
+                    <div class="box-meine-fahrten">
+                        <p class="start-destination">Linz - Wien</p>
                         <p class="datetime">Fr. 30.04.2019, 17:00 Uhr</p>
                     </div>
                 </a>
             </div>
-            <h6 class="timing_meineFahrten">Vergangene Fahrten</h6>
-            <div class="list_meineFahrten">
+            <h6 class="timing-meine-Fahrten">Vergangene Fahrten</h6>
+            <div id="rides_past" class="list_meineFahrten">
                 <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_details.html">
-                    <div class="box_meineFahrten">
-                        <p class="start_destination">Linz - Wien</p>
+                    <div class="box-meine-fahrten">
+                        <p class="start-destination">Linz - Wien</p>
                         <p class="datetime">Fr. 30.04.2019, 17:00 Uhr</p>
                     </div>
                 </a>
@@ -41,7 +42,7 @@
 
         </section>
     </div>
-    <script src="../../scripts/meineFahrten_script.js"></script>
+    <script src="../../scripts/meine_fahrten_script.js"></script>
     
 </body>
 </html>

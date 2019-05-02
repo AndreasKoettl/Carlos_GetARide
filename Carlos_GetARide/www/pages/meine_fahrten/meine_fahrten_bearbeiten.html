@@ -9,11 +9,11 @@
 <body>
     <div id="app">
     <header class="row">
-        <img src="../../images/icons/back.svg" class="header_icon" @click="goBack">
+        <img src="../../images/icons/back.svg" class="header-icon" @click="goBack">
         <h1>Fahrt bearbeiten</h1>
     </header>
 
-    <section class="edit-content bottomPadding">
+    <section class="edit-content bottom-padding">
 
         <form>
             <div class="textinput">
@@ -44,22 +44,22 @@
                 <label for="regPlate">Kennzeichen</label>
                 <input type="text" id="regPlate" name="regPlate" placeholder="W-123AB">
             </div>
-            <div class="textinput row_bottomPadding">
+            <div class="textinput row-bottom-padding">
                 <label for="repeating" class="repeating-label">Wiederholende Fahrt</label>
-                <div class="repeating-options row_noPadding">
+                <div class="repeating-options row-no-padding">
                     <img src="../../images/icons/check.svg" id="check_icon" />
                     <img src="../../images/icons/x_icon_neu.svg" id="x_icon" />
                 </div>
             </div>
 
-            <button class="button_red_full" onclick="event.preventDefault(); window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten.html'">Änderungen speichern</button>
+            <button class="button-red-full" onclick="event.preventDefault(); window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten.html'">Änderungen speichern</button>
 
         </form>
 
     </section>
     </div>
 
-    <script src="../../scripts/meineFahrten_goBack_script.js"></script>
+    <script src="../../scripts/goback_script.js"></script>
 
 </body>
 </html>

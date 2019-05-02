@@ -4,11 +4,11 @@
     display: flex;
 }
 
-.bottomPadding {
+.bottom-padding {
     padding-bottom: 3vh;
 }
 
-#nav_bar {
+#nav-bar {
     width: 80vw;
     height: 6vh;
     margin: 0 auto;
@@ -46,7 +46,7 @@
     transition-duration: 400ms;
 }
 
-.timing_meineFahrten {
+.timing-meine-Fahrten {
     width: 80vw;
     font-family: Montserrat, sans-serif;
     font-size: 3vw;
@@ -60,7 +60,7 @@
     padding: 0px;
 }
 
-.box_meineFahrten {
+.box-meine-fahrten {
     width: 80vw;
     box-sizing: border-box;
     margin: 0 auto;
@@ -70,7 +70,7 @@
     list-style: none;
 }
 
-.start_destination {
+.start-destination {
     font-family: Montserrat, sans-serif;
     font-size: 5vw;
     color: var(--red);
@@ -101,26 +101,26 @@
     justify-content: space-between;
 }
 
-.row_noPadding {
+.row-no-padding {
     display: flex;
     justify-content: space-between;
 }
 
-.row_bottomPadding {
+.row-bottom-padding {
     display: flex;
     justify-content: space-between;
     padding-bottom: 2vh;
     list-style: none;
 }
 
-.header_icon {
+.header-icon {
     width: 3.5vw;
     margin-left: 3.5vh;
     z-index: 0;
     position: absolute;
 }
 
-.content_box {
+.content-box {
     width: 70vw;
     box-sizing: border-box;
     margin: 0 auto;
@@ -128,7 +128,7 @@
     padding-bottom: 3vh;
 }
 
-.details_h1 {
+.details-h1 {
     font-family: Montserrat, sans-serif;
     font-size: 6vw;
     color: var(--grey);
@@ -138,7 +138,7 @@
     margin: 0;
 }
 
-.details_h2 {
+.details-h2 {
     font-family: Montserrat, sans-serif;
     font-size: 4vw;
     color: var(--grey);
@@ -148,7 +148,7 @@
     margin: 0;
 }
 
-.details_h3 {
+.details-h3 {
     font-family: 'Roboto Slab', serif;
     font-size: 3vw;
     color: var(--grey-light);
@@ -157,7 +157,7 @@
     margin: 0;
 }
 
-.details_h4 {
+.details-h4 {
     font-family: 'Roboto Slab', serif;
     font-size: 3vw;
     text-transform: uppercase;
@@ -168,7 +168,7 @@
    margin-bottom: 2vh;
 }
 
-.details_h4_padding_top {
+.details-h4-padding-top {
     font-family: 'Roboto Slab', serif;
     font-size: 3vw;
     text-transform: uppercase;
@@ -180,7 +180,7 @@
     margin-bottom: 2vh;
 }
 
-.details_h5 {
+.details-h5 {
     font-family: 'Roboto Slab', serif;
     font-size: 2.5vw;
     text-transform: uppercase;
@@ -192,7 +192,7 @@
     padding-bottom: 0.5vh;
 }
 
-.icon_repeating {
+.icon-repeating {
     width: 6vw;
     height: 6vw;
     z-index: 0;
@@ -200,16 +200,16 @@
     margin: 0;
 }
 
-.icon_route {
+.icon-route {
     height: 15vh;
 }
 
-.icon_request {
+.icon-request {
     height: 4vh;
     margin: auto 0;
 }
 
-.box_route {
+.box-route {
     height: 15vh;
     width: 80%;
 }
@@ -222,12 +222,12 @@
     width: 60%;
 }
 
-.request_data {
+.request-data {
     width: 50%;
     margin-left: -10%;
 }
 
-.button_red_full {
+.button-red-full {
     margin: 1vh auto 0 auto;
     width: 100%;
     height: 5vh;
