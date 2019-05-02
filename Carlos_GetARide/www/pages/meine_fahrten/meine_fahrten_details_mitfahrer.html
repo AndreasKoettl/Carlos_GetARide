@@ -3,72 +3,78 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script src="../../lib/vue/vue.min.js"></script>
     <title>Meine Fahrten Details</title>
 </head>
 <body>
-    <header class="row">
-        <img src="../../images/icons/back.svg" class="header_icon">
-        <h1>Meine Fahrten</h1>
-    </header>
-    
-    <section class="content_box bottomPadding">
+    <div id="app">
+        <header class="row">
+            <img src="../../images/icons/back.svg" class="header_icon" @click="goBack">
+            <h1>Meine Fahrten</h1>
+        </header>
 
-        <div class="row">
-            <h6 class="details_h1">Fr, 26. April 2019</h6>
-            <img src="../../images/icons/Einzelfahrt_Icon.svg" class="icon_repeating"/>
-        </div>
+        <section class="content_box bottomPadding">
 
-        <hr />
+            <div class="row">
+                <h6 class="details_h1">Fr, 26. April 2019</h6>
+                <img src="../../images/icons/Einzelfahrt_Icon.svg" class="icon_repeating" />
+            </div>
 
-        <div class="row">
-            <img src="../../images/icons/Verbindung.svg" class="icon_route" />
-            <div class="col box_route">
-                <div>
-                    <p class="details_h3">17:00 Uhr</p>
-                    <h6 class="details_h2">Linz, Hauptbahnhof</h6>
-                </div>
-                <div>
-                    <p class="details_h3">17:00 Uhr</p>
-                    <h6 class="details_h2">Wien, Mariahilfer Straße</h6>
+            <hr />
+
+            <div class="row">
+                <img src="../../images/icons/Verbindung.svg" class="icon_route" />
+                <div class="col box_route">
+                    <div>
+                        <p class="details_h3">17:00 Uhr</p>
+                        <h6 class="details_h2">Linz, Hauptbahnhof</h6>
+                    </div>
+                    <div>
+                        <p class="details_h3">17:00 Uhr</p>
+                        <h6 class="details_h2">Wien, Mariahilfer Straße</h6>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <hr />
+            <hr />
 
-        <h6 class="details_h4_padding_top">Fahrer</h6>
-        <ul class="list">
+            <h6 class="details_h4_padding_top">Fahrer</h6>
+            <ul class="list">
 
-            <li class="row_bottomPadding">
-                <img src="../../images/icons/user_colored.svg" class="icon_request" />
-                <div class="request_data">
-                    <h6 class="details_h2">Dominik Müller</h6>
+                <li class="row_bottomPadding">
+                    <img src="../../images/icons/user_colored.svg" class="icon_request" />
+                    <div class="request_data">
+                        <h6 class="details_h2">Dominik Müller</h6>
+                    </div>
+                    <img src="../../images/icons/speech-bubble.svg" class="icon_request" />
+                </li>
+
+                <li class="row_bottomPadding">
+                    <img src="../../images/icons/car_info.svg" class="icon_request" />
+                    <div class="request_data col">
+                        <h6 class="details_h2">W-123AB</h6>
+                        <h6 class="details_h5">Audi A4 schwarz</h6>
+                    </div>
+                    <img src="../../images/icons/speech-bubble.svg" class="icon_request" />
+                </li>
+
+            </ul>
+
+            <hr />
+
+            <div class="row">
+                <div class="price">
+                    <h6 class="details_h2">3 €</h6>
+                    <p class="details_h3">pro Person</p>
                 </div>
-                <img src="../../images/icons/speech-bubble.svg" class="icon_request" />
-            </li>
-
-            <li class="row_bottomPadding">
-                <img src="../../images/icons/car_info.svg" class="icon_request" />
-                <div class="request_data col">
-                    <h6 class="details_h2">W-123AB</h6>
-                    <h6 class="details_h5">Audi A4 schwarz</h6>
-                </div>
-                <img src="../../images/icons/speech-bubble.svg" class="icon_request" />
-            </li>
-
-        </ul>
-
-        <hr />
-
-        <div class="row">
-            <div class="price">
-                <h6 class="details_h2">3 €</h6>
-                <p class="details_h3">pro Person</p>
             </div>
-        </div>
 
-        <button class="button_red_full">Fahrt canceln</button>
+            <button class="button_red_full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_fahrt_geloescht.html'">Fahrt canceln</button>
 
-    </section>
+        </section>
+    </div>
+
+    <script src="../../scripts/meineFahrten_goBack_script.js"></script>
+
 </body>
 </html>

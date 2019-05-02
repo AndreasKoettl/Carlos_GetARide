@@ -13,37 +13,20 @@ carlos_meineFahrten.app = new Vue({
 
     methods: {
         switchMenu: function () {
-                let slider = $("#slider");
-                let driver = $("#driver");
-                let codriver = $("#codriver");
+            let slider = document.getElementById('slider');
+            let driver = document.getElementById('driver');
+            let codriver = document.getElementById('codriver');
 
-                if (slider.css('left') == '0px') {
-                    slider.animate({ left: '40vw' }, 400, function () {
-                        driver.removeClass('active_menu');
-                        codriver.addClass('active_menu');
-                    });
-
-                }
-                else {
-                    slider.animate({ left: '0vw' }, 400, function () {
-                        codriver.removeClass('active_menu');
-                        driver.addClass('active_menu');
-                    });
-                }
-        }
-    }
-});
-
-carlos_meineFahrten.app2 = new Vue({
-
-    el: "#app2",
-
-    data: {
-    },
-
-    methods: {
-        switchToDetails: function () {
-            window.location.href = "/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_details.html";
+            if (slider.offsetLeft == 0) {
+                slider.style.left = '40vw';
+                driver.classList.remove('active_menu');
+                codriver.classList.add('active_menu');
+            }
+            else {
+                slider.style.left = '0px';
+                codriver.classList.remove('active_menu');
+                driver.classList.add('active_menu');
+            }
         }
     }
 });
