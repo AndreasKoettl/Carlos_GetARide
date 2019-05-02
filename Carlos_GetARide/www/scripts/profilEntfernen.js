@@ -1,41 +1,50 @@
+/**
+ * Entfernt den User aus der Datenbank, meldet ihn ab, und leitet ihn an die Login Seite weiter.
+ */
 function deleteUser() {
     event.preventDefault();
 
-    let storageData = localStorage.getItem("carlosUser");
+    // User Daten aus dem local storage holen.
+    let userData = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-    if (storageData !== null) {
+    // Eingegebene Formulardaten holen.
+    let formData = new FormData($("#profilEntfernen-form")[0]);
 
-        let userData = JSON.parse(storageData);
+    // Email des Users an die Formulardaten anhängen.
+    formData.append("email", userData["email"]);
 
-        let formData = new FormData($("#profilEntfernen-form")[0]);
+    // AJAX-Post Request starten.
+    $.post({
+        accepts: "application/json",
+        dataType: "json",
+        async: true,
+        contentType: false,
+        processData: false,
+        url: getAbsPath("php/auth.php?/deleteUser"),
+        data: formData,
+        success: function (data) {
+            // Prüfen ob das Profil entfernt wurde.
+            if (data["status"] === "success") {
+                // User Daten aus dem local storage löschen.
+                localStorage.removeItem(STORAGE_KEY);
 
-        formData.append("email", userData["email"]);
-
-        $.post({
-            accepts: "application/json",
-            dataType: "json",
-            async: true,
-            contentType: false,
-            processData: false,
-            url: "/Carlos_GetARide/www/php/auth.php?/deleteUser",
-            data: formData,
-            success: function (data) {
-                if (data["status"] === "success") {
-                    window.location.href = "/Carlos_GetARide/www/index.html";
-                } else {
-                    $("#errorMessage").text(data["statusmessage"]);
-                    $("#password").val("");
-                }
-            },
-            error: function () {
-                $("#errorMessage").text("Server Verbindung fehlgeschlagen");
+                // User an die Login Seite weiterleiten.
+                redirectUser("pages/login/login.html");
+            } else {
+                // Fehlermeldung ausgeben, wenn das Profil nicht entfernt werden konnte.
+                $("#errorMessage").text("Profil entfernen fehlgeschlagen: " + data["statusmessage"]);
+                $("#password").val("");
             }
-        });
-    } else {
-        window.location.href = "/Carlos_GetARide/www/index.html";
-    }
+        },
+        error: function () {
+            $("#errorMessage").text("Server Verbindung fehlgeschlagen");
+        }
+    });
 }
 
 $(document).ready(function () {
+    // User an die Login Seite weiterleiten, wenn dieser nicht eingeloggt ist.
+    redirectNotAuthUser("pages/login/login.html");
+
     $("#profilEntfernen-form").submit(deleteUser);
 });

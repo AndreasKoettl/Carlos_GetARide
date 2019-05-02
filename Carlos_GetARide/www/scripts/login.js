@@ -1,35 +1,50 @@
-﻿function loginUser() {
+﻿/**
+ * Meldet den User an der Seite an.
+ * Bei richtiger Email-Passwort-Kombination wird der User an die Startseite weitergeleitet,
+ * ansonsten wird eine entsprechende Fehlermeldung angezeigt.
+ */
+function loginUser() {
     event.preventDefault();
 
+    // Eingegebene Formulardaten holen.
     let formData = new FormData($("#login-form")[0]);
 
+    // AJAX-Post Request starten.
     $.post({
         accepts: "application/json",
         dataType: "json",
         async: true,
         contentType: false,
         processData: false,
-        url: "/Carlos_GetARide/www/php/auth.php?/loginUser",
+        url: getAbsPath("php/auth.php?/loginUser"),
         data: formData,
         success: function (data) {
+            // Prüfen ob das Anmelden erfolgreich war.
             if (data["status"] === "success") {
-                window.location.href = "/Carlos_GetARide/www/index.html";
-
+                // Userdaten in JSON-String formatieren.
                 let userData = JSON.stringify(data["data"][0]);
 
-                localStorage.setItem( "carlosUser", userData);
+                // Userdaten im local storage speichern.
+                localStorage.setItem(STORAGE_KEY, userData);
+
+                // User an die Startseite weiterleiten.
+                redirectUser( "index.html");
             }
             else {
-                $("#errorMessage").text("Login fehlgeschlagen!");
+                // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                $("#errorMessage").text("Login fehlgeschlagen: " + data["statusmessage"]);
                 $("#password").val("");
             }
         },
         error: function () {
-            $("#errorMessage").text("Server Verbindung fehlgeschlagen");
+            $("#errorMessage").text("Server Verbindung fehlgeschlagen.");
         }
     });
 }
 
 $(document).ready(function () {
+    // User an die Startseite weiterleiten, wenn dieser bereits eingeloggt ist.
+    redirectAuthUser("index.html");
+
     $("#login-form").submit(loginUser);
 });
