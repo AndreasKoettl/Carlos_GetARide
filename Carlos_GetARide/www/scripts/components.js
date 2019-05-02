@@ -4,16 +4,30 @@
  *
  */
 
+const ANDROID_ROOT = "/android_asset/www/";
+
+// nav-bar links for xampp testing
+//<div id="nav-bar">
+//    <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/hakerl_icon.svg" /></a>
+//    <a href="/Carlos_GetARide/www/pages/fahrt-suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/magnifying-glass.svg" /></a>
+//    <a href="/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wohin.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/plus-button.svg" /></a>
+//    <a href="/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/carlos/Carlos_GetARide/www/images/icons/speech-bubble.svg" /></a>
+//    <a href="/carlos/Carlos_GetARide/www/pages/profil/profil.html" class="menu-item" id="profil" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/user_colored.svg" /></a>
+//    </div >
+
 // Navigation Bar component
 Vue.component('nav-bar', {
     template: `
     <div id="nav-bar">
-        <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/hakerl_icon.svg" /></a>
-        <a href="/Carlos_GetARide/www/pages/fahrt-suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/magnifying-glass.svg" /></a>
-        <a href="/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wohin.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/plus-button.svg" /></a>
-        <a href="/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/carlos/Carlos_GetARide/www/images/icons/speech-bubble.svg" /></a>
-        <a href="/carlos/Carlos_GetARide/www/pages/profil/profil.html" class="menu-item" id="profil" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/user_colored.svg" /></a>
+        <a href="/android_asset/www/pages/meine_fahrten/meine_fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/hakerl_icon.svg" /></a>
+        <a href="/android_asset/www/pages/fahrt-suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/magnifying-glass.svg" /></a>
+        <a href="/android_asset/www/pages/fahrt_erstellen/wohin.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/android_asset/www/images/icons/plus-button.svg" /></a>
+        <a href="/android_asset/www/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/android_asset/www/images/icons/speech-bubble.svg" /></a>
+        <a href="/android_asset/www/pages/profil/profil.html" class="menu-item" id="profil" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/user_colored.svg" /></a>
     </div>
+
+
+
     `,
     methods: {
         clickMenu: function (event) {
@@ -46,12 +60,12 @@ Vue.component('header-title', {
     </header>
 `
 });
-
+ // /carlos/Carlos_GetARide/www/images/icons/back.svg
 Vue.component('header-back', {
     props: ['title'],
     template: `
     <header class="row">
-        <img src="/carlos/Carlos_GetARide/www/images/icons/back.svg" class="header_icon" @click="goBack">
+        <img src="/android_asset/www/images/icons/back.svg" class="header_icon" @click="goBack">
         <h1>{{title}}</h1>
     </header>
 `,
@@ -67,7 +81,7 @@ Vue.component('header-fahrt-erstellen', {
     props:['title'],
     template: `
     <header>
-    <a @click="goBack" id="back"><img src="/carlos/Carlos_GetARide/www/images/icons/back.svg"/></a>
+    <a @click="goBack" id="back"><img src="/android_asset/www/images/icons/back.svg"/></a>
     <div>
         <h3>{{title}}</h3>
         <div id="page-navigation">
@@ -149,7 +163,26 @@ carlos.app = new Vue({
     methods: {
         submitWohin: function () {
             event.preventDefault();
-            window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wiederholend.html";
+            window.location.href = ANDROID_ROOT+"pages/fahrt_erstellen/wiederholend.html";
+            //window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wiederholend.html";
+        },
+        clickYes: function () {
+            document.querySelector('#yes').classList += ' active';
+            if (document.querySelector('#no').classList.contains('active')) {
+                document.querySelector('#no').classList.remove('active');
+            }
+        },
+        clickNo: function () {
+            document.querySelector('#no').classList += ' active';
+            if (document.querySelector('#yes').classList.contains('active')) {
+                document.querySelector('#yes').classList.remove('active');
+            }
+        },
+        submitWiederholend: function () {
+            window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wann.html";
+            //window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wann.html";
+        },
+        submitWannEinzelfahrt: function () {
         }
     }
 });

@@ -4,16 +4,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
-    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../lib/vue/vue.min.js"></script>
+
 </head>
 <body>
-    <div></div>
-    <img src="../../images/illustrationen/fahrt-anbieten_zeit.jpg" class="illustration-big" />
-    <h1>Wann fährst du?</h1>
-
-    <div id="nav-bar-container"></div>
-    <script>
-        $('#nav-bar-container').load("/pages/nav-bar.html");
-    </script>
+    <div id="app">
+        <header-fahrt-erstellen title="Fahrt erstellen"></header-fahrt-erstellen>
+        <img src="../../images/illustrationen/fahrt-anbieten_zeit.jpg" id="illustration-big" />
+        <div id="form-wrapper">
+            <h1 class="fahrt-erstellen-heading">Wann fährst du?</h1>
+            <input type="date" class="textinput" placeholder="22. Mai 2018"/>
+            <input type="time" class="textinput" placeholder="08:30"/>
+            <button class="red-button" @click="submitWannEinzelfahrt">Weiter</button>
+        </div>
+        <nav-bar></nav-bar>
+    </div>
+    <script src="../../scripts/components.js"></script>
 </body>
 </html>

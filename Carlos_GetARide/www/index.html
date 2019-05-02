@@ -20,21 +20,43 @@
 </head>
     <body>
         <div id="app">
-            <app-menu></app-menu>
-            <header-fahrt-erstellen></header-fahrt-erstellen>
-            
-            <h1>Test</h1>
-            <a href="pages/meine_fahrten.html">Link zu Meine Fahrten</a>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Die Verbindung mit dem Gerät wird hergestellt.</p>
-                <p class="event received">Das Gerät ist bereit.</p>
-            </div>
+            <div id="start-screen">
+                <div id="welcome-header">
+                    <img src="images/logo/logo_small.png" />
+                    <div id="welcome-text">
+                        <h2>Willkommen!</h2>
+                        <p>Wonach suchst du?</p>
+                    </div>
+                </div>
 
-            <input type="date" placeholder="test"/>
-            <input type="time" placeholder="test"/>
+                <a href="pages/meine_fahrten/meine_fahrten.html">
+                    <div class="main-option">
+                        <div id="main-option-text-container">
+                            <img src="images/icons/magnifying-glass.svg" class="icon" />
+                            <h3>Fahrt<br />suchen</h3>
+                        </div>
+                        <div class="illustration-small-container">
+                            <img src="images/illustrationen/fahrt-suchen.png" class="illustration-small" />
+                        </div>
+                        </div>
+</a>
+
+                <a href="pages/fahrt_erstellen/wann.html">
+                    <div class="main-option">
+                        <div id="main-option-text-container">
+                            <img src="images/icons/plus-button.svg" class="icon" />
+                            <h3>Fahrt<br />anbieten</h3>
+                        </div>
+                        <div class="illustration-small-container">
+                            <img src="images/illustrationen/fahrt-anbieten.png" class="illustration-small" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <nav-bar></nav-bar>
         </div>
 
-        <script src="scripts/inputHandling.js"></script>
+        <script src="scripts/components.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="scripts/platformOverrides.js"></script>
         <script type="text/javascript" src="scripts/index.js"></script>

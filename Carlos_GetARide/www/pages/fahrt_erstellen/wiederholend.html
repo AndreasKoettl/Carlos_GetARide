@@ -13,11 +13,12 @@
         <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" id="illustration-big" />
         <div id="form-wrapper">
             <h1 class="fahrt-erstellen-heading">Fährst du regelmäßig?</h1>
+                <p>zum Beispiel wöchentlich am selben Tag und circa zur selben Zeit</p>
             <div id="wrapper-yes-no">
-                <img src="../../images/icons/hakerl_icon.svg" class="icon-yes-no active" id="yes" />
-                <img src="../../images/icons/x_icon_neu.svg" class="icon-yes-no active" id="no" />
+                <img src="../../images/icons/hakerl_icon.svg" class="icon-yes-no" id="yes" @click="clickYes"/>
+                <img src="../../images/icons/x_icon_neu.svg" class="icon-yes-no" id="no" @click="clickNo" />
             </div>
-            <button class="red-button" @click="submitWohin">Weiter</button>
+            <button class="red-button" @click="submitWiederholend">Weiter</button>
         </div>
         <nav-bar></nav-bar>
     </div>

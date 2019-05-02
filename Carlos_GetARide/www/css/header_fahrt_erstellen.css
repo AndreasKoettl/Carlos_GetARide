@@ -7,9 +7,9 @@ header {
     justify-content: flex-start;
 }
 
-    header > div {
-        width: 60vw;      
-    }
+header > div {
+    width: 60vw;      
+}
 
 header h3 {
     font-family: Roboto Slab, serif;
@@ -29,8 +29,8 @@ header a {
 }
 
 header a img {
-    width:50px;
-    height: 50px;
+    width:8vw;
+    height: 8vw;
     margin: auto;
 }
 
@@ -40,7 +40,7 @@ header a img {
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
     border-radius: 25px;
-    border: 5px solid var(--grey-light);
+    border: 0.5vw solid var(--grey-light);
 }
 
 .circle-active {
