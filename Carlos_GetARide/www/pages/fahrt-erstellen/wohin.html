@@ -10,8 +10,8 @@
 </head>
 <body>
     <div id="app">
-    
-        <app-menu></app-menu>
+
+        <nav-bar></nav-bar>
         <header-fahrt-erstellen></header-fahrt-erstellen>
         <div id="nav-bar-container"></div>
 
@@ -19,14 +19,16 @@
         <div id="form-wrapper">
             <h1 class="#fahrt-erstellen-heading">Wohin fährst du?</h1>
             <form>
-                <input @click="placeInputClick" id="start" class="textinput" type="text" placeholder="Start" />
-                <input @click="placeInputClick" id="ziel" class="textinput" type="text" placeholder="Ziel" />
+                <place-input id="start" placeholder="Start"></place-input>
+                <place-input id="ziel" placeholder="Ziel"></place-input>
                 <button class="red-button">Weiter</button>
             </form>
         </div>
     </div>
-    
-    <script src="../../scripts/inputHandling.js"></script>
-    
+
+    <!--<input @click="placeInputClick" id="ziel" class="textinput" type="text" placeholder="Ziel" />-->
+
+    <script src="../../scripts/components.js"></script>
+
 </body>
 </html>

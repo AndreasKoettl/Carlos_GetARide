@@ -36,8 +36,5 @@
 
 .active-border {
     border-bottom: 3px solid var(--red);
-}
-
-.nav-bar-tilted {
-    height: 25vw !important;
+    box-sizing:border-box;
 }
