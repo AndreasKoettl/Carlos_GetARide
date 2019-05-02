@@ -8,7 +8,7 @@
     padding-bottom: 3vh;
 }
 
-#app {
+#nav_bar {
     width: 80vw;
     height: 6vh;
     margin: 0 auto;
@@ -43,6 +43,7 @@
     height: 6vh;
     width: 50%;
     z-index: 0;
+    transition-duration: 400ms;
 }
 
 .timing_meineFahrten {
