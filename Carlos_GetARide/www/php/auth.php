@@ -1,6 +1,5 @@
 ﻿<?php
 require_once '../lib/limonade-master/lib/limonade.php';
-require_once 'DatabaseAccess.php';
 require_once 'utilities.php';
 
 /**
@@ -10,9 +9,7 @@ dispatch_post('/loginUser', 'loginUser');
 dispatch_post('/logoutUser', 'logoutUser');
 dispatch_post('/registerUser', 'registerUser');
 dispatch_post('/deleteUser', 'deleteUser');
-
-// Minimale Passwortlänge.
-define('MIN_PWD_LENGTH', 8);
+dispatch_post('/changePassword', 'changePassword');
 
 /**
  * Meldet den User an der Seite an.
@@ -21,17 +18,14 @@ define('MIN_PWD_LENGTH', 8);
  * @return false|string|void
  */
 function loginUser() {
-    // Datenbankverbindung aufbauen.
-    $dbConnection = new DatabaseAccess;
-
     // User mit engegebener Email Adresse suchen.
-    $dbConnection->prepareStatement("SELECT * FROM users WHERE email = :email AND active = '1'");
-    $dbConnection->bindParam(":email", htmlentities($_POST["email"], ENT_QUOTES));
-    $dbConnection->executeStatement();
-    $result = $dbConnection->fetchAll();
+    $result = getUserByMail($_POST["email"]);
 
     // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
-    if ($dbConnection->getRowCount() > 0 && password_verify($_POST["password"], $result["data"][0]["password"])) {
+    if (verifyUser($result, $_POST["password"])) {
+        // Gespeicherte Session Variablen löschen.
+        session_unset();
+
         // Am Server speichern, dass der User eingeloggt ist.
         $_SESSION["email"] = $result["data"][0]["email"];
         $_SESSION["isloggedin"] = true;
@@ -39,7 +33,7 @@ function loginUser() {
         $result = setSuccessMessage($result, "Login erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Email-passwort Kombination ungültig.");
+        $result = setErrorMessage($result, "Email-Passwort Kombination ungültig.");
     }
 
     // Userdaten und Statusnachrichten zurückgeben.
@@ -76,25 +70,19 @@ function registerUser() {
         hasValue($_POST["lastname"]) &&
         hasValue($_POST["email"]) &&
         hasValue($_POST["password"]) &&
-        hasValue($_POST["passwordRepeat"])) {
-
-        // Datenbankverbindung aufbauen.
-        $dbConnection = new DatabaseAccess;
+        hasValue($_POST["password-repeat"])) {
 
         // Prüfen ob die Email Adresse bereits registriert ist.
-        $dbConnection->prepareStatement("SELECT * FROM users WHERE email = :email AND active = '1'");
-        $dbConnection->bindParam(":email", htmlentities($_POST["email"], ENT_QUOTES));
-        $dbConnection->executeStatement();
-        $result = $dbConnection->fetchAll();
-
-        // Prüfen ob die Email Adresse gefunden wurde.
-        if ($dbConnection->getRowCount() == 0) {
+        if (!userExists($_POST["email"])) {
             // Prüfen ob die Email Adresse gültiges Format besitzt.
             if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
                 // Prüfen ob beide Passwörter übereinstimmen.
-                if ($_POST["password"] == $_POST["passwordRepeat"]) {
+                if ($_POST["password"] == $_POST["password-repeat"]) {
                     // Prüfen ob die Passwörter die minimale Länge überschreiten.
                     if (strlen($_POST["password"]) >= MIN_PWD_LENGTH) {
+                        // Datenbankverbindung aufbauen.
+                        $dbConnection = new DatabaseAccess;
+
                         // Den User in der Datenbank anlegen, Passwort wird gehasht.
                         $dbConnection->prepareStatement("INSERT INTO users (firstname, lastname, email, password, active) VALUES (:firstname, :lastname, :email, :password, 1)");
                         $dbConnection->bindParam(":firstname", htmlentities($_POST["firstname"], ENT_QUOTES));
@@ -139,13 +127,10 @@ function deleteUser() {
         $dbConnection = new DatabaseAccess;
 
         // Die Userdaten aus der Datenbank holen.
-        $dbConnection->prepareStatement("SELECT * FROM users WHERE email = :email AND active = '1'");
-        $dbConnection->bindParam(":email", htmlentities($_POST["email"], ENT_QUOTES));
-        $dbConnection->executeStatement();
-        $result = $dbConnection->fetchAll();
+        $result = getUserByMail($_POST["email"]);
 
         // Prüfen ob der User gefunden wurde, und ob das angegebene Passwort mit dem gespeicherten übereinstimmt.
-        if ($dbConnection->getRowCount() > 0 && password_verify($_POST["password"], $result["data"][0]["password"])) {
+        if (verifyUser($result, $_POST["password"])) {
             // Am Server speichern, dass der User nicht mehr eingeloggt ist.
             session_unset();
 
@@ -155,14 +140,14 @@ function deleteUser() {
 
             // Statement zum Löschen aller Daten des Users.
             $sql = <<<'SQL'
-DELETE FROM settings WHERE idusers = :idusers;
-DELETE FROM notifications WHERE idusers = :idusers;
-DELETE FROM messages WHERE idusers = :idusers;
-DELETE FROM chats WHERE idusers = :idusers;
-DELETE FROM passengers WHERE iddrives IN (SELECT iddrives FROM drives WHERE idusers =:idusers);
-DELETE FROM drives WHERE idusers = :idusers;
-UPDATE drives SET passengers = passengers - 1 WHERE iddrives IN (SELECT iddrives FROM passengers WHERE isusers=:idusers);
-DELETE FROM passengers WHERE idusers = :idusers;
+DELETE FROM settings WHERE users_idusers = :idusers;
+DELETE FROM notifications WHERE users_idusers = :idusers;
+DELETE FROM messages WHERE users_idusers = :idusers;
+DELETE FROM chats WHERE users_idusers = :idusers;
+DELETE FROM passengers WHERE drives_iddrives IN (SELECT iddrives FROM drives WHERE users_idusers =:idusers);
+DELETE FROM drives WHERE users_idusers = :idusers;
+UPDATE drives SET passengers = passengers - 1 WHERE iddrives IN (SELECT drives_iddrives FROM passengers WHERE users_idusers=:idusers);
+DELETE FROM passengers WHERE users_idusers = :idusers;
 DELETE FROM users WHERE idusers = :idusers;
 SQL;
 
@@ -183,62 +168,62 @@ SQL;
             else {
                 $result = setErrorMessage($result, "Profil löschen fehlgeschlagen.");
             }
-
-            /*
-            // Userdaten aus Tabelle settings löschen.
-            $dbConnection->prepareStatement("DELETE FROM settings WHERE idusers = :idusers");
-            $dbConnection->bindParam(":idusers", $idusers);
-            $dbConnection->executeStatement();
-
-            // Userdaten aus Tabelle notifications löschen.
-            $dbConnection->prepareStatement("DELETE FROM notifications WHERE idusers = :idusers");
-            $dbConnection->bindParam(":idusers", $idusers);
-            $dbConnection->executeStatement();
-
-            // Userdaten aus Tabelle messages löschen.
-            $dbConnection->prepareStatement("DELETE FROM messages WHERE idusers = :idusers");
-            $dbConnection->bindParam(":idusers", $idusers);
-            $dbConnection->executeStatement();
-
-            // Userdaten aus Tabelle chats löschen.
-            $dbConnection->prepareStatement("DELETE FROM chats WHERE idusers = :idusers");
-            $dbConnection->bindParam(":idusers", $idusers);
-            $dbConnection->executeStatement();
-
-            // Alle Fahrten aus Tabelle drives auslesen, die der User anbietet.
-            // Alle mitfahrer aus Tabelle passengers löschen, die bei diesen Fahrten mitfahren.
-            $dbConnection->prepareStatement("DELETE FROM passengers WHERE iddrives IN (SELECT iddrives FROM drives WHERE idusers =:idusers)");
-            $dbConnection->bindParam(":idusers", $idusers);
-            $dbConnection->executeStatement();
-
-            // Userdaten aus Tabelle drives löschen.
-            $dbConnection->prepareStatement("DELETE FROM drives WHERE idusers = :idusers");
-            $dbConnection->bindParam(":idusers", $idusers);
-            $dbConnection->executeStatement();
-
-            // Bei allen Fahrten, bei denen der User mitgefahren wäre, die passengers Anzahl
-            // in Tabelle drives um eins reduzieren.
-            $dbConnection->prepareStatement("UPDATE drives SET passengers = passengers - 1 WHERE iddrives IN (SELECT iddrives FROM passengers WHERE isusers=:idusers)");
-            $dbConnection->bindParam(":idusers", $idusers);
-            $dbConnection->executeStatement();
-
-            // Alle Fahrten aus Tabelle passengers auslesen, bei denen der User mitfährt.
-            // Userdaten aus Tabelle passengers löschen.
-            $dbConnection->prepareStatement("DELETE FROM passengers WHERE idusers = :idusers");
-            $dbConnection->bindParam(":idusers", $idusers);
-            $dbConnection->executeStatement();
-
-            // Userdaten aus der Tabelle users löschen.
-            $dbConnection->prepareStatement("DELETE FROM users WHERE idusers = :idusers");
-            $dbConnection->bindParam(":idusers", $idusers);
-            $dbConnection->executeStatement();
-            */
         } else {
             $result = setErrorMessage($result, "Passwort ungültig.");
         }
-
     } else {
         $result = createErrorArray("Kein Passwort angegeben.");
+    }
+
+    // Statusnachricht zurückgeben.
+    return json_encode($result);
+}
+
+/**
+ * Ändert das Passwort eines gegebenen Users.
+ *
+ * @return false|string|void
+ */
+function changePassword() {
+    $result = array();
+
+    // Prüft ob der User am Server angemeldet ist.
+    if (isLoggedIn()) {
+        if (hasValue($_POST["password-old"]) &&
+            hasValue($_POST["password"]) &&
+            hasValue($_POST["password-repeat"])) {
+
+            // Die Userdaten aus der Datenbank holen.
+            $result = getUserByMail($_POST["email"]);
+
+            // Prüfen ob das alte Passwort zum User passt.
+            if (verifyUser($result, $_POST["password-old"])) {
+                // Prüfen ob das neue Passwort alle Kriterien erfüllt.
+                if (verifyNewPassword($_POST["password"], $_POST["password-repeat"])) {
+                    // Prüfen ob altes und neues Passwort ident sind.
+                    if ($_POST["password-old"] != $_POST["password"]) {
+                        // Datenbankverbindung aufbauen.
+                        $dbConnection = new DatabaseAccess;
+
+                        // Passwort in der Datenbank ändern.
+                        $dbConnection->prepareStatement("UPDATE users SET password = :password WHERE idusers = :idusers");
+                        $dbConnection->bindParam(":idusers", $result["data"][0]["idusers"]);
+                        $dbConnection->bindParam(":password", password_hash(htmlentities($_POST["password"], ENT_QUOTES), PASSWORD_DEFAULT));
+                        $dbConnection->executeStatement();
+                    } else {
+                        $result = setErrorMessage($result, "Das neue Passwort muss sich vom alten unterscheiden.");
+                    }
+                } else {
+                    $result = setErrorMessage($result, "Passwörter müssen mindestens " . MIN_PWD_LENGTH . " Zeichen lang sein und übereinstimmen.");
+                }
+            } else {
+                $result = setErrorMessage($result, "Altes Passwort ist nicht korrekt.");
+            }
+        } else {
+            $result = setErrorMessage($result, "Nicht alle Felder ausgefüllt.");
+        }
+    } else {
+        $result = createErrorArray("User ist nicht eingeloggt.");
     }
 
     // Statusnachricht zurückgeben.

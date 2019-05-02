@@ -32,12 +32,12 @@ function loginUser() {
             }
             else {
                 // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
-                $("#errorMessage").text("Login fehlgeschlagen: " + data["statusmessage"]);
+                $("#error-message").text("Login fehlgeschlagen: " + data["statusmessage"]);
                 $("#password").val("");
             }
         },
         error: function () {
-            $("#errorMessage").text("Server Verbindung fehlgeschlagen.");
+            $("#error-message").text("Server Verbindung fehlgeschlagen.");
         }
     });
 }
