@@ -7,9 +7,10 @@ body {
 
 #illustration-big{
     width:100vw;
+    margin-top:5vw;
 }
 
-.fahrt-erstellen {
+.fahrtErstellenHeading {
     color: var(--grey-dark);
     font-size: 8vw;
 }

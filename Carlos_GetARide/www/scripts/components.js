@@ -8,9 +8,9 @@
 Vue.component('nav-bar', {
     template: `
     <div id="nav-bar">
-        <a href="/carlos/Carlos_GetARide/www/pages/mein-fahrten/fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/hakerl_icon.svg" /></a>
+        <a href="/carlos/Carlos_GetARide/www/pages/meine-fahrten/fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/hakerl_icon.svg" /></a>
         <a href="/Carlos_GetARide/www/pages/fahrt-suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/magnifying-glass.svg" /></a>
-        <a href="/carlos/Carlos_GetARide/www/pages/fahrt-erstellen/wohin.html" v-on:click="clickMenu" id="fahrt-erstellen" class="menu-item"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/plus-button.svg" /></a>
+        <a href="/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wohin.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/plus-button.svg" /></a>
         <a href="/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/carlos/Carlos_GetARide/www/images/icons/speech-bubble.svg" /></a>
         <a href="/carlos/Carlos_GetARide/www/pages/profil/profil.html" class="menu-item" id="profil" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/user_colored.svg" /></a>
     </div>
@@ -33,20 +33,45 @@ Vue.component('nav-bar', {
         target.className += ' active-border';
         let child = target.childNodes[0];
         child.className += ' active';  
-
-        }
-        
+        }        
     }
 });
 
 
-// Header with the process bar for "fahrt-erstellen"
-Vue.component('header-fahrt-erstellen', {
+Vue.component('header-title', {
+    props: ['title'],
     template: `
     <header>
-    <a @click="$route.go(-1)" id="back"><img src="/carlos/Carlos_GetARide/www/images/icons/back.svg"/></a>
+            <h1 class="mainHeading">{{title}}</h1>
+    </header>
+`
+});
+
+Vue.component('header-back', {
+    props: ['title'],
+    template: `
+    <header class="row">
+        <img src="/carlos/Carlos_GetARide/www/images/icons/back.svg" class="header_icon" @click="goBack">
+        <h1>{{title}}</h1>
+    </header>
+`,
+    methods: {
+        goBack: function () {
+            history.back();
+        }
+    }
+});
+
+
+
+// Header with the process bar for "fahrt-erstellen"
+Vue.component('header-fahrt-erstellen', {
+    props:['title'],
+    template: `
+    <header>
+    <a @click="goBack" id="back"><img src="/carlos/Carlos_GetARide/www/images/icons/back.svg"/></a>
     <div>
-        <h3>Fahrt erstellen</h3>
+        <h3>{{title}}</h3>
         <div id="page-navigation">
             <div class="circle" id="circle-wohin"></div>
             <div class="circle" id="circle-wiederholend"></div>
@@ -58,6 +83,11 @@ Vue.component('header-fahrt-erstellen', {
     </div>
 </header>
     `,
+    methods: {
+        goBack: function () {
+            history.back();
+        }
+    },
     mounted: function () {
         let path = document.location.pathname.match(/[^\/]+$/)[0];
         let id = path.slice(0, -5);
@@ -76,17 +106,18 @@ Vue.component('place-input', {
     template: `<input v-on:click="placeInputClicked" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder"/>`,
     methods: {
         placeInputClicked: function () {
+            if (this.clickCounter == 0) {
             // change back button
-            this.header.classList.toggle("backButtonInvisible");
-            document.querySelector('#back').onclick = function () {
-                // adjust so that changes dont disappear
-            location.reload();
-                
+            if (window.location.href.includes('wohin')) {
+                this.header.classList.toggle("backButtonInvisible");
             }
 
-
-            // change styles
-            if (this.clickCounter == 0) {
+            document.querySelector('#back').onclick = function () {
+                // adjust so that changes dont disappear
+                location.reload();
+                
+            }                     
+           
             // hide all unnecessary elements
             document.querySelector('#illustration-big').style.display = "none";
             document.querySelector('h1').style.display = "none";
@@ -99,9 +130,9 @@ Vue.component('place-input', {
                 if (!children[i].className.includes('placeInputActive')) {
                     children[i].style.display = "none";
                 }
-            }        
-            this.clickCounter++;
+            }            
             }
+            this.clickCounter++;
         }
     }, 
     mounted: function () {
@@ -120,7 +151,7 @@ carlos.app = new Vue({
     methods: {
         submitWohin: function () {
             event.preventDefault();
-            window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt-erstellen/wiederholend.html";
+            window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wiederholend.html";
         }
     }
 });
