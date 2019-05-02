@@ -30,6 +30,11 @@ carlos_meineFahrten.app = new Vue({
         },
         
         loadUpcomingRides: function () {
+            // get user id
+            let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
+            console.log(iduser);
+
+
             // AJAX-Post Request starten.
             $.post({
                 accepts: "application/json",
@@ -38,7 +43,7 @@ carlos_meineFahrten.app = new Vue({
                 contentType: false,
                 processData: false,
                 url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/upcoming",
-                data: 'hi',
+                data: iduser,
                 success: function (data) {
                     // Prüfen ob das Anmelden erfolgreich war.
                     //if (data["status"] === "success") {
