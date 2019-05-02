@@ -5,25 +5,23 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
     <script src="../../lib/vue/vue.min.js"></script>
-    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+
     
 </head>
 <body>
     <div id="app">
-
-        <nav-bar></nav-bar>
         <header-fahrt-erstellen></header-fahrt-erstellen>
         <div id="nav-bar-container"></div>
-
         <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" id="illustration-big" />
         <div id="form-wrapper">
-            <h1 class="#fahrt-erstellen-heading">Wohin fährst du?</h1>
+            <h1 class="fahrt-erstellen">Wohin fährst du?</h1>
             <form>
                 <place-input id="start" placeholder="Start"></place-input>
-                <place-input id="ziel" placeholder="Ziel"></place-input>
+                <place-input id="ziel" placeholder="Ziel"></place-input>                
                 <button class="red-button">Weiter</button>
             </form>
         </div>
+        <nav-bar></nav-bar>
     </div>
 
     <!--<input @click="placeInputClick" id="ziel" class="textinput" type="text" placeholder="Ziel" />-->

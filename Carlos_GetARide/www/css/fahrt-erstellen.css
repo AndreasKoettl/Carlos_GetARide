@@ -10,7 +10,7 @@ body {
 }
 
 .fahrt-erstellen {
-    color: #707070;
+    color: var(--grey-dark);
     font-size: 8vw;
 }
 

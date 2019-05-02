@@ -56,3 +56,7 @@ header a img {
     justify-content: space-between;
     margin: auto;
 }
+
+.placeInputActive {
+    margin-top: 25vw !important;
+}
