@@ -1,4 +1,4 @@
-﻿// Eine Einführung zur leeren Vorlage finden Sie in der folgenden Dokumentation:
+﻿/*/ Eine Einführung zur leeren Vorlage finden Sie in der folgenden Dokumentation:
 // http://go.microsoft.com/fwlink/?LinkID=397704
 // Zum Debuggen von Code beim Laden einer Seite in cordova-simulate oder auf Android-Geräten/-Emulatoren: Starten Sie Ihre App, legen Sie Haltepunkte fest, 
 // und führen Sie dann "window.location.reload()" in der JavaScript-Konsole aus.
@@ -28,5 +28,68 @@
     function onResume() {
         // TODO: Diese Anwendung wurde erneut aktiviert. Stellen Sie hier den Anwendungszustand wieder her.
     };
+<<<<<<< HEAD
 
 } )();
+=======
+} )();*/
+
+/**
+ * Key für den local storage.
+ * @type {string}
+ */
+const STORAGE_KEY = "carlosUser";
+
+/**
+ * Absoluter Pfad vom Root- bis ins www-Verzeichnis.
+ * @type {string}
+ */
+const ABS_PATH = "/Carlos_GetARide/www/";
+
+/**
+ * Gibt den absoluten Pfad vom Root- bis zum angegebenen Pfad zurück.
+ * @param websitePath
+ * @returns {string}
+ */
+function getAbsPath(websitePath) {
+    return ABS_PATH + websitePath;
+}
+
+/**
+ * Gibt zurück, ob ein User derzeit eingeloggt ist.
+ * @returns {boolean}
+ */
+function isLoggedIn() {
+    return (localStorage.getItem("carlosUser") !== null);
+}
+
+/**
+ * Leitet den User an die angegebenen Pfad innerhalb des www-Verzeichnis weiter.
+ * @param websitePath
+ */
+function redirectUser(websitePath) {
+    window.location.href = getAbsPath(websitePath);
+}
+
+/**
+ * Leitet den User an die angegebenen Pfad innerhalb des www-Verzeichnis weiter,
+ * wenn dieser nicht eingeloggt ist.
+ * @param websitePath
+ */
+function redirectNotAuthUser(websitePath) {
+    if (!isLoggedIn()) {
+        window.location.href = getAbsPath(websitePath);
+    }
+}
+
+/**
+ * Leitet den User an die angegebenen Pfad innerhalb des www-Verzeichnis weiter,
+ * wenn dieser eingeloggt ist.
+ * @param websitePath
+ */
+function redirectAuthUser(websitePath) {
+    if (isLoggedIn()) {
+        window.location.href = getAbsPath(websitePath);
+    }
+}
+>>>>>>> develop
