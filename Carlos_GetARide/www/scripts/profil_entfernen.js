@@ -8,7 +8,7 @@ function deleteUser() {
     let userData = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
     // Eingegebene Formulardaten holen.
-    let formData = new FormData($("#profilEntfernen-form")[0]);
+    let formData = new FormData($("#profil-entfernen-form")[0]);
 
     // Email des Users an die Formulardaten anhängen.
     formData.append("email", userData["email"]);
@@ -32,12 +32,12 @@ function deleteUser() {
                 redirectUser("pages/login/login.html");
             } else {
                 // Fehlermeldung ausgeben, wenn das Profil nicht entfernt werden konnte.
-                $("#errorMessage").text("Profil entfernen fehlgeschlagen: " + data["statusmessage"]);
+                $("#error-message").text("Profil entfernen fehlgeschlagen: " + data["statusmessage"]);
                 $("#password").val("");
             }
         },
         error: function () {
-            $("#errorMessage").text("Server Verbindung fehlgeschlagen");
+            $("#error-message").text("Server Verbindung fehlgeschlagen");
         }
     });
 }
@@ -46,5 +46,5 @@ $(document).ready(function () {
     // User an die Login Seite weiterleiten, wenn dieser nicht eingeloggt ist.
     redirectNotAuthUser("pages/login/login.html");
 
-    $("#profilEntfernen-form").submit(deleteUser);
+    $("#profil-entfernen-form").submit(deleteUser);
 });

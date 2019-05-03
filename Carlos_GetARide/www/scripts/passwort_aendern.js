@@ -1,13 +1,20 @@
 ﻿/**
- * Registiert den User in der Datenbank.
+ * Ändert das Passwort des Users.
  * Wenn alle Daten richtig eingegeben wurden, wird der User an die Login Seite weitergeleitet,
- * ansonsten wird eine entsprechende Fehlermeldung angezeigt.
+ * und muss sich neu anmelden.
+ * Ansonsten wird eine entsprechende Fehlermeldung angezeigt.
  */
-function registerUser() {
+function changePassword() {
     event.preventDefault();
 
+    // User Daten aus dem local storage holen.
+    let userData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
     // Eingegebene Formulardaten holen.
-    let formData = new FormData($("#register-form")[0]);
+    let formData = new FormData($("#change-password-form")[0]);
+
+    // Email des Users an die Formulardaten anhängen.
+    formData.append("email", userData["email"]);
 
     // AJAX-Post Request starten.
     $.post({
@@ -16,17 +23,18 @@ function registerUser() {
         async: true,
         contentType: false,
         processData: false,
-        url: getAbsPath("php/auth.php?/registerUser"),
+        url: getAbsPath("php/auth.php?/changePassword"),
         data: formData,
         success: function (data) {
-            // Prüfen ob die Registrierung erfolgreich war.
+            // Prüfen ob das Passwort erfolgreich geändert wurde.
             if (data["status"] === "success") {
-                // User an die Login Seite weiterleiten.
-                redirectUser("pages/login/login.html");
+                // User ausloggen.
+                logoutUser();
             }
             else {
                 // Fehlermeldung ausgeben, wenn die Registrierung nicht erfolgreich war.
-                $("#error-message").text("Registrierung fehlgeschlagen: " + data["statusmessage"]);
+                $("#error-message").text("Passwort ändern fehlgeschlagen: " + data["statusmessage"]);
+                $("#password-old").val("");
                 $("#password").val("");
                 $("#password-repeat").val("");
             }
@@ -39,7 +47,7 @@ function registerUser() {
 
 $(document).ready(function () {
     // User an die Startseite weiterleiten, wenn dieser bereits eingeloggt ist.
-    redirectAuthUser("index.html");
+    redirectNotAuthUser("pages/login/login.html");
 
-    $("#register-form").submit(registerUser);
+    $("#change-password-form").submit(changePassword);
 });

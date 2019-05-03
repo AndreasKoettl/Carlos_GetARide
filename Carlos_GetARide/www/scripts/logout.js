@@ -31,7 +31,7 @@ function logoutUser() {
             }
         },
         error: function () {
-            $("#errorMessage").text("Server Verbindung fehlgeschlagen.");
+            alert("Server Verbindung fehlgeschlagen.");
         }
     });
 }
