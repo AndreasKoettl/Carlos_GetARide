@@ -4,24 +4,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" type="text/css" href="../../css/index.css" />
     <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
-    <script src="../../scripts/auth.js"></script>
+    <script src="../../scripts/index.js"></script>
+    <script src="../../scripts/login.js"></script>
     <title>Login</title>
 </head>
 <body>
     <h1 id="h1">Login</h1>
     <form id="login-form">
+        <div id="error-message"></div>
         <div>
             <label for="email">E-Mail:</label>
-            <input type="text" name="email" id="username" value="" placeholder="E-Mail" />
+            <input id="email" type="email" name="email" value="" placeholder="E-Mail" />
         </div>
-
         <div>
             <label for="password">Passwort:</label>
-            <input type="text" name="password" id="password" value="" placeholder="E-Mail" />
+            <input type="password" name="password" id="password" value="" placeholder="Passwort" />
         </div>
-
-        <button class="red-button" id="login-button">Log-In</button>
-
+        <input type="submit" class="red-button" id="login-button" value="Log-In" />
     </form>
 </body>
 </html>

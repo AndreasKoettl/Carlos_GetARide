@@ -4,111 +4,111 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
     <script src="../../lib/vue/vue.min.js"></script>
-    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <title>Meine Fahrten Details</title>
 </head>
 <body>
-    <header class="row" id="app4">
-        <img src="../../images/icons/back.svg" class="header_icon" @click="backToOverview">
-        <h1>Meine Fahrten</h1>
-    </header>
-    
-    <section class="content_box">
+    <div id="app">
+        <header class="row">
+            <img src="../../images/icons/back.svg" class="header-icon" @click="goBack">
+            <h1>Meine Fahrten</h1>
+        </header>
 
-        <div class="row">
-            <h6 class="details_h1">Fr, 26. April 2019</h6>
-            <img src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon_repeating" />
-        </div>
+        <section class="content-box">
 
-        <hr />
-
-        <div class="row">
-            <img src="../../images/icons/Verbindung.svg" class="icon_route" />
-            <div class="col box_route">
-                <div>
-                    <p class="details_h3">17:00 Uhr</p>
-                    <h6 class="details_h2">Linz, Hauptbahnhof</h6>
-                </div>
-                <div>
-                    <p class="details_h3">17:00 Uhr</p>
-                    <h6 class="details_h2">Wien, Mariahilfer Straße</h6>
-                </div>
+            <div class="row">
+                <h6 class="details-h1">Fr, 26. April 2019</h6>
+                <img src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
             </div>
-        </div>
 
-        <hr />
+            <hr />
 
-        <div class="row">
-            <div class="price">
-                <h6 class="details_h2">3 €</h6>
-                <p class="details_h3">pro Person</p>
-            </div>
-            <div class="seats">
-                <h6 class="details_h2">2 Plätze</h6>
-                <p class="details_h3">verfügbar</p>
-            </div>
-        </div>
-
-        <h6 class="details_h4">Anfragen</h6>
-        <ul class="list">
-
-            <li class="row_bottomPadding">
-                <img src="../../images/icons/user_colored.svg" class="icon_request" />
-                <div class="request_data col">
-                    <h6 class="details_h2">Lisa Maier</h6>
-                    <div class="row_noPadding">
-                        <h6 class="details_h5">Akzeptieren</h6>
-                        <h6 class="details_h5">Ablehnen</h6>
+            <div class="row">
+                <img src="../../images/icons/Verbindung.svg" class="icon-route" />
+                <div class="col box-route">
+                    <div>
+                        <p class="details-h3">17:00 Uhr</p>
+                        <h6 class="details-h2">Linz, Hauptbahnhof</h6>
+                    </div>
+                    <div>
+                        <p class="details-h3">17:00 Uhr</p>
+                        <h6 class="details-h2">Wien, Mariahilfer Straße</h6>
                     </div>
                 </div>
-                <img src="../../images/icons/speech-bubble.svg" class="icon_request" />
-            </li>
-
-            <li class="row_bottomPadding">
-                <img src="../../images/icons/user_colored.svg" class="icon_request" />
-                <div class="request_data col">
-                    <h6 class="details_h2">Dominik Müller</h6>
-                    <div class="row_noPadding">
-                        <h6 class="details_h5">Akzeptieren</h6>
-                        <h6 class="details_h5">Ablehnen</h6>
-                    </div>
-                </div>
-                <img src="../../images/icons/speech-bubble.svg" class="icon_request" />
-            </li>
-
-        </ul>
-
-        <h6 class="details_h4">Zusagen</h6>
-        <ul class="list">
-
-            <li class="row_bottomPadding">
-                <img src="../../images/icons/user_colored.svg" class="icon_request" />
-                <div class="request_data col">
-                    <h6 class="details_h2">Herbert Fischer</h6>
-                    <h6 class="details_h5">Ablehnen</h6>
-                </div>
-                <img src="../../images/icons/speech-bubble.svg" class="icon_request" />
-            </li>
-
-        </ul>
-
-        <hr />
-
-        <div class="row">
-            <div class="price">
-                <h6 class="details_h2">W-123AB</h6>
-                <p class="details_h3">Audi A4 schwarz</p>
             </div>
+
+            <hr />
+
+            <div class="row">
+                <div class="price">
+                    <h6 class="details-h2">3 €</h6>
+                    <p class="details-h3">pro Person</p>
+                </div>
+                <div class="seats">
+                    <h6 class="details-h2">2 Plätze</h6>
+                    <p class="details-h3">verfügbar</p>
+                </div>
+            </div>
+
+            <h6 class="details-h4">Anfragen</h6>
+            <ul class="list">
+
+                <li class="row-bottom-padding">
+                    <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                    <div class="request-data col">
+                        <h6 class="details-h2">Lisa Maier</h6>
+                        <div class="row-no-padding">
+                            <h6 class="details-h5">Akzeptieren</h6>
+                            <h6 class="details-h5">Ablehnen</h6>
+                        </div>
+                    </div>
+                    <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                </li>
+
+                <li class="row-bottom-padding">
+                    <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                    <div class="request-data col">
+                        <h6 class="details-h2">Dominik Müller</h6>
+                        <div class="row-no-padding">
+                            <h6 class="details-h5">Akzeptieren</h6>
+                            <h6 class="details-h5">Ablehnen</h6>
+                        </div>
+                    </div>
+                    <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                </li>
+
+            </ul>
+
+            <h6 class="details-h4">Zusagen</h6>
+            <ul class="list">
+
+                <li class="row-bottom-padding">
+                    <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                    <div class="request-data col">
+                        <h6 class="details-h2">Herbert Fischer</h6>
+                        <h6 class="details-h5">Ablehnen</h6>
+                    </div>
+                    <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                </li>
+
+            </ul>
+
+            <hr />
+
+            <div class="row">
+                <div class="price">
+                    <h6 class="details-h2">W-123AB</h6>
+                    <p class="details-h3">Audi A4 schwarz</p>
+                </div>
+            </div>
+
+            <button class="button-red-full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_bearbeiten.html'">Fahrt bearbeiten</button>
+            <button class="button-red-full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_fahrt_geloescht.html'">Fahrt löschen</button>
+            
+        </section>
+
         </div>
 
-        <div id="app3">
-            <button class="button_red_full" @click="switchToEditing">Fahrt bearbeiten</button>
-            <button class="button_red_full" @click="deleteRide">Fahrt löschen</button>
-        </div>
-        
-    </section>
-
-    <script src="../../scripts/meineFahrten_details_script.js"></script>
+    <script src="../../scripts/goback_script.js"></script>
 
 </body>
 </html>

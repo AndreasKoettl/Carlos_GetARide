@@ -26,9 +26,13 @@
     background-color: var(--blue-light);
 }
 
-.mainHeading {
+.main-heading {
     padding-top: 3vh;
     padding-bottom: 3vh;
+}
+
+a {
+    text-decoration: none;
 }
 
 h1 {
@@ -73,3 +77,13 @@ form {
     margin: 2vh 0 0 0;
 }
 
+.red-button {
+    width: 80vw;
+    height: 7vw;
+    margin: 3vh auto;
+    font-size: 4vw;
+    font-family: 'Roboto Slab', serif;
+    color: #fff;
+    background-color: var(--red);
+    border-radius: 50px;
+}
