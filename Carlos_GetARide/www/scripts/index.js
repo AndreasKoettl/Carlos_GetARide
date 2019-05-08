@@ -39,7 +39,7 @@ const STORAGE_KEY = "carlosUser";
  * Absoluter Pfad vom Root- bis ins www-Verzeichnis.
  * @type {string}
  */
-const ABS_PATH = "/carlos/Carlos_GetARide/www/";
+const ABS_PATH = "/Carlos/Carlos_GetARide/www/";
 
 /**
  * Gibt den absoluten Pfad vom Root- bis zum angegebenen Pfad zurück.

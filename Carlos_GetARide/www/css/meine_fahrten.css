@@ -63,7 +63,7 @@
 .box-meine-fahrten {
     width: 80vw;
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 0 auto 3vh auto;
     background-color: #fff;
     border-radius: 35px;
     padding: 3vh 3vh;
