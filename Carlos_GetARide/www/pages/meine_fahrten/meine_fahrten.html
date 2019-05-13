@@ -31,11 +31,11 @@
                 </a>
             </div>
             <h6 class="timing-meine-Fahrten">Vergangene Fahrten</h6>
-            <div id="rides_past" class="list_meineFahrten">
-                <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_details.html">
+            <div v-if="listPastRides.length !== 0" id="rides_past" class="list_meineFahrten">
+                <a v-for="(ride, index) in listPastRides" href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_details.html">
                     <div class="box-meine-fahrten">
-                        <p class="start-destination">Linz - Wien</p>
-                        <p class="datetime">Fr. 30.04.2019, 17:00 Uhr</p>
+                        <p class="start-destination">{{ride.route}}</p>
+                        <p class="datetime">{{ride.date}}, {{ride.time}} Uhr</p>
                     </div>
                 </a>
             </div>
