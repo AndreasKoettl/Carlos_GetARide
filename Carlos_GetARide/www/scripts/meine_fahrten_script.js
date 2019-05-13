@@ -54,6 +54,7 @@ carlos_meineFahrten.app = new Vue({
                     data: iduser,
                     success: function (data) {
                         let result = JSON.parse(data);
+                        
                         // Prüfen ob das Anmelden erfolgreich war.
                         if (result["status"] === "success") {
                             // Ausgabe in Box
@@ -61,7 +62,9 @@ carlos_meineFahrten.app = new Vue({
                                 let route = result["data"][i]["locationStart"] + " - " + result["data"][i]["locationEnd"];
                                 let date = new Date(result["data"][i]["driveDate"]);
                                 let time = result["data"][i]["driveTime"];
-                                let dateTime = document.getElementsByClassName("datetime")[i];
+
+                                //let currentDate = new Date();
+                                
 
                                 appAccess.listUpcomingRides.push(new Ride(route, date, time));
                             }
@@ -87,8 +90,6 @@ carlos_meineFahrten.app = new Vue({
     },
 
     mounted: function () {
-        this.ridesUpcoming = document.getElementById('rides-upcoming');
-        this.ridesPast = document.getElementById('rides-past');
 
         this.loadUpcomingRides();
     }
