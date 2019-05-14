@@ -148,6 +148,10 @@ Vue.component('place-input', {
             }            
             }
             this.clickCounter++;
+
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById(this.id);
+            var searchBox = new google.maps.places.SearchBox(input);           
         }
     }, 
     mounted: function () {

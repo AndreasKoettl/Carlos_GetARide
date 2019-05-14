@@ -142,3 +142,17 @@ p {
     margin: 2vh 0;
 }
 
+div.pac-container {
+    border: none !important;
+    box-shadow:none !important;
+}
+
+div.pac-item 
+
+span.pac-item-query {
+    font-size: 3vw !important;
+}
+
+span.pac-icon-marker {
+    display:none !important;
+}

@@ -17,7 +17,7 @@
             <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
             <form>
                 <place-input id="start" placeholder="Start"></place-input>
-                <place-input id="ziel" placeholder="Ziel"></place-input>                
+                <place-input id="ziel" placeholder="Ziel"></place-input>
                 <button class="red-button" @click="submitWohin">Weiter</button>
             </form>
         </div>
@@ -26,5 +26,7 @@
 
     <script src="../../scripts/components.js"></script>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCo8Y_Ab71a8ssbE4nCzjbCWVWyZeedcHw&libraries=places&callback=initAutocomplete"
+            async defer></script>
 </body>
 </html>
