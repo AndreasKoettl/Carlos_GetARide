@@ -122,36 +122,53 @@ Vue.component('place-input', {
     methods: {
         placeInputClicked: function () {
             if (this.clickCounter == 0) {
-            // change back button
-            if (window.location.href.includes('wohin')) {
-                this.header.classList.toggle("backButtonInvisible");
-            }
-
-            document.querySelector('#back').onclick = function () {
-                // adjust so that changes dont disappear
-                location.reload();
-                
-            }                     
            
-            // hide all unnecessary elements
-            document.querySelector('#illustration-big').style.display = "none";
-            document.querySelector('h1').style.display = "none";
-            let inputField = event.target;
-            inputField.className += " placeInputActive";
-
-            // hide all fields of the form, except active
-            let children = inputField.parentElement.childNodes;
-            for (let i = 0; i < children.length; i += 2) {
-                if (!children[i].className.includes('placeInputActive')) {
-                    children[i].style.display = "none";
+                if (window.location.href.includes('wohin')) {
+                    this.header.classList.toggle("backButtonInvisible");
                 }
-            }            
+
+                // change back button
+                document.querySelector('#back').onclick = function () {
+                    // adjust back so that changes dont disappear
+                    location.reload();                
+                }                     
+           
+                // hide all unnecessary elements
+                document.querySelector('#illustration-big').classList.add('displayNone');
+                document.querySelector('h1').classList.add('displayNone');
+                this.inputField = event.target;
+                this.inputField.classList.add("placeInputActive");
+
+                // hide all fields of the form, except active
+                let children = this.inputField.parentElement.childNodes;
+                for (let i = 0; i < children.length; i += 2) {
+                    if (!children[i].className.includes('placeInputActive')) {
+                        children[i].classList.add('displayNone');
+                    }
+                }            
             }
             this.clickCounter++;
 
-            // Create the search box and link it to the UI element.
-            var input = document.getElementById(this.id);
-            var searchBox = new google.maps.places.SearchBox(input);           
+            // Create the search box and link it to the UI element.          
+            this.searchBox = new google.maps.places.SearchBox(this.inputField);
+            this.searchBox.addListener('places_changed', this.placePicked);
+
+        },
+
+        placePicked: function () {
+            this.clickCounter--;
+            // get the place that has been picked
+            let place = this.searchBox.getPlaces()[0];
+
+            // remove class of active place-input
+            this.inputField.classList.remove("placeInputActive");
+
+            // display all hidden elements again
+            let hiddenElements = document.querySelectorAll('.displayNone');
+            for (let i = 0; i < hiddenElements.length; i++) {
+                hiddenElements[i].classList.remove('displayNone');
+            }
+            
         }
     }, 
     mounted: function () {
@@ -159,6 +176,7 @@ Vue.component('place-input', {
         if (window.location.href.includes('wohin')) {
             this.header.classList.add("backButtonInvisible");
         }
+
     }
 });
 
