@@ -20,7 +20,7 @@
     <img class="search-picture" src="../../images/illustrationen/fahrt-suchen.png" />
     <h1>Finde eine passende Fahrt!</h1>
     <div id="app">
-        <form action="">
+        <form action="" id="search-form">
             <div class="textinput">
                 <input type="text" id="locationStart" name="locationStart" placeholder="Startort" />
             </div>
@@ -28,15 +28,13 @@
                 <input type="text" id="locationEnd" name="locationEnd" placeholder="Zielort" />
             </div>
             <div class="textinput">
-                <input onclick="myfunction()" type="text" id="dateDrive" name="dateDrive" placeholder="Datum" />
+                <input type="date" id="dateDrive" name="dateDrive" placeholder="Datum" />
             </div>
             <div class="textinput">
-                <input type="text" id="timeDrive" name="timeDrive" placeholder="Uhrzeit" />
+                <input type="time" id="timeDrive" name="timeDrive" placeholder="Uhrzeit" />
             </div>
             <input type="datetime-local" id="dateDriveInput" name="dateDriveInput" hidden />
-            <input type="submit" id="searchButton" value="Suchen" />
-
-            <date-pick v-model="date"></date-pick>
+            <input type="submit" id="searchButton" value="Suchen" @click="submitSearch"/>
         </form>
     </div>
     <script type="text/javascript" src="../../scripts/fahrt_suchen.js"></script>

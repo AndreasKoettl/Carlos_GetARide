@@ -82,3 +82,7 @@ h1 {
     border: 1px solid grey;
     margin-right: 4vw;
 }
+
+.textinput{
+    color: var(--grey-middle);
+}
