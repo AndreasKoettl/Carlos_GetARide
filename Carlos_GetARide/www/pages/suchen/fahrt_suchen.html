@@ -17,25 +17,69 @@
     <title>CarlosGetARide</title>
 </head>
 <body id="search-content">
-    <img class="search-picture" src="../../images/illustrationen/fahrt-suchen.png" />
-    <h1>Finde eine passende Fahrt!</h1>
+   
     <div id="app">
-        <form action="" id="search-form">
-            <div class="textinput">
-                <input type="text" id="locationStart" name="locationStart" placeholder="Startort" />
+        <div id="inputForm" v-if="inputForm">
+            <img class="search-picture" src="../../images/illustrationen/fahrt-suchen.png" />
+            <h1>Finde eine passende Fahrt!</h1>
+            <form action="" id="search-form">
+                <div class="textinput">
+                    <input type="text" id="locationStart" name="locationStart" placeholder="Startort" />
+                </div>
+                <div class="textinput">
+                    <input type="text" id="locationEnd" name="locationEnd" placeholder="Zielort" />
+                </div>
+                <div class="textinput">
+                    <input type="date" id="dateDrive" name="dateDrive" placeholder="Datum" />
+                </div>
+                <div class="textinput">
+                    <input type="time" id="timeDrive" name="timeDrive" placeholder="Uhrzeit" />
+                </div>
+                <input type="datetime-local" id="dateDriveInput" name="dateDriveInput" hidden />
+                <input type="submit" id="searchButton" value="Suchen" @click="submitSearch" />
+            </form>
+        </div>
+        <div id="search-results" v-else>
+            <div id="driveInput">
+                <div class="locations">
+                    <img id="route-img" />
+                    <div>
+                        <p id="start">Hagenberg</p>
+                        <p id="end">Oberneukirchen</p>
+                    </div>
+                </div>
+                <p class="date-time">28.04.2019, 17:00 Uhr</p>
             </div>
-            <div class="textinput">
-                <input type="text" id="locationEnd" name="locationEnd" placeholder="Zielort" />
+
+            <div class="result">
+                <p class="destination">Hagenberg - Oberneukirchen</p>
+                <p class="time">Fr 26.04.2019, 17:00</p>
             </div>
-            <div class="textinput">
-                <input type="date" id="dateDrive" name="dateDrive" placeholder="Datum" />
+
+            <div class="result">
+                <p class="destination">Hagenberg - Oberneukirchen</p>
+                <p class="time">Fr 26.04.2019, 17:00</p>
             </div>
-            <div class="textinput">
-                <input type="time" id="timeDrive" name="timeDrive" placeholder="Uhrzeit" />
+
+            <div class="result">
+                <p class="destination">Hagenberg - Oberneukirchen</p>
+                <p class="time">Fr 26.04.2019, 17:00</p>
             </div>
-            <input type="datetime-local" id="dateDriveInput" name="dateDriveInput" hidden />
-            <input type="submit" id="searchButton" value="Suchen" @click="submitSearch"/>
-        </form>
+
+            <div class="result">
+                <p class="destination">Hagenberg - Oberneukirchen</p>
+                <p class="time">Fr 26.04.2019, 17:00</p>
+            </div>
+            <div class="result">
+                <p class="destination">Hagenberg - Oberneukirchen</p>
+                <p class="time">Fr 26.04.2019, 17:00</p>
+            </div>
+            <div class="result">
+                <p class="destination">Hagenberg - Oberneukirchen</p>
+                <p class="time">Fr 26.04.2019, 17:00</p>
+            </div>
+
+        </div>
     </div>
     <script type="text/javascript" src="../../scripts/fahrt_suchen.js"></script>
     <script type="text/javascript" src="../../scripts/platformOverrides.js"></script>

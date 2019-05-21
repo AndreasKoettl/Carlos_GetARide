@@ -6,7 +6,9 @@ mtd280.app = new Vue({
     el: "#app",
 
     data: {
-      
+        inputForm: true,
+        details: false,
+        searchData: []
     },
 
     methods: {
@@ -22,12 +24,15 @@ mtd280.app = new Vue({
                 url: "../../php/search.php?/searchRide",
                 data: formData,
                 success: function (data) {
-                    $console.log(JSON.stringify(data["data"][0]));
+                    //console.log(JSON.stringify(data["data"][0]));
+                    console.log(JSON.stringify(data));
+                    this.searchData = JSON.stringify(data["data"]);
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
+            this.inputForm = false;
         }
     }
 });

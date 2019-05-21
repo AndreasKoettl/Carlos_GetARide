@@ -3,10 +3,9 @@ require_once '../lib/limonade-master/lib/limonade.php';
 require_once 'utilities.php';
 
 
-dispatch_post('/searchRide', 'hello');
-dispatch_post('/lel', 'lel');
+dispatch_post('/searchRide', 'searchRide');
 	
-        function hello()
+        function searchRide()
         {
 			$query = array();
 				
@@ -29,15 +28,29 @@ dispatch_post('/lel', 'lel');
 				  $query .= ($set===TRUE ? " AND" : " WHERE") . " locationEnd = '$end'";
 				  $set = TRUE;
 			    }
-			    if (hasValue($_POST["dateDrive"]))
-			    {
-				  $query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate = '$date'";
-				}
-				if (hasValue($_POST["timeDrive"]))
-			    {
-				  $query .= ($set===TRUE ? " AND" : " WHERE") . " driveTime = '$time'";
-				}
-				
+	
+			//	 if (hasValue($_POST["dateDrive"]))
+			//    {
+			//	  if(hasValue($_POST["timeDrive"])){
+			//		$datetime = $date." ".$time;
+			//	  } else {
+			//		$datetime = $date." ";
+			//		$dt = new DateTime()->format('H:i:s');
+			//		$datetime .= $dt;
+			//	  }
+			//	} else {
+			//		if(hasValue($_POST["timeDrive"])){
+			//			$datetime = new DateTime()->format('Y-m-d');
+			//			$datetime .= " ".$time;
+			//		} else{
+			//			$datetime = new DateTime()->format('Y-m-d H:i:s');
+			//		}
+			//	}
+					
+
+				$datetime= $date." ".$time;
+				$query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate = '$datetime'";
+
 				$dbConnection = new DatabaseAccess;
 
 				$dbConnection->prepareStatement($query);
@@ -47,7 +60,6 @@ dispatch_post('/lel', 'lel');
 			
 			} else {
 				$results = "Please enter a start or end location";
-		
 			}
 				
 
@@ -57,29 +69,6 @@ dispatch_post('/lel', 'lel');
 
 			return json_encode($results);
         }
-
-		function lel()
-		{
-			
-				$set = FALSE;
-				$query  = "SELECT * FROM table_name";
-				
-				if (hasValue($_POST["locationStart"]))
-				   {
-					  $query .= " WHERE name = '$name'";
-					  $set = TRUE;
-				   }
-				   if (!empty($address))
-				   {
-					  $query .= ($set===TRUE ? " AND" : " WHERE") . " address = '$address'";
-					  $set = TRUE;
-				   }
-				   if (!empty($country))
-				   {
-					  $query .= ($set===TRUE ? " AND" : " WHERE") . " country = '$country'";
-					}
-			
-		}
 run();
 
 ?>
