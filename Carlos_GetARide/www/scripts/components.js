@@ -100,7 +100,8 @@ Vue.component('header-fahrt-erstellen', {
     `,
     methods: {
         goBack: function () {
-            history.back();
+            sessionStorage.setItem("state", sessionStorage.getItem("state") - 1);
+            history.back();            
         }
     },
     mounted: function () {
@@ -191,41 +192,43 @@ Vue.component('place-input', {
 var carlos = carlos || {};
 
 carlos.app = new Vue({  
-
     el: "#app",
     data: {
-        driveData: []
+        driveData: [],
+        process:['wohin', 'wiederholend', 'wann'],
+        state: 0
     },
     methods: {
-        submitWohin: function (start, ziel) {            
-            this.driveData.push({
-                start: start,
-                ziel: ziel
-            });
-            localStorage.setItem("driveData", JSON.stringify(this.driveData));
-
-            event.preventDefault();
-            window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wiederholend.html";           
-            //window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wiederholend.html";
-        },
-
-        checkIfComplete: function (page) {           
-            if (page == "wohin") {
-                let start = document.querySelector('#start').value;
-                let ziel = document.querySelector('#ziel').value;
-                if (start != "" && ziel != "") {
-                    document.querySelector('#submitWohin').classList.remove('disabled');
-                    this.complete = true;
-                }
+        checkIfComplete: function () {
+            switch (this.process[this.state]) {
+                case 'wohin':
+                    let start = document.querySelector('#start').value;
+                    let ziel = document.querySelector('#ziel').value;
+                    //if (start != "" && ziel != "") {
+                    if(true){
+                        document.querySelector('#submitWohin').classList.remove('disabled');
+                        this.complete = true;
+                    }
+                    break;
+                case 'wann':
+                    break;
             }
         },
 
-        addSubmit: function (page) {            
+        addSubmit: function () {                        
             if (this.complete) {
-                if (page == "wohin") {
+                switch (this.process[this.state]) {
+                    case 'wohin':
                     this.submitWohin(document.querySelector('#start').value, document.querySelector('#ziel').value);
-                } else if (page == "wiederholend") {
+                    break;
+
+                    case 'wiederholend':
                     this.submitWiederholend(this.wiederholend);
+                    break;
+
+                    case 'wann':
+                    this.submitWannEinzelfahrt();
+                    break;                
                 }
             }            
             this.complete = false;
@@ -240,6 +243,7 @@ carlos.app = new Vue({
             this.complete = true;
             document.querySelector('#submitWiederholend').classList.remove('disabled');
         },
+
         clickNo: function () {
             document.querySelector('#no').classList += ' active';
             if (document.querySelector('#yes').classList.contains('active')) {
@@ -249,20 +253,68 @@ carlos.app = new Vue({
             this.complete = true;
             document.querySelector('#submitWiederholend').classList.remove('disabled');
         },
+
+        submitWohin: function (start, ziel) {
+            event.preventDefault();            
+
+            // set data for wohin
+            this.driveData.push({
+                start: start,
+                ziel: ziel
+            });
+            sessionStorage.setItem("driveData", JSON.stringify(this.driveData));         
+
+            // change page
+            window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wiederholend.html";
+            //window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wiederholend.html";
+
+            this.state++;
+            sessionStorage.setItem("state", this.state);
+            // adjust back settings
+        },
+
         submitWiederholend: function (wiederholend) {            
             this.driveData.push({
                 wiederholend: wiederholend
             });
-            localStorage.setItem("driveData", JSON.stringify(this.driveData));
+            sessionStorage.setItem("driveData", JSON.stringify(this.driveData));
             window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wann.html";
+            this.state++;
+            sessionStorage.setItem("state", this.state);
             //window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wann.html";
         },
         submitWannEinzelfahrt: function () {
+
+        },
+
+        loadData: function () {
+
         }
     },
 
     mounted: function () {
-        this.driveData = JSON.parse(localStorage.getItem("driveData"));
+        let driveDataStorage = JSON.parse(sessionStorage.getItem("driveData"));                
+        if (driveDataStorage != null) {
+            this.driveData = driveDataStorage;
+        }
+
+        let stateStorage = sessionStorage.getItem("state");
+        if (stateStorage != null) {
+            this.state = stateStorage;
+        }
+
+        // make sure that data that has been entered before is displayed again!
+        if (this.process[this.state] == 'wohin') {
+            if (this.driveData != null) {
+                for (let key in this.driveData) {                    
+                    if (this.driveData[key].start != null) {                        
+                        document.querySelector('#start').value = this.driveData[key].start;
+                    }
+
+                }
+            }            
+        }
+        
     },
 
     updated: function () {

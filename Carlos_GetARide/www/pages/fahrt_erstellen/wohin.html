@@ -16,9 +16,9 @@
         <div id="form-wrapper">
             <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
             <form>                
-            <place-input id="start" placeholder="Start"  v-on:data-input="checkIfComplete('wohin')"></place-input>          
-            <place-input id="ziel" placeholder="Ziel" v-on:data-input="checkIfComplete('wohin')"></place-input>                
-            <button class="red-button disabled" id="submitWohin" v-on:click="addSubmit('wohin')">Weiter</button>
+            <place-input id="start" placeholder="Start"  v-on:data-input="checkIfComplete()"></place-input>          
+            <place-input id="ziel" placeholder="Ziel" v-on:data-input="checkIfComplete()"></place-input>                
+            <button class="red-button disabled" id="submitWohin" v-on:click="addSubmit()">Weiter</button>
             </form>
         </div>
         <nav-bar></nav-bar>
