@@ -20,6 +20,8 @@ body {
     margin:auto;
 }
 
+
+
 #wrapper-yes-no{
     width: 50vw;
     margin:5vh auto 2vh auto;
@@ -44,6 +46,8 @@ body {
     filter: brightness(0) invert(36%) sepia(27%) saturate(2113%) hue-rotate(327deg) brightness(93%) contrast(87%);
 }
 
+
+
 p {
     font-family: Montserrat, sans-serif;
     font-size: 3vw;
@@ -52,6 +56,8 @@ p {
     width: 60vw;
     margin:auto;
 }
+
+
 
 /* Start screen css */
 
@@ -142,6 +148,8 @@ p {
     margin: 2vh 0;
 }
 
+
+
 /* Input field css */
 
 div.pac-container {
@@ -174,4 +182,9 @@ span.pac-icon-marker {
 
  .displayNone {
      display:none;
+ }
+
+
+ .disabled {
+     background: var(--grey-light) !important;
  }

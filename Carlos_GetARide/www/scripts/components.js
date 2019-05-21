@@ -118,7 +118,7 @@ Vue.component('place-input', {
         }
     },
     props: ['id', 'placeholder'],
-    template: `<input v-on:click="placeInputClicked" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder"/>`,
+    template: `<input v-on:click="placeInputClicked" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder"/>`,
     methods: {
         placeInputClicked: function () {
             if (this.clickCounter == 0) {
@@ -150,15 +150,23 @@ Vue.component('place-input', {
             this.clickCounter++;
 
             // Create the search box and link it to the UI element.          
-            this.searchBox = new google.maps.places.SearchBox(this.inputField);
-            this.searchBox.addListener('places_changed', this.placePicked);
+            //let defaultBounds = new google.maps.LatLngBounds(
+            //    new google.maps.LatLng(48.087166, 17.303634),
+            //    new google.maps.LatLng(47.396249, 10.731279));
 
+            var defaultBounds = new google.maps.LatLngBounds(                
+                new google.maps.LatLng(45.721952, 9.329633),
+                new google.maps.LatLng(48.914576, 17.239527));
+            this.searchBox = new google.maps.places.SearchBox(this.inputField, { bounds: defaultBounds });
+            this.searchBox.addListener('places_changed', this.placePicked);
+            
+                  
         },
 
         placePicked: function () {
             this.clickCounter--;
             // get the place that has been picked
-            let place = this.searchBox.getPlaces()[0];
+            // let place = this.searchBox.getPlaces()[0];
 
             // remove class of active place-input
             this.inputField.classList.remove("placeInputActive");
@@ -176,38 +184,88 @@ Vue.component('place-input', {
         if (window.location.href.includes('wohin')) {
             this.header.classList.add("backButtonInvisible");
         }
-
     }
 });
 
+// vue for fahrt_anbieten
 var carlos = carlos || {};
 
-carlos.app = new Vue({
+carlos.app = new Vue({  
+
     el: "#app",
-    data: {},
+    data: {
+        driveData: []
+    },
     methods: {
-        submitWohin: function () {
+        submitWohin: function (start, ziel) {            
+            this.driveData.push({
+                start: start,
+                ziel: ziel
+            });
+            localStorage.setItem("driveData", JSON.stringify(this.driveData));
+
             event.preventDefault();
-            window.location.href = ANDROID_ROOT+"pages/fahrt_erstellen/wiederholend.html";
+            window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wiederholend.html";           
             //window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wiederholend.html";
         },
+
+        checkIfComplete: function (page) {           
+            if (page == "wohin") {
+                let start = document.querySelector('#start').value;
+                let ziel = document.querySelector('#ziel').value;
+                if (start != "" && ziel != "") {
+                    document.querySelector('#submitWohin').classList.remove('disabled');
+                    this.complete = true;
+                }
+            }
+        },
+
+        addSubmit: function (page) {            
+            if (this.complete) {
+                if (page == "wohin") {
+                    this.submitWohin(document.querySelector('#start').value, document.querySelector('#ziel').value);
+                } else if (page == "wiederholend") {
+                    this.submitWiederholend(this.wiederholend);
+                }
+            }            
+            this.complete = false;
+        },
+
         clickYes: function () {
             document.querySelector('#yes').classList += ' active';
             if (document.querySelector('#no').classList.contains('active')) {
                 document.querySelector('#no').classList.remove('active');
             }
+            this.wiederholend = true;
+            this.complete = true;
+            document.querySelector('#submitWiederholend').classList.remove('disabled');
         },
         clickNo: function () {
             document.querySelector('#no').classList += ' active';
             if (document.querySelector('#yes').classList.contains('active')) {
                 document.querySelector('#yes').classList.remove('active');
             }
+            this.wiederholend = false;
+            this.complete = true;
+            document.querySelector('#submitWiederholend').classList.remove('disabled');
         },
-        submitWiederholend: function () {
+        submitWiederholend: function (wiederholend) {            
+            this.driveData.push({
+                wiederholend: wiederholend
+            });
+            localStorage.setItem("driveData", JSON.stringify(this.driveData));
             window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wann.html";
             //window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wann.html";
         },
         submitWannEinzelfahrt: function () {
         }
+    },
+
+    mounted: function () {
+        this.driveData = JSON.parse(localStorage.getItem("driveData"));
+    },
+
+    updated: function () {
+        
     }
 });
