@@ -84,19 +84,16 @@ Vue.component('header-fahrt-erstellen', {
     <div>
         <h3>{{title}}</h3>
         <div id="page-navigation">
-            <div class="circle" id="circle-wohin"></div>
-            <div class="circle" id="circle-wiederholend"></div>
-            <div class="circle" id="circle-wann"></div>
-            <div class="circle" id="circle-merkmale"></div>
-            <div class="circle" id="circle-personen"></div>
-            <div class="circle" id="circle-preis"></div>
+            <div class="circle" id="circle-route"></div>
+            <div class="circle" id="circle-repeating"></div>
+            <div class="circle" id="circle-dateTime"></div>
+            <div class="circle" id="circle-passengers"></div>            
+            <div class="circle" id="circle-details"></div>            
+            <div class="circle" id="circle-price"></div>
         </div>
     </div>
 </header>
-    `,    
-    mounted: function () {
-       
-    }
+    `
 });
 
 // Input field for places, with search-functionality
@@ -109,19 +106,16 @@ Vue.component('place-input', {
         }
     },
     props: ['id', 'placeholder'],
-    template: `<input v-on:click="placeInputClicked" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder"/>`,
+    template: `<input v-on:click="placeInputClicked()" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder"/>`,
     methods: {
         placeInputClicked: function () {
             if (this.clickCounter == 0) {
-                // change back button
-                //document.querySelector('#back').onclick = function () {
-                //    // adjust back so that changes dont disappear
-                //    location.reload();
-                //}                     
+                // change back-button here !!!
+                document.querySelector('#processHeader').classList.remove("backButtonInvisible");                
            
                 // hide all unnecessary elements
-                document.querySelector('#illustration-big').classList.add('displayNone');
-                document.querySelector('h1').classList.add('displayNone');
+                document.querySelectorAll('.illustration-big')[0].classList.add('displayNone');
+                document.querySelectorAll('h1')[0].classList.add('displayNone');
                 this.inputField = event.target;
                 this.inputField.classList.add("placeInputActive");
 
@@ -141,15 +135,14 @@ Vue.component('place-input', {
             //    new google.maps.LatLng(47.396249, 10.731279));
 
             var defaultBounds = new google.maps.LatLngBounds(                
-                new google.maps.LatLng(45.721952, 9.329633),
-                new google.maps.LatLng(48.914576, 17.239527));
+                new google.maps.LatLng(46.959182, 10.886682),
+                new google.maps.LatLng(48.498183, 16.646211));
             this.searchBox = new google.maps.places.SearchBox(this.inputField, { bounds: defaultBounds });
-            this.searchBox.addListener('places_changed', this.placePicked);
-            
+            this.searchBox.addListener('places_changed', this.placePicked);            
                   
         },
 
-        placePicked: function () {
+        placePicked: function () {            
             this.clickCounter--;
             // get the place that has been picked
             // let place = this.searchBox.getPlaces()[0];
@@ -161,14 +154,7 @@ Vue.component('place-input', {
             let hiddenElements = document.querySelectorAll('.displayNone');
             for (let i = 0; i < hiddenElements.length; i++) {
                 hiddenElements[i].classList.remove('displayNone');
-            }
-            
-        }
-    }, 
-    mounted: function () {
-        this.header = document.querySelector('header');
-        if (window.location.href.includes('wohin')) {
-            this.header.classList.add("backButtonInvisible");
+            }           
         }
     }
 });
@@ -176,69 +162,63 @@ Vue.component('place-input', {
 // vue for fahrt_anbieten
 var carlos = carlos || {};
 
-carlos.app = new Vue({  
+carlos.app = new Vue({
     el: "#app",
     data: {
         driveData: [],
-        process:['wohin', 'wiederholend', 'wann', 'Frequenz', 'wannWiederholend', 'Personen', 'Merkmale' ],
-        index: 0,        
+        process: ['route', 'repeating', 'dateTime', 'passengers', 'details', 'price'],
+        index: 0,
         startValue: "",
-        destinationValue: ""
-        
+        destinationValue: "",
+        dateValue:"",
+        timeValue: "",   
+        passengersValue:"",
+        complete: false,        
+
     },
     methods: {
-        goBack: function () {            
+        goBack: function () {
             this.index--;
         },
 
-        // checks if all the data has been entered
-        // sets the submit-button enabled (red)
-        checkIfComplete: function () {
+        // checks if all the data has been entered for the different pages
+        // if so set the corresponding submit-button enabled (red)
+        checkIfComplete: function () {            
             switch (this.process[this.index]) {
-                case 'wohin':                  
+                case 'route':
                     if (this.start.value != "" && this.destination.value != "") {
-                        document.querySelector('#submitWohin').classList.remove('disabled');
+                        document.querySelector('#submitRoute').classList.remove('disabled');
                         this.complete = true;
                     }
                     break;
-                case 'wann':
-                    if (this.date.value != "" && this.time.value != "") {
-                        document.querySelector('#submitWann').classList.remove('disabled');
+                case 'dateTime':              
+                    if (this.date.value != "" && this.time.value != "") {                        
+                        document.querySelector('#submitDateTime').classList.remove('disabled');
                         this.complete = true;
-                    }                    
+                    }
+                    break;
+                case 'passengers':
+                    if (this.passengers.value != "") {
+                        document.querySelector('#submitPassengers').classList.remove('disabled');
+                        this.complete = true;
+                    }
+                    break;
+                case 'details':
+                    break;
+                case 'price':
                     break;
             }
         },
 
-        
-        // adds the right submit-callback to the button on click of it
-        addSubmit: function () {                        
-            if (this.complete) {
-                switch (this.process[this.index]) {
-                    case 'wohin':
-                    this.submitWohin();
-                    break;
-
-                    case 'wiederholend':
-                    this.submitWiederholend();
-                    break;
-
-                    case 'wann':
-                        this.submitWann(document.querySelector('#date').value, document.querySelector('#time').value);
-                    break;                
-                }
-            }            
-            this.complete = false;
-        },
 
         clickYes: function () {
             document.querySelector('#yes').classList += ' active';
             if (document.querySelector('#no').classList.contains('active')) {
                 document.querySelector('#no').classList.remove('active');
             }
-            this.wiederholend = true;
+            this.repeating = true;
             this.complete = true;
-            document.querySelector('#submitWiederholend').classList.remove('disabled');
+            document.querySelector('#submitRepeating').classList.remove('disabled');
         },
 
         clickNo: function () {
@@ -246,43 +226,28 @@ carlos.app = new Vue({
             if (document.querySelector('#yes').classList.contains('active')) {
                 document.querySelector('#yes').classList.remove('active');
             }
-            this.wiederholend = false;
+            this.repeating = false;
             this.complete = true;
-            document.querySelector('#submitWiederholend').classList.remove('disabled');
+            document.querySelector('#submitRepeating').classList.remove('disabled');
         },
 
-        submitWohin: function () {
-            this.driveData['start'] = this.start.value;
-            this.driveData['destination'] = this.destination.value;
-            this.index++;              
-        },
-
-        submitWiederholend: function () {
-            this.driveData['wiederholend'] = this.wiederholend;
+        submitData: function (data) {
+            for (let i = 0; i < data.length; i++) {
+                let element = this[data[i]];                
+                if (typeof (element) == "object") {
+                    this.driveData[data[i]] = element.value;
+                } else if (typeof (element) == "boolean") {
+                    this.driveData[data[i]] = element;
+                }
+            }
             this.index++;
-        },
-        submitWann: function (date, time) {
-            this.driveData['date'] = this.date.value;
-            this.driveData['time'] = this.time.value;
-            this.index++;
-        },
-
-        submitMerkmale: function () {
-
-        },
-
-        submitPersonen: function () {
-
-        },
-
-        submitDriveData: function () {
-
-        },
+            this.complete = false;
+        },        
 
         loadData: function () {
             // make sure that data that has been entered before is displayed again!
             switch (this.process[this.index]) {
-                case 'wohin':        
+                case 'route':        
                     if (this.driveData['start'] != null) {
                         this.startValue = this.driveData['start'];                        
                     }
@@ -290,47 +255,66 @@ carlos.app = new Vue({
                         this.destinationValue = this.driveData['destination'];
                     }                    
                     break;
-                case 'wiederholend':                    
-                    if (this.driveData['wiederholend'] != null) {
-                        if (this.driveData['wiederholend']) {
+                case 'repeating':                    
+                    if (this.driveData['repeating'] != null) {
+                        if (this.driveData['repeating']) {
                             this.clickYes();
                         } else {
                             this.clickNo();
                         }
                     }
                     break;
-                case 'wann':
-                    let date = sessionStorage.getItem("date");
-                    if (date != null) {
-                        document.querySelector('#date').value = date;
+                case 'dateTime':                    
+                    if (this.driveData['date'] != null) {
+                        this.dateValue = this.driveData['date'];
                     }
-                    let time = sessionStorage.getItem("time");
-                    if (time != null) {
-                        document.querySelector('#time').value = time;
+                    if (this.driveData['time'] != null) {
+                        this.timeValue = this.driveData['time'];
+                    }      
+                    break;
+                case 'passengers':
+                    if (this.driveData['passengers'] != null) {
+                        this.passengersValue = this.driveData['passengers'];
                     }
+                    break;
+                case 'details':
+                    break;
+                case 'price':
                     break;
             }
         },
-        initVar: function () {
-            this.start = document.querySelector('#start');
+        init: function () {
+            this.start = document.querySelector('#start');            
             this.destination = document.querySelector('#destination');
             this.date = document.querySelector('#date');
             this.time = document.querySelector('#time');
+            this.passengers = document.querySelector('#numPassengers');
+
+
+            let activeCircle = document.querySelectorAll('.circle-active');
+            if (activeCircle[0] != undefined) {
+                activeCircle[0].classList.remove("circle-active");
+            }                
+            document.querySelector('#circle-' + this.process[this.index]).className += (' circle-active');
+        },
+
+        placeInputGoBack: function () { 
+     
         }
     },
 
     mounted: function () {       
-        if (this.process[this.index] == 'wohin') {
-            document.querySelector('#processHeader').classList.toggle("backButtonInvisible");
+        if (this.process[this.index] == 'route') {
+            document.querySelector('#processHeader').classList.add("backButtonInvisible");
         }
-        this.initVar();      
+        this.init();
     },
 
     updated: function () {  
-        if (this.process[this.index] != 'wohin') {
-            document.querySelector('#processHeader').classList.toggle("backButtonInvisible");
-        }
-        this.initVar(); 
+        if (this.process[this.index] != 'route') {
+            document.querySelector('#processHeader').classList.remove("backButtonInvisible");
+        }        
+        this.init();
         this.loadData();
         this.checkIfComplete(); 
     }
