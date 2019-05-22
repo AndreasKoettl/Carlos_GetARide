@@ -12,7 +12,7 @@ const ANDROID_ROOT = "/carlos/Carlos_GetARide/www/";
 /*<div id="nav-bar">
     <a href="/android_asset/www/pages/meine_fahrten/meine_fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/hakerl_icon.svg" /></a>
     <a href="/android_asset/www/pages/fahrt-suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/magnifying-glass.svg" /></a>
-    <a href="/android_asset/www/pages/fahrt_erstellen/wohin.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/android_asset/www/images/icons/plus-button.svg" /></a>
+    <a href="/android_asset/www/pages/fahrt_erstellen/fahrt_erstellen.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/android_asset/www/images/icons/plus-button.svg" /></a>
     <a href="/android_asset/www/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/android_asset/www/images/icons/speech-bubble.svg" /></a>
     <a href="/android_asset/www/pages/profil/profil.html" class="menu-item" id="profil" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/user_colored.svg" /></a>
     </div >*/
@@ -23,7 +23,7 @@ Vue.component('nav-bar', {
     <div id="nav-bar">
     <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/hakerl_icon.svg" /></a>
     <a href="/carlos/Carlos_GetARide/www/pages/fahrt-suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/magnifying-glass.svg" /></a>
-    <a href="/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wohin.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/plus-button.svg" /></a>
+    <a href="/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/plus-button.svg" /></a>
     <a href="/carlos/Carlos_GetARide/www/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/carlos/Carlos_GetARide/www/images/icons/speech-bubble.svg" /></a>
     <a href="/carlos/Carlos_GetARide/www/pages/profil/profil.html" class="menu-item" id="profil" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/user_colored.svg" /></a>
     </div >
@@ -79,8 +79,8 @@ Vue.component('header-back', {
 Vue.component('header-fahrt-erstellen', {
     props:['title'],
     template: `
-    <header>
-    <a @click="goBack" id="back"><img src="/carlos/Carlos_GetARide/www/images/icons/back.svg"/></a>
+    <header id="processHeader">
+    <a @click="$emit('go-back', $event.target.value)" id="back"><img src="/carlos/Carlos_GetARide/www/images/icons/back.svg"/></a>
     <div>
         <h3>{{title}}</h3>
         <div id="page-navigation">
@@ -93,21 +93,15 @@ Vue.component('header-fahrt-erstellen', {
         </div>
     </div>
 </header>
-    `,
-    methods: {
-        goBack: function () {
-            sessionStorage.setItem("state", sessionStorage.getItem("state") - 1);
-            history.back();            
-        }
-    },
+    `,    
     mounted: function () {
-        let path = document.location.pathname.match(/[^\/]+$/)[0];
-        let id = path.slice(0, -5);
-        document.querySelector('#circle-' + id).className += (' circle-active');
+       
     }
 });
 
 // Input field for places, with search-functionality
+// disables and hides all other elements on the page
+// emits a data-input Event on change
 Vue.component('place-input', {
     data: function () {
         return {
@@ -119,15 +113,11 @@ Vue.component('place-input', {
     methods: {
         placeInputClicked: function () {
             if (this.clickCounter == 0) {
-                if (window.location.href.includes('wohin')) {
-                    this.header.classList.toggle("backButtonInvisible");
-                }
-
                 // change back button
-                document.querySelector('#back').onclick = function () {
-                    // adjust back so that changes dont disappear
-                    location.reload();
-                }                     
+                //document.querySelector('#back').onclick = function () {
+                //    // adjust back so that changes dont disappear
+                //    location.reload();
+                //}                     
            
                 // hide all unnecessary elements
                 document.querySelector('#illustration-big').classList.add('displayNone');
@@ -190,23 +180,32 @@ carlos.app = new Vue({
     el: "#app",
     data: {
         driveData: [],
-        process:['wohin', 'wiederholend', 'wann'],
-        state: 0
+        process:['wohin', 'wiederholend', 'wann', 'Frequenz', 'wannWiederholend', 'Personen', 'Merkmale' ],
+        index: 0,        
+        startValue: "",
+        destinationValue: ""
+        
     },
     methods: {
+        goBack: function () {            
+            this.index--;
+        },
+
         // checks if all the data has been entered
-        // sets the button enabled
+        // sets the submit-button enabled (red)
         checkIfComplete: function () {
-            switch (this.process[this.state]) {
-                case 'wohin':
-                    let start = document.querySelector('#start').value;
-                    let ziel = document.querySelector('#ziel').value;
-                    if (start != "" && ziel != "") {
+            switch (this.process[this.index]) {
+                case 'wohin':                  
+                    if (this.start.value != "" && this.destination.value != "") {
                         document.querySelector('#submitWohin').classList.remove('disabled');
                         this.complete = true;
                     }
                     break;
                 case 'wann':
+                    if (this.date.value != "" && this.time.value != "") {
+                        document.querySelector('#submitWann').classList.remove('disabled');
+                        this.complete = true;
+                    }                    
                     break;
             }
         },
@@ -215,17 +214,17 @@ carlos.app = new Vue({
         // adds the right submit-callback to the button on click of it
         addSubmit: function () {                        
             if (this.complete) {
-                switch (this.process[this.state]) {
+                switch (this.process[this.index]) {
                     case 'wohin':
-                    this.submitWohin(document.querySelector('#start').value, document.querySelector('#ziel').value);
+                    this.submitWohin();
                     break;
 
                     case 'wiederholend':
-                    this.submitWiederholend(this.wiederholend);
+                    this.submitWiederholend();
                     break;
 
                     case 'wann':
-                    this.submitWannEinzelfahrt();
+                        this.submitWann(document.querySelector('#date').value, document.querySelector('#time').value);
                     break;                
                 }
             }            
@@ -252,79 +251,87 @@ carlos.app = new Vue({
             document.querySelector('#submitWiederholend').classList.remove('disabled');
         },
 
-        submitWohin: function (start, ziel) {
-            event.preventDefault();            
-
-            sessionStorage.setItem('start', start);
-            sessionStorage.setItem('ziel', ziel);                      
-
-            // change page
-            window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wiederholend.html";
-            //window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wiederholend.html";
-
-            this.state++;
-            sessionStorage.setItem("state", this.state);
-            // adjust back settings
+        submitWohin: function () {
+            this.driveData['start'] = this.start.value;
+            this.driveData['destination'] = this.destination.value;
+            this.index++;              
         },
 
-        submitWiederholend: function (wiederholend) {                        
-            sessionStorage.setItem("wiederholend", wiederholend);
-            window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wann.html";
-            this.state++;
-            sessionStorage.setItem("state", this.state);
-            //window.location.href = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/wann.html";
+        submitWiederholend: function () {
+            this.driveData['wiederholend'] = this.wiederholend;
+            this.index++;
         },
-        submitWannEinzelfahrt: function () {
+        submitWann: function (date, time) {
+            this.driveData['date'] = this.date.value;
+            this.driveData['time'] = this.time.value;
+            this.index++;
+        },
+
+        submitMerkmale: function () {
+
+        },
+
+        submitPersonen: function () {
+
+        },
+
+        submitDriveData: function () {
 
         },
 
         loadData: function () {
-
-        }
-    },
-
-    mounted: function () {          
-        //let driveDataStorage = JSON.parse(sessionStorage.getItem("driveData"));                
-        //if (driveDataStorage != null) {
-        //    this.driveData = driveDataStorage;
-        //}
-
-        let stateStorage = sessionStorage.getItem("state");
-        if (stateStorage != null) {
-            this.state = stateStorage;
-        }
-
-        // make sure that data that has been entered before is displayed again!
-        switch (this.process[this.state]) {
-            case 'wohin':
-                let start = sessionStorage.getItem("start");
-                if (start != null) {
-                    document.querySelector('#start').value = start;
-                }
-                let ziel = sessionStorage.getItem("ziel");
-                if (ziel != null) {
-                    document.querySelector('#ziel').value = ziel;
-                }
-                break;
-            case 'wiederholend':
-                let wiederholend = sessionStorage.getItem("wiederholend");
-                if (wiederholend != null) {
-                    if (wiederholend == 'true') {
-                        this.clickYes();
-                    } else {
-                        this.clickNo();
+            // make sure that data that has been entered before is displayed again!
+            switch (this.process[this.index]) {
+                case 'wohin':        
+                    if (this.driveData['start'] != null) {
+                        this.startValue = this.driveData['start'];                        
                     }
-                }
-                break;
-            case 'wann':
-                break;
+                    if (this.driveData['start'] != null) {
+                        this.destinationValue = this.driveData['destination'];
+                    }                    
+                    break;
+                case 'wiederholend':                    
+                    if (this.driveData['wiederholend'] != null) {
+                        if (this.driveData['wiederholend']) {
+                            this.clickYes();
+                        } else {
+                            this.clickNo();
+                        }
+                    }
+                    break;
+                case 'wann':
+                    let date = sessionStorage.getItem("date");
+                    if (date != null) {
+                        document.querySelector('#date').value = date;
+                    }
+                    let time = sessionStorage.getItem("time");
+                    if (time != null) {
+                        document.querySelector('#time').value = time;
+                    }
+                    break;
+            }
+        },
+        initVar: function () {
+            this.start = document.querySelector('#start');
+            this.destination = document.querySelector('#destination');
+            this.date = document.querySelector('#date');
+            this.time = document.querySelector('#time');
         }
-
-        this.checkIfComplete();        
-
     },
 
-    updated: function () {
-        
+    mounted: function () {       
+        if (this.process[this.index] == 'wohin') {
+            document.querySelector('#processHeader').classList.toggle("backButtonInvisible");
+        }
+        this.initVar();      
+    },
+
+    updated: function () {  
+        if (this.process[this.index] != 'wohin') {
+            document.querySelector('#processHeader').classList.toggle("backButtonInvisible");
+        }
+        this.initVar(); 
+        this.loadData();
+        this.checkIfComplete(); 
     }
 });
