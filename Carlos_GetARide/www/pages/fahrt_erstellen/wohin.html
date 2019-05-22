@@ -15,7 +15,7 @@
         <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" id="illustration-big" />
         <div id="form-wrapper">
             <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
-            <form>                
+            <form id="wohinForm">
             <place-input id="start" placeholder="Start"  v-on:data-input="checkIfComplete()"></place-input>          
             <place-input id="ziel" placeholder="Ziel" v-on:data-input="checkIfComplete()"></place-input>                
             <button class="red-button disabled" id="submitWohin" v-on:click="addSubmit()">Weiter</button>

@@ -9,7 +9,6 @@ const ANDROID_ROOT = "/carlos/Carlos_GetARide/www/";
 // nav-bar links for xampp testing
 
 
-
 /*<div id="nav-bar">
     <a href="/android_asset/www/pages/meine_fahrten/meine_fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/hakerl_icon.svg" /></a>
     <a href="/android_asset/www/pages/fahrt-suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/magnifying-glass.svg" /></a>
@@ -28,9 +27,6 @@ Vue.component('nav-bar', {
     <a href="/carlos/Carlos_GetARide/www/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/carlos/Carlos_GetARide/www/images/icons/speech-bubble.svg" /></a>
     <a href="/carlos/Carlos_GetARide/www/pages/profil/profil.html" class="menu-item" id="profil" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/user_colored.svg" /></a>
     </div >
-
-
-
     `,
     methods: {
         clickMenu: function (event) {
@@ -123,7 +119,6 @@ Vue.component('place-input', {
     methods: {
         placeInputClicked: function () {
             if (this.clickCounter == 0) {
-           
                 if (window.location.href.includes('wohin')) {
                     this.header.classList.toggle("backButtonInvisible");
                 }
@@ -131,7 +126,7 @@ Vue.component('place-input', {
                 // change back button
                 document.querySelector('#back').onclick = function () {
                     // adjust back so that changes dont disappear
-                    location.reload();                
+                    location.reload();
                 }                     
            
                 // hide all unnecessary elements
@@ -199,13 +194,14 @@ carlos.app = new Vue({
         state: 0
     },
     methods: {
+        // checks if all the data has been entered
+        // sets the button enabled
         checkIfComplete: function () {
             switch (this.process[this.state]) {
                 case 'wohin':
                     let start = document.querySelector('#start').value;
                     let ziel = document.querySelector('#ziel').value;
-                    //if (start != "" && ziel != "") {
-                    if(true){
+                    if (start != "" && ziel != "") {
                         document.querySelector('#submitWohin').classList.remove('disabled');
                         this.complete = true;
                     }
@@ -215,6 +211,8 @@ carlos.app = new Vue({
             }
         },
 
+        
+        // adds the right submit-callback to the button on click of it
         addSubmit: function () {                        
             if (this.complete) {
                 switch (this.process[this.state]) {
@@ -257,12 +255,8 @@ carlos.app = new Vue({
         submitWohin: function (start, ziel) {
             event.preventDefault();            
 
-            // set data for wohin
-            this.driveData.push({
-                start: start,
-                ziel: ziel
-            });
-            sessionStorage.setItem("driveData", JSON.stringify(this.driveData));         
+            sessionStorage.setItem('start', start);
+            sessionStorage.setItem('ziel', ziel);                      
 
             // change page
             window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wiederholend.html";
@@ -273,11 +267,8 @@ carlos.app = new Vue({
             // adjust back settings
         },
 
-        submitWiederholend: function (wiederholend) {            
-            this.driveData.push({
-                wiederholend: wiederholend
-            });
-            sessionStorage.setItem("driveData", JSON.stringify(this.driveData));
+        submitWiederholend: function (wiederholend) {                        
+            sessionStorage.setItem("wiederholend", wiederholend);
             window.location.href = ANDROID_ROOT + "pages/fahrt_erstellen/wann.html";
             this.state++;
             sessionStorage.setItem("state", this.state);
@@ -292,11 +283,11 @@ carlos.app = new Vue({
         }
     },
 
-    mounted: function () {
-        let driveDataStorage = JSON.parse(sessionStorage.getItem("driveData"));                
-        if (driveDataStorage != null) {
-            this.driveData = driveDataStorage;
-        }
+    mounted: function () {          
+        //let driveDataStorage = JSON.parse(sessionStorage.getItem("driveData"));                
+        //if (driveDataStorage != null) {
+        //    this.driveData = driveDataStorage;
+        //}
 
         let stateStorage = sessionStorage.getItem("state");
         if (stateStorage != null) {
@@ -304,17 +295,33 @@ carlos.app = new Vue({
         }
 
         // make sure that data that has been entered before is displayed again!
-        if (this.process[this.state] == 'wohin') {
-            if (this.driveData != null) {
-                for (let key in this.driveData) {                    
-                    if (this.driveData[key].start != null) {                        
-                        document.querySelector('#start').value = this.driveData[key].start;
-                    }
-
+        switch (this.process[this.state]) {
+            case 'wohin':
+                let start = sessionStorage.getItem("start");
+                if (start != null) {
+                    document.querySelector('#start').value = start;
                 }
-            }            
+                let ziel = sessionStorage.getItem("ziel");
+                if (ziel != null) {
+                    document.querySelector('#ziel').value = ziel;
+                }
+                break;
+            case 'wiederholend':
+                let wiederholend = sessionStorage.getItem("wiederholend");
+                if (wiederholend != null) {
+                    if (wiederholend == 'true') {
+                        this.clickYes();
+                    } else {
+                        this.clickNo();
+                    }
+                }
+                break;
+            case 'wann':
+                break;
         }
-        
+
+        this.checkIfComplete();        
+
     },
 
     updated: function () {
