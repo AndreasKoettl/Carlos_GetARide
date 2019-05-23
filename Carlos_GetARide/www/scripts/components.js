@@ -102,7 +102,8 @@ Vue.component('header-fahrt-erstellen', {
 Vue.component('place-input', {
     data: function () {
         return {
-            clickCounter : 0
+            clickCounter: 0,
+            noSearchBox:true
         }
     },
     props: ['id', 'placeholder'],
@@ -129,24 +130,20 @@ Vue.component('place-input', {
             }
             this.clickCounter++;
 
-            // Create the search box and link it to the UI element.          
-            //let defaultBounds = new google.maps.LatLngBounds(
-            //    new google.maps.LatLng(48.087166, 17.303634),
-            //    new google.maps.LatLng(47.396249, 10.731279));
-
-            var defaultBounds = new google.maps.LatLngBounds(                
-                new google.maps.LatLng(46.959182, 10.886682),
-                new google.maps.LatLng(48.498183, 16.646211));
-            this.searchBox = new google.maps.places.SearchBox(this.inputField, { bounds: defaultBounds });
-            this.searchBox.addListener('places_changed', this.placePicked);            
-                  
+            if (this.noSearchBox) {
+                // Create the search box and link it to the UI element.                     
+                var defaultBounds = new google.maps.LatLngBounds(
+                    new google.maps.LatLng(46.959182, 10.886682),
+                    new google.maps.LatLng(48.498183, 16.646211));
+                this.searchBox = new google.maps.places.SearchBox(this.inputField, { bounds: defaultBounds });
+                this.searchBox.addListener('places_changed', this.placePicked);
+                this.noSearchBox = false;
+            }                                       
         },
 
         placePicked: function () {            
             this.clickCounter--;
-            // get the place that has been picked
-            // let place = this.searchBox.getPlaces()[0];
-
+            
             // remove class of active place-input
             this.inputField.classList.remove("placeInputActive");
 
@@ -155,6 +152,8 @@ Vue.component('place-input', {
             for (let i = 0; i < hiddenElements.length; i++) {
                 hiddenElements[i].classList.remove('displayNone');
             }           
+
+            document.querySelector('#processHeader').classList.add("backButtonInvisible");                
         }
     }
 });
@@ -166,13 +165,16 @@ carlos.app = new Vue({
     el: "#app",
     data: {
         driveData: [],
-        process: ['route', 'repeating', 'dateTime', 'passengers', 'details', 'price'],
+        process: ['route', 'repeating', 'dateTime', 'passengers', 'details', 'price', 'success'],
         index: 0,
         startValue: "",
         destinationValue: "",
         dateValue:"",
         timeValue: "",   
-        passengersValue:"",
+        passengersValue: "",
+        licensePlateValue: "",
+        carDetailsValue: "",
+        priceValue:"",
         complete: false,        
 
     },
@@ -204,8 +206,15 @@ carlos.app = new Vue({
                     }
                     break;
                 case 'details':
+                    document.querySelector('#submitDetails').classList.remove('disabled');
+                    this.complete = true;
                     break;
                 case 'price':
+                    if (this.price.value != "") {
+                        document.querySelector('#submitDriveData').classList.remove('disabled');
+                        document.querySelector('#submitDriveData').classList.add('active-green');
+                        this.complete = true;
+                    }
                     break;
             }
         },
@@ -232,8 +241,9 @@ carlos.app = new Vue({
         },
 
         submitData: function (data) {
+            event.preventDefault();
             for (let i = 0; i < data.length; i++) {
-                let element = this[data[i]];                
+                let element = this[data[i]];              
                 if (typeof (element) == "object") {
                     this.driveData[data[i]] = element.value;
                 } else if (typeof (element) == "boolean") {
@@ -251,7 +261,7 @@ carlos.app = new Vue({
                     if (this.driveData['start'] != null) {
                         this.startValue = this.driveData['start'];                        
                     }
-                    if (this.driveData['start'] != null) {
+                    if (this.driveData['destination'] != null) {
                         this.destinationValue = this.driveData['destination'];
                     }                    
                     break;
@@ -278,8 +288,17 @@ carlos.app = new Vue({
                     }
                     break;
                 case 'details':
+                    if (this.driveData['licensePlate'] != null) {
+                        this.licensePlateValue = this.driveData['licensePlate'];
+                    }
+                    if (this.driveData['carDetails'] != null) {
+                        this.carDetailsValue = this.driveData['carDetails'];
+                    }
                     break;
                 case 'price':
+                    if (this.driveData['price'] != null) {
+                        this.priceValue = this.driveData['price'];
+                    }
                     break;
             }
         },
@@ -289,12 +308,15 @@ carlos.app = new Vue({
             this.date = document.querySelector('#date');
             this.time = document.querySelector('#time');
             this.passengers = document.querySelector('#numPassengers');
+            this.licensePlate = document.querySelector('#licensePlate');
+            this.carDetails = document.querySelector('#carDetails');
+            this.price = document.querySelector('#priceValue');
 
 
             let activeCircle = document.querySelectorAll('.circle-active');
             if (activeCircle[0] != undefined) {
                 activeCircle[0].classList.remove("circle-active");
-            }                
+            }
             document.querySelector('#circle-' + this.process[this.index]).className += (' circle-active');
         },
 
@@ -308,6 +330,10 @@ carlos.app = new Vue({
             document.querySelector('#processHeader').classList.add("backButtonInvisible");
         }
         this.init();
+    },
+    beforeUpdate: function () {        
+        let currentProcess = document.getElementById('route');
+        currentProcess.classList.add('slide-leave');
     },
 
     updated: function () {  

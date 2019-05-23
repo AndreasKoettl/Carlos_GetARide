@@ -13,11 +13,45 @@ body {
 .fahrt-erstellen-heading {
     color: var(--grey-dark);
     font-size: 7vw;
+    width: 80vw;
+    margin:auto;
 }
 
 #form-wrapper {
     width: 80vw;
     margin:auto;
+}
+
+
+
+@keyframes slide-in {
+    from {
+        left: 100vw;
+    }
+
+    to {
+        left: 0;
+    }
+}
+.slide-enter {
+    position: absolute;    
+    animation-name: slide-in;
+    animation-duration: 2s;
+}
+
+@keyframes slide-leave {
+    from {
+        left: 0;
+    }
+    to {
+        left: 100vw;
+    }
+}
+
+.slide-leave {
+    position: absolute;   
+    animation-name: slide-leave;
+    animation-duration: 2s;
 }
 
 
@@ -148,6 +182,10 @@ p {
     margin: 2vh 0;
 }
 
+.active-green{
+    background: var(--green) !important;
+}
+
 
 
 /* Input field css */
@@ -157,13 +195,19 @@ div.pac-container {
     box-shadow: none !important;
     font-family: Montserrat, sans-serif !important;
     font-size: 3vw;
+    width: 80vw !important;
+    margin:auto !important;    
 }
 
 div.pac-item {
-    padding: 5vh;
+    padding: 2vh;
     color: var(--grey-light) !important;
     border-top: solid 2px var(--grey-light);
     font-size: 2vw;
+}
+
+div.pac-item:first-child {
+    border-top:none;
 }
 
 span.pac-item-query {

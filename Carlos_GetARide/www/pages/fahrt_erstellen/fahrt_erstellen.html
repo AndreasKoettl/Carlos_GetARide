@@ -26,7 +26,7 @@
         </div>
 
         <!-- REPEATING -->
-        <div id="repeating" v-if="process[index] == 'repeating'">
+        <div id="repeating" v-if="process[index] == 'repeating'" class="slide-enter">
             <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
             <div class="form-wrapper">
                 <h1 class="fahrt-erstellen-heading">Fährst du regelmäßig?</h1>
@@ -71,9 +71,9 @@
             <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
             <h1 class="fahrt-erstellen-heading">Wie sieht dein Auto aus?</h1>
             <form id="detailsForm">
-                <input placeholder="Kennzeichen" id="licensePlate" />
-                <textarea placeholder="Sonstige Merkmale (zum Beispiel: Farbe, Automarke)" id="carDetails"></textarea>
-                <button class="red-button disabled" id="submitDetails" v-on:click="addSubmit(submitData(['licencePlate', 'details']))">Weiter</button>
+                <input placeholder="Kennzeichen" id="licensePlate" :value="licensePlateValue"/>
+                <textarea placeholder="Sonstige Merkmale (zum Beispiel: Farbe, Automarke)" :value="carDetailsValue" id="carDetails"></textarea>
+                <button class="red-button disabled" id="submitDetails" v-on:click="complete ? submitData(['licensePlate', 'carDetails']) : ''">Weiter</button>
             </form>
         </div>
 
@@ -83,12 +83,16 @@
             <div class="priceForm">
                 <h1 class="fahrt-erstellen-heading">Wieviel soll die Fahrt kosten?</h1>
                 <form id="routeForm">
-
-                    <button class="red-button disabled" id="submitDriveData" v-on:click="addSubmit()">Fahrt erstellen</button>
+                    <input id="priceValue" :value="priceValue" placeholder="Preis" v-on:input="checkIfComplete()"/>
+                    <button class="red-button disabled" id="submitDriveData" v-on:click="complete ? submitData(['price']) : ''">Fahrt erstellen</button>
                 </form>
             </div>
         </div>
 
+        <!-- SUCCESS -->
+        <div id="success" v-if="process[index] == 'success'">               
+             <h1>Gratulation!</h1>
+        </div>
         <nav-bar></nav-bar>
 
     </div>
