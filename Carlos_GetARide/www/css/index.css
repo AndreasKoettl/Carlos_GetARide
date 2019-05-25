@@ -88,3 +88,7 @@ form {
     background-color: var(--red);
     border-radius: 50px;
 }
+
+button:focus, button:active{
+    outline:none;
+}

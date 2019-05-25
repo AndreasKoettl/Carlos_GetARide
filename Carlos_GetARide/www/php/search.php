@@ -4,6 +4,7 @@ require_once 'utilities.php';
 
 
 dispatch_post('/searchRide', 'searchRide');
+dispatch_post('/getUser/:iduser', 'getUserById');
 	
         function searchRide()
         {
@@ -29,27 +30,30 @@ dispatch_post('/searchRide', 'searchRide');
 				  $set = TRUE;
 			    }
 	
-			//	 if (hasValue($_POST["dateDrive"]))
-			//    {
-			//	  if(hasValue($_POST["timeDrive"])){
-			//		$datetime = $date." ".$time;
-			//	  } else {
-			//		$datetime = $date." ";
-			//		$dt = new DateTime()->format('H:i:s');
-			//		$datetime .= $dt;
-			//	  }
-			//	} else {
-			//		if(hasValue($_POST["timeDrive"])){
-			//			$datetime = new DateTime()->format('Y-m-d');
-			//			$datetime .= " ".$time;
-			//		} else{
-			//			$datetime = new DateTime()->format('Y-m-d H:i:s');
-			//		}
-			//	}
+				$datetime = new Datetime();
+				$datetime = $datetime->format('Y-m-d H:i:s');
+				
+				 if (hasValue($_POST["dateDrive"]))
+			    {
+				  if(hasValue($_POST["timeDrive"])){
+					$datetime = $date." ".$time.":00";
+				  } 
+				  else {
+					$datetime = $date." ";
+					$dt = new DateTime();
+					$dt = $dt->setTime(00, 01);
+					$dt = $dt->format('H:i:s');
+					$datetime .= $dt;
+				  }
+				} else {
+					if(hasValue($_POST["timeDrive"])){
+						$datetime = new DateTime();
+						$datetime = $datetime->format('Y-m-d');
+						$datetime .= " ".$time.":00";
+					} 
+				}
 					
-
-				$datetime= $date." ".$time;
-				$query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate = '$datetime'";
+				$query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate >= '$datetime'";
 
 				$dbConnection = new DatabaseAccess;
 
@@ -57,9 +61,8 @@ dispatch_post('/searchRide', 'searchRide');
 				$dbConnection->executeStatement();
 				$results = $dbConnection->fetchAll();
 				
-			
 			} else {
-				$results = "Please enter a start or end location";
+				$results = false;
 			}
 				
 
@@ -69,6 +72,25 @@ dispatch_post('/searchRide', 'searchRide');
 
 			return json_encode($results);
         }
+
+		function getUserById(){
+
+			$dbConnection = new DatabaseAccess;
+			$dbConnection->prepareStatement("SELECT firstname, lastname FROM users WHERE idusers = :iduser");
+			$dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
+			$dbConnection->executeStatement();
+			$result = $dbConnection->fetchAll();
+
+			if ($dbConnection->getRowCount() > 0) {
+				$result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
+			}
+			else {
+				$result = setErrorMessage($result, "Keine Fahrten vorhanden.");
+			}
+
+			return json_encode($result);
+		}
+
 run();
 
 ?>
