@@ -38,12 +38,11 @@ function loadCodriversRides()
 	$dbConnection = new DatabaseAccess;
 	
     // Fahrten mit mit gegebenen User als Mitfahrer suchen.
-    $dbConnection->prepareStatement("SELECT drives_iddrives FROM passengers WHERE users_idusers = :iduser");
+    $dbConnection->prepareStatement("SELECT drives_iddrives FROM requests WHERE users_idusers = :iduser AND accepted = 1");
     $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $drives = $dbConnection->fetchAll();
 
-	$singleDrive;
 	$result["data"] = array();
 
 	foreach ($drives["data"] as $val) {

@@ -45,7 +45,6 @@ carlos_meineFahrten.app = new Vue({
 
             // get user id
             let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
-            let userData = JSON.stringify('{ "userid":' + iduser + '}');
             var appAccess = this;
 
                 // AJAX-Post Request starten.
@@ -65,15 +64,25 @@ carlos_meineFahrten.app = new Vue({
                             for (let i = 0; i < result["data"].length; i++) {
                                 let route = result["data"][i]["locationStart"] + " - " + result["data"][i]["locationEnd"];
                                 let date = new Date(result["data"][i]["driveDate"]);
-                                let time = result["data"][i]["driveTime"];
+                                //let time = result["data"][i]["driveTime"];
 
                                 let currentDate = new Date();
 
                                 if (currentDate <= date) {
-                                    appAccess.listUpcomingRides.push(new Ride(route, date, time));
+                                    if (result["data"][i]["iddrives"] === result["data"][i]["initialDriveId"]) {
+                                        appAccess.listUpcomingRides.push(new Ride(route, date));
+                                    }
+                                    else if (result["data"][i]["initialDriveId"] === null) {
+                                        appAccess.listUpcomingRides.push(new Ride(route, date));
+                                    }
                                 }
                                 else {
-                                    appAccess.listPastRides.push(new Ride(route, date, time));
+                                    if (result["data"][i]["iddrives"] === result["data"][i]["initialDriveId"]) {
+                                        appAccess.listPastRides.push(new Ride(route, date));
+                                    }
+                                    else if (result["data"][i]["initialDriveId"] === null) {
+                                        appAccess.listPastRides.push(new Ride(route, date));
+                                    }
                                 }
                             }
                             appAccess.sortRides(appAccess.listUpcomingRides);
@@ -95,7 +104,6 @@ carlos_meineFahrten.app = new Vue({
 
             // get user id
             let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
-            let userData = JSON.stringify('{ "userid":' + iduser + '}');
             var appAccess = this;
 
             let drives = [];
@@ -116,15 +124,24 @@ carlos_meineFahrten.app = new Vue({
                         for (let i = 0; i < result["data"].length; i++) {
                             let route = result["data"][i][0]["locationStart"] + " - " + result["data"][i][0]["locationEnd"];
                             let date = new Date(result["data"][i][0]["driveDate"]);
-                            let time = result["data"][i][0]["driveTime"];
 
                             let currentDate = new Date();
 
                             if (currentDate <= date) {
-                                appAccess.listUpcomingRides.push(new Ride(route, date, time));
+                                if (result["data"][i][0]["iddrives"] === result["data"][i][0]["initialDriveId"]) {
+                                    appAccess.listUpcomingRides.push(new Ride(route, date));
+                                }
+                                else if (result["data"][i][0]["initialDriveId"] === null) {
+                                    appAccess.listUpcomingRides.push(new Ride(route, date));
+                                }
                             }
                             else {
-                                appAccess.listPastRides.push(new Ride(route, date, time));
+                                if (result["data"][i][0]["iddrives"] === result["data"][i][0]["initialDriveId"]) {
+                                    appAccess.listPastRides.push(new Ride(route, date));
+                                }
+                                else if (result["data"][i][0]["initialDriveId"] === null) {
+                                    appAccess.listPastRides.push(new Ride(route, date));
+                                }
                             }
                         }
                         appAccess.sortRides(appAccess.listUpcomingRides);
@@ -167,11 +184,10 @@ carlos_meineFahrten.app = new Vue({
 });
 
 class Ride {
-    constructor(route, date, time) {
+    constructor(route, date) {
         this._route = route;
         this._date = date;
         this._originalDate = date;
-        this._time = time.substring(0, 5);
         this.formatDate();
     }
 
@@ -181,8 +197,6 @@ class Ride {
     set originalDate(date) { this._originalDate = date; }
     get originalDate() { return this._originalDate; }
     set date(date) { this._date = date; }
-    get time() {return this._time;}
-    set time(time) {this._time = time;}
 
     formatDate() {
         let day = this._date.getDay();
@@ -194,14 +208,20 @@ class Ride {
             case 4: day = "Do"; break;
             case 5: day = "Fr"; break;
             case 6: day = "Sa"; break;
-            case 7: day = "So"; break;
+            case 0: day = "So"; break;
             default: day = ""; break;
         }
 
         let dayNB = this._date.getDate();
         let month = this._date.getMonth()+1;
         let year = this._date.getFullYear();
+        let hours = this._date.getHours();
+        let minutes = this._date.getMinutes();
 
-        this._date = day + ", " + dayNB + "." + month + "." + year;
+        if (minutes < 10) {
+            minutes = "0"+minutes;
+        }
+
+        this._date = day + ", " + dayNB + "." + month + "." + year + " " + hours + ":" + minutes + " Uhr";
     }
 }
