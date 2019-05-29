@@ -87,3 +87,11 @@ function redirectAuthUser(websitePath) {
         window.location.href = getAbsPath(websitePath);
     }
 }
+
+function succeeded(resultArray) {
+    return resultArray["status"] === "success";
+}
+
+function failed(resultArray) {
+    return resultArray["status"] === "error";
+}

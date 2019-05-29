@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="../../css/index.css" />
+    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../scripts/index.js"></script>
+    <script src="../../scripts/logout.js"></script>
+    <script src="../../scripts/passwort_zuruecksetzen.js"></script>
+    <title>Passwort zurücksetzen</title>
+</head>
+<body>
+<h1 id="h1">Passwort zurücksetzen</h1>
+<form id="reset-password-form">
+    <div id="error-message"></div>
+    <div>
+        <input type="hidden" name="email" id="email" value="" />
+    </div>
+    <div>
+        <label for="password">Passwort:</label>
+        <input type="password" name="password" id="password" value="" placeholder="Neues Passwort" />
+    </div>
+    <div>
+        <label for="password-repeat">Passwort:</label>
+        <input type="password" name="password-repeat" id="password-repeat" value="" placeholder="Neues Passwort wiederholen" />
+    </div>
+    <input type="submit" class="red-button" id="reset-button" value="Passwort ändern" />
+</form>
+</body>
+</html>

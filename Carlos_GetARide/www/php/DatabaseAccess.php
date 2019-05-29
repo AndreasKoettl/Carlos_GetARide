@@ -164,8 +164,39 @@ class DatabaseAccess
      *
      * @return array An array containing the datasets and a statusmessage, or an errormessage.
      */
-    public function getResultArray()
+    public function getResultArray(): array
     {
         return $this->result;
+    }
+
+    /**
+     * Starts a new transaction, which can be undone with rollback in case of an error.
+     *
+     * @return bool True if the transaction was started successfully.
+     */
+    public function beginTransaction(): bool
+    {
+        return $this->dbConnection->beginTransaction();
+    }
+
+    /**
+     * Undos the current transaction, all changes since beginTransaction will be undone,
+     * except DROP or TRUNCATE statements.
+     *
+     * @return bool True if the rollback was successful.
+     */
+    public function rollback(): bool
+    {
+        return $this->rollback();
+    }
+
+    /**
+     * Commits the current transaction, saves all changes made to the database since beginTransaction.
+     *
+     * @return bool True if the commit was successful.
+     */
+    public function commit(): bool
+    {
+        return $this->commit();
     }
 }
