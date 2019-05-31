@@ -22,7 +22,14 @@ body {
     margin:auto;
 }
 
+.process-page {
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:10;
+    width:100vw !important;
 
+}
 
 @keyframes slide-in {
     from {
@@ -33,10 +40,11 @@ body {
         left: 0;
     }
 }
-.slide-enter {
-    position: absolute;    
+
+.slide-enter-active {    
     animation-name: slide-in;
-    animation-duration: 2s;
+    animation-duration: 1s;
+    animation-timing-function:ease-in-out;
 }
 
 @keyframes slide-leave {
@@ -44,14 +52,14 @@ body {
         left: 0;
     }
     to {
-        left: 100vw;
+        left: -100vw;
     }
 }
 
-.slide-leave {
-    position: absolute;   
+.slide-leave-active {    
     animation-name: slide-leave;
-    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
 }
 
 
@@ -221,7 +229,7 @@ span.pac-icon-marker {
 }
 
  div.pac-logo::after {
-     background: none !important;
+    
  }
 
  .displayNone {
