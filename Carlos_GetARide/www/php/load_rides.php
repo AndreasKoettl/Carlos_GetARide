@@ -5,7 +5,7 @@ require_once 'utilities.php';
 
 dispatch('/driver/:iduser', 'loadDriversRides');
 dispatch('/codriver/:iduser', 'loadCodriversRides');
-dispatch('/codriverDetails/:drives', 'loadCodriversDetails');
+dispatch('/driverRepeating/:initialDriveId', 'loadDriversRepeatingRides');
 
 
 function loadDriversRides()
@@ -79,6 +79,30 @@ function loadCodriversRides()
 	
     return json_encode($result);
 	
+}
+
+function loadDriversRepeatingRides()
+{
+    // Datenbankverbindung aufbauen.
+    $dbConnection = new DatabaseAccess;
+
+    // Fahrten mit mit gegebenen User als Fahrer suchen.
+    $dbConnection->prepareStatement("SELECT * FROM drives WHERE initialDriveId = :initialDriveId ORDER BY driveDate ASC");
+    $dbConnection->bindParam(":initialDriveId", htmlentities(params("initialDriveId"), ENT_QUOTES));
+    $dbConnection->executeStatement();
+    $result = $dbConnection->fetchAll();
+    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+    if ($dbConnection->getRowCount() > 0) {
+
+        $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
+    }
+    else {
+        $result = setErrorMessage($result, "Keine wiederholenden Fahrten vorhanden.");
+    }
+
+    // Userdaten und Statusnachrichten zurückgeben.
+    return json_encode($result);
+
 }
 
 run();
