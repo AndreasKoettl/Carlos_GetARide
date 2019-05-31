@@ -85,8 +85,6 @@ carlos_meineFahrten.app = new Vue({
                                     }
                                 }
                             }
-                            appAccess.sortRides(appAccess.listUpcomingRides);
-                            appAccess.sortRides(appAccess.listPastRides);
                         }
 
                         else {
@@ -118,7 +116,7 @@ carlos_meineFahrten.app = new Vue({
                 data: iduser,
                 success: function (data) {
                     let result = JSON.parse(data);
-
+                    console.log(result);
                     // Prüfen ob das Anmelden erfolgreich war.
                     if (result["status"] === "success") {
                         for (let i = 0; i < result["data"].length; i++) {
@@ -144,8 +142,8 @@ carlos_meineFahrten.app = new Vue({
                                 }
                             }
                         }
-                        appAccess.sortRides(appAccess.listUpcomingRides);
-                        appAccess.sortRides(appAccess.listPastRides);
+                        //appAccess.sortRides(appAccess.listUpcomingRides);
+                        //appAccess.sortRides(appAccess.listPastRides);
                     }
 
                     else {
@@ -157,22 +155,6 @@ carlos_meineFahrten.app = new Vue({
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
-        },
-
-        sortRides: function (rides) {
-            let i = 0;
-            while (i < rides.length - 1) {
-                if (rides[i].originalDate > rides[i + 1].originalDate) {
-                    let tmp = rides[i];
-                    rides[i] = rides[i + 1];
-                    rides[i + 1] = tmp;
-                    i = 0;
-                }
-                else {
-                    i++;
-                }
-            }
-            
         }
 
     },

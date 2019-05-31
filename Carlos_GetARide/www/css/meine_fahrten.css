@@ -68,6 +68,8 @@
     border-radius: 35px;
     padding: 3vh 3vh;
     list-style: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .start-destination {
@@ -77,6 +79,8 @@
     font-weight: 900;
     padding: 0px;
     margin: 0px;
+    width: 90%;
+    float: left;
 }
 
 .datetime {
@@ -198,6 +202,7 @@
     z-index: 0;
     padding: 0;
     margin: 0;
+    float: right;
 }
 
 .icon-route {

@@ -23,10 +23,13 @@
 
             <h6 class="timing-meine-Fahrten">Kommende Fahrten</h6>
             <div v-if="listUpcomingRides.length !== 0" id="rides-upcoming" class="list_meineFahrten">
-                <a v-for="(ride, index) in listUpcomingRides" href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_details.html">
+                <a v-for="(ride, index) in listUpcomingRides" href=ABS_PATH+"pages/meine_fahrten/meine_fahrten_details.html">
                     <div class="box-meine-fahrten">
-                        <p class="start-destination">{{ride.route}}</p>
-                        <p class="datetime">{{ride.date}}</p>
+                        <div class="row-no-padding">
+                            <p class="start-destination">{{ride.route}}</p>
+                            <img src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
+                        </div>
+                        <p class="datetime">{{ride.date}}</p>">
                     </div>
                 </a>
             </div>
@@ -34,7 +37,10 @@
             <div v-if="listPastRides.length !== 0" id="rides_past" class="list_meineFahrten">
                 <a v-for="(ride, index) in listPastRides" href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_details.html">
                     <div class="box-meine-fahrten">
-                        <p class="start-destination">{{ride.route}}</p>
+                        <div class="row-no-padding">
+                            <p class="start-destination">{{ride.route}}</p>
+                            <img src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
+                        </div>
                         <p class="datetime">{{ride.date}}</p>
                     </div>
                 </a>

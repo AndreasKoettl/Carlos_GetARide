@@ -14,7 +14,7 @@ function loadDriversRides()
 	$dbConnection = new DatabaseAccess;
 
     // Fahrten mit mit gegebenen User als Fahrer suchen.
-    $dbConnection->prepareStatement("SELECT * FROM drives WHERE users_idusers = :iduser");
+    $dbConnection->prepareStatement("SELECT * FROM drives WHERE users_idusers = :iduser ORDER BY driveDate ASC");
     $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
@@ -38,7 +38,7 @@ function loadCodriversRides()
 	$dbConnection = new DatabaseAccess;
 	
     // Fahrten mit mit gegebenen User als Mitfahrer suchen.
-    $dbConnection->prepareStatement("SELECT drives_iddrives FROM requests WHERE users_idusers = :iduser AND accepted = 1");
+    $dbConnection->prepareStatement("SELECT drives_iddrives FROM requests WHERE users_idusers = :iduser");
     $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $drives = $dbConnection->fetchAll();
@@ -52,6 +52,20 @@ function loadCodriversRides()
 		$singleDrive = $dbConnection->fetchAll();
 		array_push($result["data"], $singleDrive["data"]);
 	}
+
+	//sort array by driveDate
+    $i = 0;
+            while ($i < sizeof($result["data"]) - 1) {
+                if ($result["data"][$i][0]["driveDate"] > $result["data"][$i+1][0]["driveDate"]) {
+                    $tmp = $result["data"][$i][0]["driveDate"];
+                    $result["data"][$i][0]["driveDate"] = $result["data"][$i+1][0]["driveDate"];
+                    $result["data"][$i+1][0]["driveDate"] = $tmp;
+                    $i = 0;
+                }
+                else {
+                    $i++;
+                }
+            }
 
     // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
     if ($dbConnection->getRowCount() > 0) {
