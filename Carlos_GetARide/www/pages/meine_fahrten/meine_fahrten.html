@@ -62,7 +62,10 @@
                 <div class="row">
                     <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
                     <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
-                    <img src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
+                    <img v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].repeating == 0" src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
+                    <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
+                    <img v-if="indexPastRide !== -1 && listPastRides[indexPastRide].repeating == 0" src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
+                    <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                 </div>
 
                 <hr />
@@ -87,12 +90,14 @@
 
                 <div class="row">
                     <div class="price">
-                        <h6 class="details-h2">3 €</h6>
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].price}} €</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].price}} €</h6>
                         <p class="details-h3">pro Person</p>
                     </div>
                     <div class="seats">
-                        <h6 class="details-h2">2 Plätze</h6>
-                        <p class="details-h3">verfügbar</p>
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].passengersAvailable}} Plätze</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].passengersAvailable}} Plätze</h6>
+                        <p class="details-h3">noch verfügbar</p>
                     </div>
                 </div>
 
@@ -143,12 +148,13 @@
 
                 <div class="row">
                     <div class="price">
-                        <h6 class="details-h2">W-123AB</h6>
-                        <p class="details-h3">Audi A4 schwarz</p>
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].licensePlate}}</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].licensePlate}}</h6>
+                        <p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].details}}</p>
+                        <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].details}}</p>
                     </div>
                 </div>
 
-                <button class="button-red-full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_bearbeiten.html'">Fahrt bearbeiten</button>
                 <button class="button-red-full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_fahrt_geloescht.html'">Fahrt löschen</button>
 
             </section>
@@ -164,9 +170,15 @@
             <section class="content-box bottom-padding">
 
                 <div class="row">
-                    <h6 class="details-h1">Fr, 26. April 2019</h6>
-                    <img src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
+                    <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
+                    <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
+                    <img v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].repeating == 0" src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
+                    <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
+                    <img v-if="indexPastRide !== -1 && listPastRides[indexPastRide].repeating == 0" src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
+                    <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                 </div>
+                <p v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].isAccepted == 0" class="timing-meine-Fahrten" style="margin-top: 0px">noch nicht akzeptiert</p>
+                <p v-if="indexPastRide !== -1 && listPastRides[indexPastRide].isAccepted == 0" class="timing-meine-Fahrten" style="margin-top: 0px">noch nicht akzeptiert</p>
 
                 <hr />
 
@@ -174,12 +186,14 @@
                     <img src="../../images/icons/Verbindung.svg" class="icon-route" />
                     <div class="col box-route">
                         <div>
-                            <p class="details-h3">17:00 Uhr</p>
-                            <h6 class="details-h2">Linz, Hauptbahnhof</h6>
+                            <p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].time}}</p>
+                            <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].time}}</p>
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeStart}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeStart}}</h6>
                         </div>
                         <div>
-                            <p class="details-h3">17:00 Uhr</p>
-                            <h6 class="details-h2">Wien, Mariahilfer Straße</h6>
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeEnd}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeEnd}}</h6>
                         </div>
                     </div>
                 </div>
@@ -192,7 +206,8 @@
                     <li class="row-bottom-padding">
                         <img src="../../images/icons/user_colored.svg" class="icon-request" />
                         <div class="request-data">
-                            <h6 class="details-h2">Dominik Müller</h6>
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].firstName}} {{listUpcomingRides[indexUpcomingRide].lastName}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].firstName}} {{listPastRides[indexPastRide].lastName}}</h6>
                         </div>
                         <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
                     </li>
@@ -200,8 +215,10 @@
                     <li class="row-bottom-padding">
                         <img src="../../images/icons/car_info.svg" class="icon-request" />
                         <div class="request-data col">
-                            <h6 class="details-h2">W-123AB</h6>
-                            <h6 class="details-h5">Audi A4 schwarz</h6>
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].licensePlate}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].licensePlate}}</h6>
+                            <p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].details}}</p>
+                            <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].details}}</p>
                         </div>
                         <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
                     </li>
@@ -212,7 +229,8 @@
 
                 <div class="row">
                     <div class="price">
-                        <h6 class="details-h2">3 €</h6>
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].price}} €</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].price}} €</h6>
                         <p class="details-h3">pro Person</p>
                     </div>
                 </div>

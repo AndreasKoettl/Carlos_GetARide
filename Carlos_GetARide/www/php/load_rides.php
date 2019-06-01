@@ -6,7 +6,8 @@ require_once 'utilities.php';
 dispatch('/driver/:iduser', 'loadDriversRides');
 dispatch('/codriver/:iduser', 'loadCodriversRides');
 dispatch('/driverRepeating/:initialDriveId', 'loadDriversRepeatingRides');
-
+dispatch('/driverName/:iddriver', 'loadDriversName');
+dispatch('/coDriverNames/:iddrive', 'loadCoDriverNames');
 
 function loadDriversRides()
 {
@@ -101,6 +102,77 @@ function loadDriversRepeatingRides()
     }
     else {
         $result = setErrorMessage($result, "Keine wiederholenden Fahrten vorhanden.");
+    }
+
+    // Userdaten und Statusnachrichten zurückgeben.
+    return json_encode($result);
+
+}
+
+function loadDriversName()
+{
+	// Datenbankverbindung aufbauen.
+	$dbConnection = new DatabaseAccess;
+
+    // Fahrten mit mit gegebenen User als Fahrer suchen.
+    $dbConnection->prepareStatement("SELECT firstname, lastname FROM users WHERE idusers = :iddriver");
+    $dbConnection->bindParam(":iddriver", htmlentities(params("iddriver"), ENT_QUOTES));
+    $dbConnection->executeStatement();
+    $result = $dbConnection->fetchAll();
+
+    for ($i = 0; $i < sizeof($result["data"]); $i++) {
+        $result["data"][$i]["firstname"] = html_entity_decode($result["data"][$i]["firstname"]);
+        $result["data"][$i]["lastname"] = html_entity_decode($result["data"][$i]["lastname"]);
+    }
+    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+    if ($dbConnection->getRowCount() > 0) {
+
+        $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
+    }
+    else {
+        $result = setErrorMessage($result, "Fahrer wurde nicht gefunden.");
+    }
+
+    // Userdaten und Statusnachrichten zurückgeben.
+    return json_encode($result);
+	
+}
+
+function loadCoDriverNames()
+{
+    // Datenbankverbindung aufbauen.
+    $dbConnection = new DatabaseAccess;
+
+    // Fahrten mit mit gegebenen User als Fahrer suchen.
+    $dbConnection->prepareStatement("SELECT users_idusers FROM requests WHERE drives_iddrives = :iddrive");
+    $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+    $dbConnection->executeStatement();
+    $idusers = $dbConnection->fetchAll();
+
+    $result["data"] = array();
+
+    for ($i = 0; $i < sizeof($idusers["data"]); $i++) {
+        $dbConnection->prepareStatement("SELECT * FROM users WHERE idusers = :iduser");
+        $dbConnection->bindParam(":iduser", $idusers["data"][$i]["users_idusers"]);
+        $dbConnection->executeStatement();
+        $user = $dbConnection->fetchAll();
+/*
+        $accepted = array("accepted" => $val["accepted"]);
+        $merged = array_merge($user["data"], $accepted);*/
+        array_push($result["data"], $user["data"]);
+    }
+
+    for ($i = 0; $i < sizeof($result["data"]); $i++) {
+        $result["data"][$i][0]["firstname"] = html_entity_decode($result["data"][$i][0]["firstname"]);
+        $result["data"][$i][0]["lastname"] = html_entity_decode($result["data"][$i][0]["lastname"]);
+    }
+    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+    if ($dbConnection->getRowCount() > 0) {
+
+        $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
+    }
+    else {
+        $result = setErrorMessage($result, "Fahrer wurde nicht gefunden.");
     }
 
     // Userdaten und Statusnachrichten zurückgeben.

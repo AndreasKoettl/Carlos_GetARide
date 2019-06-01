@@ -2,6 +2,10 @@
     background-color: white;
 }
 
+.main-light-grey {
+    background-color: var(--grey-extralight);
+}
+
 .illustration_meineFahrten {
     width: 80vw;
     margin: 5vh auto;

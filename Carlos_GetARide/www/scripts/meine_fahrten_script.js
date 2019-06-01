@@ -71,56 +71,82 @@ carlos_meineFahrten.app = new Vue({
                         if (result["status"] === "success") {
                             // Ausgabe in Box
                             for (let i = 0; i < result["data"].length; i++) {
+                                let iddrive = result["data"][i]["iddrives"];
                                 let routeStart = result["data"][i]["locationStart"];
                                 let routeEnd = result["data"][i]["locationEnd"];
                                 let dateTime = new Date(result["data"][i]["driveDate"]);
                                 let accepted = result["data"][i]["accepted"];
+                                let price = result["data"][i]["price"];
+                                let passengers = result["data"][i]["passengers"];
+                                let maxPassengers = result["data"][i]["maxPassengers"];
+                                let licensePlate = result["data"][i]["licensePlate"];
+                                let details = result["data"][i]["details"];
 
                                 let currentDate = new Date();
 
                                 if (currentDate <= dateTime) {
                                         if (result["data"][i]["iddrives"] === result["data"][i]["initialDriveId"]) {
                                             appAccess.listUpcomingRides.push({
+                                                iddrive: iddrive,
                                                 routeStart: routeStart,
                                                 routeEnd: routeEnd,
                                                 date: appAccess.formatDate(dateTime),
                                                 time: appAccess.formatTime(dateTime),
                                                 repeating: 1,
                                                 initialDriveId: result["data"][i]["iddrives"],
-                                                accepted: accepted
+                                                accepted: accepted,
+                                                price: price,
+                                                passengersAvailable: maxPassengers - passengers,
+                                                licensePlate: licensePlate,
+                                                details: details
                                             });
                                         }
                                         else if (result["data"][i]["initialDriveId"] === null) {
                                             appAccess.listUpcomingRides.push({
+                                                iddrive: iddrive,
                                                 routeStart: routeStart,
                                                 routeEnd: routeEnd,
                                                 date: appAccess.formatDate(dateTime),
                                                 time: appAccess.formatTime(dateTime),
                                                 repeating: 0,
-                                                accepted: accepted
+                                                accepted: accepted,
+                                                price: price,
+                                                passengersAvailable: maxPassengers - passengers,
+                                                licensePlate: licensePlate,
+                                                details: details
                                             });
                                         }
                                 }
                                 else {
                                         if (result["data"][i]["iddrives"] === result["data"][i]["initialDriveId"]) {
                                             appAccess.listPastRides.push({
+                                                iddrive: iddrive,
                                                 routeStart: routeStart,
                                                 routeEnd: routeEnd,
                                                 date: appAccess.formatDate(dateTime),
                                                 time: appAccess.formatTime(dateTime),
                                                 repeating: 1,
                                                 initialDriveId: result["data"][i]["iddrives"],
-                                                accepted: accepted
+                                                accepted: accepted,
+                                                price: price,
+                                                passengersAvailable: maxPassengers - passengers,
+                                                licensePlate: licensePlate,
+                                                details: details
                                             });
                                         }
                                         else if (result["data"][i]["initialDriveId"] === null) {
                                             appAccess.listPastRides.push({
+                                                iddrive: iddrive,
                                                 routeStart: routeStart,
                                                 routeEnd: routeEnd,
                                                 date: appAccess.formatDate(dateTime),
                                                 time: appAccess.formatTime(dateTime),
                                                 repeating: 0,
-                                                accepted: accepted
+                                                accepted: accepted,
+                                                price: price,
+                                                passengersAvailable: maxPassengers - passengers,
+                                                licensePlate: licensePlate,
+                                                details: details
                                             });
                                         }
                                     }
@@ -158,57 +184,96 @@ carlos_meineFahrten.app = new Vue({
                     // Prüfen ob das Anmelden erfolgreich war.
                     if (result["status"] === "success") {
                         for (let i = 0; i < result["data"].length; i++) {
-
+                            let iddrive = result["data"][i][0]["iddrives"];
                             let routeStart = result["data"][i][0]["locationStart"];
                             let routeEnd = result["data"][i][0]["locationEnd"];
                             let dateTime = new Date(result["data"][i][0]["driveDate"]);
                             let accepted = result["data"][i]["accepted"];
+                            let price = result["data"][i][0]["price"];
+                            let passengers = result["data"][i][0]["passengers"];
+                            let maxPassengers = result["data"][i][0]["maxPassengers"];
+                            let licensePlate = result["data"][i][0]["licensePlate"];
+                            let details = result["data"][i][0]["details"];
+                            let idDriver = result["data"][i][0]["users_idusers"];
 
                             let currentDate = new Date();
 
                             if (currentDate <= dateTime) {
                                 if (result["data"][i][0]["iddrives"] === result["data"][i][0]["initialDriveId"]) {
                                     appAccess.listUpcomingRides.push({
+                                        iddrive: iddrive,
                                         routeStart: routeStart,
                                         routeEnd: routeEnd,
                                         date: appAccess.formatDate(dateTime),
                                         time: appAccess.formatTime(dateTime),
                                         repeating: 1,
                                         initialDriveId: result["data"][i][0]["iddrives"],
-                                        isAccepted: accepted
+                                        isAccepted: accepted,
+                                        price: price,
+                                        passengersAvailable: maxPassengers - passengers,
+                                        licensePlate: licensePlate,
+                                        details: details,
+                                        idDriver: idDriver,
+                                        firstName: "Driver",
+                                        lastName: idDriver
                                     });
                                 }
                                 else if (result["data"][i][0]["initialDriveId"] === null) {
+
                                     appAccess.listUpcomingRides.push({
+                                        iddrive: iddrive,
                                         routeStart: routeStart,
                                         routeEnd: routeEnd,
                                         date: appAccess.formatDate(dateTime),
                                         time: appAccess.formatTime(dateTime),
                                         repeating: 0,
-                                        isAccepted: accepted
+                                        isAccepted: accepted,
+                                        price: price,
+                                        passengersAvailable: maxPassengers - passengers,
+                                        licensePlate: licensePlate,
+                                        details: details,
+                                        idDriver: idDriver,
+                                        firstName: "Driver",
+                                        lastName: idDriver
                                     });
                                 }
                             }
                             else {
                                 if (result["data"][i][0]["iddrives"] === result["data"][i][0]["initialDriveId"] && accepted == 1) {
                                     appAccess.listPastRides.push({
+                                        iddrive: iddrive,
                                         routeStart: routeStart,
                                         routeEnd: routeEnd,
                                         date: appAccess.formatDate(dateTime),
                                         time: appAccess.formatTime(dateTime),
                                         repeating: 1,
                                         initialDriveId: result["data"][i][0]["iddrives"],
-                                        isAccepted: accepted
+                                        isAccepted: accepted,
+                                        price: price,
+                                        passengersAvailable: maxPassengers - passengers,
+                                        licensePlate: licensePlate,
+                                        details: details,
+                                        idDriver: idDriver,
+                                        firstName: "Driver",
+                                        lastName: idDriver
                                     });
                                 }
                                 else if (result["data"][i][0]["initialDriveId"] === null && accepted == 1) {
                                     appAccess.listPastRides.push({
+                                        iddrive: iddrive,
                                         routeStart: routeStart,
                                         routeEnd: routeEnd,
                                         date: appAccess.formatDate(dateTime),
                                         time: appAccess.formatTime(dateTime),
                                         repeating: 0,
-                                        isAccepted: accepted
+                                        isAccepted: accepted,
+                                        price: price,
+                                        passengersAvailable: maxPassengers - passengers,
+                                        licensePlate: licensePlate,
+                                        details: details,
+                                        idDriver: idDriver,
+                                        firstName: "Driver",
+                                        lastName: idDriver
                                     });
                                 }
                             }
@@ -322,9 +387,18 @@ carlos_meineFahrten.app = new Vue({
                         this.indexPastRide = index;
                         this.indexUpcomingRide = -1;
                     }
+
                     this.isDriver ? this.isDriverDetails = true : this.isCoDriverDetails = true;
-                    document.getElementsByTagName("body")[0].classList.remove("main");
-                    document.getElementsByTagName("body")[0].classList.add("main-white");
+
+                    if (list[index].isAccepted == 0) {
+                        document.getElementsByTagName("body")[0].classList.remove("main");
+                        document.getElementsByTagName("body")[0].classList.add("main-light-grey");
+                    }
+                    else {
+                        document.getElementsByTagName("body")[0].classList.remove("main");
+                        document.getElementsByTagName("body")[0].classList.add("main-white");
+                    }
+                    this.isDriver ? this.getCoDriversNames(index, isUpcoming) : this.getDriversName(list[index].idDriver, isUpcoming);
                 }
 
         },
@@ -366,19 +440,29 @@ carlos_meineFahrten.app = new Vue({
                     if (result["status"] === "success") {
 
                         for (let i = 0; i < result["data"].length; i++) {
-
+                            let iddrive = result["data"][i]["iddrives"];
                             let dateTime = new Date(result["data"][i]["driveDate"]);
                             let routeStart = result["data"][i]["locationStart"];
                             let routeEnd = result["data"][i]["locationEnd"];
+                            let price = result["data"][i]["price"];
+                            let passengers = result["data"][i]["passengers"];
+                            let maxPassengers = result["data"][i]["maxPassengers"];
+                            let licensePlate = result["data"][i]["licensePlate"];
+                            let details = result["data"][i]["details"];
 
                             //if (result["data"][i]["iddrives"] !== result["data"][i]["initialDriveId"]) {
                                 list.splice(index + 1, 0, {
+                                    iddrive: iddrive,
                                     routeStart: routeStart,
                                     routeEnd: routeEnd,
                                     date: appAccess.formatDate(dateTime),
                                     time: appAccess.formatTime(dateTime),
                                     repeating: 3,
-                                    initialDriveId: result["data"][i]["initialDriveId"]
+                                    initialDriveId: result["data"][i]["initialDriveId"],
+                                    price: price,
+                                    passengersAvailable: maxPassengers - passengers,
+                                    licensePlate: licensePlate,
+                                    details: details
                                 });
                             //}
                         }
@@ -418,23 +502,125 @@ carlos_meineFahrten.app = new Vue({
                         let reversedResult = result["data"].reverse();
 
                         for (let i = 0; i < reversedResult.length; i++) {
-
+                            let iddrive = result["data"][i][0]["iddrives"];
                             let dateTime = new Date(reversedResult[i][0]["driveDate"]);
                             let routeStart = result["data"][i][0]["locationStart"];
                             let routeEnd = result["data"][i][0]["locationEnd"];
+                            let price = result["data"][i][0]["price"];
+                            let passengers = result["data"][i][0]["passengers"];
+                            let maxPassengers = result["data"][i][0]["maxPassengers"];
+                            let licensePlate = result["data"][i][0]["licensePlate"];
+                            let details = result["data"][i][0]["details"];
+                            let idDriver = result["data"][i][0]["users_idusers"];
 
                             if (reversedResult[i][0]["initialDriveId"] === initalDriveId) {
                                 list.splice(index + 1, 0, {
+                                    iddrive: iddrive,
                                     routeStart: routeStart,
                                     routeEnd: routeEnd,
                                     date: appAccess.formatDate(dateTime),
                                     time: appAccess.formatTime(dateTime),
                                     repeating: 3,
                                     initialDriveId: initalDriveId,
-                                    isAccepted: reversedResult[i]["accepted"]
+                                    isAccepted: reversedResult[i]["accepted"],
+                                    price: price,
+                                    passengersAvailable: maxPassengers - passengers,
+                                    licensePlate: licensePlate,
+                                    details: details,
+                                    idDriver: idDriver,
+                                    firstName: "Driver",
+                                    lastName: idDriver
                                 });
                             }
                         }
+                    }
+
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
+        },
+
+        getDriversName: async function (iddriver, isUpcoming) {
+            var appAccess = this;
+            let list;
+            isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
+
+            let ajaxRequest = await $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/driverName/" + iddriver,
+                data: iddriver,
+                success: function (data) {
+                    let result = JSON.parse(data);
+
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+
+                        for (let i = 0; i < result["data"].length; i++) {
+
+                            let firstName = result["data"][i]["firstname"];
+                            let lastName = result["data"][i]["lastname"];
+
+                            for (let i = 0; i < list.length; i++) {
+                                if (list[i].idDriver === iddriver) {
+                                    list[i].firstName = firstName;
+                                    list[i].lastName = lastName;
+                                }
+                            }
+                        }
+                    }
+
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
+        },
+
+        getCoDriversNames: async function (index, isUpcoming) {
+            var appAccess = this;
+            let list;
+            isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
+            let iddrive = list[index].iddrive;
+
+            let ajaxRequest = await $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/coDriverNames/" + iddrive,
+                data: iddrive,
+                success: function (data) {
+                    let result = JSON.parse(data);
+                    console.log(result);
+
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+
+                       /* for (let i = 0; i < result["data"].length; i++) {
+
+                            let firstName = result["data"][i]["firstname"];
+                            let lastName = result["data"][i]["lastname"];
+
+                            for (let i = 0; i < list.length; i++) {
+                                if (list[i].idDriver === iddriver) {
+                                    list[i].firstName = firstName;
+                                    list[i].lastName = lastName;
+                                }
+                            }
+                        }*/
                     }
 
                     else {
@@ -452,7 +638,12 @@ carlos_meineFahrten.app = new Vue({
             (val === "isDriverDetails") ? this.isDriverDetails = false : this.isCoDriverDetails = false;
             this.listUpcomingRides = [];
             this.listPastRides = [];
-            document.getElementsByTagName("body")[0].classList.remove("main-white");
+            if (document.getElementsByTagName("body")[0].classList.contains("main-light-grey")) {
+                document.getElementsByTagName("body")[0].classList.remove("main-light-grey");
+            }
+            else {
+                document.getElementsByTagName("body")[0].classList.remove("main-white");
+            }
             document.getElementsByTagName("body")[0].classList.add("main");
             this.isDriver ? this.loadDriversRides() : this.loadCodriversRides();
             this.setAcceptedCss();
