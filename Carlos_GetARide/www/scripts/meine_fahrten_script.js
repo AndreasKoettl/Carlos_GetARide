@@ -11,7 +11,11 @@ carlos_meineFahrten.app = new Vue({
     data: {
         listUpcomingRides: [],
         listPastRides: [],
-        isDriver: true
+        isDriver: true,
+        isDriverDetails: false,
+        isCoDriverDetails: false,
+        indexUpcomingRide: -1,
+        indexPastRide: -1
     },
 
     methods: {
@@ -67,17 +71,20 @@ carlos_meineFahrten.app = new Vue({
                         if (result["status"] === "success") {
                             // Ausgabe in Box
                             for (let i = 0; i < result["data"].length; i++) {
-                                let route = result["data"][i]["locationStart"] + " - " + result["data"][i]["locationEnd"];
-                                let date = new Date(result["data"][i]["driveDate"]);
+                                let routeStart = result["data"][i]["locationStart"];
+                                let routeEnd = result["data"][i]["locationEnd"];
+                                let dateTime = new Date(result["data"][i]["driveDate"]);
                                 let accepted = result["data"][i]["accepted"];
 
                                 let currentDate = new Date();
 
-                                if (currentDate <= date) {
+                                if (currentDate <= dateTime) {
                                         if (result["data"][i]["iddrives"] === result["data"][i]["initialDriveId"]) {
                                             appAccess.listUpcomingRides.push({
-                                                route: route,
-                                                date: appAccess.formatDate(date),
+                                                routeStart: routeStart,
+                                                routeEnd: routeEnd,
+                                                date: appAccess.formatDate(dateTime),
+                                                time: appAccess.formatTime(dateTime),
                                                 repeating: 1,
                                                 initialDriveId: result["data"][i]["iddrives"],
                                                 accepted: accepted
@@ -85,8 +92,10 @@ carlos_meineFahrten.app = new Vue({
                                         }
                                         else if (result["data"][i]["initialDriveId"] === null) {
                                             appAccess.listUpcomingRides.push({
-                                                route: route,
-                                                date: appAccess.formatDate(date),
+                                                routeStart: routeStart,
+                                                routeEnd: routeEnd,
+                                                date: appAccess.formatDate(dateTime),
+                                                time: appAccess.formatTime(dateTime),
                                                 repeating: 0,
                                                 accepted: accepted
                                             });
@@ -95,8 +104,10 @@ carlos_meineFahrten.app = new Vue({
                                 else {
                                         if (result["data"][i]["iddrives"] === result["data"][i]["initialDriveId"]) {
                                             appAccess.listPastRides.push({
-                                                route: route,
-                                                date: appAccess.formatDate(date),
+                                                routeStart: routeStart,
+                                                routeEnd: routeEnd,
+                                                date: appAccess.formatDate(dateTime),
+                                                time: appAccess.formatTime(dateTime),
                                                 repeating: 1,
                                                 initialDriveId: result["data"][i]["iddrives"],
                                                 accepted: accepted
@@ -104,8 +115,10 @@ carlos_meineFahrten.app = new Vue({
                                         }
                                         else if (result["data"][i]["initialDriveId"] === null) {
                                             appAccess.listPastRides.push({
-                                                route: route,
-                                                date: appAccess.formatDate(date),
+                                                routeStart: routeStart,
+                                                routeEnd: routeEnd,
+                                                date: appAccess.formatDate(dateTime),
+                                                time: appAccess.formatTime(dateTime),
                                                 repeating: 0,
                                                 accepted: accepted
                                             });
@@ -146,16 +159,20 @@ carlos_meineFahrten.app = new Vue({
                     if (result["status"] === "success") {
                         for (let i = 0; i < result["data"].length; i++) {
 
-                            let route = result["data"][i][0]["locationStart"] + " - " + result["data"][i][0]["locationEnd"];
-                            let date = new Date(result["data"][i][0]["driveDate"]);
-                            let currentDate = new Date();
+                            let routeStart = result["data"][i][0]["locationStart"];
+                            let routeEnd = result["data"][i][0]["locationEnd"];
+                            let dateTime = new Date(result["data"][i][0]["driveDate"]);
                             let accepted = result["data"][i]["accepted"];
 
-                            if (currentDate <= date) {
+                            let currentDate = new Date();
+
+                            if (currentDate <= dateTime) {
                                 if (result["data"][i][0]["iddrives"] === result["data"][i][0]["initialDriveId"]) {
                                     appAccess.listUpcomingRides.push({
-                                        route: route,
-                                        date: appAccess.formatDate(date),
+                                        routeStart: routeStart,
+                                        routeEnd: routeEnd,
+                                        date: appAccess.formatDate(dateTime),
+                                        time: appAccess.formatTime(dateTime),
                                         repeating: 1,
                                         initialDriveId: result["data"][i][0]["iddrives"],
                                         isAccepted: accepted
@@ -163,8 +180,10 @@ carlos_meineFahrten.app = new Vue({
                                 }
                                 else if (result["data"][i][0]["initialDriveId"] === null) {
                                     appAccess.listUpcomingRides.push({
-                                        route: route,
-                                        date: appAccess.formatDate(date),
+                                        routeStart: routeStart,
+                                        routeEnd: routeEnd,
+                                        date: appAccess.formatDate(dateTime),
+                                        time: appAccess.formatTime(dateTime),
                                         repeating: 0,
                                         isAccepted: accepted
                                     });
@@ -173,8 +192,10 @@ carlos_meineFahrten.app = new Vue({
                             else {
                                 if (result["data"][i][0]["iddrives"] === result["data"][i][0]["initialDriveId"] && accepted == 1) {
                                     appAccess.listPastRides.push({
-                                        route: route,
-                                        date: appAccess.formatDate(date),
+                                        routeStart: routeStart,
+                                        routeEnd: routeEnd,
+                                        date: appAccess.formatDate(dateTime),
+                                        time: appAccess.formatTime(dateTime),
                                         repeating: 1,
                                         initialDriveId: result["data"][i][0]["iddrives"],
                                         isAccepted: accepted
@@ -182,8 +203,10 @@ carlos_meineFahrten.app = new Vue({
                                 }
                                 else if (result["data"][i][0]["initialDriveId"] === null && accepted == 1) {
                                     appAccess.listPastRides.push({
-                                        route: route,
-                                        date: appAccess.formatDate(date),
+                                        routeStart: routeStart,
+                                        routeEnd: routeEnd,
+                                        date: appAccess.formatDate(dateTime),
+                                        time: appAccess.formatTime(dateTime),
                                         repeating: 0,
                                         isAccepted: accepted
                                     });
@@ -236,6 +259,12 @@ carlos_meineFahrten.app = new Vue({
             let dayNB = date.getDate();
             let month = date.getMonth()+1;
             let year = date.getFullYear();
+
+
+            return day + ", " + dayNB + "." + month + "." + year;
+        },
+
+        formatTime: function (date) {
             let hours = date.getHours();
             let minutes = date.getMinutes();
 
@@ -243,7 +272,11 @@ carlos_meineFahrten.app = new Vue({
                 minutes = "0"+minutes;
             }
 
-            return day + ", " + dayNB + "." + month + "." + year + " " + hours + ":" + minutes + " Uhr";
+            if (hours < 10) {
+                hours = "0"+hours;
+            }
+
+            return hours + ":" + minutes + " Uhr";
         },
 
         showDetails: async function (index, isUpcoming) {
@@ -266,13 +299,32 @@ carlos_meineFahrten.app = new Vue({
                             if (i !== index) {
                                 list.splice(i, 1);
                                 //document.getElementsByClassName("box-meine-fahrten")[i].style.backgroundColor = "white";
-                                document.getElementsByClassName("box-meine-fahrten")[i].style.width = "80vw";
-                                document.getElementsByClassName("box-meine-fahrten")[i].style.margin = "0 auto 3vh auto";
+                                if (isUpcoming) {
+                                    document.getElementsByClassName("box-meine-fahrten")[i].style.width = "80vw";
+                                    document.getElementsByClassName("box-meine-fahrten")[i].style.margin = "0 auto 3vh auto";
+                                }
+                                else {
+                                    document.getElementsByClassName("box-meine-fahrten")[i+this.listUpcomingRides.length].style.width = "80vw";
+                                    document.getElementsByClassName("box-meine-fahrten")[i+this.listUpcomingRides.length].style.margin = "0 auto 3vh auto";
+                                }
                                 i--;
                             }
                         }
                     }
                     list[index].repeating = 1;
+                }
+                else if (list[index].repeating === 0 || list[index].repeating === 3) {
+                    if (isUpcoming) {
+                        this.indexUpcomingRide = index;
+                        this.indexPastRide = -1;
+                    }
+                    else {
+                        this.indexPastRide = index;
+                        this.indexUpcomingRide = -1;
+                    }
+                    this.isDriver ? this.isDriverDetails = true : this.isCoDriverDetails = true;
+                    document.getElementsByTagName("body")[0].classList.remove("main");
+                    document.getElementsByTagName("body")[0].classList.add("main-white");
                 }
 
         },
@@ -314,14 +366,21 @@ carlos_meineFahrten.app = new Vue({
                     if (result["status"] === "success") {
 
                         for (let i = 0; i < result["data"].length; i++) {
-                            if (result["data"][i]["iddrives"] !== result["data"][i]["initialDriveId"]) {
+
+                            let dateTime = new Date(result["data"][i]["driveDate"]);
+                            let routeStart = result["data"][i]["locationStart"];
+                            let routeEnd = result["data"][i]["locationEnd"];
+
+                            //if (result["data"][i]["iddrives"] !== result["data"][i]["initialDriveId"]) {
                                 list.splice(index + 1, 0, {
-                                    route: result["data"][i]["locationStart"] + " - " + result["data"][i]["locationEnd"],
-                                    date: appAccess.formatDate(new Date(result["data"][i]["driveDate"])),
+                                    routeStart: routeStart,
+                                    routeEnd: routeEnd,
+                                    date: appAccess.formatDate(dateTime),
+                                    time: appAccess.formatTime(dateTime),
                                     repeating: 3,
                                     initialDriveId: result["data"][i]["initialDriveId"]
                                 });
-                            }
+                            //}
                         }
                     }
 
@@ -356,15 +415,23 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
+                        let reversedResult = result["data"].reverse();
 
-                        for (let i = 0; i < result["data"].length; i++) {
-                            if (result["data"][i][0]["iddrives"] !== result["data"][i][0]["initialDriveId"] && result["data"][i][0]["initialDriveId"] === initalDriveId) {
+                        for (let i = 0; i < reversedResult.length; i++) {
+
+                            let dateTime = new Date(reversedResult[i][0]["driveDate"]);
+                            let routeStart = result["data"][i][0]["locationStart"];
+                            let routeEnd = result["data"][i][0]["locationEnd"];
+
+                            if (reversedResult[i][0]["initialDriveId"] === initalDriveId) {
                                 list.splice(index + 1, 0, {
-                                    route: result["data"][i][0]["locationStart"] + " - " + result["data"][i][0]["locationEnd"],
-                                    date: appAccess.formatDate(new Date(result["data"][i][0]["driveDate"])),
+                                    routeStart: routeStart,
+                                    routeEnd: routeEnd,
+                                    date: appAccess.formatDate(dateTime),
+                                    time: appAccess.formatTime(dateTime),
                                     repeating: 3,
                                     initialDriveId: initalDriveId,
-                                    isAccepted: result["data"][i]["accepted"]
+                                    isAccepted: reversedResult[i]["accepted"]
                                 });
                             }
                         }
@@ -379,6 +446,16 @@ carlos_meineFahrten.app = new Vue({
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
+        },
+
+        goBack: function (val) {
+            (val === "isDriverDetails") ? this.isDriverDetails = false : this.isCoDriverDetails = false;
+            this.listUpcomingRides = [];
+            this.listPastRides = [];
+            document.getElementsByTagName("body")[0].classList.remove("main-white");
+            document.getElementsByTagName("body")[0].classList.add("main");
+            this.isDriver ? this.loadDriversRides() : this.loadCodriversRides();
+            this.setAcceptedCss();
         }
 
     },

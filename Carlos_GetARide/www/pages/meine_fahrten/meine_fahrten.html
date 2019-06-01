@@ -9,6 +9,7 @@
 </head>
 <body class="main">
     <div id="app">
+        <div v-if="!isDriverDetails && !isCoDriverDetails">
         <header>
             <h1 class="main-heading">Meine Fahrten</h1>
         </header>
@@ -26,10 +27,10 @@
                 <a v-for="(ride, index) in listUpcomingRides" @click="showDetails(index, true)">
                     <div class="box-meine-fahrten">
                         <div class="row-no-padding">
-                            <p class="start-destination">{{ride.route}}</p>
+                            <p class="start-destination">{{ride.routeStart}} - {{ride.routeEnd}}</p>
                             <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
                         </div>
-                        <p class="datetime">{{ride.date}}</p>">
+                        <p class="datetime">{{ride.date}} {{ride.time}}</p>">
                     </div>
                 </a>
             </div>
@@ -38,15 +39,189 @@
                 <a v-for="(ride, index) in listPastRides" @click="showDetails(index, false)">
                     <div class="box-meine-fahrten">
                         <div class="row-no-padding">
-                            <p class="start-destination">{{ride.route}}</p>
+                            <p class="start-destination">{{ride.routeStart}} - {{ride.routeEnd}}</p>
                             <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
                         </div>
-                        <p class="datetime">{{ride.date}}</p>
+                        <p class="datetime">{{ride.date}} {{ride.time}}</p>
                     </div>
                 </a>
             </div>
 
         </section>
+        </div>
+
+
+        <div v-if="isDriverDetails">
+            <header class="row">
+                <img src="../../images/icons/back.svg" class="header-icon" @click="goBack('isDriverDetails')">
+                <h1>Meine Fahrten</h1>
+            </header>
+
+            <section class="content-box">
+
+                <div class="row">
+                    <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
+                    <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
+                    <img src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <img src="../../images/icons/Verbindung.svg" class="icon-route" />
+                    <div class="col box-route">
+                        <div>
+                            <p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].time}}</p>
+                            <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].time}}</p>
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeStart}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeStart}}</h6>
+                        </div>
+                        <div>
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeEnd}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeEnd}}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <div class="price">
+                        <h6 class="details-h2">3 €</h6>
+                        <p class="details-h3">pro Person</p>
+                    </div>
+                    <div class="seats">
+                        <h6 class="details-h2">2 Plätze</h6>
+                        <p class="details-h3">verfügbar</p>
+                    </div>
+                </div>
+
+                <h6 class="details-h4">Anfragen</h6>
+                <ul class="list">
+
+                    <li class="row-bottom-padding">
+                        <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                        <div class="request-data col">
+                            <h6 class="details-h2">Lisa Maier</h6>
+                            <div class="row-no-padding">
+                                <h6 class="details-h5">Akzeptieren</h6>
+                                <h6 class="details-h5">Ablehnen</h6>
+                            </div>
+                        </div>
+                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                    </li>
+
+                    <li class="row-bottom-padding">
+                        <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                        <div class="request-data col">
+                            <h6 class="details-h2">Dominik Müller</h6>
+                            <div class="row-no-padding">
+                                <h6 class="details-h5">Akzeptieren</h6>
+                                <h6 class="details-h5">Ablehnen</h6>
+                            </div>
+                        </div>
+                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                    </li>
+
+                </ul>
+
+                <h6 class="details-h4">Zusagen</h6>
+                <ul class="list">
+
+                    <li class="row-bottom-padding">
+                        <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                        <div class="request-data col">
+                            <h6 class="details-h2">Herbert Fischer</h6>
+                            <h6 class="details-h5">Ablehnen</h6>
+                        </div>
+                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                    </li>
+
+                </ul>
+
+                <hr />
+
+                <div class="row">
+                    <div class="price">
+                        <h6 class="details-h2">W-123AB</h6>
+                        <p class="details-h3">Audi A4 schwarz</p>
+                    </div>
+                </div>
+
+                <button class="button-red-full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_bearbeiten.html'">Fahrt bearbeiten</button>
+                <button class="button-red-full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_fahrt_geloescht.html'">Fahrt löschen</button>
+
+            </section>
+        </div>
+
+
+        <div v-if="isCoDriverDetails">
+            <header class="row">
+                <img src="../../images/icons/back.svg" class="header-icon" @click="goBack('isCoDriverDetails')">
+                <h1>Meine Fahrten</h1>
+            </header>
+
+            <section class="content-box bottom-padding">
+
+                <div class="row">
+                    <h6 class="details-h1">Fr, 26. April 2019</h6>
+                    <img src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <img src="../../images/icons/Verbindung.svg" class="icon-route" />
+                    <div class="col box-route">
+                        <div>
+                            <p class="details-h3">17:00 Uhr</p>
+                            <h6 class="details-h2">Linz, Hauptbahnhof</h6>
+                        </div>
+                        <div>
+                            <p class="details-h3">17:00 Uhr</p>
+                            <h6 class="details-h2">Wien, Mariahilfer Straße</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <h6 class="details-h4-padding-top">Fahrer</h6>
+                <ul class="list">
+
+                    <li class="row-bottom-padding">
+                        <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                        <div class="request-data">
+                            <h6 class="details-h2">Dominik Müller</h6>
+                        </div>
+                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                    </li>
+
+                    <li class="row-bottom-padding">
+                        <img src="../../images/icons/car_info.svg" class="icon-request" />
+                        <div class="request-data col">
+                            <h6 class="details-h2">W-123AB</h6>
+                            <h6 class="details-h5">Audi A4 schwarz</h6>
+                        </div>
+                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                    </li>
+
+                </ul>
+
+                <hr />
+
+                <div class="row">
+                    <div class="price">
+                        <h6 class="details-h2">3 €</h6>
+                        <p class="details-h3">pro Person</p>
+                    </div>
+                </div>
+
+                <button class="button-red-full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_fahrt_geloescht.html'">Fahrt canceln</button>
+
+            </section>
+        </div>
+
     </div>
 
     <script src="../../scripts/index.js"></script>
