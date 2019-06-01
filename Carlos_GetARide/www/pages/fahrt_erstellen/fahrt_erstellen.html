@@ -12,7 +12,7 @@
     <div id="app">
         <header-fahrt-erstellen title="Fahrt erstellen" @go-back="goBack()"></header-fahrt-erstellen>
 
-        <transition name="slide">
+        <transition :name="slide">
             <!-- ROUTE -->
             <div id="route" class="process-page" v-if="process[index] == 'route'">
                 <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
@@ -27,7 +27,7 @@
             </div>
         </transition>
 
-        <transition name="slide">
+        <transition :name="slide">
             <!-- REPEATING -->
             <div id="repeating" class="process-page" v-if="process[index] == 'repeating'">
                 <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
@@ -46,7 +46,7 @@
         </transition>
 
         <!-- DATETIME -->
-        <transition name="slide">
+        <transition :name="slide">
             <div id="dateTime" class="process-page" v-if="process[index] == 'dateTime'">
                 <img src="../../images/illustrationen/fahrt-anbieten_zeit.jpg" class="illustration-big" />
                 <div class="form-wrapper">
@@ -60,7 +60,7 @@
             </div>
         </transition>
 
-        <transition name="slide">
+        <transition :name="slide" >
             <!-- PASSENGERS -->
             <div id="passengers" class="process-page" v-if="process[index] == 'passengers'">
                 <img src="../../images/illustrationen/fahrt-anbieten_personen.jpg" class="illustration-big" />
@@ -78,10 +78,10 @@
             <!-- DETAILS -->
             <div id="details" class="process-page" v-if="process[index] == 'details'">
                 <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
-                <h1 class="fahrt-erstellen-heading">Wie sieht dein Auto aus?</h1>
-                <form id="detailsForm">
+                <form id="detailsForm" class="lift-form">
+                    <h1 class="fahrt-erstellen-heading">Wie sieht dein Auto aus?</h1>
                     <input placeholder="Kennzeichen" id="licensePlate" :value="licensePlateValue" />
-                    <textarea placeholder="Sonstige Merkmale (zum Beispiel: Farbe, Automarke)" :value="carDetailsValue" id="carDetails"></textarea>
+                    <textarea placeholder="Sonstige Merkmale wie Automarke, -farbe" :value="carDetailsValue" id="carDetails"></textarea>
                     <button class="red-button disabled" id="submitDetails" v-on:click="complete ? submitData(['licensePlate', 'carDetails']) : ''">Weiter</button>
                 </form>
             </div>

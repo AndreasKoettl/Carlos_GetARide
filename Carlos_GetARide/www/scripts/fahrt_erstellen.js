@@ -10,8 +10,8 @@ carlos.app = new Vue({
     el: "#app",
     data: {
         driveData: [],
-        process: ['route', 'repeating', 'dateTime', 'passengers', 'details', 'price', 'success'],
-        index: 0,
+        process: ['route', 'repeating', 'dateTime', 'details', 'passengers','price', 'success'],
+        index: 4,
         startValue: "",
         destinationValue: "",
         dateValue:"",
@@ -19,13 +19,15 @@ carlos.app = new Vue({
         passengersValue: "",
         licensePlateValue: "",
         carDetailsValue: "",
-        priceValue:"",
-        complete: false,        
-
-    },
+        priceValue: "",
+        slide:"slide",
+        complete: false        
+    },    
     methods: {
         goBack: function () {
+            this.slide = "reverse-slide";
             this.index--;
+            
         },
 
         // checks if all the data has been entered for the different pages
@@ -157,6 +159,12 @@ carlos.app = new Vue({
             this.carDetails = document.querySelector('#carDetails');
             this.price = document.querySelector('#priceValue');
 
+            if (this.process[this.index] == 'route') {
+                document.querySelector('#processHeader').classList.add("backButtonInvisible");
+            } else {
+                document.querySelector('#processHeader').classList.remove("backButtonInvisible");
+            }
+
 
             let activeCircle = document.querySelectorAll('.circle-active');
             if (activeCircle[0] != undefined) {
@@ -170,21 +178,15 @@ carlos.app = new Vue({
         }
     },
 
-    mounted: function () {       
-        if (this.process[this.index] == 'route') {
-            document.querySelector('#processHeader').classList.add("backButtonInvisible");
-        }
-        this.init();
-    },
-    beforeUpdate: function () {                
-    },
-
-    updated: function () {  
-        if (this.process[this.index] != 'route') {
-            document.querySelector('#processHeader').classList.remove("backButtonInvisible");
-        }        
+    mounted: function () {               
+        this.init();        
+    },   
+    updated: function () {            
         this.init();
         this.loadData();
-        this.checkIfComplete(); 
+        this.checkIfComplete();
+        this.back = false;
+        this.slide = "slide";
     }
+
 });
