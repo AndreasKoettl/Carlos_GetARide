@@ -38,7 +38,7 @@ function loadCodriversRides()
 	$dbConnection = new DatabaseAccess;
 	
     // Fahrten mit mit gegebenen User als Mitfahrer suchen.
-    $dbConnection->prepareStatement("SELECT drives_iddrives FROM requests WHERE users_idusers = :iduser");
+    $dbConnection->prepareStatement("SELECT drives_iddrives, accepted FROM requests WHERE users_idusers = :iduser");
     $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $drives = $dbConnection->fetchAll();
@@ -50,16 +50,19 @@ function loadCodriversRides()
 		$dbConnection->bindParam(":iddrive", $val["drives_iddrives"]);
 		$dbConnection->executeStatement();
 		$singleDrive = $dbConnection->fetchAll();
-		array_push($result["data"], $singleDrive["data"]);
+
+        $accepted = array("accepted" => $val["accepted"]);
+        $merged = array_merge($singleDrive["data"], $accepted);
+		array_push($result["data"], $merged);
 	}
 
 	//sort array by driveDate
     $i = 0;
             while ($i < sizeof($result["data"]) - 1) {
                 if ($result["data"][$i][0]["driveDate"] > $result["data"][$i+1][0]["driveDate"]) {
-                    $tmp = $result["data"][$i][0]["driveDate"];
-                    $result["data"][$i][0]["driveDate"] = $result["data"][$i+1][0]["driveDate"];
-                    $result["data"][$i+1][0]["driveDate"] = $tmp;
+                    $tmp = $result["data"][$i];
+                    $result["data"][$i] = $result["data"][$i+1];
+                    $result["data"][$i+1] = $tmp;
                     $i = 0;
                 }
                 else {
@@ -87,7 +90,7 @@ function loadDriversRepeatingRides()
     $dbConnection = new DatabaseAccess;
 
     // Fahrten mit mit gegebenen User als Fahrer suchen.
-    $dbConnection->prepareStatement("SELECT * FROM drives WHERE initialDriveId = :initialDriveId ORDER BY driveDate ASC");
+    $dbConnection->prepareStatement("SELECT * FROM drives WHERE initialDriveId = :initialDriveId ORDER BY driveDate DESC");
     $dbConnection->bindParam(":initialDriveId", htmlentities(params("initialDriveId"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
