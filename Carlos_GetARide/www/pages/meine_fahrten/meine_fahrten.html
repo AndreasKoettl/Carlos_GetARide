@@ -104,22 +104,12 @@
                 <h6 class="details-h4">Anfragen</h6>
                 <ul class="list">
 
-                    <li class="row-bottom-padding">
-                        <img src="../../images/icons/user_colored.svg" class="icon-request" />
-                        <div class="request-data col">
-                            <h6 class="details-h2">Lisa Maier</h6>
-                            <div class="row-no-padding">
-                                <h6 class="details-h5">Akzeptieren</h6>
-                                <h6 class="details-h5">Ablehnen</h6>
-                            </div>
-                        </div>
-                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
-                    </li>
 
+                    <div v-for="(coDriver, index) in listNotAccepted">
                     <li class="row-bottom-padding">
                         <img src="../../images/icons/user_colored.svg" class="icon-request" />
                         <div class="request-data col">
-                            <h6 class="details-h2">Dominik Müller</h6>
+                            <h6 class="details-h2">{{coDriver.firstName}} {{coDriver.lastName}}</h6>
                             <div class="row-no-padding">
                                 <h6 class="details-h5">Akzeptieren</h6>
                                 <h6 class="details-h5">Ablehnen</h6>
@@ -127,20 +117,23 @@
                         </div>
                         <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
                     </li>
+                    </div>
 
                 </ul>
 
                 <h6 class="details-h4">Zusagen</h6>
                 <ul class="list">
 
+                    <div v-for="(coDriver, index) in listAccepted">
                     <li class="row-bottom-padding">
                         <img src="../../images/icons/user_colored.svg" class="icon-request" />
                         <div class="request-data col">
-                            <h6 class="details-h2">Herbert Fischer</h6>
-                            <h6 class="details-h5">Ablehnen</h6>
+                                <h6 class="details-h2">{{coDriver.firstName}} {{coDriver.lastName}}</h6>
+                                <h6 class="details-h5">Ablehnen</h6>
                         </div>
                         <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
                     </li>
+                    </div>
 
                 </ul>
 

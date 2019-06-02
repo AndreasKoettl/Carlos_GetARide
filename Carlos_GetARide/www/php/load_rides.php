@@ -156,9 +156,17 @@ function loadCoDriverNames()
         $dbConnection->bindParam(":iduser", $idusers["data"][$i]["users_idusers"]);
         $dbConnection->executeStatement();
         $user = $dbConnection->fetchAll();
-/*
-        $accepted = array("accepted" => $val["accepted"]);
-        $merged = array_merge($user["data"], $accepted);*/
+
+
+        $dbConnection->prepareStatement("SELECT accepted FROM requests WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
+        $dbConnection->bindParam(":iduser", $idusers["data"][$i]["users_idusers"]);
+        $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+        $dbConnection->executeStatement();
+        $accepted = $dbConnection->fetchAll();
+
+        //$accepted = array("accepted" => $val["accepted"]);
+        //$merged = array_merge($user["data"][$i], $accepted["data"][$i][0]);
+        array_push($user["data"], $accepted["data"]);
         array_push($result["data"], $user["data"]);
     }
 
@@ -172,7 +180,7 @@ function loadCoDriverNames()
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Fahrer wurde nicht gefunden.");
+        $result = setErrorMessage($result, "Kein Mitfahrer gefunden.");
     }
 
     // Userdaten und Statusnachrichten zurückgeben.

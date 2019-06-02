@@ -11,6 +11,8 @@ carlos_meineFahrten.app = new Vue({
     data: {
         listUpcomingRides: [],
         listPastRides: [],
+        listAccepted: [],
+        listNotAccepted: [],
         isDriver: true,
         isDriverDetails: false,
         isCoDriverDetails: false,
@@ -604,23 +606,30 @@ carlos_meineFahrten.app = new Vue({
                 data: iddrive,
                 success: function (data) {
                     let result = JSON.parse(data);
-                    console.log(result);
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
 
-                       /* for (let i = 0; i < result["data"].length; i++) {
+                        for (let i = 0; i < result["data"].length; i++) {
 
-                            let firstName = result["data"][i]["firstname"];
-                            let lastName = result["data"][i]["lastname"];
+                            let firstName = result["data"][i][0]["firstname"];
+                            let lastName = result["data"][i][0]["lastname"];
+                            let accepted = result["data"][i][1][0]["accepted"];
 
-                            for (let i = 0; i < list.length; i++) {
-                                if (list[i].idDriver === iddriver) {
-                                    list[i].firstName = firstName;
-                                    list[i].lastName = lastName;
-                                }
+                            if (accepted == 0) {
+                                appAccess.listNotAccepted.push({
+                                    firstName: firstName,
+                                    lastName: lastName
+                                });
                             }
-                        }*/
+                            else {
+                                appAccess.listAccepted.push({
+                                    firstName: firstName,
+                                    lastName: lastName
+                                });
+                            }
+
+                        }
                     }
 
                     else {
@@ -638,6 +647,8 @@ carlos_meineFahrten.app = new Vue({
             (val === "isDriverDetails") ? this.isDriverDetails = false : this.isCoDriverDetails = false;
             this.listUpcomingRides = [];
             this.listPastRides = [];
+            this.listAccepted = [];
+            this.listNotAccepted = [];
             if (document.getElementsByTagName("body")[0].classList.contains("main-light-grey")) {
                 document.getElementsByTagName("body")[0].classList.remove("main-light-grey");
             }
