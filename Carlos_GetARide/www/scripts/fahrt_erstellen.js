@@ -11,7 +11,7 @@ carlos.app = new Vue({
     data: {
         driveData: [],
         process: ['route', 'repeating', 'dateTime', 'details', 'passengers','price', 'success'],
-        index: 4,
+        index: 0,          
         startValue: "",
         destinationValue: "",
         dateValue:"",
@@ -96,59 +96,16 @@ carlos.app = new Vue({
                 } else if (typeof (element) == "boolean") {
                     this.driveData[data[i]] = element;
                 }
-            }                     
+            }                
+
+            if (this.process[this.index] == "route") {
+                this.driveData['start-city'] = sessionStorage.getItem('start-city');
+                this.driveData['destination-city'] = sessionStorage.getItem('destination-city');
+            }
             this.index++;     
             this.complete = false;
         },        
-
-        loadData: function () {
-            // make sure that data that has been entered before is displayed again!
-            switch (this.process[this.index]) {
-                case 'route':        
-                    if (this.driveData['start'] != null) {
-                        this.startValue = this.driveData['start'];                        
-                    }
-                    if (this.driveData['destination'] != null) {
-                        this.destinationValue = this.driveData['destination'];
-                    }                    
-                    break;
-                case 'repeating':                    
-                    if (this.driveData['repeating'] != null) {
-                        if (this.driveData['repeating']) {
-                            this.clickYes();
-                        } else {
-                            this.clickNo();
-                        }
-                    }
-                    break;
-                case 'dateTime':                    
-                    if (this.driveData['date'] != null) {
-                        this.dateValue = this.driveData['date'];
-                    }
-                    if (this.driveData['time'] != null) {
-                        this.timeValue = this.driveData['time'];
-                    }      
-                    break;
-                case 'passengers':
-                    if (this.driveData['passengers'] != null) {
-                        this.passengersValue = this.driveData['passengers'];
-                    }
-                    break;
-                case 'details':
-                    if (this.driveData['licensePlate'] != null) {
-                        this.licensePlateValue = this.driveData['licensePlate'];
-                    }
-                    if (this.driveData['carDetails'] != null) {
-                        this.carDetailsValue = this.driveData['carDetails'];
-                    }
-                    break;
-                case 'price':
-                    if (this.driveData['price'] != null) {
-                        this.priceValue = this.driveData['price'];
-                    }
-                    break;
-            }
-        },
+        
         init: function () {
             this.start = document.querySelector('#start');            
             this.destination = document.querySelector('#destination');
@@ -170,7 +127,17 @@ carlos.app = new Vue({
             if (activeCircle[0] != undefined) {
                 activeCircle[0].classList.remove("circle-active");
             }
+
             document.querySelector('#circle-' + this.process[this.index]).className += (' circle-active');
+
+            // loadData for page repeating
+            if (this.driveData['repeating'] != null) {
+                if (this.driveData['repeating']) {
+                    this.clickYes();
+                } else {
+                    this.clickNo();
+                }
+            }
         },
 
         placeInputGoBack: function () { 
@@ -182,11 +149,11 @@ carlos.app = new Vue({
         this.init();        
     },   
     updated: function () {            
-        this.init();
-        this.loadData();
+        this.init();        
         this.checkIfComplete();
         this.back = false;
         this.slide = "slide";
+        console.log(this.driveData);
     }
 
 });
