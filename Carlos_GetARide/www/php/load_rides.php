@@ -8,6 +8,7 @@ dispatch('/codriver/:iduser', 'loadCodriversRides');
 dispatch('/driverRepeating/:initialDriveId', 'loadDriversRepeatingRides');
 dispatch('/driverName/:iddriver', 'loadDriversName');
 dispatch('/coDriverNames/:iddrive', 'loadCoDriverNames');
+dispatch('/cancelRide/:iddrive/:iduser', 'cancelRide');
 
 function loadDriversRides()
 {
@@ -181,6 +182,63 @@ function loadCoDriverNames()
     }
     else {
         $result = setErrorMessage($result, "Kein Mitfahrer gefunden.");
+    }
+
+    // Userdaten und Statusnachrichten zurückgeben.
+    return json_encode($result);
+
+}
+
+function cancelRide()
+{
+    // Datenbankverbindung aufbauen.
+    $dbConnection = new DatabaseAccess;
+
+    $dbConnection->prepareStatement("SELECT initialDriveId FROM drives WHERE iddrives = :iddrive");
+    $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+    $dbConnection->executeStatement();
+    $initialDriveId = $dbConnection->fetchAll();
+
+    $result = array();
+
+    // überprüfen ob es sich bei Fahrt um wiederholende Fahrt handelt
+    if ($initialDriveId["data"][0]["initialDriveId"] !== htmlentities(params("iddrive"), ENT_QUOTES)) {
+        // Fahrt löschen
+        $dbConnection->prepareStatement("DELETE FROM requests WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
+        $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
+        $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+        $dbConnection->executeStatement();
+        $result = $dbConnection->fetchAll();
+    }
+    else {
+        $dbConnection->prepareStatement("SELECT iddrives FROM drives WHERE initialDriveId = :initialDriveId ORDER BY driveDate ASC");
+        $dbConnection->bindParam(":initialDriveId", $initialDriveId["data"][0]["initialDriveId"]);
+        $dbConnection->executeStatement();
+        $nextRides = $dbConnection->fetchAll();
+
+        for ($i = 1; $i < sizeof($nextRides["data"]); $i++) {
+            $dbConnection->prepareStatement("UPDATE drives SET initialDriveId = :newInitialDriveId WHERE iddrives = :iddrive");
+            $dbConnection->bindParam(":newInitialDriveId", $nextRides["data"][1]["iddrives"]);
+            $dbConnection->bindParam(":iddrive", $nextRides["data"][$i]["iddrives"]);
+            $dbConnection->executeStatement();
+            $newRepetitions = $dbConnection->fetchAll();
+        }
+
+        $dbConnection->prepareStatement("DELETE FROM requests WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
+        $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
+        $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+        $dbConnection->executeStatement();
+        $result = $dbConnection->fetchAll();
+    }
+
+
+    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+    if ($dbConnection->getRowCount() > 0) {
+
+        $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
+    }
+    else {
+        $result = setErrorMessage($result, "Keine Fahrten vorhanden.");
     }
 
     // Userdaten und Statusnachrichten zurückgeben.

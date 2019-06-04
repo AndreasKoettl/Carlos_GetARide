@@ -60,8 +60,12 @@
             <section class="content-box">
 
                 <div class="row">
-                    <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
-                    <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
+                    <div class="col">
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
+                        <p v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].time}}</p>
+                        <p v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].time}}
+                    </div>
                     <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                     <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                 </div>
@@ -161,8 +165,12 @@
             <section class="content-box bottom-padding">
 
                 <div class="row">
-                    <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
-                    <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
+                    <div class="col">
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
+                        <p v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].time}}</p>
+                        <p v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].time}}
+                    </div>
                     <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                     <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                 </div>
@@ -224,7 +232,7 @@
                     </div>
                 </div>
 
-                <button class="button-red-full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_fahrt_geloescht.html'">Fahrt canceln</button>
+                <button v-if="indexUpcomingRide !== -1" class="button-red-full" @click="cancelRide(indexUpcomingRide, true)">Fahrt canceln</button>
 
             </section>
         </div>

@@ -367,15 +367,6 @@ carlos_meineFahrten.app = new Vue({
                         if (list[i].initialDriveId === list[index].initialDriveId) {
                             if (i !== index) {
                                 list.splice(i, 1);
-                                //document.getElementsByClassName("box-meine-fahrten")[i].style.backgroundColor = "white";
-                                if (isUpcoming) {
-                                    document.getElementsByClassName("box-meine-fahrten")[i].style.width = "80vw";
-                                    document.getElementsByClassName("box-meine-fahrten")[i].style.margin = "0 auto 3vh auto";
-                                }
-                                else {
-                                    document.getElementsByClassName("box-meine-fahrten")[i+this.listUpcomingRides.length].style.width = "80vw";
-                                    document.getElementsByClassName("box-meine-fahrten")[i+this.listUpcomingRides.length].style.margin = "0 auto 3vh auto";
-                                }
                                 i--;
                             }
                         }
@@ -392,17 +383,16 @@ carlos_meineFahrten.app = new Vue({
                         this.indexUpcomingRide = -1;
                     }
 
-                    this.isDriver ? this.isDriverDetails = true : this.isCoDriverDetails = true;
-
-                    /*if (list[index].isAccepted == 0) {
-                        document.getElementsByTagName("body")[0].classList.remove("main");
-                        document.getElementsByTagName("body")[0].classList.add("main-light-grey");
+                    if (this.isDriver) {
+                        await (this.isDriverDetails = true);
+                        this.getCoDriversNames(index, isUpcoming);
+                    } else {
+                        await (this.isCoDriverDetails = true);
+                        if (list[index].isAccepted == 0) {
+                            document.getElementsByTagName('button')[0].innerHTML = "Anfrage löschen";
+                            this.getDriversName(list[index].idDriver, isUpcoming);
+                        }
                     }
-                    else {
-                        document.getElementsByTagName("body")[0].classList.remove("main");
-                        document.getElementsByTagName("body")[0].classList.add("main-white");
-                    }*/
-                    this.isDriver ? this.getCoDriversNames(index, isUpcoming) : this.getDriversName(list[index].idDriver, isUpcoming);
                 }
 
         },
@@ -429,7 +419,7 @@ carlos_meineFahrten.app = new Vue({
             let list;
             isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
 
-            let ajaxRequest = await $.ajax({
+            await $.ajax({
                 accepts: "application/json",
                 async: true,
                 contentType: false,
@@ -490,7 +480,7 @@ carlos_meineFahrten.app = new Vue({
             let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
             let initalDriveId = list[index].initialDriveId;
 
-            let ajaxRequest = await $.ajax({
+            await $.ajax({
                 accepts: "application/json",
                 async: true,
                 contentType: false,
@@ -644,7 +634,40 @@ carlos_meineFahrten.app = new Vue({
             });
         },
 
-        goBack: function (val) {
+        cancelRide: async function (index, isUpcoming) {
+
+            var appAccess = this;
+            let list;
+            isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
+            let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
+
+            await $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/cancelRide/" + list[index].iddrive + "/" + iduser,
+                data: list[index].iddrive, iduser,
+                success: function (data) {
+                    let result = JSON.parse(data);
+
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+                        appAccess.goBack('isCoDriverDetails');
+                    }
+
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
+        },
+
+        goBack: async function (val) {
             (val === "isDriverDetails") ? this.isDriverDetails = false : this.isCoDriverDetails = false;
             this.listUpcomingRides = [];
             this.listPastRides = [];
@@ -657,7 +680,12 @@ carlos_meineFahrten.app = new Vue({
                 document.getElementsByTagName("body")[0].classList.remove("main-white");
             }
             document.getElementsByTagName("body")[0].classList.add("main");*/
-            this.isDriver ? this.loadDriversRides() : this.loadCodriversRides();
+            if (val === "isDriverDetails") {
+                this.loadDriversRides();
+            } else {
+                await this.loadCodriversRides();
+                this.switchMenu();
+            }
             this.setAcceptedCss();
         }
 
