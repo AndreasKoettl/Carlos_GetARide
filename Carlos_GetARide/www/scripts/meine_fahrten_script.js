@@ -299,12 +299,14 @@ carlos_meineFahrten.app = new Vue({
         setAcceptedCss: function () {
             for (let i = 0; i < this.listUpcomingRides.length; i++) {
                 if (this.listUpcomingRides[i].isAccepted == 0) {
-                    document.getElementsByClassName("box-meine-fahrten")[i].style.backgroundColor = "var(--grey-extralight)";
+                    document.getElementsByClassName("box-meine-fahrten")[i].style.backgroundColor = "white";
+                    document.getElementsByClassName("box-meine-fahrten")[i].style.border = "2px solid var(--red)";
                 }
             }
             for (let i = 0; i < this.listPastRides.length; i++) {
                 if (this.listPastRides[i].isAccepted == 0) {
-                    document.getElementsByClassName("box-meine-fahrten")[i+this.listUpcomingRides.length].style.backgroundColor = "var(--grey-extralight)";
+                    document.getElementsByClassName("box-meine-fahrten")[i].style.backgroundColor = "white";
+                    document.getElementsByClassName("box-meine-fahrten")[i].style.border = "2px solid var(--red)";
                 }
             }
         },
@@ -392,14 +394,14 @@ carlos_meineFahrten.app = new Vue({
 
                     this.isDriver ? this.isDriverDetails = true : this.isCoDriverDetails = true;
 
-                    if (list[index].isAccepted == 0) {
+                    /*if (list[index].isAccepted == 0) {
                         document.getElementsByTagName("body")[0].classList.remove("main");
                         document.getElementsByTagName("body")[0].classList.add("main-light-grey");
                     }
                     else {
                         document.getElementsByTagName("body")[0].classList.remove("main");
                         document.getElementsByTagName("body")[0].classList.add("main-white");
-                    }
+                    }*/
                     this.isDriver ? this.getCoDriversNames(index, isUpcoming) : this.getDriversName(list[index].idDriver, isUpcoming);
                 }
 
@@ -408,16 +410,15 @@ carlos_meineFahrten.app = new Vue({
         setRepetitionCss: function () {
             for (let i = 0; i < this.listUpcomingRides.length; i++) {
                 if (this.listUpcomingRides[i].repeating === 3) {
-                    //document.getElementsByClassName("box-meine-fahrten")[i].style.backgroundColor = "var(--grey-extralight)";
-                    document.getElementsByClassName("box-meine-fahrten")[i].style.width = "73vw";
-                    document.getElementsByClassName("box-meine-fahrten")[i].style.marginRight = "10vw";
+                    document.getElementsByClassName("box-meine-fahrten")[i].style.backgroundColor = "white";
+                    document.getElementsByClassName("box-meine-fahrten")[i].style.border = "2px solid var(--grey-extralight)";
                 }
             }
             for (let i = 0; i < this.listPastRides.length; i++) {
                 if (this.listPastRides[i].repeating === 3) {
                     //document.getElementsByClassName("box-meine-fahrten")[i+this.listUpcomingRides.length].style.backgroundColor = "var(--grey-extralight)";
-                    document.getElementsByClassName("box-meine-fahrten")[i+this.listUpcomingRides.length].style.width = "73vw";
-                    document.getElementsByClassName("box-meine-fahrten")[i+this.listUpcomingRides.length].style.marginRight = "10vw";
+                    document.getElementsByClassName("box-meine-fahrten")[i].style.backgroundColor = "white";
+                    document.getElementsByClassName("box-meine-fahrten")[i].style.border = "2px solid var(--grey-extralight)";
                 }
             }
         },
@@ -649,13 +650,13 @@ carlos_meineFahrten.app = new Vue({
             this.listPastRides = [];
             this.listAccepted = [];
             this.listNotAccepted = [];
-            if (document.getElementsByTagName("body")[0].classList.contains("main-light-grey")) {
+            /*if (document.getElementsByTagName("body")[0].classList.contains("main-light-grey")) {
                 document.getElementsByTagName("body")[0].classList.remove("main-light-grey");
             }
             else {
                 document.getElementsByTagName("body")[0].classList.remove("main-white");
             }
-            document.getElementsByTagName("body")[0].classList.add("main");
+            document.getElementsByTagName("body")[0].classList.add("main");*/
             this.isDriver ? this.loadDriversRides() : this.loadCodriversRides();
             this.setAcceptedCss();
         }

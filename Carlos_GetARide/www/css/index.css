@@ -19,10 +19,6 @@
     --grey-extralight: #EAEAEA;
 }
 
-.main {
-    background-color: var(--blue-light);
-}
-
 .main-heading {
     padding-top: 3vh;
     padding-bottom: 3vh;

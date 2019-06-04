@@ -7,13 +7,13 @@
     <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <title>Meine Fahrten</title>
 </head>
-<body class="main">
+<body class="main-white">
     <div id="app">
         <div v-if="!isDriverDetails && !isCoDriverDetails">
         <header>
             <h1 class="main-heading">Meine Fahrten</h1>
         </header>
-        <img src="../../images/illustrationen/meineFahrten_forGreyBG.svg" class="illustration_meineFahrten">
+        <img src="../../images/illustrationen/meineFahrten_forWhiteGB.svg" class="illustration_meineFahrten">
         <nav id="nav-bar">
             <div id="slider" @click="switchMenu"></div>
             <p id="driver" class="menu active_menu" @click="switchMenu">Fahrer</p>
@@ -62,20 +62,18 @@
                 <div class="row">
                     <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
                     <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
-                    <img v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].repeating == 0" src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
                     <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
-                    <img v-if="indexPastRide !== -1 && listPastRides[indexPastRide].repeating == 0" src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
                     <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                 </div>
 
                 <hr />
 
                 <div class="row">
-                    <img src="../../images/icons/Verbindung.svg" class="icon-route" />
+                    <img src="../../images/icons/Verbindung_smaller.svg" class="icon-route" />
                     <div class="col box-route">
                         <div>
-                            <p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].time}}</p>
-                            <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].time}}</p>
+                            <!--<p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].time}}</p>
+                            <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].time}}</p>-->
                             <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeStart}}</h6>
                             <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeStart}}</h6>
                         </div>
@@ -165,18 +163,16 @@
                 <div class="row">
                     <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
                     <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
-                    <img v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].repeating == 0" src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
                     <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
-                    <img v-if="indexPastRide !== -1 && listPastRides[indexPastRide].repeating == 0" src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
                     <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                 </div>
-                <p v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].isAccepted == 0" class="timing-meine-Fahrten" style="margin-top: 0px">noch nicht akzeptiert</p>
+                <p v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].isAccepted == 0" class="details-h4" style="margin-top: 0px">noch nicht akzeptiert</p>
                 <p v-if="indexPastRide !== -1 && listPastRides[indexPastRide].isAccepted == 0" class="timing-meine-Fahrten" style="margin-top: 0px">noch nicht akzeptiert</p>
 
                 <hr />
 
                 <div class="row">
-                    <img src="../../images/icons/Verbindung.svg" class="icon-route" />
+                    <img src="../../images/icons/Verbindung_smaller.svg" class="icon-route" />
                     <div class="col box-route">
                         <div>
                             <p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].time}}</p>
