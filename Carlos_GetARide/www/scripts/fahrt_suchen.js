@@ -107,9 +107,8 @@ mtd280.app = new Vue({
         },
 
         showDetails: function (index) {
-            this.resultsOverview = false;
-            this.index = index;
             this.getUserById(this.searchData[index]["users_idusers"], index);
+            this.index = index;
         },
 
         toUcFirst: function (string) {
@@ -134,6 +133,7 @@ mtd280.app = new Vue({
                         console.log(data["data"]);
                         let thename = data["data"][0]["firstname"] + " " + data["data"][0]["lastname"];
                         appAccess.searchData[index]["fullname"] = thename;
+                        appAccess.resultsOverview = false;
                     }
                 },
                 error: function () {

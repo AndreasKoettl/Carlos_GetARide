@@ -1,5 +1,4 @@
 ﻿#profile-content {
-    background-color: var(--blue-light);
     font-family: 'Roboto Slab', serif;
     font-weight: 400;
     color: var(--grey-dark);
@@ -35,20 +34,36 @@ h2{
     margin:10vw auto;
 }
 
-.options img{
-    width: 6vw;
-    margin: 0 4vw 0;
+.profile-options{
+    width: 90vw;
+    margin: 10vh auto 0 auto;
+}
+
+.profile-options img {
+    height: auto;
+    width: 7vw;
+    margin: 0 5vw 0 auto;
     position: relative;
-    top: 0.6vh;
 }
 
-.options a{
-    display:block;
-    font-size:2.5vh;
+.profile-options a{
+    border: 2px solid var(--grey-extralight);
+    border-radius: 50px;
+    display: block;
+    font-size: 2.5vh;
+    color: var(--grey-dark);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:center;
 }
 
-.options a:first-of-type{
-    margin-bottom: 3vh;
+.profile-options a:first-of-type {
+    margin-bottom: 2vh;
+}
+.profile-options p{
+    margin: 1.3vh 0 1.3vh 5vw;
+    width: 70vw;
 }
 
 .data{
@@ -67,14 +82,4 @@ h2{
     margin:0 auto;
 }
 
-.options {
-    background-color: #FFF;
-    border-radius: 15px;
-    color: var(--red);
-
-    box-sizing:border-box;
-    width: 70vw;
-    margin: 7vh auto 0 auto;
-    padding: 6vw;
-}
 

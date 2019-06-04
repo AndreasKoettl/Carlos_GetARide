@@ -55,6 +55,8 @@ dispatch_post('/getUser/:iduser', 'getUserById');
 					
 				$query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate >= '$datetime'";
 
+				$query .= " ORDER BY driveDate ASC";
+
 				$dbConnection = new DatabaseAccess;
 
 				$dbConnection->prepareStatement($query);
