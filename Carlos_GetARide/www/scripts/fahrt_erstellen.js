@@ -21,13 +21,48 @@ carlos.app = new Vue({
         carDetailsValue: "",
         priceValue: "",
         slide:"slide",
-        complete: false        
+        complete: false,                
     },    
     methods: {
         goBack: function () {
             this.slide = "reverse-slide";
-            this.index--;
-            
+            this.index--;            
+        },
+
+        searchBoxEnter: function () {
+            // change back-button here !!!
+            // change this css-settings to emit for more general component !!!
+            document.querySelector('#processHeader').classList.remove("backButtonInvisible");
+            document.querySelector('#back').addEventListener('click', this.searchBoxLeave);
+
+            // hide all unnecessary elements
+            document.querySelectorAll('.illustration-big')[0].classList.add('displayNone');
+            document.querySelectorAll('h1')[0].classList.add('displayNone');
+            let button = document.getElementsByClassName('red-button');
+            button[0].classList.add('displayNone');
+
+            // hide all fields of the form, except active            
+            let children = document.getElementsByClassName('textinput');
+            for (let i = 0; i < children.length; i++) {
+                if (!children[i].className.includes('placeInputActive')) {
+                    children[i].classList.add('displayNone');
+                }
+            }            
+        },
+
+        searchBoxLeave: function (state) {
+            // set city for database !!!?
+            if (state == 'back') {
+                document.getElementsByClassName('placeInputActive')[0].classList.remove('placeInputActive');
+                document.getElementById('suggestions').classList.add('displayNone');
+            }
+            // display all hidden elements again
+            let hiddenElements = document.querySelectorAll('.displayNone');
+            for (let i = 0; i < hiddenElements.length; i++) {
+                hiddenElements[i].classList.remove('displayNone');
+            }
+
+            document.querySelector('#processHeader').classList.add("backButtonInvisible");  
         },
 
         // checks if all the data has been entered for the different pages
@@ -138,11 +173,7 @@ carlos.app = new Vue({
                     this.clickNo();
                 }
             }
-        },
-
-        placeInputGoBack: function () { 
-     
-        }
+        },        
     },
 
     mounted: function () {               
@@ -152,8 +183,7 @@ carlos.app = new Vue({
         this.init();        
         this.checkIfComplete();
         this.back = false;
-        this.slide = "slide";
-        console.log(this.driveData);
+        this.slide = "slide";        
     }
 
 });

@@ -52,24 +52,20 @@ Vue.component('header-title', {
     props: ['title'],
     template: `
     <header>
-            <h1 class="mainHeading">{{title}}</h1>
+       <h1 class="mainHeading">{{title}}</h1>
     </header>
 `
 });
-// /carlos/Carlos_GetARide/www/images/icons/back.svg
+
+
 Vue.component('header-back', {
     props: ['title'],
     template: `
     <header class="row">
-        <img src="/carlos/Carlos_GetARide/www/images/icons/back.svg" class="header_icon" @click="goBack">
+        <img src="/carlos/Carlos_GetARide/www/images/icons/back.svg" class="header_icon" @click="$emit('go-back', $event.target.value)">
         <h1>{{title}}</h1>
     </header>
-`,
-    methods: {
-        goBack: function () {
-            history.back();
-        }
-    }
+`
 });
 
 // Header with the process bar for "fahrt-erstellen"
@@ -104,76 +100,125 @@ Vue.component('place-input', {
         }
     },
     props: ['id', 'placeholder'],
-    template: `<input v-on:click="placeInputClicked()" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder"/>`,
+    template: `<div><input v-on:click="placeInputClicked()" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder" v-on:keyup="return autoCompleteListener(event.target, event);"/>
+<img src="/carlos/Carlos_GetARide/www/images/icons/x_icon.svg" class="clear-icon" v-on:click="clearInput()"/></div>`,
     methods: {
-        initAutocomplete: function () {
-            alert('fail');
-        },
-
         placeInputClicked: function () {
-            if (this.clickCounter == 0) {
-                // change back-button here !!!
-                document.querySelector('#processHeader').classList.remove("backButtonInvisible");
+            this.inputField = event.target;
+            this.inputField.classList.add("placeInputActive");
 
-                // hide all unnecessary elements
-                document.querySelectorAll('.illustration-big')[0].classList.add('displayNone');
-                document.querySelectorAll('h1')[0].classList.add('displayNone');
-                this.inputField = event.target;
-                this.inputField.classList.add("placeInputActive");
+            // event for style-changes
+            this.$emit('searchbox-enter');
 
-                // hide all fields of the form, except active
-                let children = this.inputField.parentElement.childNodes;
-                for (let i = 0; i < children.length; i += 2) {
-                    if (!children[i].className.includes('placeInputActive')) {
-                        children[i].classList.add('displayNone');
-                    }
+            // Ajax-Request abschicken
+            this.AUTOCOMPLETION_URL = 'https://autocomplete.geocoder.api.here.com/6.2/suggest.json';
+            this.ajaxRequest = new XMLHttpRequest();
+            this.query = '';
+
+            // Attach the event listeners to the XMLHttpRequest object
+            this.ajaxRequest.addEventListener("load", this.onAutoCompleteSuccess);
+            this.ajaxRequest.addEventListener("error", this.onAutoCompleteFailed);
+            this.ajaxRequest.responseType = "json";
+
+            // set up containers for the panel
+            this.suggestionsContainer = document.getElementById('suggestions');
+            this.suggestionsContainer.classList.remove('displayNone');
+
+            // initialize communication with the platform
+            this.APPLICATION_ID = 'l4fIqul1eFhApaijcp0i';
+            this.APPLICATION_CODE = 'dUxBZHyGQYjDx1AMP169Bw';
+
+            var platform = new H.service.Platform({
+                app_id: this.APPLICATION_ID,
+                app_code: this.APPLICATION_CODE,
+                useCIT: false,
+                useHTTPS: true
+            });
+
+            var defaultLayers = platform.createDefaultLayers();
+            var geocoder = platform.getGeocodingService();
+        },
+
+        /**
+        * If the text in the text box  has changed, and is not empty,
+        * send a geocoding auto-completion request to the server.
+        *
+        * @param {Object} textBox the textBox DOM object linked to this event
+        * @param {Object} event the DOM event which fired this listener
+        */
+        autoCompleteListener: function (textBox, event) {            
+            if (this.query != textBox.value) {
+                if (textBox.value.length >= 1) {
+                    var params = '?' +
+                        'query=' + encodeURIComponent(textBox.value) +
+                        '&maxresults=10' +
+                        '&language=de' +
+                        '&mapview=48.551203, 16.756126;47.001742, 12.425370' +
+                        '&app_id=' + this.APPLICATION_ID +
+                        '&app_code=' + this.APPLICATION_CODE;
+                    this.ajaxRequest.open('GET', this.AUTOCOMPLETION_URL + params);
+                    this.ajaxRequest.send();
                 }
             }
-            this.clickCounter++;
+            this.query = textBox.value;
+        },
 
-            if (this.noSearchBox) {                
-                // Create the autocomplete object, restricting the search predictions to
-                // geographical location types.
-                this.searchBox = new google.maps.places.Autocomplete(this.inputField, { types: ['geocode'] });
-                
-                // Avoid paying for data that you don't need by restricting the set of
-                // place fields that are returned to just the address components.
-                this.searchBox.setFields(['address_component']);
+        onAutoCompleteSuccess: function () {
+            this.addSuggestionsToPanel(this.ajaxRequest.response);  // In this context, 'this' means the XMLHttpRequest itself.        
+        },
 
-                // When the user selects an address from the drop-down, populate the
-                // address fields in the form.                
-                this.searchBox.addListener('place_changed', this.placePicked);
+        addSuggestionsToPanel: function (response) {
+            this.suggestionsContainer.innerHTML = "";
+            for (let i = 0; i < response['suggestions'].length; i++) {
+                let data = response['suggestions'][i];
 
-                //restrict search to certain countries
-                this.searchBox.setComponentRestrictions({ 'country': ['at'] });                
-                this.noSearchBox = false;
+                let suggestion = document.createElement('li');
+                suggestion.classList.add('suggestion');
+
+                let matchlevel = data['matchLevel'];
+                if (matchlevel == 'city') {
+                    suggestion.innerHTML = 'city'+data['address']['city'] + ", " + data['address']['country'];
+                } else if (matchlevel == 'street') {
+                    suggestion.innerHTML = "street"+data['address']['street'] + ", " + data['address']['city'];
+                } else if (matchlevel == 'houseNumber') {
+                    suggestion.innerHTML = "house" +data['address']['street'] + " " + data['address']['houseNumber'] + ", " + data['address']['city'];
+                } else if (matchlevel == 'district') {
+                    continue;                    
+                } else if (matchlevel == 'state') {
+                    continue;
+                } else if (matchlevel == 'county') {
+                    continue;
+                } else if (matchlevel == 'country') {
+                    continue;
+                } else {
+                    console.log(matchlevel);
+                    suggestion.innerHTML = data['label'];
+                }
+                this.suggestionsContainer.appendChild(suggestion);
+                suggestion.addEventListener("click", this.placePicked);
             }
         },
 
-        placePicked: function () {                       
-            // get the city of the selected place and save it to the sessionStorage
-            let place = this.searchBox.getPlace();
-            for (var i = 0; i < place.address_components.length; i++) {
-                var addresstype = place.address_components[i].types[0];
-                if (addresstype == 'locality') {
-                    var val = place.address_components[i]['long_name'];
-                    console.log(val);
-                    sessionStorage.setItem(this.id+"-city", val);                    
-                }
-            }
-
-            this.clickCounter--;            
+        placePicked: function () {
+            this.clickCounter--;
 
             // remove class of active place-input
             this.inputField.classList.remove("placeInputActive");
 
-            // display all hidden elements again
-            let hiddenElements = document.querySelectorAll('.displayNone');
-            for (let i = 0; i < hiddenElements.length; i++) {
-                hiddenElements[i].classList.remove('displayNone');
-            }
+            // set input-value to selected place
+            this.inputField.value = event.target.innerHTML;
 
-            document.querySelector('#processHeader').classList.add("backButtonInvisible");            
+            // hide and empty suggestionBox
+            this.suggestionsContainer.classList.add('displayNone');
+            this.suggestionsContainer.innerHTML = "";
+
+            this.$emit('searchbox-leave');
+        },
+
+        clearInput: function () {
+            alert('clicke');
+            this.inputField.value = "";
+            this.suggestionsContainer.innerHTML = "";
         }
     }
 });

@@ -100,6 +100,7 @@ body {
     animation-timing-function: ease-in-out;
 }
 
+
 /* YES-NO Buttons */
 
 #wrapper-yes-no{
@@ -244,42 +245,6 @@ textarea {
 }
 
 
-
-/* Input field css */
-
-div.pac-container {
-    border: none !important;
-    box-shadow: none !important;
-    font-family: Montserrat, sans-serif !important;
-    font-size: 3vw;
-    width: 80vw !important;
-    margin:auto !important;    
-}
-
-div.pac-item {
-    padding: 2vh;
-    color: var(--grey-light) !important;
-    border-top: solid 2px var(--grey-light);
-    font-size: 2vw;
-}
-
-div.pac-item:first-child {
-    border-top:none;
-}
-
-span.pac-item-query {
-    font-size: 3vw !important;
-    color: var(--grey-dark) !important;
-    font-size: 3vw;
-}
-
-span.pac-icon-marker {
-    display:none !important;
-}
-
- div.pac-logo::after {
-    
- }
 
  .displayNone {
      display:none;
