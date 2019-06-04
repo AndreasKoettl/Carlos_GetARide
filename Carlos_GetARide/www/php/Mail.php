@@ -7,10 +7,10 @@ use \PHPMailer\PHPMailer\PHPMailer;
 
 class Mail
 {
-    const HOST = "localhost";
+    const HOST = "smtp.gmail.com";
     const SMTP_AUTH = true;
-    const SENDER_MAIL = "carlos_getaride@gmail.com";
-    const SENDER_NAME = "Carlos Get A Ride";
+    const SENDER_MAIL = "carlos.getaride@gmail.com";
+    const SENDER_NAME = "Carlos";
     const SENDER_PASSWORD = "Carlos_GetARide";
     const SMTPSecure = "tls";
     const PORT = 587;
