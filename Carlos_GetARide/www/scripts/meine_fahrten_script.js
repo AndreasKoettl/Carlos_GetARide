@@ -826,13 +826,15 @@ carlos_meineFahrten.app = new Vue({
                             if (accepted == 0) {
                                 appAccess.listNotAccepted.push({
                                     firstName: firstName,
-                                    lastName: lastName
+                                    lastName: lastName,
+                                    iddrive: iddrive
                                 });
                             }
                             else {
                                 appAccess.listAccepted.push({
                                     firstName: firstName,
-                                    lastName: lastName
+                                    lastName: lastName,
+                                    iddrive: iddrive
                                 });
                             }
 
@@ -906,6 +908,109 @@ carlos_meineFahrten.app = new Vue({
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
                         appAccess.goBack('isDriverDetails');
+                    }
+
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
+
+        },
+
+        declineRequest: async function (index) {
+
+            var appAccess = this;
+            let iddrive = this.listNotAccepted[index].iddrive;
+            let firstname = this.listNotAccepted[index].firstName;
+            let lastname = this.listNotAccepted[index].lastName;
+            await $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/declineRide/" + iddrive + "/" + firstname + "/" + lastname,
+                data: iddrive, firstname, lastname,
+                success: async function (data) {
+                    let result = JSON.parse(data);
+
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+                        await appAccess.listNotAccepted.splice(index, 1);
+                    }
+
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
+
+        },
+
+        declineCommitment: async function (index) {
+
+            let iddrive = this.listAccepted[index].iddrive;
+            let firstname = this.listAccepted[index].firstName;
+            let lastname = this.listAccepted[index].lastName;
+            let appAccess = this;
+
+            await $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/reducePassengers/" + iddrive + "/" + firstname + "/" + lastname,
+                data: iddrive, firstname, lastname,
+                success: async function (data) {
+                    let result = JSON.parse(data);
+
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+                        await appAccess.listAccepted.splice(index, 1);
+                    }
+
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
+
+        },
+
+        confirmRequest: async function (index) {
+
+            let iddrive = this.listNotAccepted[index].iddrive;
+            let firstname = this.listNotAccepted[index].firstName;
+            let lastname = this.listNotAccepted[index].lastName;
+            let appAccess = this;
+
+            await $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/confirmRequest/" + iddrive + "/" + firstname + "/" + lastname,
+                data: iddrive, firstname, lastname,
+                success: async function (data) {
+                    let result = JSON.parse(data);
+
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+                        let request = appAccess.listNotAccepted[index];
+                        await appAccess.listNotAccepted.splice(index, 1);
+                        await appAccess.listAccepted.push(request);
                     }
 
                     else {

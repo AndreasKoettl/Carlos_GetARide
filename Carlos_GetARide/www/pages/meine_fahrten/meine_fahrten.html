@@ -113,8 +113,8 @@
                         <div class="request-data col">
                             <h6 class="details-h2">{{coDriver.firstName}} {{coDriver.lastName}}</h6>
                             <div class="row-no-padding">
-                                <h6 class="details-h5">Akzeptieren</h6>
-                                <h6 class="details-h5">Ablehnen</h6>
+                                <h6 class="details-h5" @click="confirmRequest(index)">Akzeptieren</h6>
+                                <h6 class="details-h5" @click="declineRequest(index)">Ablehnen</h6>
                             </div>
                         </div>
                         <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
@@ -130,7 +130,7 @@
                     <li class="row-bottom-padding">
                         <img src="../../images/icons/user_colored.svg" class="icon-request" />
                         <div class="request-data col">
-                                <h6 class="details-h2">{{coDriver.firstName}} {{coDriver.lastName}}</h6>
+                                <h6 class="details-h2" @click="declineCommitment(index)">{{coDriver.firstName}} {{coDriver.lastName}}</h6>
                                 <h6 class="details-h5">Ablehnen</h6>
                         </div>
                         <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
