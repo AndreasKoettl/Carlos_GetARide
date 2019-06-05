@@ -21,9 +21,6 @@ function logoutUser() {
             if (data["status"] === "success") {
                 // User Daten aus dem local storage löschen.
                 localStorage.removeItem(STORAGE_KEY);
-
-                // User an die Startseite weiterleiten.
-                redirectUser( "pages/login/login.html");
             }
             else {
                 // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.

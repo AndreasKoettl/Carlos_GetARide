@@ -78,14 +78,14 @@ function registerUser() {
         hasValue($_POST["lastname"]) &&
         hasValue($_POST["email"]) &&
         hasValue($_POST["password"]) &&
-        hasValue($_POST["password-repeat"])) {
+        hasValue($_POST["passwordRepeat"])) {
 
         // Prüfen ob die Email Adresse bereits registriert ist.
         if (!userExists($_POST["email"])) {
             // Prüfen ob die Email Adresse gültiges Format besitzt.
             if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
                 // Prüfen ob beide Passwörter übereinstimmen.
-                if ($_POST["password"] == $_POST["password-repeat"]) {
+                if ($_POST["password"] == $_POST["passwordRepeat"]) {
                     // Prüfen ob die Passwörter die minimale Länge überschreiten.
                     if (strlen($_POST["password"]) >= MIN_PWD_LENGTH) {
                         // Datenbankverbindung aufbauen.
@@ -197,19 +197,19 @@ function changePassword() {
 
     // Prüft ob der User am Server angemeldet ist.
     if (isLoggedIn()) {
-        if (hasValue($_POST["password-old"]) &&
+        if (hasValue($_POST["passwordOld"]) &&
             hasValue($_POST["password"]) &&
-            hasValue($_POST["password-repeat"])) {
+            hasValue($_POST["passwordRepeat"])) {
 
             // Die Userdaten aus der Datenbank holen.
             $result = getUserByMail($_POST["email"]);
 
             // Prüfen ob das alte Passwort zum User passt.
-            if (verifyUser($result, $_POST["password-old"])) {
+            if (verifyUser($result, $_POST["passwordOld"])) {
                 // Prüfen ob das neue Passwort alle Kriterien erfüllt.
-                if (verifyNewPassword($_POST["password"], $_POST["password-repeat"])) {
+                if (verifyNewPassword($_POST["password"], $_POST["passwordRepeat"])) {
                     // Prüfen ob altes und neues Passwort ident sind.
-                    if ($_POST["password-old"] != $_POST["password"]) {
+                    if ($_POST["passwordOld"] != $_POST["password"]) {
                         // Datenbankverbindung aufbauen.
                         $dbConnection = new DatabaseAccess;
 
@@ -265,36 +265,34 @@ function forgotPassword() {
             $recipientMail = $result["data"][0]["email"];
             $recipientName = $result["data"][0]["firstname"] . " " . $result["data"][0]["lastname"];
             $subject = "Passwort zurücksetzen";
-            $link = 'passwort_zuruecksetzen.html?user=' . $result["data"][0]["password"];
+            $link = 'http://localhost/Carlos/Carlos_GetARide/www/pages/login/passwort_zuruecksetzen.html?user=' . $result["data"][0]["password"];
             $htmlBody = 'Auf den folgenden Link klicken, um das Passwort zurückzusetzen: <a href="' . $link . '">Passwort zurücksetzen</a>';
             $altBody = 'Auf den folgenden Link klicken, um das Passwort zurückzusetzen: ' . $link;
 
             // Nur zu Testzecken
             $result["data"]["resetlink"] = $link;
 
-            // Auskommentieren, um tatsächlich Mail zu senden
-
             // Neue Mail erstellen.
-            /*$mail = new Mail($recipientMail, $recipientName, $subject, $htmlBody, $altBody);
+            $mail = new Mail($recipientMail, $recipientName, $subject, $htmlBody, $altBody);
 
             // Prüfen ob Erstellung erfolgreich war.
             if (succeeded($mail->getResultArray())) {
+                $userData = $result;
+
                 $mail->send();
                 $result = $mail->getResultArray();
 
                 // Prüfen ob Mail erfolgreich gesendet wurde.
-                if (succeeded($result)) {*/
+                if (succeeded($result)) {
+                    // Datenbankverbindung aufbauen.
+                    $dbConnection = new DatabaseAccess;
 
-            // Datenbankverbindung aufbauen.
-            $dbConnection = new DatabaseAccess;
-
-            // Active auf 0 setzen, damit der User sich nicht mehr anmelden kann, bis er sein Passwort ändert.
-            $dbConnection->prepareStatement("UPDATE users SET active = 0, dateChanged = NOW() WHERE idusers = :idusers");
-            $dbConnection->bindParam(":idusers", $result["data"][0]["idusers"]);
-            $dbConnection->executeStatement();
-
-                /*}
-            }*/
+                    // Active auf 0 setzen, damit der User sich nicht mehr anmelden kann, bis er sein Passwort ändert.
+                    $dbConnection->prepareStatement("UPDATE users SET active = 0, dateChanged = NOW() WHERE idusers = :idusers");
+                    $dbConnection->bindParam(":idusers", $userData["data"][0]["idusers"]);
+                    $dbConnection->executeStatement();
+                }
+            }
         } else {
             $result = setErrorMessage($result, "Es existiert kein User mit dieser Email Adresse.");
         }
@@ -349,13 +347,13 @@ function resetPassword() {
     // Formulardaten prüfen.
     if (hasValue($_POST["email"]) &&
         hasValue($_POST["password"]) &&
-        hasValue($_POST["password-repeat"])) {
+        hasValue($_POST["passwordRepeat"])) {
 
         // Userdaten anhand Mail Adresse abfragen.
         $result = getUserByMail($_POST["email"]);
 
         // Prüfen ob neues Passwort allen Kriterien entspricht.
-        if (verifyNewPassword($_POST["password"], $_POST["password-repeat"])) {
+        if (verifyNewPassword($_POST["password"], $_POST["passwordRepeat"])) {
 
             // Datenbankverbindung aufbauen.
             $dbConnection = new DatabaseAccess;

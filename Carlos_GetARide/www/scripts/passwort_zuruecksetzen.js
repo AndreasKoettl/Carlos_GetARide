@@ -4,82 +4,97 @@
  * und muss sich neu anmelden.
  * Ansonsten wird eine entsprechende Fehlermeldung angezeigt.
  */
-function resetPassword() {
-    event.preventDefault();
+new Vue({
+    el: "#app",
 
-    // Eingegebene Formulardaten holen.
-    let formData = new FormData($("#reset-password-form")[0]);
-
-    // AJAX-Post Request starten.
-    $.post({
-        accepts: "application/json",
-        dataType: "json",
-        async: true,
-        contentType: false,
-        processData: false,
-        url: getAbsPath("php/auth.php?/resetPassword"),
-        data: formData,
-        success: function (data) {
-            // Prüfen ob das Passwort erfolgreich geändert wurde.
-            if (data["status"] === "success") {
-                // User zur login Seite weiterleiten.
-                logoutUser();
-            }
-            else {
-                // Fehlermeldung ausgeben, wenn das Passwort nicht geändert wurde.
-                $("#error-message").text("Passwort ändern fehlgeschlagen: " + data["statusmessage"]);
-                $("#password").val("");
-                $("#password-repeat").val("");
-            }
-        },
-        error: function () {
-            $("#error-message").text("Server Verbindung fehlgeschlagen.");
+    data: {
+        errors: [],
+        succeeded: false,
+        formData: {
+            email: "",
+            password: "",
+            passwordRepeat: ""
         }
-    });
-}
+    },
+    methods: {
+        resetPassword: function() {
+            event.preventDefault();
 
-/**
- * Initialisiert das Formular zum zurücksetzen des Passwortes.
- *
- * @param paramUser Der Get Parameter der dem Passwort zurücksetzen Link angefügt wurde.
- */
-function initResetForm(paramUser) {
+            // Alle Fehlermeldungen löschen.
+            this.errors = [];
+            // Vue Objekt innerhalb Callback Funktionen verfügbar machen.
+            let vueObject = this;
+            // Post Request starten.
+            var postRequest = $.post(getAbsPath("php/auth.php?/resetPassword"), this.formData, null, "json");
 
-    // AJAX-Post Request starten.
-    $.post({
-        dataType: "json",
-        async: true,
-        url: getAbsPath("php/auth.php?/resetPasswordLink"),
-        data: { "passwordHash": paramUser },
-        success: function (data) {
-            // Prüfen ob ein entsprechender User existiert.
-            if (succeeded(data)) {
-                // Email in verstecktes Feld schreiben.
-                $("#email").val(data["data"][0]["email"]);
-            }
-            else {
-                // Wenn kein User existiert, an die Startseite weiterleiten.
-                redirectUser("index.html");
-            }
+            // Callback Funktionen wenn Request erfolgreich war.
+            postRequest.done(function(data) {
+                // Prüfen ob das Registrieren erfolgreich war.
+                if (succeeded(data)) {
+                    logoutUser();
+                    vueObject.succeeded = true;
+                }
+                else {
+                    // Fehlermeldung hinzufügen.
+                    vueObject.errors.push("Passwort ändern fehlgeschlagen: " + data["statusmessage"]);
+                    // Passwort Eingabefelder leeren.
+                    vueObject.formData.password = "";
+                    vueObject.formData.passwordRepeat = "";
+                }
+            });
+
+            // Callback Funktionen wenn der Request fehlerhaft war.
+            postRequest.fail(function(data) {
+                // Fehlermeldung hinzufügen.
+                vueObject.errors.push("Server Verbindung fehlgeschlagen.");
+                // Passwort Eingabefelder leeren.
+                vueObject.formData.password = "";
+                vueObject.formData.passwordRepeat = "";
+            });
         },
-        error: function () {
-            $("#error-message").text("Server Verbindung fehlgeschlagen.");
+        initResetForm: function(paramUser) {
+            // Vue Objekt innerhalb Callback Funktionen verfügbar machen.
+            let vueObject = this;
+            // Post Request starten.
+            var postRequest = $.post(getAbsPath("php/auth.php?/resetPasswordLink"), { "passwordHash": paramUser }, null, "json");
+
+            // Callback Funktionen wenn Request erfolgreich war.
+            postRequest.done(function(data) {
+                // Prüfen ob das Registrieren erfolgreich war.
+                if (succeeded(data)) {
+                    vueObject.formData.email = data["data"][0]["email"];
+                }
+                else {
+                    // Wenn kein User existiert, an die Startseite weiterleiten.
+                    redirectUser("index.html");
+                }
+            });
+
+            // Callback Funktionen wenn der Request fehlerhaft war.
+            postRequest.fail(function(data) {
+                // Fehlermeldung hinzufügen.
+                vueObject.errors.push("Server Verbindung fehlgeschlagen.");
+                // Passwort Eingabefelder leeren.
+                vueObject.formData.password = "";
+                vueObject.formData.passwordRepeat = "";
+            });
+        },
+        redirectToLogin: function() {
+            redirectUser("pages/login/login.html");
         }
-    });
-}
+    },
+    mounted: function() {
+        // Get Parameter aus der URL holen.
+        let url = new URL(window.location.href);
+        let getParamUser = url.searchParams.get("user");
 
-$(document).ready(function () {
-    // Get Parameter aus der URL holen.
-    let url = new URL(window.location.href);
-    let getParamUser = url.searchParams.get("user");
-
-    // Prüfen ob Parameter vorhanden ist.
-    if (getParamUser) {
-        // Formular zum zurücksetzen des Passworts initialisieren.
-        initResetForm(getParamUser);
-        $("#reset-password-form").submit(resetPassword);
-    } else {
-        // User an die Startseite weiterleiten, wenn Parameter nicht gesetzt war.
-        redirectUser("index.html");
+        // Prüfen ob Parameter vorhanden ist.
+        if (getParamUser) {
+            // Formular zum zurücksetzen des Passworts initialisieren.
+            this.initResetForm(getParamUser);
+        } else {
+            // User an die Startseite weiterleiten, wenn Parameter nicht gesetzt war.
+            redirectUser("index.html");
+        }
     }
 });

@@ -4,41 +4,53 @@
  * über den der User sein Passwort zurücksetzen kann.
  * Ansonsten wird eine entsprechende Fehlermeldung angezeigt.
  */
-function forgotPassword() {
-    event.preventDefault();
+redirectAuthUser("index.html");
 
-    // Eingegebene Formulardaten holen.
-    let formData = new FormData($("#forgot-password-form")[0]);
+new Vue({
+    el: "#app",
 
-    // AJAX-Post Request starten.
-    $.post({
-        accepts: "application/json",
-        dataType: "json",
-        async: true,
-        contentType: false,
-        processData: false,
-        url: getAbsPath("php/auth.php?/forgotPassword"),
-        data: formData,
-        success: function (data) {
-            // Prüfen ob die Mail erfolgreich gesendet wurde.
-            if (data["status"] === "success") {
-                // Nur zu Testzwecken, im Live Betrieb wird der Link per Mail zugesendet.
-                $("#error-message").html('Passwort zurücksetzen: <a href="' + data["data"]["resetlink"] + '">Hier klicken</a>');
-            }
-            else {
-                // Fehlermeldung ausgeben, wenn die Mail nicht gesendet werden konnte.
-                $("#error-message").text("Passwort zurücksetzen fehlgeschlagen: " + data["statusmessage"]);
-            }
-        },
-        error: function () {
-            $("#error-message").text("Server Verbindung fehlgeschlagen.");
+    data: {
+        errors: [],
+        succeeded: false,
+        formData: {
+            email: ""
         }
-    });
-}
+    },
+    methods: {
+        forgotPassword: function() {
+            event.preventDefault();
 
-$(document).ready(function () {
-    // User an die Login Seite weiterleiten, wenn dieser nicht eingeloggt ist.
-    redirectNotAuthUser("pages/login/login.html");
+            // Alle Fehlermeldungen löschen.
+            this.errors = [];
+            // Vue Objekt innerhalb Callback Funktionen verfügbar machen.
+            let vueObject = this;
+            // Post Request starten.
+            var postRequest = $.post(getAbsPath("php/auth.php?/forgotPassword"), this.formData, null, "json");
 
-    $("#forgot-password-form").submit(forgotPassword);
+            // Callback Funktionen wenn Request erfolgreich war.
+            postRequest.done(function(data) {
+                // Prüfen ob das Registrieren erfolgreich war.
+                if (succeeded(data)) {
+                    logoutUser();
+                    vueObject.succeeded = true;
+                }
+                else {
+                    // Fehlermeldung hinzufügen.
+                    vueObject.errors.push("Passwort zurücksetzen fehlgeschlagen: " + data["statusmessage"]);
+                }
+            });
+
+            // Callback Funktionen wenn der Request fehlerhaft war.
+            postRequest.fail(function(data) {
+                // Fehlermeldung hinzufügen.
+                vueObject.errors.push("Server Verbindung fehlgeschlagen.");
+            });
+        },
+        redirectToLogin: function() {
+            redirectUser("pages/login/login.html");
+        }
+    },
+    mounted: function() {
+        redirectAuthUser("index.html");
+    }
 });
