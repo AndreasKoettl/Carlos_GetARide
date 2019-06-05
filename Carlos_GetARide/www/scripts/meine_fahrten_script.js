@@ -239,6 +239,34 @@ carlos_meineFahrten.app = new Vue({
                                         lastName: idDriver
                                     });
                                 }
+                                else if (result["data"][i][0]["initialDriveId"] !== null) {
+                                    let isInitialDrive = true;
+                                    for (let j = 0; j < result["data"].length; j++) {
+                                        if (result["data"][j][0]["iddrives"] === result["data"][i][0]["initialDriveId"]) {
+                                            isInitialDrive = false;
+                                        }
+                                    }
+                                    console.log(isInitialDrive);
+                                    if (isInitialDrive) {
+                                        appAccess.listUpcomingRides.push({
+                                            iddrive: iddrive,
+                                            routeStart: routeStart,
+                                            routeEnd: routeEnd,
+                                            date: appAccess.formatDate(dateTime),
+                                            time: appAccess.formatTime(dateTime),
+                                            repeating: 0,
+                                            isAccepted: accepted,
+                                            price: price,
+                                            passengersAvailable: maxPassengers - passengers,
+                                            licensePlate: licensePlate,
+                                            details: details,
+                                            idDriver: idDriver,
+                                            firstName: "Driver",
+                                            lastName: idDriver
+                                        });
+                                    }
+
+                                }
                             }
                             else {
                                 if (result["data"][i][0]["iddrives"] === result["data"][i][0]["initialDriveId"] && accepted == 1) {
@@ -634,20 +662,60 @@ carlos_meineFahrten.app = new Vue({
             });
         },
 
-        cancelRide: async function (index, isUpcoming) {
+        cancelRide: async function (index) {
 
             var appAccess = this;
-            let list;
-            isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
             let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
+            let iddrive = this.listUpcomingRides[index].iddrive;
+            let initialDriveId = this.listUpcomingRides[index].initialDriveId;
+
+            /*if (iddrive === initialDriveId) {
+                for (let i = (index+1); i < this.listUpcomingRides.length; i++) {
+                   if (this.listUpcomingRides[i].initialDriveId === initialDriveId) {
+                       this.listToAdd.push(this.listUpcomingRides[i]);
+                   }
+                }
+            }*/
+
+                await $.ajax({
+                    accepts: "application/json",
+                    async: true,
+                    contentType: false,
+                    processData: false,
+                    url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/cancelRide/" + iddrive + "/" + iduser,
+                    data: iddrive, iduser,
+                    success: function (data) {
+                        let result = JSON.parse(data);
+
+                        // Prüfen ob das Laden erfolgreich war.
+                        if (result["status"] === "success") {
+                            appAccess.goBack('isCoDriverDetails');
+                        }
+
+                        else {
+                            // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                            console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                        }
+                    },
+                    error: function () {
+                        console.log("Server Verbindung fehlgeschlagen.");
+                    }
+                });
+
+        },
+
+        deleteRide: async function (index) {
+
+            /*var appAccess = this;
+            let iddrive = this.listUpcomingRides[index].iddrive;
 
             await $.ajax({
                 accepts: "application/json",
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/cancelRide/" + list[index].iddrive + "/" + iduser,
-                data: list[index].iddrive, iduser,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/deleteRide/" + iddrive,
+                data: iddrive,
                 success: function (data) {
                     let result = JSON.parse(data);
 
@@ -664,7 +732,7 @@ carlos_meineFahrten.app = new Vue({
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
-            });
+            });*/
         },
 
         goBack: async function (val) {

@@ -135,9 +135,7 @@
                         </div>
                         <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
                     </li>
-                    </div>
-
-                </ul>
+                    </div>>
 
                 <hr />
 
@@ -150,7 +148,7 @@
                     </div>
                 </div>
 
-                <button class="button-red-full" onclick="window.location.href = '/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_fahrt_geloescht.html'">Fahrt löschen</button>
+                <button v-if="indexUpcomingRide !== -1" class="button-red-full" @click="deleteRide(indexUpcomingride)">Fahrt löschen</button>
 
             </section>
         </div>
@@ -174,8 +172,8 @@
                     <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                     <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                 </div>
-                <p v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].isAccepted == 0" class="details-h4" style="margin-top: 0px">noch nicht akzeptiert</p>
-                <p v-if="indexPastRide !== -1 && listPastRides[indexPastRide].isAccepted == 0" class="timing-meine-Fahrten" style="margin-top: 0px">noch nicht akzeptiert</p>
+                <p v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].isAccepted == 0" class="details-h4">noch nicht akzeptiert</p>
+                <p v-if="indexPastRide !== -1 && listPastRides[indexPastRide].isAccepted == 0" class="timing-meine-Fahrten">noch nicht akzeptiert</p>
 
                 <hr />
 
@@ -183,8 +181,6 @@
                     <img src="../../images/icons/Verbindung_smaller.svg" class="icon-route" />
                     <div class="col box-route">
                         <div>
-                            <p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].time}}</p>
-                            <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].time}}</p>
                             <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeStart}}</h6>
                             <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeStart}}</h6>
                         </div>
@@ -232,7 +228,7 @@
                     </div>
                 </div>
 
-                <button v-if="indexUpcomingRide !== -1" class="button-red-full" @click="cancelRide(indexUpcomingRide, true)">Fahrt canceln</button>
+                <button v-if="indexUpcomingRide !== -1" class="button-red-full" @click="cancelRide(indexUpcomingRide)">Fahrt canceln</button>
 
             </section>
         </div>
