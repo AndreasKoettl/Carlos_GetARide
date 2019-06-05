@@ -17,7 +17,8 @@ carlos_meineFahrten.app = new Vue({
         isDriverDetails: false,
         isCoDriverDetails: false,
         indexUpcomingRide: -1,
-        indexPastRide: -1
+        indexPastRide: -1,
+        date: new Date()
     },
 
     methods: {
@@ -73,6 +74,7 @@ carlos_meineFahrten.app = new Vue({
                         if (result["status"] === "success") {
                             // Ausgabe in Box
                             for (let i = 0; i < result["data"].length; i++) {
+                                let isInitialized = false;
                                 let iddrive = result["data"][i]["iddrives"];
                                 let routeStart = result["data"][i]["locationStart"];
                                 let routeEnd = result["data"][i]["locationEnd"];
@@ -94,6 +96,7 @@ carlos_meineFahrten.app = new Vue({
                                                 routeEnd: routeEnd,
                                                 date: appAccess.formatDate(dateTime),
                                                 time: appAccess.formatTime(dateTime),
+                                                dateTime: dateTime,
                                                 repeating: 1,
                                                 initialDriveId: result["data"][i]["iddrives"],
                                                 accepted: accepted,
@@ -110,6 +113,7 @@ carlos_meineFahrten.app = new Vue({
                                                 routeEnd: routeEnd,
                                                 date: appAccess.formatDate(dateTime),
                                                 time: appAccess.formatTime(dateTime),
+                                                dateTime: dateTime,
                                                 repeating: 0,
                                                 accepted: accepted,
                                                 price: price,
@@ -117,6 +121,35 @@ carlos_meineFahrten.app = new Vue({
                                                 licensePlate: licensePlate,
                                                 details: details
                                             });
+                                        }
+                                        else if (result["data"][i]["initialDriveId"] !== null) {
+                                            let isInitialDrive = true;
+                                            for (let j = 0; j < result["data"].length; j++) {
+                                                if (result["data"][j]["iddrives"] === result["data"][i]["initialDriveId"]) {
+                                                    isInitialDrive = false;
+                                                }
+                                            }
+                                            if (isInitialDrive) {
+                                                if (!isInitialized) {
+                                                    appAccess.listUpcomingRides.push({
+                                                        iddrive: iddrive,
+                                                        routeStart: routeStart,
+                                                        routeEnd: routeEnd,
+                                                        date: appAccess.formatDate(dateTime),
+                                                        time: appAccess.formatTime(dateTime),
+                                                        dateTime: dateTime,
+                                                        repeating: 1,
+                                                        initialDriveId: result["data"][i]["iddrives"],
+                                                        accepted: accepted,
+                                                        price: price,
+                                                        passengersAvailable: maxPassengers - passengers,
+                                                        licensePlate: licensePlate,
+                                                        details: details
+                                                    });
+                                                    isInitialized = true;
+                                                }
+                                            }
+
                                         }
                                 }
                                 else {
@@ -127,6 +160,7 @@ carlos_meineFahrten.app = new Vue({
                                                 routeEnd: routeEnd,
                                                 date: appAccess.formatDate(dateTime),
                                                 time: appAccess.formatTime(dateTime),
+                                                dateTime: dateTime,
                                                 repeating: 1,
                                                 initialDriveId: result["data"][i]["iddrives"],
                                                 accepted: accepted,
@@ -143,6 +177,7 @@ carlos_meineFahrten.app = new Vue({
                                                 routeEnd: routeEnd,
                                                 date: appAccess.formatDate(dateTime),
                                                 time: appAccess.formatTime(dateTime),
+                                                dateTime: dateTime,
                                                 repeating: 0,
                                                 accepted: accepted,
                                                 price: price,
@@ -186,6 +221,7 @@ carlos_meineFahrten.app = new Vue({
                     // Prüfen ob das Anmelden erfolgreich war.
                     if (result["status"] === "success") {
                         for (let i = 0; i < result["data"].length; i++) {
+                            let isInitialized = false;
                             let iddrive = result["data"][i][0]["iddrives"];
                             let routeStart = result["data"][i][0]["locationStart"];
                             let routeEnd = result["data"][i][0]["locationEnd"];
@@ -208,6 +244,7 @@ carlos_meineFahrten.app = new Vue({
                                         routeEnd: routeEnd,
                                         date: appAccess.formatDate(dateTime),
                                         time: appAccess.formatTime(dateTime),
+                                        dateTime: dateTime,
                                         repeating: 1,
                                         initialDriveId: result["data"][i][0]["iddrives"],
                                         isAccepted: accepted,
@@ -228,6 +265,7 @@ carlos_meineFahrten.app = new Vue({
                                         routeEnd: routeEnd,
                                         date: appAccess.formatDate(dateTime),
                                         time: appAccess.formatTime(dateTime),
+                                        dateTime: dateTime,
                                         repeating: 0,
                                         isAccepted: accepted,
                                         price: price,
@@ -246,36 +284,41 @@ carlos_meineFahrten.app = new Vue({
                                             isInitialDrive = false;
                                         }
                                     }
-                                    console.log(isInitialDrive);
                                     if (isInitialDrive) {
-                                        appAccess.listUpcomingRides.push({
-                                            iddrive: iddrive,
-                                            routeStart: routeStart,
-                                            routeEnd: routeEnd,
-                                            date: appAccess.formatDate(dateTime),
-                                            time: appAccess.formatTime(dateTime),
-                                            repeating: 0,
-                                            isAccepted: accepted,
-                                            price: price,
-                                            passengersAvailable: maxPassengers - passengers,
-                                            licensePlate: licensePlate,
-                                            details: details,
-                                            idDriver: idDriver,
-                                            firstName: "Driver",
-                                            lastName: idDriver
-                                        });
+                                            if (!isInitialized) {
+                                                appAccess.listUpcomingRides.push({
+                                                    iddrive: iddrive,
+                                                    routeStart: routeStart,
+                                                    routeEnd: routeEnd,
+                                                    date: appAccess.formatDate(dateTime),
+                                                    time: appAccess.formatTime(dateTime),
+                                                    dateTime: dateTime,
+                                                    repeating: 1,
+                                                    initialDriveId: result["data"][i][0]["iddrives"],
+                                                    isAccepted: accepted,
+                                                    price: price,
+                                                    passengersAvailable: maxPassengers - passengers,
+                                                    licensePlate: licensePlate,
+                                                    details: details,
+                                                    idDriver: idDriver,
+                                                    firstName: "Driver",
+                                                    lastName: idDriver
+                                                });
+                                                isInitialized = true;
+                                            }
                                     }
 
                                 }
                             }
                             else {
-                                if (result["data"][i][0]["iddrives"] === result["data"][i][0]["initialDriveId"] && accepted == 1) {
+                                if (result["data"][i][0]["iddrives"] === result["data"][i][0]["initialDriveId"]) {
                                     appAccess.listPastRides.push({
                                         iddrive: iddrive,
                                         routeStart: routeStart,
                                         routeEnd: routeEnd,
                                         date: appAccess.formatDate(dateTime),
                                         time: appAccess.formatTime(dateTime),
+                                        dateTime: dateTime,
                                         repeating: 1,
                                         initialDriveId: result["data"][i][0]["iddrives"],
                                         isAccepted: accepted,
@@ -288,13 +331,14 @@ carlos_meineFahrten.app = new Vue({
                                         lastName: idDriver
                                     });
                                 }
-                                else if (result["data"][i][0]["initialDriveId"] === null && accepted == 1) {
+                                else if (result["data"][i][0]["initialDriveId"] === null) {
                                     appAccess.listPastRides.push({
                                         iddrive: iddrive,
                                         routeStart: routeStart,
                                         routeEnd: routeEnd,
                                         date: appAccess.formatDate(dateTime),
                                         time: appAccess.formatTime(dateTime),
+                                        dateTime: dateTime,
                                         repeating: 0,
                                         isAccepted: accepted,
                                         price: price,
@@ -305,6 +349,37 @@ carlos_meineFahrten.app = new Vue({
                                         firstName: "Driver",
                                         lastName: idDriver
                                     });
+                                }
+                                else if (result["data"][i][0]["initialDriveId"] !== null) {
+                                    let isInitialDrive = true;
+                                    for (let j = 0; j < result["data"].length; j++) {
+                                        if (result["data"][j][0]["iddrives"] === result["data"][i][0]["initialDriveId"]) {
+                                            isInitialDrive = false;
+                                        }
+                                    }
+                                    if (isInitialDrive) {
+                                        if (!isInitialized) {
+                                            appAccess.listPastRides.push({
+                                                iddrive: iddrive,
+                                                routeStart: routeStart,
+                                                routeEnd: routeEnd,
+                                                date: appAccess.formatDate(dateTime),
+                                                time: appAccess.formatTime(dateTime),
+                                                dateTime: dateTime,
+                                                repeating: 0,
+                                                isAccepted: accepted,
+                                                price: price,
+                                                passengersAvailable: maxPassengers - passengers,
+                                                licensePlate: licensePlate,
+                                                details: details,
+                                                idDriver: idDriver,
+                                                firstName: "Driver",
+                                                lastName: idDriver
+                                            });
+                                            isInitialized = true;
+                                        }
+                                    }
+
                                 }
                             }
                         }
@@ -446,14 +521,44 @@ carlos_meineFahrten.app = new Vue({
             var appAccess = this;
             let list;
             isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
+            let initialDriveId = list[index].initialDriveId;
+            let iddrive = list[index].iddrive;
+            let originalInitialDriveId;
 
             await $.ajax({
                 accepts: "application/json",
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/driverRepeating/" + list[index].initialDriveId,
-                data: list[index].initialDriveId,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/initialDriveId/" + iddrive,
+                data: iddrive,
+                success: function (data) {
+                    let result = JSON.parse(data);
+
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+
+                        for (let i = 0; i < result["data"].length; i++) {
+                            originalInitialDriveId = result["data"][i]["initialDriveId"];
+                        }
+                    }
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
+
+            await $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/driverRepeating/" + originalInitialDriveId,
+                data: originalInitialDriveId,
                 success: function (data) {
                     let result = JSON.parse(data);
 
@@ -471,13 +576,14 @@ carlos_meineFahrten.app = new Vue({
                             let licensePlate = result["data"][i]["licensePlate"];
                             let details = result["data"][i]["details"];
 
-                            //if (result["data"][i]["iddrives"] !== result["data"][i]["initialDriveId"]) {
+                            if (result["data"][i]["initialDriveId"] === initialDriveId) {
                                 list.splice(index + 1, 0, {
                                     iddrive: iddrive,
                                     routeStart: routeStart,
                                     routeEnd: routeEnd,
                                     date: appAccess.formatDate(dateTime),
                                     time: appAccess.formatTime(dateTime),
+                                    dateTime: dateTime,
                                     repeating: 3,
                                     initialDriveId: result["data"][i]["initialDriveId"],
                                     price: price,
@@ -485,7 +591,31 @@ carlos_meineFahrten.app = new Vue({
                                     licensePlate: licensePlate,
                                     details: details
                                 });
-                            //}
+                            }
+                            else if (result["data"][i]["initialDriveId"] !== null) {
+                                let isInitialDrive = true;
+                                for (let j = 0; j < result["data"].length; j++) {
+                                    if (result["data"][j]["iddrives"] === result["data"][j]["initialDriveId"]) {
+                                        isInitialDrive = false;
+                                    }
+                                }
+                                if (isInitialDrive && result["data"][i]["initialDriveId"] === originalInitialDriveId) {
+                                    list.splice(index + 1, 0, {
+                                        iddrive: iddrive,
+                                        routeStart: routeStart,
+                                        routeEnd: routeEnd,
+                                        date: appAccess.formatDate(dateTime),
+                                        time: appAccess.formatTime(dateTime),
+                                        dateTime: dateTime,
+                                        repeating: 3,
+                                        initialDriveId: initialDriveId,
+                                        price: price,
+                                        passengersAvailable: maxPassengers - passengers,
+                                        licensePlate: licensePlate,
+                                        details: details
+                                    });
+                                }
+                            }
                         }
                     }
 
@@ -506,7 +636,36 @@ carlos_meineFahrten.app = new Vue({
             let list;
             isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
             let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
-            let initalDriveId = list[index].initialDriveId;
+            let initialDriveId = list[index].initialDriveId;
+            let iddrive = list[index].iddrive;
+            let originalInitialDriveId;
+
+            await $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/initialDriveId/" + iddrive,
+                data: iddrive,
+                success: function (data) {
+                    let result = JSON.parse(data);
+
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+
+                        for (let i = 0; i < result["data"].length; i++) {
+                            originalInitialDriveId = result["data"][i]["initialDriveId"];
+                        }
+                    }
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
 
             await $.ajax({
                 accepts: "application/json",
@@ -523,26 +682,27 @@ carlos_meineFahrten.app = new Vue({
                         let reversedResult = result["data"].reverse();
 
                         for (let i = 0; i < reversedResult.length; i++) {
-                            let iddrive = result["data"][i][0]["iddrives"];
+                            let iddrive = reversedResult[i][0]["iddrives"];
                             let dateTime = new Date(reversedResult[i][0]["driveDate"]);
-                            let routeStart = result["data"][i][0]["locationStart"];
-                            let routeEnd = result["data"][i][0]["locationEnd"];
-                            let price = result["data"][i][0]["price"];
-                            let passengers = result["data"][i][0]["passengers"];
-                            let maxPassengers = result["data"][i][0]["maxPassengers"];
-                            let licensePlate = result["data"][i][0]["licensePlate"];
-                            let details = result["data"][i][0]["details"];
-                            let idDriver = result["data"][i][0]["users_idusers"];
+                            let routeStart = reversedResult[i][0]["locationStart"];
+                            let routeEnd = reversedResult[i][0]["locationEnd"];
+                            let price = reversedResult[i][0]["price"];
+                            let passengers = reversedResult[i][0]["passengers"];
+                            let maxPassengers = reversedResult[i][0]["maxPassengers"];
+                            let licensePlate = reversedResult[i][0]["licensePlate"];
+                            let details = reversedResult[i][0]["details"];
+                            let idDriver = reversedResult[i][0]["users_idusers"];
 
-                            if (reversedResult[i][0]["initialDriveId"] === initalDriveId) {
+                            if (reversedResult[i][0]["initialDriveId"] === initialDriveId) {
                                 list.splice(index + 1, 0, {
                                     iddrive: iddrive,
                                     routeStart: routeStart,
                                     routeEnd: routeEnd,
                                     date: appAccess.formatDate(dateTime),
                                     time: appAccess.formatTime(dateTime),
+                                    dateTime: dateTime,
                                     repeating: 3,
-                                    initialDriveId: initalDriveId,
+                                    initialDriveId: initialDriveId,
                                     isAccepted: reversedResult[i]["accepted"],
                                     price: price,
                                     passengersAvailable: maxPassengers - passengers,
@@ -552,6 +712,34 @@ carlos_meineFahrten.app = new Vue({
                                     firstName: "Driver",
                                     lastName: idDriver
                                 });
+                            }
+                            else if (reversedResult[i][0]["initialDriveId"] !== null) {
+                                let isInitialDrive = true;
+                                for (let j = 0; j < result["data"].length; j++) {
+                                    if (reversedResult[j][0]["iddrives"] === reversedResult[j][0]["initialDriveId"]) {
+                                        isInitialDrive = false;
+                                    }
+                                }
+                                if (isInitialDrive && reversedResult[i][0]["initialDriveId"] === originalInitialDriveId) {
+                                    list.splice(index + 1, 0, {
+                                        iddrive: iddrive,
+                                        routeStart: routeStart,
+                                        routeEnd: routeEnd,
+                                        date: appAccess.formatDate(dateTime),
+                                        time: appAccess.formatTime(dateTime),
+                                        dateTime: dateTime,
+                                        repeating: 3,
+                                        initialDriveId: initialDriveId,
+                                        isAccepted: reversedResult[i]["accepted"],
+                                        price: price,
+                                        passengersAvailable: maxPassengers - passengers,
+                                        licensePlate: licensePlate,
+                                        details: details,
+                                        idDriver: idDriver,
+                                        firstName: "Driver",
+                                        lastName: idDriver
+                                    });
+                                }
                             }
                         }
                     }
@@ -662,20 +850,14 @@ carlos_meineFahrten.app = new Vue({
             });
         },
 
-        cancelRide: async function (index) {
+        cancelRide: async function (index, isUpcoming) {
 
             var appAccess = this;
+            let list;
+            isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
             let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
-            let iddrive = this.listUpcomingRides[index].iddrive;
-            let initialDriveId = this.listUpcomingRides[index].initialDriveId;
-
-            /*if (iddrive === initialDriveId) {
-                for (let i = (index+1); i < this.listUpcomingRides.length; i++) {
-                   if (this.listUpcomingRides[i].initialDriveId === initialDriveId) {
-                       this.listToAdd.push(this.listUpcomingRides[i]);
-                   }
-                }
-            }*/
+            let iddrive = list[index].iddrive;
+            let initialDriveId = list[index].initialDriveId;
 
                 await $.ajax({
                     accepts: "application/json",
@@ -704,10 +886,12 @@ carlos_meineFahrten.app = new Vue({
 
         },
 
-        deleteRide: async function (index) {
+        deleteRide: async function (index, isUpcoming) {
 
-            /*var appAccess = this;
-            let iddrive = this.listUpcomingRides[index].iddrive;
+            var appAccess = this;
+            let list;
+            isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
+            let iddrive = list[index].iddrive;
 
             await $.ajax({
                 accepts: "application/json",
@@ -721,7 +905,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
-                        appAccess.goBack('isCoDriverDetails');
+                        appAccess.goBack('isDriverDetails');
                     }
 
                     else {
@@ -732,7 +916,8 @@ carlos_meineFahrten.app = new Vue({
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
-            });*/
+            });
+
         },
 
         goBack: async function (val) {
