@@ -1,8 +1,4 @@
 ﻿"use strict";
-/*
- * CARLOS Mitfahrbörse
- *
- */
 
 var carlos = carlos || {};
 
@@ -21,19 +17,31 @@ carlos.app = new Vue({
         carDetailsValue: "",
         priceValue: "",
         slide:"slide",
-        complete: false,                
+        complete: false               
     },    
     methods: {
-        goBack: function () {
-            this.slide = "reverse-slide";
-            this.index--;            
+        // This method is called when a user clicks the back-button        
+        goBack: function () {                                    
+            // check if the back button has been hit on a place-input-page
+            // or on a normal page
+            if (document.getElementsByClassName('placeInputActive')[0] != null) {
+                this.searchBoxLeave('back-button');
+            } else {
+                this.slide = "reverse-slide";
+                this.$nextTick(function () {
+                    this.index--;
+                })
+                
+            }
         },
 
-        searchBoxEnter: function () {
-            // change back-button here !!!
-            // change this css-settings to emit for more general component !!!
-            document.querySelector('#processHeader').classList.remove("backButtonInvisible");
-            document.querySelector('#back').addEventListener('click', this.searchBoxLeave);
+        // This method is called when a user clicks the place-input field
+        // CSS-changes for a specific page should be made here
+        searchBoxEnter: function () {            
+            // unhide back-button
+            document.querySelector('#processHeader').classList.remove("backButtonInvisible");            
+
+            document.getElementsByClassName('placeInputActive')[0].classList.add('placeInputActiveChanges');
 
             // hide all unnecessary elements
             document.querySelectorAll('.illustration-big')[0].classList.add('displayNone');
@@ -50,17 +58,34 @@ carlos.app = new Vue({
             }            
         },
 
-        searchBoxLeave: function (state) {
-            // set city for database !!!?
-            if (state == 'back') {
-                document.getElementsByClassName('placeInputActive')[0].classList.remove('placeInputActive');
+        // This method is called when a user leaves the place-input field
+        // CSS-changes for a specific page should be made here
+        searchBoxLeave: function (leaveMethod) {            
+            document.getElementsByClassName('placeInputActiveChanges')[0].classList.remove('placeInputActiveChanges');
+
+            // changes for going back from place-input with the back-button
+            if (leaveMethod == 'back-button') {
+                // remove active and content from place-input
+                this.inputField = document.getElementsByClassName('placeInputActive')[0];
+                this.inputField.classList.remove('placeInputActive');
+                this.inputField.value = "";
+
                 document.getElementById('suggestions').classList.add('displayNone');
+                this.clearIcon = document.getElementById('clear-' + this.inputField.id);
+                this.clearIcon.classList.add('displayNone');
+                this.checkIfComplete();
             }
+
+            //changes for going back from place-input in general
             // display all hidden elements again
             let hiddenElements = document.querySelectorAll('.displayNone');
             for (let i = 0; i < hiddenElements.length; i++) {
-                hiddenElements[i].classList.remove('displayNone');
-            }
+                if (!hiddenElements[i].classList.contains('clear-icon')){
+                    hiddenElements[i].classList.remove('displayNone');
+                }
+            }     
+
+            
 
             document.querySelector('#processHeader').classList.add("backButtonInvisible");  
         },
@@ -73,6 +98,9 @@ carlos.app = new Vue({
                     if (this.start.value != "" && this.destination.value != "") {
                         document.querySelector('#submitRoute').classList.remove('disabled');
                         this.complete = true;
+                    } else {
+                        document.querySelector('#submitRoute').classList.add('disabled');
+                        this.complete = false;
                     }
                     break;
                 case 'dateTime':              
@@ -97,10 +125,9 @@ carlos.app = new Vue({
                         document.querySelector('#submitDriveData').classList.add('active-green');
                         this.complete = true;
                     }
-                    break;
+                    break;                
             }
         },
-
 
         clickYes: function () {
             document.querySelector('#yes').classList += ' active';
@@ -137,6 +164,7 @@ carlos.app = new Vue({
                 this.driveData['start-city'] = sessionStorage.getItem('start-city');
                 this.driveData['destination-city'] = sessionStorage.getItem('destination-city');
             }
+
             this.index++;     
             this.complete = false;
         },        
@@ -151,18 +179,18 @@ carlos.app = new Vue({
             this.carDetails = document.querySelector('#carDetails');
             this.price = document.querySelector('#priceValue');
 
+            // deactivate back-button on first page of the process
             if (this.process[this.index] == 'route') {
                 document.querySelector('#processHeader').classList.add("backButtonInvisible");
             } else {
                 document.querySelector('#processHeader').classList.remove("backButtonInvisible");
             }
 
-
+            // activate the right circle
             let activeCircle = document.querySelectorAll('.circle-active');
             if (activeCircle[0] != undefined) {
                 activeCircle[0].classList.remove("circle-active");
             }
-
             document.querySelector('#circle-' + this.process[this.index]).className += (' circle-active');
 
             // loadData for page repeating
@@ -183,7 +211,7 @@ carlos.app = new Vue({
         this.init();        
         this.checkIfComplete();
         this.back = false;
-        this.slide = "slide";        
+        this.slide = "slide";
+        console.log(this.driveData);
     }
-
 });

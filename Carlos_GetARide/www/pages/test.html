@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <script src="../lib/vue/vue.min.js"></script>
+
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+</head>
+<body>
+    <div id="app">        
+        <place-input id="start" clearid="clear-start" placeholder="Start" :value="driveData['start']" v-on:data-input="checkIfComplete()" @searchbox-leave="searchBoxLeave('pick')" @searchbox-enter="searchBoxEnter()"></place-input>
+        <ul id="suggestions" class="displayNone"></ul>
+    </div>
+    
+    <script src="../scripts/components.js"></script>    
+    <script src="../scripts/fahrt_erstellen.js"></script>    
+</body>
+</html>

@@ -20,8 +20,8 @@
                 <div class="form-wrapper">
                     <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
                     <form id="routeForm">
-                        <place-input id="start" placeholder="Start" :value="driveData['start']" v-on:data-input="checkIfComplete()" @searchbox-leave="searchBoxLeave('pick')" @searchbox-enter="searchBoxEnter()"></place-input>
-                        <place-input id="destination" placeholder="Ziel" :value="driveData['destination']" v-on:data-input="checkIfComplete()" @searchbox-leave="searchBoxLeave('pick')" @searchbox-enter="searchBoxEnter()"></place-input>
+                        <place-input id="start" clearid="clear-start" placeholder="Start" :loadvalue="driveData['start']" v-on:data-input="checkIfComplete()" @searchbox-leave="searchBoxLeave('pick')" @searchbox-enter="searchBoxEnter()"></place-input>
+                        <place-input id="destination" clearid="clear-destination" placeholder="Ziel" :loadvalue="driveData['destination']" v-on:data-input="checkIfComplete()" @searchbox-leave="searchBoxLeave('pick')" @searchbox-enter="searchBoxEnter()"></place-input>
                         <button class="red-button disabled" id="submitRoute" v-on:click="complete ? submitData(['start', 'destination']) : ''">Weiter</button>
                     </form>
                     <ul id="suggestions" class="displayNone"></ul>
@@ -48,15 +48,14 @@
         </transition>
 
         <!-- DATETIME -->
-        <transition :name="slide">
+        <transition :name="slide">            
             <div id="dateTime" class="process-page" v-if="process[index] == 'dateTime'">
                 <img src="../images/illustrationen/fahrt-anbieten_zeit.jpg" class="illustration-big" />
                 <div class="form-wrapper">
                     <h1 class="fahrt-erstellen-heading">Wann fährst du?</h1>
-                    <form id="dateTimeForm">
+                    <form id="dateTimeForm">                        
                         <input type="date" class="textinput" id="date" v-on:input="checkIfComplete()" :value="dateValue" />
                         <input type="time" class="textinput" id="time" v-on:input="checkIfComplete()" :value="timeValue" />
-                        <place-input></place-input>
                         <button class="disabled red-button illustration-small" v-on:click="complete ? submitData(['date', 'time']) : ''" id="submitDateTime">Weiter</button>
                     </form>
                 </div>

@@ -94,22 +94,29 @@ Vue.component('header-fahrt-erstellen', {
 // emits a data-input Event on change
 Vue.component('place-input', {
     data: function () {
-        return {
-            clickCounter: 0,
-            noSearchBox: true
+        return {                           
         }
     },
-    props: ['id', 'placeholder'],
-    template: `<div><input v-on:click="placeInputClicked()" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder" v-on:keyup="return autoCompleteListener(event.target, event);"/>
-<img src="/carlos/Carlos_GetARide/www/images/icons/x_icon.svg" class="clear-icon" v-on:click="clearInput()"/></div>`,
-    methods: {
+    props: ['id', 'placeholder', 'clearid', 'loadvalue'],
+    template: `<div><input v-bind:value="loadvalue" v-on:click="placeInputClicked()" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder"/>
+<img src="/carlos/Carlos_GetARide/www/images/icons/x_ohne_kreis.svg" v-bind:id="clearid" class="clear-icon displayNone" v-on:click="clearInput()"/></div>`,
+    methods: {      
         placeInputClicked: function () {
             this.inputField = event.target;
-            this.inputField.classList.add("placeInputActive");
+            this.inputField.classList.add("placeInputActive");                                    
+            this.clearIcon = document.getElementById('clear-'+this.inputField.id);
+            this.clearIcon.classList.remove('displayNone');
+
+           
+            document.getElementById('start').addEventListener('keyup', function () {
+                if (document.getElementById('start').value.length > 3) {
+                    alert('3 chars');
+                    this.autoCompleteListener(event.target, event);
+                } });
 
             // event for style-changes
             this.$emit('searchbox-enter');
-
+            
             // Ajax-Request abschicken
             this.AUTOCOMPLETION_URL = 'https://autocomplete.geocoder.api.here.com/6.2/suggest.json';
             this.ajaxRequest = new XMLHttpRequest();
@@ -153,7 +160,7 @@ Vue.component('place-input', {
                         'query=' + encodeURIComponent(textBox.value) +
                         '&maxresults=10' +
                         '&language=de' +
-                        '&mapview=48.551203, 16.756126;47.001742, 12.425370' +
+                        '&mapview=48.316731, 16.490108;47.221794, 13.228341' +                       
                         '&app_id=' + this.APPLICATION_ID +
                         '&app_code=' + this.APPLICATION_CODE;
                     this.ajaxRequest.open('GET', this.AUTOCOMPLETION_URL + params);
@@ -177,11 +184,11 @@ Vue.component('place-input', {
 
                 let matchlevel = data['matchLevel'];
                 if (matchlevel == 'city') {
-                    suggestion.innerHTML = 'city'+data['address']['city'] + ", " + data['address']['country'];
+                    suggestion.innerHTML = data['address']['city'] + ", " + data['address']['country'];
                 } else if (matchlevel == 'street') {
-                    suggestion.innerHTML = "street"+data['address']['street'] + ", " + data['address']['city'];
+                    suggestion.innerHTML = data['address']['street'] + ", " + data['address']['city'];
                 } else if (matchlevel == 'houseNumber') {
-                    suggestion.innerHTML = "house" +data['address']['street'] + " " + data['address']['houseNumber'] + ", " + data['address']['city'];
+                    suggestion.innerHTML = data['address']['street'] + " " + data['address']['houseNumber'] + ", " + data['address']['city'];
                 } else if (matchlevel == 'district') {
                     continue;                    
                 } else if (matchlevel == 'state') {
@@ -194,8 +201,12 @@ Vue.component('place-input', {
                     console.log(matchlevel);
                     suggestion.innerHTML = data['label'];
                 }
-                this.suggestionsContainer.appendChild(suggestion);
-                suggestion.addEventListener("click", this.placePicked);
+                if (this.suggestionsContainer.childNodes.length < 5) {
+                    this.suggestionsContainer.appendChild(suggestion);
+                    suggestion.addEventListener("click", this.placePicked);
+                } else {
+                    break;
+                }                
             }
         },
 
@@ -211,14 +222,17 @@ Vue.component('place-input', {
             // hide and empty suggestionBox
             this.suggestionsContainer.classList.add('displayNone');
             this.suggestionsContainer.innerHTML = "";
+            this.clearIcon.classList.add('displayNone');
 
             this.$emit('searchbox-leave');
         },
 
         clearInput: function () {
-            alert('clicke');
-            this.inputField.value = "";
-            this.suggestionsContainer.innerHTML = "";
+            document.getElementsByClassName('placeInputActive')[0].value = "";
+            document.getElementById('suggestions').innerHTML = "";
         }
+    },
+    mounted: function () {
+       
     }
 });
