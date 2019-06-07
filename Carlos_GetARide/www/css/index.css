@@ -20,14 +20,17 @@ label {
     display: block;
     margin: 3vh 1vw 1vh 1vw;
     color: var(--grey-light);
-    font-size: 4vw;
+    font-size: 5vw;
     font-weight: 400;
 }
 
 input {
     border: 2px solid var(--grey-extralight);
     border-radius: 50px;
-    padding: 2vw 3.5vw;
+    font-size: 4vw;
+    font-family: Montserrat, sans-serif;
+    color: var(--grey-dark);
+    padding: 2.6vw 5vw;
     box-sizing: border-box;
     width: 100%;
 }
@@ -38,10 +41,22 @@ input:active, input:focus{
 
 form {
     margin: 0 auto;
-    width: 80vw;
+    width: 90vw;
 }
 
 .textinput {
     margin: 2vh 0 0 0;
 }
 
+.red-button {
+    display:block;  
+    width: 90vw;
+    margin: 8vw auto;
+    font-size: 5vw;
+    padding: 2.1vw 5vw;
+    font-family: 'Roboto Slab', serif;
+    color: #fff;
+    background-color: var(--red);
+    border-radius: 50px;
+    border:none;
+}
