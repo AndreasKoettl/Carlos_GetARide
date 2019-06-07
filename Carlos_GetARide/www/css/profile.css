@@ -12,18 +12,19 @@
 }
 
 .settings {
-    width: 80vw;
-    margin: 15% auto 0 auto;
+    width: 88vw;
+    margin: 15% auto 15% auto;
 }
 
 .settings p{
-    font-size:6vw;
+    font-size:6.5vw;
+    margin: 4vh 0 2vh 0;
     font-weight: 400;
 }
 
 
 .yes, .no, .garbage-icon {
-    height: 6vw;
+    height: 9vw;
 }
 
 .yes {
