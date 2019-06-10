@@ -30,8 +30,7 @@ carlos.app = new Vue({
                 this.slide = "reverse-slide";
                 this.$nextTick(function () {
                     this.index--;
-                })
-                
+                })                
             }
         },
 
@@ -164,8 +163,10 @@ carlos.app = new Vue({
                 this.driveData['start-city'] = sessionStorage.getItem('start-city');
                 this.driveData['destination-city'] = sessionStorage.getItem('destination-city');
             }
-
-            this.index++;     
+            this.slide = "slide";
+            this.$nextTick(function () {
+                this.index++;
+            })               
             this.complete = false;
         },        
         
@@ -194,7 +195,7 @@ carlos.app = new Vue({
             document.querySelector('#circle-' + this.process[this.index]).className += (' circle-active');
 
             // loadData for page repeating
-            if (this.driveData['repeating'] != null) {
+            if (this.driveData['repeating'] != null && this.process[this.index]=="repeating") {
                 if (this.driveData['repeating']) {
                     this.clickYes();
                 } else {
@@ -210,8 +211,7 @@ carlos.app = new Vue({
     updated: function () {            
         this.init();        
         this.checkIfComplete();
-        this.back = false;
-        this.slide = "slide";
-        console.log(this.driveData);
+        this.back = false;        
+        //console.log(this.driveData);
     }
 });

@@ -98,7 +98,7 @@ Vue.component('place-input', {
         }
     },
     props: ['id', 'placeholder', 'clearid', 'loadvalue'],
-    template: `<div><input v-bind:value="loadvalue" v-on:click="placeInputClicked()" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder"/>
+    template: `<div><input v-bind:value="loadvalue" v-on:click="placeInputClicked()" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder" v-on:keyup="return autoCompleteListener(event.target, event);"/>
 <img src="/carlos/Carlos_GetARide/www/images/icons/x_ohne_kreis.svg" v-bind:id="clearid" class="clear-icon displayNone" v-on:click="clearInput()"/></div>`,
     methods: {      
         placeInputClicked: function () {
@@ -106,14 +106,7 @@ Vue.component('place-input', {
             this.inputField.classList.add("placeInputActive");                                    
             this.clearIcon = document.getElementById('clear-'+this.inputField.id);
             this.clearIcon.classList.remove('displayNone');
-
-           
-            document.getElementById('start').addEventListener('keyup', function () {
-                if (document.getElementById('start').value.length > 3) {
-                    alert('3 chars');
-                    this.autoCompleteListener(event.target, event);
-                } });
-
+                       
             // event for style-changes
             this.$emit('searchbox-enter');
             
