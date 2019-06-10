@@ -5,7 +5,7 @@ var carlos = carlos || {};
 carlos.app = new Vue({
     el: "#app",
     data: {
-        driveData: [],
+        driveData: {},
         process: ['route', 'repeating', 'dateTime', 'details', 'passengers','price', 'success'],
         index: 0,          
         startValue: "",
@@ -163,12 +163,34 @@ carlos.app = new Vue({
                 this.driveData['start-city'] = sessionStorage.getItem('start-city');
                 this.driveData['destination-city'] = sessionStorage.getItem('destination-city');
             }
+
+            if (this.process[this.index] == "price") {
+                this.submitForm();
+            }
+
             this.slide = "slide";
             this.$nextTick(function () {
                 this.index++;
             })               
             this.complete = false;
+            
+            
         },        
+
+        submitForm: function () {      
+            let driveData = JSON.stringify(this.driveData);
+            $.post({                                           
+                async: true,                
+                url: "/carlos/Carlos_GetARide/www/php/saveRide.php?/saveRide",
+                data: { driveData: driveData },
+                success: function (data) {                   
+                    console.log(data);
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
+        },
         
         init: function () {
             this.start = document.querySelector('#start');            
