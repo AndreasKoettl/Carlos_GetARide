@@ -7,12 +7,13 @@
     <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <title>Meine Fahrten</title>
 </head>
-<body class="main">
+<body class="main-white">
     <div id="app">
+        <div v-if="!isDriverDetails && !isCoDriverDetails">
         <header>
             <h1 class="main-heading">Meine Fahrten</h1>
         </header>
-        <img src="../../images/illustrationen/meineFahrten_forGreyBG.svg" class="illustration_meineFahrten">
+        <img src="../../images/illustrationen/meineFahrten_forWhiteGB.svg" class="illustration_meineFahrten">
         <nav id="nav-bar">
             <div id="slider" @click="switchMenu"></div>
             <p id="driver" class="menu active_menu" @click="switchMenu">Fahrer</p>
@@ -22,27 +23,222 @@
         <section class="bottom-padding">
 
             <h6 class="timing-meine-Fahrten">Kommende Fahrten</h6>
-            <div id="rides-upcoming" class="list_meineFahrten">
-                <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_details.html">
+            <div v-if="listUpcomingRides.length !== 0" id="rides-upcoming" class="list_meineFahrten">
+                <a v-for="(ride, index) in listUpcomingRides" @click="showDetails(index, true)">
                     <div class="box-meine-fahrten">
-                        <p class="start-destination">Linz - Wien</p>
-                        <p class="datetime">Fr. 30.04.2019, 17:00 Uhr</p>
+                        <div class="row-no-padding">
+                            <p class="start-destination">{{ride.routeStart}} - {{ride.routeEnd}}</p>
+                            <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
+                        </div>
+                        <p class="datetime">{{ride.date}} {{ride.time}}</p>">
                     </div>
                 </a>
             </div>
             <h6 class="timing-meine-Fahrten">Vergangene Fahrten</h6>
-            <div id="rides_past" class="list_meineFahrten">
-                <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten_details.html">
+            <div v-if="listPastRides.length !== 0" id="rides_past" class="list_meineFahrten">
+                <a v-for="(ride, index) in listPastRides" @click="showDetails(index, false)">
                     <div class="box-meine-fahrten">
-                        <p class="start-destination">Linz - Wien</p>
-                        <p class="datetime">Fr. 30.04.2019, 17:00 Uhr</p>
+                        <div class="row-no-padding">
+                            <p class="start-destination">{{ride.routeStart}} - {{ride.routeEnd}}</p>
+                            <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
+                        </div>
+                        <p class="datetime">{{ride.date}} {{ride.time}}</p>
                     </div>
                 </a>
             </div>
 
         </section>
+        </div>
+
+
+        <div v-if="isDriverDetails">
+            <header class="row">
+                <img src="../../images/icons/back.svg" class="header-icon" @click="goBack('isDriverDetails')">
+                <h1>Meine Fahrten</h1>
+            </header>
+
+            <section class="content-box">
+
+                <div class="row">
+                    <div class="col">
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
+                        <p v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].time}}</p>
+                        <p v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].time}}
+                    </div>
+                    <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
+                    <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <img src="../../images/icons/Verbindung_smaller.svg" class="icon-route" />
+                    <div class="col box-route">
+                        <div>
+                            <!--<p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].time}}</p>
+                            <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].time}}</p>-->
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeStart}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeStart}}</h6>
+                        </div>
+                        <div>
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeEnd}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeEnd}}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <div class="price">
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].price}} €</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].price}} €</h6>
+                        <p class="details-h3">pro Person</p>
+                    </div>
+                    <div class="seats">
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].passengersAvailable}} Plätze</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].passengersAvailable}} Plätze</h6>
+                        <p class="details-h3">noch verfügbar</p>
+                    </div>
+                </div>
+
+                <h6 class="details-h4">Anfragen</h6>
+                <ul class="list">
+
+
+                    <div v-for="(coDriver, index) in listNotAccepted">
+                    <li class="row-bottom-padding">
+                        <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                        <div class="request-data col">
+                            <h6 class="details-h2">{{coDriver.firstName}} {{coDriver.lastName}}</h6>
+                            <div class="row-no-padding">
+                                <h6 class="details-h5" @click="confirmRequest(index)">Akzeptieren</h6>
+                                <h6 class="details-h5" @click="declineRequest(index)">Ablehnen</h6>
+                            </div>
+                        </div>
+                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                    </li>
+                    </div>
+
+                </ul>
+
+                <h6 class="details-h4">Zusagen</h6>
+                <ul class="list">
+
+                    <div v-for="(coDriver, index) in listAccepted">
+                    <li class="row-bottom-padding">
+                        <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                        <div class="request-data col">
+                                <h6 class="details-h2" @click="declineCommitment(index)">{{coDriver.firstName}} {{coDriver.lastName}}</h6>
+                                <h6 class="details-h5">Ablehnen</h6>
+                        </div>
+                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                    </li>
+                    </div>>
+
+                <hr />
+
+                <div class="row">
+                    <div class="price">
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].licensePlate}}</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].licensePlate}}</h6>
+                        <p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].details}}</p>
+                        <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].details}}</p>
+                    </div>
+                </div>
+
+                <button v-if="indexUpcomingRide !== -1" class="button-red-full" @click="deleteRide(indexUpcomingRide, true)">Fahrt löschen</button>
+                    <button v-if="indexPastRide !== -1 && listPastRides[indexPastRide].dateTime >= date" class="button-red-full" @click="deleteRide(indexPastRide, false)">Fahrt löschen</button>
+
+            </section>
+        </div>
+
+
+        <div v-if="isCoDriverDetails">
+            <header class="row">
+                <img src="../../images/icons/back.svg" class="header-icon" @click="goBack('isCoDriverDetails')">
+                <h1>Meine Fahrten</h1>
+            </header>
+
+            <section class="content-box bottom-padding">
+
+                <div class="row">
+                    <div class="col">
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h1">{{listUpcomingRides[indexUpcomingRide].date}}</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h1">{{listPastRides[indexPastRide].date}}</h6>
+                        <p v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].time}}</p>
+                        <p v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].time}}
+                    </div>
+                    <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
+                    <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
+                </div>
+                <p v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].accepted == 0" class="details-h4">noch nicht akzeptiert</p>
+                <p v-if="indexPastRide !== -1 && listPastRides[indexPastRide].accepted == 0" class="timing-meine-Fahrten">noch nicht akzeptiert</p>
+
+                <hr />
+
+                <div class="row">
+                    <img src="../../images/icons/Verbindung_smaller.svg" class="icon-route" />
+                    <div class="col box-route">
+                        <div>
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeStart}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeStart}}</h6>
+                        </div>
+                        <div>
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeEnd}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeEnd}}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <h6 class="details-h4-padding-top">Fahrer</h6>
+                <ul class="list">
+
+                    <li class="row-bottom-padding">
+                        <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                        <div class="request-data">
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].firstName}} {{listUpcomingRides[indexUpcomingRide].lastName}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].firstName}} {{listPastRides[indexPastRide].lastName}}</h6>
+                        </div>
+                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                    </li>
+
+                    <li class="row-bottom-padding">
+                        <img src="../../images/icons/car_info.svg" class="icon-request" />
+                        <div class="request-data col">
+                            <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].licensePlate}}</h6>
+                            <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].licensePlate}}</h6>
+                            <p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].details}}</p>
+                            <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].details}}</p>
+                        </div>
+                        <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
+                    </li>
+
+                </ul>
+
+                <hr />
+
+                <div class="row">
+                    <div class="price">
+                        <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].price}} €</h6>
+                        <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].price}} €</h6>
+                        <p class="details-h3">pro Person</p>
+                    </div>
+                </div>
+
+                <button v-if="indexUpcomingRide !== -1" class="button-red-full" @click="cancelRide(indexUpcomingRide, true)">Fahrt canceln</button>
+                <button v-if="indexPastRide !== -1 && listPastRides[indexPastRide].dateTime >= date" class="button-red-full" @click="cancelRide(indexPastRide, false)">Fahrt canceln</button>
+
+            </section>
+        </div>
+
     </div>
+
+    <script src="../../scripts/index.js"></script>
     <script src="../../scripts/meine_fahrten_script.js"></script>
-    
+
 </body>
 </html>
