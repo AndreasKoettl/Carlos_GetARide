@@ -25,7 +25,9 @@ function loadDriversRides()
     $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+
+
+    // Prüfen ob Fahrten gefunden wurden
     if ($dbConnection->getRowCount() > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
@@ -34,7 +36,7 @@ function loadDriversRides()
         $result = setErrorMessage($result, "Keine Fahrten vorhanden.");
     }
 
-    // Userdaten und Statusnachrichten zurückgeben.
+    // Fahrten und Statusnachrichten zurückgeben.
     return json_encode($result);
 	
 }
@@ -52,6 +54,7 @@ function loadCodriversRides()
 
 	$result["data"] = array();
 
+	// Details zu gefundenen Fahrten auslesen
 	foreach ($drives["data"] as $val) {
 		$dbConnection->prepareStatement("SELECT * FROM drives WHERE iddrives = :iddrive");
 		$dbConnection->bindParam(":iddrive", $val["drives_iddrives"]);
@@ -63,7 +66,7 @@ function loadCodriversRides()
 		array_push($result["data"], $merged);
 	}
 
-	//sort array by driveDate
+	// result-array nach driveDate sortieren
     $i = 0;
             while ($i < sizeof($result["data"]) - 1) {
                 if ($result["data"][$i][0]["driveDate"] > $result["data"][$i+1][0]["driveDate"]) {
@@ -77,7 +80,7 @@ function loadCodriversRides()
                 }
             }
 
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+    // Prüfen ob Fahrten gefunden wurden
     if ($dbConnection->getRowCount() > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
@@ -85,7 +88,7 @@ function loadCodriversRides()
     else {
         $result = setErrorMessage($result, "Keine Fahrten vorhanden.");
     }
-    // Userdaten und Statusnachrichten zurückgeben.
+    // Fahrten und Statusnachrichten zurückgeben.
 	
     return json_encode($result);
 	
@@ -101,7 +104,8 @@ function loadDriversRepeatingRides()
     $dbConnection->bindParam(":initialDriveId", htmlentities(params("initialDriveId"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+
+    // Prüfen ob Fahrten gefunden wurden
     if ($dbConnection->getRowCount() > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
@@ -110,7 +114,7 @@ function loadDriversRepeatingRides()
         $result = setErrorMessage($result, "Keine wiederholenden Fahrten vorhanden.");
     }
 
-    // Userdaten und Statusnachrichten zurückgeben.
+    // Fahrten und Statusnachrichten zurückgeben.
     return json_encode($result);
 
 }
@@ -120,7 +124,7 @@ function loadDriversName()
 	// Datenbankverbindung aufbauen.
 	$dbConnection = new DatabaseAccess;
 
-    // Fahrten mit mit gegebenen User als Fahrer suchen.
+    // Vor- und Nachnamen von gegebenen Fahrer suchen
     $dbConnection->prepareStatement("SELECT firstname, lastname FROM users WHERE idusers = :iddriver");
     $dbConnection->bindParam(":iddriver", htmlentities(params("iddriver"), ENT_QUOTES));
     $dbConnection->executeStatement();
@@ -130,7 +134,7 @@ function loadDriversName()
         $result["data"][$i]["firstname"] = html_entity_decode($result["data"][$i]["firstname"]);
         $result["data"][$i]["lastname"] = html_entity_decode($result["data"][$i]["lastname"]);
     }
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+
     if ($dbConnection->getRowCount() > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
@@ -139,7 +143,7 @@ function loadDriversName()
         $result = setErrorMessage($result, "Fahrer wurde nicht gefunden.");
     }
 
-    // Userdaten und Statusnachrichten zurückgeben.
+
     return json_encode($result);
 	
 }
@@ -149,7 +153,7 @@ function loadCoDriverNames()
     // Datenbankverbindung aufbauen.
     $dbConnection = new DatabaseAccess;
 
-    // Fahrten mit mit gegebenen User als Fahrer suchen.
+    // Mitfahrer von gegebener Fahrt suchen.
     $dbConnection->prepareStatement("SELECT users_idusers FROM requests WHERE drives_iddrives = :iddrive");
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
@@ -158,20 +162,19 @@ function loadCoDriverNames()
     $result["data"] = array();
 
     for ($i = 0; $i < sizeof($idusers["data"]); $i++) {
+        // Userdaten von Mitfahrern auslesen
         $dbConnection->prepareStatement("SELECT * FROM users WHERE idusers = :iduser");
         $dbConnection->bindParam(":iduser", $idusers["data"][$i]["users_idusers"]);
         $dbConnection->executeStatement();
         $user = $dbConnection->fetchAll();
 
-
+        // auslesen, ob Mitfahrer schon akzeptiert wurde
         $dbConnection->prepareStatement("SELECT accepted FROM requests WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
         $dbConnection->bindParam(":iduser", $idusers["data"][$i]["users_idusers"]);
         $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
         $dbConnection->executeStatement();
         $accepted = $dbConnection->fetchAll();
 
-        //$accepted = array("accepted" => $val["accepted"]);
-        //$merged = array_merge($user["data"][$i], $accepted["data"][$i][0]);
         array_push($user["data"], $accepted["data"]);
         array_push($result["data"], $user["data"]);
     }
@@ -180,7 +183,7 @@ function loadCoDriverNames()
         $result["data"][$i][0]["firstname"] = html_entity_decode($result["data"][$i][0]["firstname"]);
         $result["data"][$i][0]["lastname"] = html_entity_decode($result["data"][$i][0]["lastname"]);
     }
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+
     if ($dbConnection->getRowCount() > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
@@ -189,7 +192,7 @@ function loadCoDriverNames()
         $result = setErrorMessage($result, "Kein Mitfahrer gefunden.");
     }
 
-    // Userdaten und Statusnachrichten zurückgeben.
+
     return json_encode($result);
 
 }
@@ -199,21 +202,21 @@ function getInitialDriveId()
     // Datenbankverbindung aufbauen.
     $dbConnection = new DatabaseAccess;
 
-    // Fahrten mit mit gegebenen User als Fahrer suchen.
+    // Details zu gegebener Fahrt auslesen
     $dbConnection->prepareStatement("SELECT * FROM drives WHERE iddrives = :iddrive");
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
+
     if ($dbConnection->getRowCount() > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Keine Fahrten vorhanden.");
+        $result = setErrorMessage($result, "Keine Fahrt vorhanden.");
     }
 
-    // Userdaten und Statusnachrichten zurückgeben.
+
     return json_encode($result);
 
 }
@@ -225,6 +228,7 @@ function cancelRide()
 
     $result = array();
 
+    // Anfrage des gegebenen Users bei gegebener Fahrt löschen
         $dbConnection->prepareStatement("DELETE FROM requests WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
         $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
         $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
@@ -238,7 +242,7 @@ function cancelRide()
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Keine Fahrten vorhanden.");
+        $result = setErrorMessage($result, "Keine Fahrt vorhanden.");
     }
 
     // Userdaten und Statusnachrichten zurückgeben.
@@ -251,34 +255,29 @@ function deleteRide()
     // Datenbankverbindung aufbauen.
     $dbConnection = new DatabaseAccess;
 
-    $dbConnection->prepareStatement("SELECT initialDriveId FROM drives WHERE iddrives = :iddrive");
-    $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
-    $dbConnection->executeStatement();
-    $initialDriveId = $dbConnection->fetchAll();
-
     $result = array();
 
+    // alle Anfragen für gegebene Fahrt löschen
     $dbConnection->prepareStatement("DELETE FROM requests WHERE drives_iddrives = :iddrive");
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $deletedRequests = $dbConnection->fetchAll();
 
+    // die gegebene Fahrt selbst löschen
     $dbConnection->prepareStatement("DELETE FROM drives WHERE iddrives = :iddrive");
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
 
-
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
     if ($dbConnection->getRowCount() > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Keine Fahrten vorhanden.");
+        $result = setErrorMessage($result, "Keine Fahrt vorhanden.");
     }
 
-    // Userdaten und Statusnachrichten zurückgeben.
+
     return json_encode($result);
 
 }
@@ -289,16 +288,24 @@ function declineRide()
     $dbConnection = new DatabaseAccess;
 
     $result = array();
+    // Vor- und Nachname decoden
     $lastname = htmlentities(params("lastname"), ENT_QUOTES);
     if (strpos($lastname, '&')) {
         $lastname = substr($lastname, 0, sizeof($lastname)-7);
     }
+    $firstname = htmlentities(params("firstname"), ENT_QUOTES);
+    if (strpos($firstname, '&')) {
+        $firstname = substr($firstname, 0, sizeof($firstname)-7);
+    }
+
+    // Userdaten mit first- und lastname auslesen
     $dbConnection->prepareStatement("SELECT * FROM users WHERE firstname = :firstname AND lastname = :lastname");
-    $dbConnection->bindParam(":firstname", htmlentities(params("firstname"), ENT_QUOTES));
+    $dbConnection->bindParam(":firstname", $firstname);
     $dbConnection->bindParam(":lastname", $lastname);
     $dbConnection->executeStatement();
     $user = $dbConnection->fetchAll();
 
+    // Anfrage von User mit gefundener Id bei gegebener Fahrt löschen
     $dbConnection->prepareStatement("DELETE FROM requests WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
     $dbConnection->bindParam(":iduser", $user["data"][0]["idusers"]);
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
@@ -306,16 +313,15 @@ function declineRide()
     $result = $dbConnection->fetchAll();
 
 
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
     if ($dbConnection->getRowCount() > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Keine Fahrten vorhanden.");
+        $result = setErrorMessage($result, "Keine Anfragen vorhanden.");
     }
 
-    // Userdaten und Statusnachrichten zurückgeben.
+
     return json_encode($result);
 
 }
@@ -326,37 +332,45 @@ function reducePassengers()
     $dbConnection = new DatabaseAccess;
 
     $result = array();
+    // Vor- und Nachname decoden
     $lastname = htmlentities(params("lastname"), ENT_QUOTES);
     if (strpos($lastname, '&')) {
         $lastname = substr($lastname, 0, sizeof($lastname)-7);
     }
+    $firstname = htmlentities(params("firstname"), ENT_QUOTES);
+    if (strpos($firstname, '&')) {
+        $firstname = substr($firstname, 0, sizeof($firstname)-7);
+    }
+
+    // Userdaten mit first- und lastname auslesen
     $dbConnection->prepareStatement("SELECT * FROM users WHERE firstname = :firstname AND lastname = :lastname");
-    $dbConnection->bindParam(":firstname", htmlentities(params("firstname"), ENT_QUOTES));
+    $dbConnection->bindParam(":firstname", $firstname);
     $dbConnection->bindParam(":lastname", $lastname);
     $dbConnection->executeStatement();
     $user = $dbConnection->fetchAll();
 
+    // Anfrage von User mit gefundener Id bei gegebener Fahrt löschen
     $dbConnection->prepareStatement("DELETE FROM requests WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
     $dbConnection->bindParam(":iduser", $user["data"][0]["idusers"]);
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
-    $result = $dbConnection->fetchAll();
+    $request = $dbConnection->fetchAll();
 
+    // bei jeweiligen Drive passengers um 1 vermindern
     $dbConnection->prepareStatement("UPDATE drives SET passengers = passengers - 1 WHERE iddrives = :iddrive");
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
 
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
     if ($dbConnection->getRowCount() > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Keine Fahrten vorhanden.");
+        $result = setErrorMessage($result, "Keine Anfragen vorhanden.");
     }
 
-    // Userdaten und Statusnachrichten zurückgeben.
+
     return json_encode($result);
 
 }
@@ -367,37 +381,55 @@ function confirmRequest()
     $dbConnection = new DatabaseAccess;
 
     $result = array();
+    // Vor- und Nachname decoden
     $lastname = htmlentities(params("lastname"), ENT_QUOTES);
     if (strpos($lastname, '&')) {
         $lastname = substr($lastname, 0, sizeof($lastname)-7);
     }
-    $dbConnection->prepareStatement("SELECT * FROM users WHERE firstname = :firstname AND lastname = :lastname");
-    $dbConnection->bindParam(":firstname", htmlentities(params("firstname"), ENT_QUOTES));
-    $dbConnection->bindParam(":lastname", $lastname);
-    $dbConnection->executeStatement();
-    $user = $dbConnection->fetchAll();
+    $firstname = htmlentities(params("firstname"), ENT_QUOTES);
+    if (strpos($firstname, '&')) {
+        $firstname = substr($firstname, 0, sizeof($firstname)-7);
+    }
 
-    $dbConnection->prepareStatement("UPDATE requests SET accepted = 1 WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
-    $dbConnection->bindParam(":iduser", $user["data"][0]["idusers"]);
+    // Details zu gegebener Fahrt auslesen
+    $dbConnection->prepareStatement("SELECT * FROM drives WHERE iddrives = :iddrive");
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
-    $request = $dbConnection->fetchAll();
+    $drive = $dbConnection->fetchAll();
 
-    $dbConnection->prepareStatement("UPDATE drives SET passengers = passengers + 1 WHERE iddrives = :iddrive");
-    $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
-    $dbConnection->executeStatement();
-    $result = $dbConnection->fetchAll();
+    // wenn maxPassengers noch nicht erreicht ist
+    if ($drive["data"][0]["passengers"] < $drive["data"][0]["maxPassengers"]) {
 
-    // Prüfen ob User vorhanden ist, und das angegebene Passwort mit dem gespeicherten Hash übereinstimmt.
-    if ($dbConnection->getRowCount() > 0) {
+        // Userdaten mit first- und lastname auslesen
+        $dbConnection->prepareStatement("SELECT * FROM users WHERE firstname = :firstname AND lastname = :lastname");
+        $dbConnection->bindParam(":firstname", htmlentities(params("firstname"), ENT_QUOTES));
+        $dbConnection->bindParam(":lastname", $lastname);
+        $dbConnection->executeStatement();
+        $user = $dbConnection->fetchAll();
+
+        // accepted bei gegebener Fahrt und gegebenen User auf 1 setzen
+        $dbConnection->prepareStatement("UPDATE requests SET accepted = 1 WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
+        $dbConnection->bindParam(":iduser", $user["data"][0]["idusers"]);
+        $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+        $dbConnection->executeStatement();
+        $request = $dbConnection->fetchAll();
+
+        // bei gegebener Fahrt passengers um 1 erhöhen
+        $dbConnection->prepareStatement("UPDATE drives SET passengers = passengers + 1 WHERE iddrives = :iddrive");
+        $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+        $dbConnection->executeStatement();
+        $result = $dbConnection->fetchAll();
+    }
+
+    if (sizeof($result) > 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Keine Fahrten vorhanden.");
+        $result = setErrorMessage($result, "Die maximale Anzahl an Mitfahrern ist bereits erreicht.");
     }
 
-    // Userdaten und Statusnachrichten zurückgeben.
+
     return json_encode($result);
 
 }

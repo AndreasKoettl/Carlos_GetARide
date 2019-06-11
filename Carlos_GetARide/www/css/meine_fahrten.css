@@ -254,6 +254,16 @@
     color: var(--grey-dark);
 }
 
+.repetition {
+    background-color: white;
+    border: 2px solid var(--grey-extralight);
+}
+
+.not-accepted {
+    background-color: white;
+    border: 2px solid var(--red);
+}
+
 .repeating-label {
     width: 65%;
 }

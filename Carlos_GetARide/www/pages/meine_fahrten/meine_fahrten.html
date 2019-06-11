@@ -173,8 +173,8 @@
                     <img v-if="indexUpcomingRide !== -1 && (listUpcomingRides[indexUpcomingRide].repeating == 1 || listUpcomingRides[indexUpcomingRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                     <img v-if="indexPastRide !== -1 && (listPastRides[indexPastRide].repeating == 1 || listPastRides[indexPastRide].repeating == 3)" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating" />
                 </div>
-                <p v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].isAccepted == 0" class="details-h4">noch nicht akzeptiert</p>
-                <p v-if="indexPastRide !== -1 && listPastRides[indexPastRide].isAccepted == 0" class="timing-meine-Fahrten">noch nicht akzeptiert</p>
+                <p v-if="indexUpcomingRide !== -1 && listUpcomingRides[indexUpcomingRide].accepted == 0" class="details-h4">noch nicht akzeptiert</p>
+                <p v-if="indexPastRide !== -1 && listPastRides[indexPastRide].accepted == 0" class="timing-meine-Fahrten">noch nicht akzeptiert</p>
 
                 <hr />
 
