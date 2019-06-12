@@ -48,33 +48,33 @@
     margin: 15% auto 0 auto;
 }
 
-    .profile-options img {
-        height: auto;
-        width: 7vw;
-        margin: 0 5vw 0 auto;
-        position: relative;
-    }
+.profile-options img {
+    height: auto;
+    width: 7vw;
+    margin: 0 5vw 0 auto;
+    position: relative;
+}
 
-    .profile-options a {
-        border: 2px solid var(--grey-extralight);
-        border-radius: 50px;
-        display: block;
-        font-size: 5vw;
-        color: var(--grey-dark);
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
+.profile-options a {
+    border: 2px solid var(--grey-extralight);
+    border-radius: 50px;
+    display: block;
+    font-size: 5vw;
+    color: var(--grey-dark);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+ }
 
-    .profile-options a:first-of-type {
-        margin-bottom: 4vw;
-    }
+.profile-options a:first-of-type {
+    margin-bottom: 4vw;
+}
 
-    .profile-options p {
-        margin: 2.6vw 0 2.6vw 5vw;
-        width: 70vw;
-    }
+.profile-options p {
+    margin: 2.6vw 0 2.6vw 5vw;
+    width: 70vw;
+}
 
 .data {
     margin: 0 auto;
