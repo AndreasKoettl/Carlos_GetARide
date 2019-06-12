@@ -5,11 +5,10 @@
  *
  */
 
-// nav-bar links for xampp testing
 /*<div id="nav-bar">
     <a href="/android_asset/www/pages/meine_fahrten/meine_fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/hakerl_icon.svg" /></a>
-    <a href="/android_asset/www/pages/fahrt-suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/magnifying-glass.svg" /></a>
-    <a href="/android_asset/www/pages/fahrt_erstellen.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/android_asset/www/images/icons/plus-button.svg" /></a>
+    <a href="/android_asset/www/pages/suchen/suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/magnifying-glass.svg" /></a>
+    <a href="/android_asset/www/pages/fahrt_erstellen/fahrt_erstellen.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/android_asset/www/images/icons/plus-button.svg" /></a>
     <a href="/android_asset/www/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/android_asset/www/images/icons/speech-bubble.svg" /></a>
     <a href="/android_asset/www/pages/profil/profil.html" class="menu-item" id="profil" v-on:click="clickMenu"><img class="icon" src="/android_asset/www/images/icons/user_colored.svg" /></a>
     </div >*/
@@ -47,7 +46,6 @@ Vue.component('nav-bar', {
     }
 });
 
-
 Vue.component('header-title', {
     props: ['title'],
     template: `
@@ -56,7 +54,6 @@ Vue.component('header-title', {
     </header>
 `
 });
-
 
 Vue.component('header-back', {
     props: ['title'],
@@ -89,16 +86,18 @@ Vue.component('header-fahrt-erstellen', {
     `
 });
 
-// Input field for places, with search-functionality
-// disables and hides all other elements on the page
-// emits a data-input Event on change
+/**
+* Input field for Place-Autocomplete
+* disables and hides all other elements on the page
+* emits: searchbox-enter, searchbox-leave
+*/
 Vue.component('place-input', {
     data: function () {
         return {                           
         }
     },
     props: ['id', 'placeholder', 'clearid', 'loadvalue'],
-    template: `<div><input v-bind:value="loadvalue" v-on:click="placeInputClicked()" v-on:change="$emit('data-input', $event.target.value)" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder" v-on:keyup="return autoCompleteListener(event.target, event);"/>
+    template: `<div><input v-bind:value="loadvalue" v-on:click="placeInputClicked()" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder" v-on:keyup="return autoCompleteListener(event.target, event);"/>
 <img src="/carlos/Carlos_GetARide/www/images/icons/x_ohne_kreis.svg" v-bind:id="clearid" class="clear-icon displayNone" v-on:click="clearInput()"/></div>`,
     methods: {      
         placeInputClicked: function () {
@@ -224,8 +223,5 @@ Vue.component('place-input', {
             document.getElementsByClassName('placeInputActive')[0].value = "";
             document.getElementById('suggestions').innerHTML = "";
         }
-    },
-    mounted: function () {
-       
     }
 });

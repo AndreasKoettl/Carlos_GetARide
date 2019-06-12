@@ -6,22 +6,23 @@ carlos.app = new Vue({
     el: "#app",
     data: {
         driveData: {},
-        process: ['route', 'repeating', 'dateTime', 'details', 'passengers','price', 'success'],
-        index: 0,          
+        process: ['route', 'repeating', 'dateTime', 'details', 'passengers', 'price'],
+        index: 0,
         startValue: "",
         destinationValue: "",
-        dateValue:"",
-        timeValue: "",   
+        dateValue: "",
+        timeValue: "",
+        weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],
         passengersValue: "",
         licensePlateValue: "",
         carDetailsValue: "",
         priceValue: "",
-        slide:"slide",
-        complete: false               
-    },    
+        slide: "slide",
+        complete: false
+    },
     methods: {
         // This method is called when a user clicks the back-button        
-        goBack: function () {                                    
+        goBack: function () {
             // check if the back button has been hit on a place-input-page
             // or on a normal page
             if (document.getElementsByClassName('placeInputActive')[0] != null) {
@@ -30,15 +31,15 @@ carlos.app = new Vue({
                 this.slide = "reverse-slide";
                 this.$nextTick(function () {
                     this.index--;
-                })                
+                })
             }
         },
 
         // This method is called when a user clicks the place-input field
         // CSS-changes for a specific page should be made here
-        searchBoxEnter: function () {            
+        searchBoxEnter: function () {
             // unhide back-button
-            document.querySelector('#processHeader').classList.remove("backButtonInvisible");            
+            document.querySelector('#processHeader').classList.remove("backButtonInvisible");
 
             document.getElementsByClassName('placeInputActive')[0].classList.add('placeInputActiveChanges');
 
@@ -54,12 +55,13 @@ carlos.app = new Vue({
                 if (!children[i].className.includes('placeInputActive')) {
                     children[i].classList.add('displayNone');
                 }
-            }            
+            }
         },
 
         // This method is called when a user leaves the place-input field
+        // can be when he picks a place or when he hits the back-button
         // CSS-changes for a specific page should be made here
-        searchBoxLeave: function (leaveMethod) {            
+        searchBoxLeave: function (leaveMethod) {
             document.getElementsByClassName('placeInputActiveChanges')[0].classList.remove('placeInputActiveChanges');
 
             // changes for going back from place-input with the back-button
@@ -72,26 +74,31 @@ carlos.app = new Vue({
                 document.getElementById('suggestions').classList.add('displayNone');
                 this.clearIcon = document.getElementById('clear-' + this.inputField.id);
                 this.clearIcon.classList.add('displayNone');
-                this.checkIfComplete();
+
+                // hide and empty suggestionBox
+                this.suggestionsContainer = document.getElementById('suggestions');
+                this.suggestionsContainer.classList.add('displayNone');
+                this.suggestionsContainer.innerHTML = "";
+                this.clearIcon.classList.add('displayNone');
             }
 
-            //changes for going back from place-input in general
+            // changes for going back from place-input in general
             // display all hidden elements again
             let hiddenElements = document.querySelectorAll('.displayNone');
             for (let i = 0; i < hiddenElements.length; i++) {
-                if (!hiddenElements[i].classList.contains('clear-icon')){
+                if (!hiddenElements[i].classList.contains('clear-icon')) {
                     hiddenElements[i].classList.remove('displayNone');
                 }
-            }     
+            }
 
-            
+            this.checkIfComplete();
 
-            document.querySelector('#processHeader').classList.add("backButtonInvisible");  
+            document.querySelector('#processHeader').classList.add("backButtonInvisible");
         },
 
         // checks if all the data has been entered for the different pages
         // if so set the corresponding submit-button enabled (red)
-        checkIfComplete: function () {            
+        checkIfComplete: function () {
             switch (this.process[this.index]) {
                 case 'route':
                     if (this.start.value != "" && this.destination.value != "") {
@@ -102,16 +109,29 @@ carlos.app = new Vue({
                         this.complete = false;
                     }
                     break;
-                case 'dateTime':              
-                    if (this.date.value != "" && this.time.value != "") {                        
-                        document.querySelector('#submitDateTime').classList.remove('disabled');
-                        this.complete = true;
+                case 'dateTime':
+                    if (this.driveData["repeating"]) {
+                        if (this.daysSelected.length > 0 && this.time.value != "") {
+                            document.querySelector('#submitDateTimeRepeating').classList.remove('disabled');
+                            this.complete = true;
+                        } else {
+                            document.querySelector('#submitDateTimeRepeating').classList.add('disabled');
+                            this.complete = false;
+                        }
+                    } else {
+                        if (this.date.value != "" && this.time.value != "") {
+                            document.querySelector('#submitDateTime').classList.remove('disabled');
+                            this.complete = true;
+                        }
                     }
                     break;
                 case 'passengers':
-                    if (this.passengers.value != "") {
+                    if (this.passengers.value != "" && this.passengers.value > 0) {
                         document.querySelector('#submitPassengers').classList.remove('disabled');
                         this.complete = true;
+                    } else {
+                        document.querySelector('#submitPassengers').classList.add('disabled');
+                        this.complete = false;
                     }
                     break;
                 case 'details':
@@ -119,12 +139,16 @@ carlos.app = new Vue({
                     this.complete = true;
                     break;
                 case 'price':
-                    if (this.price.value != "") {
+                    if (this.price.value != "" && this.price.value > 0) {
                         document.querySelector('#submitDriveData').classList.remove('disabled');
                         document.querySelector('#submitDriveData').classList.add('active-green');
                         this.complete = true;
+                    } else {
+                        document.querySelector('#submitDriveData').classList.add('disabled');
+                        document.querySelector('#submitDriveData').classList.remove('active-green');
+                        this.complete = false;
                     }
-                    break;                
+                    break;
             }
         },
 
@@ -148,55 +172,65 @@ carlos.app = new Vue({
             document.querySelector('#submitRepeating').classList.remove('disabled');
         },
 
+        weekdayChoosen: function () {
+            event.target.classList.toggle('active-weekday');
+            this.checkIfComplete();
+        },
+
         submitData: function (data) {
             event.preventDefault();
+            // automatically save the different drive-data depending on the values of the paramater
             for (let i = 0; i < data.length; i++) {
-                let element = this[data[i]];              
-                if (typeof (element) == "object") {
+                let element = this[data[i]];
+                if (element.nodeName == 'INPUT') {
                     this.driveData[data[i]] = element.value;
-                } else if (typeof (element) == "boolean") {
+                } else if (typeof (element) == 'boolean') {
                     this.driveData[data[i]] = element;
                 }
-            }                
-
-            if (this.process[this.index] == "route") {
-                this.driveData['start-city'] = sessionStorage.getItem('start-city');
-                this.driveData['destination-city'] = sessionStorage.getItem('destination-city');
             }
 
-            if (this.process[this.index] == "price") {
+            if (this.process[this.index] == 'route') {
+                this.driveData['start-city'] = sessionStorage.getItem('start-city');
+                this.driveData['destination-city'] = sessionStorage.getItem('destination-city');
+            } else if (this.process[this.index] == 'price') {
                 this.submitForm();
+            } else if (this.process[this.index] == 'dateTime' && this.driveData['repeating']) {
+                let weekdays = {};
+                for (let i = 0; i < this.daysSelected.length; i++) {
+                    weekdays[i] = this.daysSelected[i].innerHTML;                    
+                }
+                this.driveData['weekdays'] = weekdays;                
             }
 
             this.slide = "slide";
             this.$nextTick(function () {
                 this.index++;
-            })               
+            })
             this.complete = false;
-            
-            
-        },        
+        },
 
-        submitForm: function () {      
+        submitForm: function () {
             let driveData = JSON.stringify(this.driveData);
-            $.post({                                           
-                async: true,                
+            $.post({
+                async: true,
                 url: "/carlos/Carlos_GetARide/www/php/saveRide.php?/saveRide",
                 data: { driveData: driveData },
-                success: function (data) {                   
+                success: function (data) {
                     console.log(data);
+                    //window.location = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen_success.html";
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
         },
-        
+
         init: function () {
-            this.start = document.querySelector('#start');            
+            this.start = document.querySelector('#start');
             this.destination = document.querySelector('#destination');
             this.date = document.querySelector('#date');
             this.time = document.querySelector('#time');
+            this.daysSelected = document.getElementsByClassName('active-weekday');
             this.passengers = document.querySelector('#numPassengers');
             this.licensePlate = document.querySelector('#licensePlate');
             this.carDetails = document.querySelector('#carDetails');
@@ -217,23 +251,28 @@ carlos.app = new Vue({
             document.querySelector('#circle-' + this.process[this.index]).className += (' circle-active');
 
             // loadData for page repeating
-            if (this.driveData['repeating'] != null && this.process[this.index]=="repeating") {
+            if (this.driveData['repeating'] != null && this.process[this.index] == "repeating") {
                 if (this.driveData['repeating']) {
                     this.clickYes();
                 } else {
                     this.clickNo();
                 }
+            } else if (this.process[this.index] == "dateTime" && this.driveData['repeating'] && this.driveData['weekdays'] != undefined) {                
+                let indices = Object.keys(this.driveData['weekdays']);
+                for (let i = 0; i < indices.length; i++) {
+                    let id = this.driveData['weekdays'][i];
+                    document.getElementById(id).classList.add('active-weekday');
+                }
             }
-        },        
-    },
 
-    mounted: function () {               
-        this.init();        
-    },   
-    updated: function () {            
-        this.init();        
+        },
+    },
+    mounted: function () {
+        this.init();
+    },
+    updated: function () {
+        this.init();
         this.checkIfComplete();
         this.back = false;        
-        //console.log(this.driveData);
     }
 });

@@ -17,15 +17,43 @@ body {
     margin:auto;
 }
 
-#form-wrapper {
-    width: 80vw;
+.form-wrapper {
+    width: 85vw;
     margin:auto;
 }
 
 .lift-form{
     margin-top:-5vh;
 }
+#weekday-wrapper{
+    width:100%;   
+    display:flex;
+}
+.weekday {
+    width: 10vw;
+    height: 10vw;
+    margin: auto;
+    border: 5px solid var(--grey-extralight);
+    border-radius: 100px;
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+    font-size:3vw;
+    color: var(--grey-light);
+    display: inline-flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
 
+.active-weekday {
+    border: 5px solid var(--green);
+    color: var(--green);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--green);
+}
 .process-page {
     position:fixed;
     left:0;
