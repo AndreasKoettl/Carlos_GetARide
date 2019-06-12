@@ -119,6 +119,7 @@ mtd280.app = new Vue({
 
         getUserById: function (iduser, index) {
             var appAccess = this;
+       
             $.ajax({
                 accepts: "application/json",
                 dataType: "json",
