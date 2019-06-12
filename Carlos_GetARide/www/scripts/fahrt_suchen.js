@@ -48,10 +48,6 @@ mtd280.app = new Vue({
             let timeDrive = this.$el.querySelector('#timeDrive').value || null;
             var appAccess = this;
 
-            console.log(locationStart);
-            console.log(locationEnd);
-            console.log(dateDrive);
-            console.log(timeDrive);
             event.preventDefault();
             $.ajax({
                 accepts: "application/json",
