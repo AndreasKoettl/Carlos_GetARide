@@ -7,19 +7,66 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script src="../../lib/vue/vue.min.js"></script>
     <title>Profil</title>
 </head>
-<body id="profile-content">
-    <img class="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
-    <div class="data">
-        <h2 class="name">Max Muster</h2>
-        <p class="mail">max.muster@hotmail.com</p>
+<body>
+    <div id="profilec">
+
+        <div v-if="profile">
+            <img class="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
+            <div class="data">
+                <h2 class="name">Max Muster</h2>
+                <p class="mail">max.muster@hotmail.com</p>
+            </div>
+
+            <div class="profile-options">
+                <a @click="loadUser"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
+                <a @click="profile = false; settings = true;"><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
+            </div>
+            <a href="../../index.html">Back to home</a>
+        </div>
+
+        <div v-else>
+            <div v-if="settings">
+                <img class="settings-picture" src="../../images/illustrationen/undraw_settings_ii2j.svg" alt="settings-picture" title="settings-picture" />
+                <div class="settings">
+                    <p>Benachrichtigungen</p>
+                    <div><img class="yes" src="../../images/icons/hakerl_icon.svg" /><img class="no" src="../../images/icons/x_icon.svg" /></div>
+                </div>
+                <button class="red-button"> Account löschen</button>
+
+                <a href="../../index.html">back to home</a>
+            </div>
+
+            <div v-else>
+                <img class="edit-picture" src="../../images/illustrationen/profile_edit.svg" alt="edit-picture" title="edit-picture" />
+                <form>
+                    <div class="textinput">
+                        <label for="username">Vorname</label>
+                        <input type="text" id="firstname" name="firstname" :placeholder="firstname">
+                    </div>
+                    <div class="textinput">
+                        <label for="strasse">Nachname</label>
+                        <input type="text" id="lastname" name="lastname" :placeholder="lastname">
+                    </div>
+                    <div class="textinput">
+                        <label for="email">E-Mail</label>
+                        <input type="email" id="email" name="email" :placeholder="email">
+                    </div>
+                </form>
+                <button class="red-button">Speichern</button>
+
+                <a href="../../index.html">back to home</a>
+            </div>
+        </div>
+
     </div>
 
-    <div class="profile-options">
-        <a><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
-        <a><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
-    </div>
+    <script type="text/javascript" src="../../scripts/profile.js"></script>
+    <script type="text/javascript" src="../../scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="../../scripts/index.js"></script>
+
     <a href="../../index.html">Back to home</a>
 
 </body>
