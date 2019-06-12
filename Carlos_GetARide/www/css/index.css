@@ -1,7 +1,10 @@
-
 @import url('profile.css');
 @import url('suchen.css');
 @import url('meine_fahrten.css');
+@import url(fahrt_erstellen.css);
+@import url(components.css);
+@import url(profile.css);
+@import url(meine_fahrten.css);
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:600,700,800');
 
@@ -15,10 +18,10 @@
     --blue-light: #F0F4F6;
     --green: #A5C03C;
     --grey-dark: #707070;
-	--grey: #858585;
     --grey-light: #C3C3C3;
     --grey-extralight: #EAEAEA;
 }
+
 
 .main {
     background-color: var(--blue-light);
@@ -60,14 +63,11 @@ input {
     padding: 2.6vw 5vw;
     box-sizing: border-box;
     width: 100%;
-    font-family: 'Monterserrat', sans-serif;
-    font-weight: 600;
-    color: var(--grey-dark);
     background-color: #FFF;
 }
 
-input:active, input:focus{
-    outline:none;
+input:active, input:focus {
+    outline: none;
 }
 
 form {
@@ -79,12 +79,14 @@ form {
     margin: 2vh 0 0 0;
 }
 
-.red-button {
-    display: block;  
+
+
+.red-button { 
     width: 90vw;
     margin: 8vw auto;
     font-size: 5vw;
-    padding: 2.1vw 5vw;
+    padding: 2.1vw 5vw;   
+    font-size: 4vw;
     font-family: 'Roboto Slab', serif;
     color: #fff;
     background-color: var(--red);
@@ -93,5 +95,5 @@ form {
 }
 
 button:focus, button:active{
-    outline:none;
+    outline:none;   
 }

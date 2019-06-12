@@ -1,0 +1,143 @@
+﻿/* HEADER */
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: flex-start;
+    z-index: 10;
+}
+
+header > div {
+    width: 60vw;
+}
+
+header h3 {
+    font-family: Roboto Slab, serif;
+    font-weight: normal;
+    font-size: 5vw;
+    color: var(--red);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+header a {
+    height: 10vh;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+header a img {
+    width: 8vw;
+    height: 8vw;
+    margin: auto;
+}
+
+.circle {
+    width: 15px;
+    height: 15px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    border: 0.5vw solid var(--grey-light);
+}
+
+.circle-active {
+    background: var(--grey-light);
+}
+
+#page-navigation {
+    width: 30vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.placeInputActiveChanges {
+    margin-top: 25vw !important;
+}
+
+.backButtonInvisible {
+    justify-content: center;
+}
+
+.backButtonInvisible #back {
+    display: none !important;
+}
+
+
+/* NAV-BAR */
+#menu {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 8vh;
+    background-color: #fff;
+    -webkit-box-shadow: 0px -2px 5px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px -2px 5px 0px rgba(0,0,0,0.15);
+    box-shadow: 0px -2px 5px 0px rgba(0,0,0,0.15);
+}
+
+#menu a {
+    height: 100%;
+    width: 20vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.icon {
+    filter: brightness(0) invert(47%) sepia(25%) saturate(0%) hue-rotate(155deg) brightness(87%) contrast(87%);
+    width: 5.5vw;
+    height: 5.5vw;
+}
+
+.chat-icon {
+    width: 6.5vw;
+    height: 6.5vw;
+}
+
+.active {
+    filter: brightness(0) invert(36%) sepia(27%) saturate(2113%) hue-rotate(327deg) brightness(93%) contrast(87%);
+}
+
+.active-border {
+    border-bottom: 3px solid var(--red);
+    box-sizing: border-box;
+}
+
+/* SEARCHBOX - place-input component */
+#suggestions {
+    width: 95%;
+    margin: auto;
+    padding: 0;
+}
+
+.suggestion:first-child {
+    border-top: none;
+}
+
+.suggestion {
+    font-family: Montserrat, sans-serif !important;
+    font-size: 2em;
+    color: var(--grey-dark);
+    padding: 5vw;
+    border-top: solid 2px var(--grey-light);
+    list-style-type: none;
+}
+
+.clear-icon {
+    position: relative;
+    margin-top: -4vh;
+    right: 3vw;
+    float: right;
+    width: 5vw;
+    height: 5vw;
+}
