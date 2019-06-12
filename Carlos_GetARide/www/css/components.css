@@ -17,7 +17,7 @@ header > div {
 header h3 {
     font-family: Roboto Slab, serif;
     font-weight: normal;
-    font-size: 3vh;
+    font-size: 5vw;
     color: var(--red);
     text-align: center;
     margin-bottom: 10px;
@@ -72,7 +72,6 @@ header a img {
 
 
 /* NAV-BAR */
-
 #nav-bar {
     display: flex;
     justify-content: space-around;
@@ -116,7 +115,7 @@ header a img {
 
 /* SEARCHBOX - place-input component */
 #suggestions {
-    width: 80vw;
+    width: 95%;
     margin: auto;
     padding: 0;
 }
@@ -127,9 +126,9 @@ header a img {
 
 .suggestion {
     font-family: Montserrat, sans-serif !important;
-    font-size: 3vw;
+    font-size: 2em;
     color: var(--grey-dark);
-    padding: 2vh;
+    padding: 5vw;
     border-top: solid 2px var(--grey-light);
     list-style-type: none;
 }

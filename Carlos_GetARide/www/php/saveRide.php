@@ -8,8 +8,8 @@ dispatch_post('/saveRide', 'saveRide');
 function saveRide(){
 	$data=$_POST["driveData"];		 
 	//Decode the JSON string and convert it into a PHP associative array.
-	$driveData = json_decode($data, true);
-	
+	$driveData = json_decode($data, true);	
+	$datetime=$driveData["date"] . " " . $driveData["time"] . ":00";	
 
 	// insert driveData into table drives
 	$query="INSERT INTO `drives` (`locationStart`, `locationEnd`, `driveDate`, `passengers`, `maxPassengers`, `dateAdded`, `dateChanged`, `price`, `licensePlate`, `details`, `initialDriveId`, `users_idusers`) 
@@ -19,18 +19,15 @@ function saveRide(){
 	$dbConnection->bindParam(":price", htmlentities ($driveData["price"]));
 	$dbConnection->bindParam(":start", htmlentities ($driveData["start"]));
 	$dbConnection->bindParam(":destination", htmlentities ($driveData["destination"]));	
-	$dbConnection->bindParam(":maxPassengers", $driveData["passengers"]);
-	if(!$driveData['repeating']){
-		$datetime=$driveData["date"] . " " . $driveData["time"] . ":00";	
-		$dbConnection->bindParam(":datetime", $datetime);
-	} else {
-		$dbConnection->bindParam(":datetime", CURRENT_TIMESTAMP);
-	}
-	$licensePlate=$driveData['licensePlate'] != undefined ? $driveData['licensePlate'] : NULL;			
+	$dbConnection->bindParam(":maxPassengers", $driveData["passengers"]);	
+	$dbConnection->bindParam(":datetime", $datetime);	
+	$licensePlate= isset($driveData["licensePlate"]) ? $driveData["licensePlate"] : NULL;			
 	$dbConnection->bindParam(":licensePlate", $licensePlate);
-	$carDetails= isset($driveData['carDetails']) ? $driveData['carDetails'] : NULL;			
-	$dbConnection->bindParam(':carDetails', $carDetails);
+	$carDetails= isset($driveData["carDetails"]) ? $driveData["carDetails"] : NULL;			
+	$dbConnection->bindParam(":carDetails", $carDetails);
 	$dbConnection->executeStatement();
+	$result=$dbConnection->fetchAll();
+	return json_encode($result);
 	
 	// update the initialDriveId if the drive is repeating
 	// create all the following drives
@@ -55,8 +52,7 @@ function saveRide(){
 		// create repeating drives		
 		$weekdays = $driveData['weekdays'];			
 		for($i=0; $i< sizeof($weekdays); $i++){
-			$weekday=$weekdays[$i];
-			
+			$weekday=$weekdays[$i];			
 		}
 	} 		
 }
