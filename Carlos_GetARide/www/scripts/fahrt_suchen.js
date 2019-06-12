@@ -42,18 +42,24 @@ mtd280.app = new Vue({
                 }
             }        
 
-            let formData = new FormData($("#search-form")[0]);
+            let locationStart = this.$el.querySelector('#locationStart').value || null;
+            let locationEnd = this.$el.querySelector('#locationEnd').value || null;
+            let dateDrive = this.$el.querySelector('#dateDrive').value || null;
+            let timeDrive = this.$el.querySelector('#timeDrive').value || null;
             var appAccess = this;
 
+            console.log(locationStart);
+            console.log(locationEnd);
+            console.log(dateDrive);
+            console.log(timeDrive);
             event.preventDefault();
-            $.post({
+            $.ajax({
                 accepts: "application/json",
                 dataType: "json",
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/search.php?/searchRide",
-                data: formData,
+                url: "../../php/search.php?/searchRide/" + locationStart + "/" + locationEnd + "/" + dateDrive + "/" + timeDrive,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     if (data === false) {
@@ -117,14 +123,13 @@ mtd280.app = new Vue({
 
         getUserById: function (iduser, index) {
             var appAccess = this;
-            $.post({
+            $.ajax({
                 accepts: "application/json",
                 dataType: "json",
                 async: true,
                 contentType: false,
                 processData: false,
                 url: "../../php/search.php?/getUser/"+iduser,
-                data: iduser,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     if (data === false) {

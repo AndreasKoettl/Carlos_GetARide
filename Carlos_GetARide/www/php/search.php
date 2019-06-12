@@ -3,28 +3,29 @@ require_once '../lib/limonade-master/lib/limonade.php';
 require_once 'utilities.php';
 
 
-dispatch_post('/searchRide', 'searchRide');
-dispatch_post('/getUser/:iduser', 'getUserById');
+dispatch('/searchRide/:start/:end/:date/:time', 'searchRide');
+dispatch('/getUser/:iduser', 'getUserById');
 	
         function searchRide()
         {
 			$query = array();
+
+			$start = (params('start') == "null") ? "" : params('start');
+			$end = (params('end') == "null") ? "" : params('end');
+			$date = (params('date') == "null") ? "" : params('date');
+			$time = (params('time') == "null") ? "" : params('time');
+
 				
-			if(hasValue($_POST["locationStart"]) || hasValue($_POST["locationEnd"])){
+			if(hasValue($start) || hasValue($end)){
 				$set = FALSE;
 				$query  = "SELECT * FROM drives";
 
-				$start = $_POST["locationStart"];
-				$end = $_POST["locationEnd"];
-				$date = $_POST["dateDrive"];
-				$time = $_POST["timeDrive"];
-				
-				if (hasValue($_POST["locationStart"]))
+				if (hasValue($start))
 				{
 				  $query .= " WHERE locationStart = '$start'";
 				  $set = TRUE;
 				}
-			    if (hasValue($_POST["locationEnd"]))
+			    if (hasValue($end))
 			    {
 				  $query .= ($set===TRUE ? " AND" : " WHERE") . " locationEnd = '$end'";
 				  $set = TRUE;
@@ -33,9 +34,9 @@ dispatch_post('/getUser/:iduser', 'getUserById');
 				$datetime = new Datetime();
 				$datetime = $datetime->format('Y-m-d H:i:s');
 				
-				 if (hasValue($_POST["dateDrive"]))
+				 if (hasValue($date))
 			    {
-				  if(hasValue($_POST["timeDrive"])){
+				  if(hasValue($time)){
 					$datetime = $date." ".$time.":00";
 				  } 
 				  else {
@@ -46,7 +47,7 @@ dispatch_post('/getUser/:iduser', 'getUserById');
 					$datetime .= $dt;
 				  }
 				} else {
-					if(hasValue($_POST["timeDrive"])){
+					if(hasValue($time)){
 						$datetime = new DateTime();
 						$datetime = $datetime->format('Y-m-d');
 						$datetime .= " ".$time.":00";
