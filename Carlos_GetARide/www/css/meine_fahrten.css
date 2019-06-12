@@ -1,3 +1,7 @@
+.main-white {
+    background-color: white;
+}
+
 .illustration_meineFahrten {
     width: 80vw;
     margin: 5vh auto;
@@ -8,6 +12,7 @@
     padding-bottom: 3vh;
 }
 
+
 #nav-bar {
     width: 80vw;
     height: 6vh;
@@ -16,7 +21,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: #fff;
+    color: var(--grey-extralight);
     background-color: var(--red);
     border-radius: 50px;
 }
@@ -35,7 +40,7 @@
 }
 
 #slider {
-    background-color: #fff;
+    background-color: var(--grey-extralight);
     color: var(--red);
     border-radius: 50px;
     position: absolute;
@@ -63,26 +68,30 @@
 .box-meine-fahrten {
     width: 80vw;
     box-sizing: border-box;
-    margin: 0 auto;
-    background-color: #fff;
+    margin: 0 auto 3vh auto;
+    background-color: var(--grey-extralight);
     border-radius: 35px;
     padding: 3vh 3vh;
     list-style: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .start-destination {
-    font-family: Montserrat, sans-serif;
+    font-family: 'Roboto Slab', serif;
     font-size: 5vw;
     color: var(--red);
     font-weight: 900;
     padding: 0px;
     margin: 0px;
+    width: 90%;
+    float: left;
 }
 
 .datetime {
-    font-family: Montserrat, sans-serif;
+    font-family: 'Roboto Slab', serif;
     font-size: 3.5vw;
-    color: var(--grey-light);
+    color: var(--grey-dark);
     padding: 0px;
     margin: 0px;
     margin-top:2vw;
@@ -90,13 +99,22 @@
 
 .row {
     display: flex;
+    justify-content: flex-start;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+}
+
+.row-h1 {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
     padding-top: 3vh;
     padding-bottom: 3vh;
 }
 
 .col {
     display: flex;
+    width: 62vw;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -108,7 +126,9 @@
 
 .row-bottom-padding {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     padding-bottom: 2vh;
     list-style: none;
 }
@@ -129,28 +149,30 @@
 }
 
 .details-h1 {
-    font-family: Montserrat, sans-serif;
+    font-family: 'Roboto Slab', sans-serif;
     font-size: 6vw;
     color: var(--grey);
-    font-weight: 900;
-    z-index: 100;
+    font-weight: 700;
+    z-index: 400;
     padding: 0;
     margin: 0;
 }
 
 .details-h2 {
-    font-family: Montserrat, sans-serif;
+    font-family: 'Roboto Slab', serif;
     font-size: 4vw;
     color: var(--grey);
-    font-weight: 900;
+    font-weight: 400;
     z-index: 100;
     padding: 0;
     margin: 0;
 }
 
 .details-h3 {
+    font-family: Montserrat, sans-serif;
     font-family: 'Roboto Slab', serif;
     font-size: 3vw;
+    font-weight: 600;
     color: var(--grey-light);
     z-index: 100;
     padding: 0;
@@ -158,7 +180,7 @@
 }
 
 .details-h4 {
-    font-family: 'Roboto Slab', serif;
+    font-family: Montserrat, sans-serif;
     font-size: 3vw;
     text-transform: uppercase;
     color: var(--red);
@@ -169,8 +191,10 @@
 }
 
 .details-h4-padding-top {
-    font-family: 'Roboto Slab', serif;
     font-size: 3vw;
+    font-family: 'Roboto Slab', serif;
+    font-size: 4vw;
+    font-weight: 400;
     text-transform: uppercase;
     color: var(--red);
     z-index: 100;
@@ -181,7 +205,7 @@
 }
 
 .details-h5 {
-    font-family: 'Roboto Slab', serif;
+    font-family: Montserrat, sans-serif;
     font-size: 2.5vw;
     text-transform: uppercase;
     color: var(--grey-light);
@@ -198,24 +222,31 @@
     z-index: 0;
     padding: 0;
     margin: 0;
+    float: right;
 }
 
 .icon-route {
-    height: 15vh;
+    height: 10vh;
+    margin: auto 5.5vw auto 2vw;
 }
 
 .icon-request {
-    height: 4vh;
+    height: 6vw;
+    margin: auto 5vw auto 0;
+}
+
+.icon-request-end {
+    height: 6vw;
     margin: auto 0;
 }
 
 .box-route {
-    height: 15vh;
+    height: 10vh;
     width: 80%;
 }
 
 .price {
-    width: 40%;
+    width: 50%;
 }
 
 .seats {
@@ -223,8 +254,7 @@
 }
 
 .request-data {
-    width: 50%;
-    margin-left: -10%;
+    width:75%;
 }
 
 .button-red-full {
@@ -237,12 +267,36 @@
     font-family: 'Roboto Slab', serif;
     background-color: var(--red);
     border-radius: 50px;
+    border:none;
+}
+
+.button-green-full {
+    margin: 1vh auto 0 auto;
+    width: 100%;
+    height: 5vh;
+    text-align: center;
+    color: #fff;
+    font-size: 2.5vh;
+    font-family: 'Roboto Slab', serif;
+    background-color: var(--green);
+    border-radius: 50px;
+    border:none;
 }
 
 .edit-content {
     font-family: 'Roboto Slab', serif;
     font-weight: 400;
     color: var(--grey-dark);
+}
+
+.repetition {
+    background-color: white;
+    border: 2px solid var(--grey-extralight);
+}
+
+.not-accepted {
+    background-color: white;
+    border: 2px solid var(--red);
 }
 
 .repeating-label {
@@ -267,3 +321,4 @@
 #x_icon {
     filter: brightness(0) invert(47%) sepia(25%) saturate(0%) hue-rotate(155deg) brightness(87%) contrast(87%);
 }
+

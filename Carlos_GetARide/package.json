@@ -4,7 +4,12 @@
     "private": true,
     "dependencies": {
         "cordova-plugin-datetimepicker": "1.1.2",
-        "cordova-plugin-splashscreen": "^5.0.2"
+        "cordova-plugin-splashscreen": "^5.0.2",
+<<<<<<< HEAD
+        "html-entities": "^1.2.1"
+=======
+        "vue-date-pick": "^1.1.0"
+>>>>>>> workOn/fahrt_suchen
     },
     "cordova": {
         "plugins": {
