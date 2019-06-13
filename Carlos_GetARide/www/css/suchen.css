@@ -11,13 +11,11 @@ color: var(--grey-dark);
     margin:0 auto;
 }
 
-h1 {
+#search-title {
     font-family: 'Roboto Slab', sans-serif;
     font-weight:400;
-    font-size: 8vw;
     text-align: center;
-
-    width: 70vw;
+    color: var(--grey-dark);
     margin: 0 auto;
 }
 

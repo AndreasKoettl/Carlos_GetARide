@@ -58,9 +58,10 @@ Vue.component('header-title', {
 Vue.component('header-back', {
     props: ['title'],
     template: `
-    <header class="row">
-        <img src="/carlos/Carlos_GetARide/www/images/icons/back.svg" class="header_icon" @click="$emit('go-back', $event.target.value)">
-        <h1>{{title}}</h1>
+    <header>
+        <a id="backbutton" @click="$emit('go-back', $event.target.value)"><img src="/carlos/Carlos_GetARide/www/images/icons/back.svg" class="header_icon"></a>
+        <div><h1>{{title}}</h1></div>
+        <a id="settings"><img src="/carlos/Carlos_GetARide/www/icons/settings.svg" class="header icon"></a>
     </header>
 `
 });

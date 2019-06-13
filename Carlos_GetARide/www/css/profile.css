@@ -34,7 +34,8 @@
 .profile-picture, .settings-picture, .search-picture {
     display: block;
     width: 60vw;
-    margin: 16vw auto;
+    position: relative;
+    margin: 1vw auto 10vw auto;
 }
 
 .edit-picture {

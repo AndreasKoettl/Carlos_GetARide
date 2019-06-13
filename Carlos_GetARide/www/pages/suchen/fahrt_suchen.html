@@ -17,11 +17,12 @@
     <title>CarlosGetARide</title>
 </head>
 <body id="search-content">
-   
+
     <div id="app">
+        <header-back title="Fahrt suchen" @go-back="window.history.back()"></header-back>
         <div id="inputForm" v-if="inputForm">
             <img class="search-picture" src="../../images/illustrationen/fahrt-suchen.png" />
-            <h1>Finde eine passende Fahrt!</h1>
+            <h1 id="search-title">Finde eine passende Fahrt!</h1>
             <form action="" id="search-form" method="get">
                 <div class="textinput">
                     <input type="text" id="locationStart" name="locationStart" placeholder="Startort" />
@@ -52,7 +53,7 @@
                     <p class="date-time">{{date}}{{time}}</p>
                 </div>
 
-                <div class="result" v-for="(item, index) in searchData"  @click="showDetails(index)">
+                <div class="result" v-for="(item, index) in searchData" @click="showDetails(index)">
                     <p class="destination">{{item.locationStart}} - {{item.locationEnd}}</p>
                     <p class="time">{{item.day}} {{item.formatDate}}, {{item.formatTime}}</p>
                 </div>
@@ -91,7 +92,7 @@
                         <img src="../../images/icons/speech-bubble.svg" class="icon-request-end" />
                     </li>
 
-                    <li class="row-bottom-padding"  v-if="((searchData[index].licensePlate) !== null) || ((searchData[index].details) !== null)">
+                    <li class="row-bottom-padding" v-if="((searchData[index].licensePlate) !== null) || ((searchData[index].details) !== null)">
                         <img src="../../images/icons/car_info.svg" class="icon-request" />
                         <div class="request_data col">
                             <h6 class="details-h2" v-if="(searchData[index].licensePlate) !== null">{{searchData[index].licensePlate}}</h6>
@@ -117,7 +118,9 @@
                 <button class="button-green-full">Mitfahren</button>
             </div>
         </div>
+        <nav-bar></nav-bar>
     </div>
+    <script src="../../scripts/components.js"></script>
     <script type="text/javascript" src="../../scripts/fahrt_suchen.js"></script>
     <script type="text/javascript" src="../../scripts/platformOverrides.js"></script>
     <script type="text/javascript" src="../../scripts/index.js"></script>
