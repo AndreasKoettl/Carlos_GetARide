@@ -19,18 +19,14 @@ color: var(--grey-dark);
     margin: 0 auto;
 }
 
-#searchButton {
+/*#searchButton {
     margin: 2vh 0;
     border: 1px solid var(--red);
     background-color: var(--red);
     color: white;
-}
+}*/
 
-.buttonEnabled {
-    background-color: green;
-}
-
-#driveInput{
+/*#driveInput{
     border: 2px solid var(--grey-extralight);
     border-radius: 15px;
     font-size: 1.8vh;
@@ -38,19 +34,19 @@ color: var(--grey-dark);
     font-family: Montserrat, sans-serif;
     padding: 6vw;
     margin: 5vh auto 5vh auto;
-}
+}*/
 
 .date-time{
     margin: 2vh 0 0 0;  
 }
 
-.result {
+/*.result {
     background-color: var(--grey-extralight);
     border-radius: 15px;
     font-size: 1.8vh;
     padding: 6vw;
     margin: 2vh auto 2vh auto;
-}
+}*/
 
 #searchContent #start, #searchContent #end{
     color: var(--grey-dark);
@@ -59,14 +55,14 @@ color: var(--grey-dark);
     hyphens: none;
 }
 
-.destination{
+/*.destination{
     font-size: 2.5vh;
     color: var(--red);
 }
 
 .destination, .time{
     margin:0;
-}
+}*/
 
 .locations{
     display:flex;
@@ -82,5 +78,5 @@ color: var(--grey-dark);
 }
 
 .textinput{
-    color: var(--grey-middle);
+    color: var(--grey-light);
 }
