@@ -10,9 +10,7 @@
 <body class="main-white">
     <div id="app">
         <div v-if="!isDriverDetails && !isCoDriverDetails">
-        <header>
-            <h1 class="main-heading">Meine Fahrten</h1>
-        </header>
+        <header title="Meine Fahrten"></header>
         <img src="../../images/illustrationen/meineFahrten_forWhiteGB.svg" class="illustration_meineFahrten">
         <nav id="nav-bar">
             <div id="slider" @click="switchMenu"></div>
@@ -30,7 +28,7 @@
                             <p class="start-destination">{{ride.routeStart}} - {{ride.routeEnd}}</p>
                             <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
                         </div>
-                        <p class="datetime">{{ride.date}} {{ride.time}}</p>">
+                        <p class="datetime">{{ride.date}} {{ride.time}}</p>
                     </div>
                 </a>
             </div>
@@ -52,10 +50,7 @@
 
 
         <div v-if="isDriverDetails">
-            <header class="row">
-                <img src="../../images/icons/back.svg" class="header-icon" @click="goBack('isDriverDetails')">
-                <h1>Meine Fahrten</h1>
-            </header>
+            <header-back title="Meine Fahrten" @go-back="goBack('isDriverDetails')"></header-back>
 
             <section class="content-box">
 
@@ -76,8 +71,6 @@
                     <img src="../../images/icons/Verbindung_smaller.svg" class="icon-route" />
                     <div class="col box-route">
                         <div>
-                            <!--<p v-if="indexUpcomingRide !== -1" class="details-h3">{{listUpcomingRides[indexUpcomingRide].time}}</p>
-                            <p v-if="indexPastRide !== -1" class="details-h3">{{listPastRides[indexPastRide].time}}</p>-->
                             <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].routeStart}}</h6>
                             <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].routeStart}}</h6>
                         </div>
@@ -156,10 +149,7 @@
 
 
         <div v-if="isCoDriverDetails">
-            <header class="row">
-                <img src="../../images/icons/back.svg" class="header-icon" @click="goBack('isCoDriverDetails')">
-                <h1>Meine Fahrten</h1>
-            </header>
+            <header-back title="Meine Fahrten" @go-back="goBack('isCoDriverDetails')"></header-back>
 
             <section class="content-box bottom-padding">
 
@@ -239,6 +229,8 @@
 
     <script src="../../scripts/index.js"></script>
     <script src="../../scripts/meine_fahrten_script.js"></script>
+
+    <script src="../scripts/components.js"></script>
 
 </body>
 </html>
