@@ -5,6 +5,8 @@ require_once 'utilities.php';
 
 dispatch('/searchRide/:start/:end/:date/:time', 'searchRide');
 dispatch('/getUser/:iduser', 'getUserById');
+dispatch_post('/addRequest/:iduser/:iddrives', 'addRequest');
+dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 	
         function searchRide()
         {
@@ -54,7 +56,7 @@ dispatch('/getUser/:iduser', 'getUserById');
 					} 
 				}
 					
-				$query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate >= '$datetime'";
+				$query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate >= '$datetime' AND passengers < maxPassengers";
 
 				$query .= " ORDER BY driveDate ASC";
 
@@ -90,6 +92,28 @@ dispatch('/getUser/:iduser', 'getUserById');
 			else {
 				$result = setErrorMessage($result, "Keine Fahrten vorhanden.");
 			}
+
+			return json_encode($result);
+		}
+
+		function addRequest(){
+			$dbConnection = new DatabaseAccess;
+			$dbConnection->prepareStatement("INSERT INTO requests (dateAdded, dateChanged, accepted, drives_iddrives, users_idusers) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, :iddrives, :iduser)");
+			$dbConnection->bindParam(":iddrives", htmlentities(params("iddrives"), ENT_QUOTES));
+			$dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
+			$dbConnection->executeStatement();
+
+			$result = setSuccessMessage($result, "Anfrage gesendet.");
+			return json_encode($result);
+		}
+
+			function checkIfCoDriver(){
+			$dbConnection = new DatabaseAccess;
+			$dbConnection->prepareStatement("SELECT * FROM requests WHERE drives_iddrives = :iddrives AND users_idusers = :iduser");
+			$dbConnection->bindParam(":iddrives", htmlentities(params("iddrives"), ENT_QUOTES));
+			$dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
+			$dbConnection->executeStatement();
+			$result = $dbConnection->fetchAll();
 
 			return json_encode($result);
 		}
