@@ -362,7 +362,6 @@ carlos_meineFahrten.app = new Vue({
                             this.getDriversName(list[index].idDriver, isUpcoming);
                         }
                     }
-                    this.$el.querySelector('#backbutton').classList.remove('hide'); 
                 }
 
         },
