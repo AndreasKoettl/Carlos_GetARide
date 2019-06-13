@@ -353,7 +353,7 @@ carlos_meineFahrten.app = new Vue({
                     }
 
                     if (this.isDriver) {
-                        await (this.isDriverDetails = true);
+                        await (this.isDriverDetails = true);    
                         this.getCoDriversNames(index, isUpcoming);
                     } else {
                         await (this.isCoDriverDetails = true);
@@ -362,6 +362,7 @@ carlos_meineFahrten.app = new Vue({
                             this.getDriversName(list[index].idDriver, isUpcoming);
                         }
                     }
+                    this.$el.querySelector('#backbutton').classList.remove('hide'); 
                 }
 
         },
@@ -871,6 +872,7 @@ carlos_meineFahrten.app = new Vue({
                 this.switchMenu();
             }
             this.setAcceptedCss();
+            this.$el.querySelector('#backbutton').classList.add('hide'); 
         }
 
     },
@@ -878,7 +880,7 @@ carlos_meineFahrten.app = new Vue({
 
 
     mounted: function () {
-        
+        this.$el.querySelector('#backbutton').classList.add('hide'); 
         this.loadDriversRides();
     }
 });

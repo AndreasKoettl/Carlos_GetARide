@@ -149,7 +149,7 @@ mtd280.app = new Vue({
         goBack: function () {
             if (this.resultsOverview) {
                 this.inputForm = true;
-                this.$el.querySelector('#backbutton').classList.add('hide'); 
+                this.$el.querySelector('#backbutton').classList.add('hide');    
             } else {           
                 this.resultsOverview = true;
             }
