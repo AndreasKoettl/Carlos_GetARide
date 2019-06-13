@@ -10,11 +10,12 @@ mtd280.app = new Vue({
         resultsOverview: true,
         searchData: [],
         index: 0,
-        start: "nicht angegeben",
-        end: "nicht angegeben",
+        start: "Startort nicht angegeben",
+        end: "Zielort nicht angegeben",
         date: "",
         time: "",
-        fullname: ""
+        fullname: "",
+        disable: false
     },
 
     methods: {
@@ -65,6 +66,7 @@ mtd280.app = new Vue({
                         appAccess.searchData = data["data"];
                         for (let i = 0; i < appAccess.searchData.length; i++) {
                             let current = appAccess.searchData[i];
+                            current["passengersAvailable"] = current["maxPassengers"] - current["passengers"];
                             let datetime = current["driveDate"];
                             datetime = datetime.split(" ");
                             current["formatDate"] = datetime[0].substring(8, 10) + "." + datetime[0].substring(5, 7) + "." + datetime[0].substring(0, 4) ;
@@ -112,6 +114,8 @@ mtd280.app = new Vue({
         showDetails: function (index) {
             this.getUserById(this.searchData[index]["users_idusers"], index);
             this.index = index;
+            let iduser = JSON.parse(localStorage.getItem("carlosUser"))["idusers"];
+            this.checkIfCoDriver(iduser, this.searchData[index]["iddrives"]);
         },
 
         toUcFirst: function (string) {
@@ -120,7 +124,7 @@ mtd280.app = new Vue({
 
         getUserById: function (iduser, index) {
             var appAccess = this;
-       
+            console.log("index" + index);
             $.ajax({
                 accepts: "application/json",
                 dataType: "json",
@@ -137,6 +141,7 @@ mtd280.app = new Vue({
                         let thename = data["data"][0]["firstname"] + " " + data["data"][0]["lastname"];
                         appAccess.searchData[index]["fullname"] = thename;
                         appAccess.resultsOverview = false;
+
                     }
                 },
                 error: function () {
@@ -153,7 +158,55 @@ mtd280.app = new Vue({
             } else {           
                 this.resultsOverview = true;
             }
+        },
+
+        rideAlong: function () {
+            let iduser = JSON.parse(localStorage.getItem("carlosUser"))["idusers"];
+            let iddrives = this.searchData[this.index]["iddrives"];
+            console.log("inside ride");
+            $.post({
+                accepts: "application/json",
+                dataType: "json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "../../php/search.php?/addRequest/" + iduser + "/" + iddrives,
+                success: function (data) {
+                    //console.log(JSON.stringify(data["data"][0]));
+                    console.log(data + " Anfrage zum Mitfahren gesendet");
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
+        },
+
+        checkIfCoDriver: function (iduser, iddrives) {
+            var appAccess = this;
+
+            $.ajax({
+                accepts: "application/json",
+                dataType: "json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "../../php/search.php?/checkIfCoDriver/" + iduser + "/" + iddrives,
+                success: function (data) {
+                    //console.log(JSON.stringify(data["data"][0]));
+                
+                    if (data["data"][0]) {
+                        appAccess.disable = true;
+                    } else {
+                        appAccess.disable = false;
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
         }
+
+
 
     },
 

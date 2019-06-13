@@ -280,6 +280,7 @@ p {
  }
 
 
- .disabled {
-     background: var(--grey-light) !important;
- }
+.disabled {
+    background: var(--grey-light) !important;
+    border: 2px solid var(--grey-light) !important;
+}

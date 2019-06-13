@@ -5,7 +5,7 @@
         Passen Sie die Inhaltssicherheitsrichtlinie im META-Tag unten nach Bedarf an. Fügen Sie "default-src" die Option "unsafe-inline" hinzu, um Inline-JavaScript zu aktivieren.
         Details finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=617521".
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src *; media-src *; font-src *">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://* data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src * 'unsafe-inline';  media-src *; font-src *">
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="format-detection" content="telephone=no">
@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
     <script type="text/javascript" src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../../lib/vue/vue.min.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
     <title>CarlosGetARide</title>
 </head>
 <body id="search-content">
@@ -25,13 +27,17 @@
             <h1 id="search-title">Finde eine passende Fahrt!</h1>
             <form action="" id="search-form" method="get">
                 <div class="textinput">
+                    <!--<div style="width:90vw; margin:5vh auto; z-index:0;">
+         <place-input id="start" clearid="clear-start" placeholder="Start" @searchbox-enter="" @searchbox-leave=""></place-input>
+         <ul id="suggestions" class="displayNone"></ul>
+     </div> -->
                     <input type="text" id="locationStart" name="locationStart" placeholder="Startort" />
                 </div>
                 <div class="textinput">
                     <input type="text" id="locationEnd" name="locationEnd" placeholder="Zielort" />
                 </div>
                 <div class="textinput">
-                    <input type="date" id="dateDrive" name="dateDrive" placeholder="Datum" />
+                    <input type="date" id="dateDrive" name="dateDrive" />
                 </div>
                 <div class="textinput">
                     <input type="time" id="timeDrive" name="timeDrive" placeholder="Uhrzeit" />
@@ -43,8 +49,9 @@
         </div>
         <div id="search-results" v-else>
             <div id="results-overview" v-if="resultsOverview">
+
                 <!--<div id="driveInput">-->
-                <div class="grey-box grey-outline-box">
+                <div class="grey-box grey-outline-box" @click="goBack()">
                     <div class="locations">
                         <img id="route-img" />
                         <div>
@@ -114,13 +121,19 @@
                         <h6 class="drive-details-h2">{{searchData[index].price}} €</h6>
                         <p class="drive-details-h3">pro Person</p>
                     </div>
+
                     <div class="drive-detail-half-page">
                         <h6 class="drive-details-h2">{{searchData[index].maxPassengers}} Plätze</h6>
                         <p class="drive-details-h3">verfügbar</p>
                     </div>
                 </div>
+                 <button v-bind:class="{'green-button':!resultsOverview, disabled:disable }" id="ride-along" @click="rideAlong()">Mitfahren</button>
 
-                <button class="green-button">Mitfahren</button>
+                    <div class="price">
+                        <h6 class="details-h2">{{searchData[index].passengersAvailable}} Plätze</h6>
+                        <p class="details-h3">verfügbar</p>
+                    </div>
+              
             </div>
         </div>
         <nav-bar></nav-bar>
