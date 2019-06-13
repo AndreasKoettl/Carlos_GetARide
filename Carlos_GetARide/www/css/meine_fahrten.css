@@ -3,7 +3,7 @@
 }
 
 .illustration_meineFahrten {
-    width: 70vw;
+    width: 60vw;
     margin: 10vw auto;
     display: block;
 }
@@ -14,7 +14,6 @@
 
 
 #nav-bar {
-    width: 90vw;
     height: 10vw;
     margin: 0 auto;
     position: relative;
@@ -66,7 +65,6 @@
 }
 
 .box-meine-fahrten {
-    width: 90vw;
     box-sizing: border-box;
     margin: 0 auto 5vw auto;
     background-color: var(--grey-extralight);
@@ -102,6 +100,7 @@
 .row {
     display: flex;
     justify-content: flex-start;
+    margin: 0;
     padding-top: 6vw;
     padding-bottom: 6vw;
 }
@@ -182,6 +181,7 @@
     padding: 0;
     margin: 0;
     text-align: left;
+    width: 100%;
 }
 
 .details-h4 {
@@ -255,10 +255,6 @@
     width: 50%;
 }
 
-.seats {
-    width: 60%;
-}
-
 .request-data {
     width:75%;
 }
@@ -287,12 +283,6 @@
     background-color: var(--green);
     border-radius: 50px;
     border:none;
-}
-
-.edit-content {
-    font-family: 'Roboto Slab', serif;
-    font-weight: 400;
-    color: var(--grey-dark);
 }
 
 .repetition {

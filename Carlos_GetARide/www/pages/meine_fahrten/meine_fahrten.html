@@ -11,14 +11,15 @@
     <div id="app">
         <div v-if="!isDriverDetails && !isCoDriverDetails">
         <header-title title="Meine Fahrten"></header-title>
+
+            <section class="content-box bottom-padding">
+
         <img src="../../images/illustrationen/meineFahrten_forWhiteGB.svg" class="illustration_meineFahrten">
         <nav id="nav-bar">
             <div id="slider" @click="switchMenu"></div>
             <p id="driver" class="menu active_menu" @click="switchMenu">Fahrer</p>
             <p id="codriver" class="menu" @click="switchMenu">Mitfahrer</p>
         </nav>
-
-        <section class="bottom-padding">
 
             <h6 class="timing-meine-Fahrten">Kommende Fahrten</h6>
             <div v-if="listUpcomingRides.length !== 0" id="rides-upcoming" class="list_meineFahrten">
@@ -46,14 +47,13 @@
             </div>
 
         </section>
-            <nav-bar></nav-bar>
         </div>
 
 
         <div v-if="isDriverDetails">
             <header-back title="Details" @go-back="goBack('isDriverDetails')"></header-back>
 
-            <section class="content-box">
+            <section class="content-box bottom-padding">
 
                 <div class="row">
                     <div class="col">
@@ -90,13 +90,13 @@
                         <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].price}} €</h6>
                         <p class="details-h3">pro Person</p>
                     </div>
-                    <div class="seats">
+                    <div class="price">
                         <h6 v-if="indexUpcomingRide !== -1" class="details-h2">{{listUpcomingRides[indexUpcomingRide].passengersAvailable}} Plätze</h6>
                         <h6 v-if="indexPastRide !== -1" class="details-h2">{{listPastRides[indexPastRide].passengersAvailable}} Plätze</h6>
                         <p class="details-h3">noch verfügbar</p>
                     </div>
                 </div>
-
+<!--
                 <h6 class="details-h4">Anfragen</h6>
                 <ul class="list">
 
@@ -132,7 +132,7 @@
                     </div>
                 </ul>
 
-                <hr />
+                <hr />-->
 
                 <div class="row">
                     <div class="price">
@@ -147,7 +147,6 @@
                     <button v-if="indexPastRide !== -1 && listPastRides[indexPastRide].dateTime >= date" class="button-red-full" @click="deleteRide(indexPastRide, false)">Fahrt löschen</button>
 
             </section>
-            <nav-bar></nav-bar>
         </div>
 
 
@@ -226,8 +225,9 @@
                 <button v-if="indexPastRide !== -1 && listPastRides[indexPastRide].dateTime >= date" class="button-red-full" @click="cancelRide(indexPastRide, false)">Fahrt canceln</button>
 
             </section>
-            <nav-bar></nav-bar>
         </div>
+
+        <nav-bar></nav-bar>
 
     </div>
 
