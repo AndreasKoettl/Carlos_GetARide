@@ -4,7 +4,7 @@ header {
     position: sticky;
     top: 0;
     width: 100vw;
-    height: 10vh;
+    height: 10%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -25,7 +25,7 @@ header h3 {
 }
 
 header a {
-    height: 10vh;
+    height: 20vw;
     width: 20vw;
     display: flex;
     flex-direction: column;
@@ -60,7 +60,7 @@ header a img {
 }
 
 .placeInputActiveChanges {
-    margin-top: 25vw !important;
+    margin-top: 20vw !important;
 }
 
 .backButtonInvisible {
@@ -79,7 +79,7 @@ header a img {
     position: fixed;
     bottom: 0;
     width: 100vw;
-    height: 8vh;
+    height: 16vw;
     background-color: #fff;
     -webkit-box-shadow: 0px -2px 5px 0px rgba(0,0,0,0.15);
     -moz-box-shadow: 0px -2px 5px 0px rgba(0,0,0,0.15);
@@ -136,7 +136,7 @@ header a img {
 
 .clear-icon {
     position: relative;
-    margin-top: -4vh;
+    margin-top: -5.2vh;
     right: 3vw;
     float: right;
     width: 5vw;

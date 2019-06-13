@@ -92,11 +92,38 @@ new Vue({
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
+        },
+
+        goBack: function () {
+            console.log('going back');
+            this.profile = true;
+            this.loadUser();
+            this.$el.querySelector('#settings-icon').classList.remove('hide');
+            this.$el.querySelector('#backbutton').classList.add('hide'); 
+        },
+
+        goToSettings: function () {
+            this.profile = false;
+            this.settings = true;
+            this.$el.querySelector('#settings-icon').classList.add('hide');
+            this.$el.querySelector('#backbutton').classList.remove('hide');    
+        },
+
+        goToEdit: function () {
+            this.profile = false;
+            this.settings = false;
+            this.$el.querySelector('#settings-icon').classList.add('hide');
+            this.$el.querySelector('#backbutton').classList.remove('hide');   
         }
     },
 
     created: function () {
         this.loadUser();
+    },
+
+    mounted: function () {
+        this.$el.querySelector('#settings-icon').classList.remove('hide');
+        this.$el.querySelector('#backbutton').classList.add('hide');
     }
 
 });

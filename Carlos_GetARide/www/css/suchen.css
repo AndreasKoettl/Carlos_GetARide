@@ -52,7 +52,7 @@ color: var(--grey-dark);
     margin: 2vh auto 2vh auto;
 }
 
-#start, #end{
+#searchContent #start, #searchContent #end{
     color: var(--grey-dark);
     font-size: 2.5vh;
     margin: 1vh 0;

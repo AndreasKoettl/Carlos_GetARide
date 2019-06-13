@@ -35,13 +35,13 @@
     display: block;
     width: 60vw;
     position: relative;
-    margin: 1vw auto 10vw auto;
+    margin: 0 auto 10vw auto;
 }
 
 .edit-picture {
     display: block;
     width: 60vw;
-    margin: 10vw auto;
+    margin: 0 auto 10vw auto;
 }
 
 .profile-options {
@@ -82,10 +82,11 @@
 .data {
     margin: 0 auto;
     text-align: center;
+    font-family: Roboto Slab, serif;
 }
 
 .name {
-    font-size: 10vw;
+    font-size: 8vw;
     margin: 0 auto;
     font-weight: 400;
 }

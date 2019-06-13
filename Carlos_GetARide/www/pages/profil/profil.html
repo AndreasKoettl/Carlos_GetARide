@@ -13,17 +13,17 @@
 </head>
 <body>
     <div id="profilec">
-        <header-back title="Profil" @go-back="window.history.back()"></header-back>
+        <header-back title="Profil" @go-back="goBack()" @go-there="goToSettings()"></header-back>
         <div v-if="profile">
-            <img class="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
+            <img class="profile-picture" id="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
             <div class="data">
                 <h2 class="name">{{firstname}} {{lastname}}</h2>
                 <p class="mail">{{email}}</p>
             </div>
 
             <div class="profile-options">
-                <a @click="profile= false; settings=false"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
-                <a @click="profile = false; settings = true;"><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
+                <a @click="goToEdit()"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
+                <a ><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
             </div>
             <a href="../../index.html">Back to home</a>
         </div>
@@ -33,7 +33,7 @@
                 <img class="settings-picture" src="../../images/illustrationen/undraw_settings_ii2j.svg" alt="settings-picture" title="settings-picture" />
                 <div class="settings">
                     <p>Benachrichtigungen</p>
-                    <div><img v-bind:class="{'red-filter':hasNotifications,  yes:settings}" @click="changeNotifications(1)" src="../../images/icons/hakerl_icon.svg" /><img v-bind:class="{'red-filter':!hasNotifications,  no:settings}" src="../../images/icons/x_icon.svg" @click="changeNotifications(0)" /></div>
+                    <div><img v-bind:class="{'red-filter':hasNotifications,  yes:settings}" @click="changeNotifications(1)" src="../../images/icons/hakerl_icon.svg" /><img v-bind:class="{'red-filter':!hasNotifications,  no:settings}" src="../../images/icons/x_icon_neu.svg" @click="changeNotifications(0)" /></div>
                 </div>
                 <button class="red-button"> Account löschen</button>
 
@@ -55,8 +55,9 @@
                         <label for="email">E-Mail</label>
                         <input type="email" id="email" name="email" v-model="email">
                     </div>
+                    <button class="red-button" @click="saveNewData">Speichern</button>
                 </form>
-                <button class="red-button" @click="saveNewData">Speichern</button>
+                
             </div>
         </div>
         <nav-bar></nav-bar>

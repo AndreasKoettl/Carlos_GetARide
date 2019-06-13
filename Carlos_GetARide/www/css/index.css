@@ -83,6 +83,7 @@ form {
 
 .red-button { 
     width: 90vw;
+    display: block;
     margin: 8vw auto;
     font-size: 5vw;
     padding: 2.1vw 5vw;   

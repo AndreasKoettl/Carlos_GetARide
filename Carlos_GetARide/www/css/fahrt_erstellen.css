@@ -18,7 +18,7 @@ body {
 }
 
 .form-wrapper {
-    width: 85vw;
+    width: 90vw;
     margin:auto;
 }
 
@@ -57,7 +57,7 @@ input:focus {
 .process-page {
     position:fixed;
     left:0;
-    top:0;
+    top:4%;
     z-index:0;
     width:100vw !important;
 

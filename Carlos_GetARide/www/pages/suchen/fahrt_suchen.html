@@ -19,7 +19,7 @@
 <body id="search-content">
 
     <div id="app">
-        <header-back title="Fahrt suchen" @go-back="window.history.back()"></header-back>
+        <header-back title="Fahrt suchen" @go-back="goBack()"></header-back>
         <div id="inputForm" v-if="inputForm">
             <img class="search-picture" src="../../images/illustrationen/fahrt-suchen.png" />
             <h1 id="search-title">Finde eine passende Fahrt!</h1>

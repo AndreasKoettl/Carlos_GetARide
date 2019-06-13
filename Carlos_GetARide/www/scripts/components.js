@@ -61,7 +61,7 @@ Vue.component('header-back', {
     <header>
         <a id="backbutton" @click="$emit('go-back', $event.target.value)"><img src="/carlos/Carlos_GetARide/www/images/icons/back.svg" class="header_icon"></a>
         <div><h1>{{title}}</h1></div>
-        <a id="settings"><img src="/carlos/Carlos_GetARide/www/icons/settings.svg" class="header icon"></a>
+        <a @click="$emit('go-there', $event.target.value)"><img src="/carlos/Carlos_GetARide/www/images/icons/settings.svg" id="settings-icon" class="header_icon hide"></a>
     </header>
 `
 });

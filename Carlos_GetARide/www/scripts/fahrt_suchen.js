@@ -99,6 +99,7 @@ mtd280.app = new Vue({
                             current["day"] = day;                      
                         }
                         appAccess.inputForm = false;
+                        appAccess.$el.querySelector('#backbutton').classList.remove('hide'); 
                     }                      
                 },
                 error: function () {
@@ -142,7 +143,21 @@ mtd280.app = new Vue({
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
+        },
+
+
+        goBack: function () {
+            if (this.resultsOverview) {
+                this.inputForm = true;
+                this.$el.querySelector('#backbutton').classList.add('hide'); 
+            } else {           
+                this.resultsOverview = true;
+            }
         }
 
+    },
+
+    mounted: function () {
+        this.$el.querySelector('#backbutton').classList.add('hide'); 
     }
 });
