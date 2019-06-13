@@ -25,7 +25,8 @@
                 <a @click="goToEdit()"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
                 <a ><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
             </div>
-            <a href="../../index.html">Back to home</a>
+            <br />
+            <a href="../../index.html" ><p>Back to home</p></a>
         </div>
 
         <div v-else>
@@ -36,8 +37,6 @@
                     <div><img v-bind:class="{'red-filter':hasNotifications,  yes:settings}" @click="changeNotifications(1)" src="../../images/icons/hakerl_icon.svg" /><img v-bind:class="{'red-filter':!hasNotifications,  no:settings}" src="../../images/icons/x_icon_neu.svg" @click="changeNotifications(0)" /></div>
                 </div>
                 <button class="red-button"> Account löschen</button>
-
-                <a href="../../index.html">back to home</a>
             </div>
 
             <div v-else>
