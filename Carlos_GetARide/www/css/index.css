@@ -23,17 +23,31 @@
 }
 
 
-.main {
-    background-color: var(--blue-light);
-}
-
-.main-heading {
-    padding-top: 3vh;
-    padding-bottom: 3vh;
+.main-illustration {
+    width: 60vw;
+    margin: 10vw auto;
+    position: relative;
+    display: block;
 }
 
 a {
     text-decoration: none;
+}
+
+.content-box-75 {
+    width: 75vw;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0;
+    padding-bottom: 10vw;
+}
+
+.content-box-90 {
+    width: 90vw;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0;
+    padding-bottom: 10vw;
 }
 
 h1 {
@@ -76,25 +90,159 @@ form {
 }
 
 .textinput {
-    margin: 2vh 0 0 0;
+    margin: 4vw 0 0 0;
 }
 
-
-
 .red-button { 
-    width: 90vw;
+    width: 100%;
     display: block;
-    margin: 8vw auto;
-    font-size: 5vw;
-    padding: 2.1vw 5vw;   
+    margin: 4vw 0;
     font-size: 4vw;
-    font-family: 'Roboto Slab', serif;
+    padding: 2.1vw 5vw;
+    font-family: Montserrat, sans-serif;
     color: #fff;
     background-color: var(--red);
     border-radius: 50px;
-    border:none;
+    border: 1px solid var(--red);
+}
+
+.green-button {
+    width: 100%;
+    display: block;
+    margin: 4vw 0;
+    font-size: 4vw;
+    padding: 2.1vw 5vw;
+    font-family: Montserrat, sans-serif;
+    color: #fff;
+    background-color: var(--green);
+    border-radius: 50px;
+    border: 1px solid var(--green);
+}
+
+.buttonEnabled {
+    background-color: green;
 }
 
 button:focus, button:active{
     outline:none;   
+}
+
+.grey-box {
+    box-sizing: border-box;
+    margin: 5vw auto 5vw auto;
+    background-color: var(--grey-extralight);
+    border-radius: 15px;
+    padding: 6vw;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.grey-outline-box {
+    background-color: white;
+    border: 2px solid var(--grey-extralight);
+}
+
+.red-outline-box {
+    background-color: white;
+    border: 2px solid var(--red);
+}
+
+.overview-h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 5.5vw;
+    color: var(--red);
+    font-weight: 900;
+    padding: 0;
+    margin: 0;
+    width: 90%;
+    text-align: left;
+    float: left;
+}
+
+.overview-h2 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 4vw;
+    color: var(--grey-dark);
+    padding: 0;
+    margin: 0;
+    margin-top:2vw;
+    text-align: left;
+}
+
+.drive-details-h1 {
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: 6vw;
+    color: var(--grey-dark);
+    font-weight: 700;
+    z-index: 400;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.drive-details-h2 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 4vw;
+    color: var(--grey-dark);
+    font-weight: 900;
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.drive-details-h3 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 3.5vw;
+    color: var(--grey-light);
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    margin-top: 1px;
+    text-align: left;
+    width: 100%;
+}
+
+.codriver-acceptance {
+    font-family: Montserrat, sans-serif;
+    font-size: 3vw;
+    text-transform: uppercase;
+    color: var(--grey-light);
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    text-align: left;
+}
+
+.special-heading {
+    font-family: Montserrat, sans-serif;
+    font-size: 3.5vw;
+    text-transform: uppercase;
+    color: var(--red);
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 4vw;
+    text-align: left;
+}
+
+.padding-top {
+    padding-top: 6vw;
+}
+
+.box-route {
+    height: 20vw;
+    width: 90vw;
+}
+
+.icon-route {
+    height: 20vw;
+    margin: 0 5.5vw 0 2vw;
+}
+
+.drive-detail-half-page {
+    width: 50%;
 }

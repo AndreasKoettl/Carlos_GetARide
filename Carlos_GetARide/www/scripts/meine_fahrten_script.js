@@ -30,7 +30,7 @@ carlos_meineFahrten.app = new Vue({
             var appAccess = this;
 
             if (slider.offsetLeft === 0) {
-                slider.style.left = '40vw';
+                slider.style.left = '50%';
                 driver.classList.remove('active_menu');
                 codriver.classList.add('active_menu');
 
@@ -270,12 +270,12 @@ carlos_meineFahrten.app = new Vue({
         setAcceptedCss: function () {
             for (let i = 0; i < this.listUpcomingRides.length; i++) {
                 if (this.listUpcomingRides[i].accepted == 0) {
-                    document.getElementsByClassName("box-meine-fahrten")[i].classList.add("not-accepted");
+                    document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
                 }
             }
             for (let i = 0; i < this.listPastRides.length; i++) {
                 if (this.listPastRides[i].accepted == 0) {
-                    document.getElementsByClassName("box-meine-fahrten")[i].classList.add("not-accepted");
+                    document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
                 }
             }
         },
@@ -370,22 +370,22 @@ carlos_meineFahrten.app = new Vue({
         setRepetitionCss: function () {
             for (let i = 0; i < this.listUpcomingRides.length; i++) {
                 if (this.listUpcomingRides[i].repeating === 3) {
-                    document.getElementsByClassName("box-meine-fahrten")[i].classList.add("repetition");
+                    document.getElementsByClassName("grey-box")[i].classList.add("grey-outline-box");
                 }
             }
             for (let i = 0; i < this.listPastRides.length; i++) {
                 if (this.listPastRides[i].repeating === 3) {
-                    document.getElementsByClassName("box-meine-fahrten")[i].classList.add("repetition");
+                    document.getElementsByClassName("grey-box")[i].classList.add("grey-outline-box");
                 }
             }
         },
 
         removeRepetitionCss: function () {
             for (let i = 0; i < this.listUpcomingRides.length; i++) {
-                document.getElementsByClassName("box-meine-fahrten")[i].classList.remove("repetition");
+                document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
             }
             for (let i = 0; i < this.listPastRides.length; i++) {
-                document.getElementsByClassName("box-meine-fahrten")[i].classList.remove("repetition");
+                document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
             }
         },
 
@@ -847,7 +847,7 @@ carlos_meineFahrten.app = new Vue({
                         // wenn maximale Anzahl an Mitfahrern schon erreicht
                         let errorField = document.getElementsByClassName("row-no-padding")[index];
                         errorField.innerHTML = result["statusmessage"];
-                        errorField.classList.add("details-h5");
+                        errorField.classList.add("codriver-acceptance");
                         console.log(result["statusmessage"]);
                     }
                 },
@@ -872,7 +872,6 @@ carlos_meineFahrten.app = new Vue({
                 this.switchMenu();
             }
             this.setAcceptedCss();
-            this.$el.querySelector('#backbutton').classList.add('hide'); 
         }
 
     },
@@ -880,7 +879,6 @@ carlos_meineFahrten.app = new Vue({
 
 
     mounted: function () {
-        this.$el.querySelector('#backbutton').classList.add('hide'); 
         this.loadDriversRides();
     }
 });

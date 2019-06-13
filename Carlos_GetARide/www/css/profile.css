@@ -30,13 +30,13 @@
 .yes {
     margin-right: 3vw;
 }
-
+/*
 .profile-picture, .settings-picture, .search-picture {
     display: block;
     width: 60vw;
     position: relative;
     margin: 0 auto 10vw auto;
-}
+}*/
 
 .edit-picture {
     display: block;
