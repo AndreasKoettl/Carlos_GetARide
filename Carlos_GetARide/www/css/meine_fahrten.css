@@ -3,19 +3,19 @@
 }
 
 .illustration_meineFahrten {
-    width: 80vw;
-    margin: 5vh auto;
-    display: flex;
+    width: 70vw;
+    margin: 10vw auto;
+    display: block;
 }
 
 .bottom-padding {
-    padding-bottom: 3vh;
+    padding-bottom: 5vw;
 }
 
 
 #nav-bar {
-    width: 80vw;
-    height: 6vh;
+    width: 90vw;
+    height: 10vw;
     margin: 0 auto;
     position: relative;
     display: flex;
@@ -28,9 +28,9 @@
 
 .menu {
     width: 50%;
-    margin: 0 auto;
+    margin: auto auto;
     text-align: center;
-    font-size: 2.7vh;
+    font-size: 5vw;
     z-index: 100;
     font-family: 'Roboto Slab', serif;
 }
@@ -45,14 +45,14 @@
     border-radius: 50px;
     position: absolute;
     left: 0vw;
-    height: 6vh;
+    height: 10vw;
     width: 50%;
     z-index: 0;
     transition-duration: 400ms;
 }
 
 .timing-meine-Fahrten {
-    width: 80vw;
+    width: 90vw;
     font-family: Montserrat, sans-serif;
     font-size: 3vw;
     font-weight: 100;
@@ -66,12 +66,12 @@
 }
 
 .box-meine-fahrten {
-    width: 80vw;
+    width: 90vw;
     box-sizing: border-box;
-    margin: 0 auto 3vh auto;
+    margin: 0 auto 5vw auto;
     background-color: var(--grey-extralight);
     border-radius: 35px;
-    padding: 3vh 3vh;
+    padding: 6vw;
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -85,6 +85,7 @@
     padding: 0px;
     margin: 0px;
     width: 90%;
+    text-align: left;
     float: left;
 }
 
@@ -95,21 +96,22 @@
     padding: 0px;
     margin: 0px;
     margin-top:2vw;
+    text-align: left;
 }
 
 .row {
     display: flex;
     justify-content: flex-start;
-    padding-top: 3vh;
-    padding-bottom: 3vh;
+    padding-top: 6vw;
+    padding-bottom: 6vw;
 }
 
 .row-h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 3vh;
-    padding-bottom: 3vh;
+    padding-top: 6vw;
+    padding-bottom: 6vw;
 }
 
 .col {
@@ -129,43 +131,45 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    padding-bottom: 2vh;
+    padding-bottom: 4vw;
     list-style: none;
 }
 
 .header-icon {
     width: 3.5vw;
-    margin-left: 3.5vh;
+    margin-left: 6vw;
     z-index: 0;
     position: absolute;
 }
 
 .content-box {
-    width: 70vw;
+    width: 75vw;
     box-sizing: border-box;
     margin: 0 auto;
     padding: 0;
-    padding-bottom: 3vh;
+    padding-bottom: 6vw;
 }
 
 .details-h1 {
     font-family: 'Roboto Slab', sans-serif;
     font-size: 6vw;
-    color: var(--grey);
+    color: var(--grey-dark);
     font-weight: 700;
     z-index: 400;
     padding: 0;
     margin: 0;
+    text-align: left;
 }
 
 .details-h2 {
     font-family: 'Roboto Slab', serif;
     font-size: 4vw;
-    color: var(--grey);
+    color: var(--grey-dark);
     font-weight: 400;
     z-index: 100;
     padding: 0;
     margin: 0;
+    text-align: left;
 }
 
 .details-h3 {
@@ -177,6 +181,7 @@
     z-index: 100;
     padding: 0;
     margin: 0;
+    text-align: left;
 }
 
 .details-h4 {
@@ -187,21 +192,21 @@
     z-index: 100;
     padding: 0;
     margin: 0;
-   margin-bottom: 2vh;
+    margin-bottom: 4vw;
+    text-align: left;
 }
 
 .details-h4-padding-top {
     font-size: 3vw;
-    font-family: 'Roboto Slab', serif;
-    font-size: 4vw;
-    font-weight: 400;
+    font-family: Montserrat, sans-serif;
     text-transform: uppercase;
     color: var(--red);
     z-index: 100;
     padding: 0;
-    padding-top: 3vh;
+    padding-top: 6vw;
     margin: 0;
-    margin-bottom: 2vh;
+    margin-bottom: 4vw;
+    text-align: left;
 }
 
 .details-h5 {
@@ -212,8 +217,9 @@
     z-index: 100;
     padding: 0;
     margin: 0;
-    padding-top: 0.5vh;
-    padding-bottom: 0.5vh;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    text-align: left;
 }
 
 .icon-repeating {
@@ -226,8 +232,8 @@
 }
 
 .icon-route {
-    height: 10vh;
-    margin: auto 5.5vw auto 2vw;
+    height: 20vw;
+    margin: 0 5.5vw 0 2vw;
 }
 
 .icon-request {
@@ -241,8 +247,8 @@
 }
 
 .box-route {
-    height: 10vh;
-    width: 80%;
+    height: 20vw;
+    width: 90vw;
 }
 
 .price {
@@ -258,12 +264,12 @@
 }
 
 .button-red-full {
-    margin: 1vh auto 0 auto;
+    margin: 2vw auto 0 auto;
     width: 100%;
-    height: 5vh;
+    height: 10vw;
     text-align: center;
     color: #fff;
-    font-size: 2.5vh;
+    font-size: 5vw;
     font-family: 'Roboto Slab', serif;
     background-color: var(--red);
     border-radius: 50px;
@@ -271,12 +277,12 @@
 }
 
 .button-green-full {
-    margin: 1vh auto 0 auto;
+    margin: 2vw auto 0 auto;
     width: 100%;
-    height: 5vh;
+    height: 10vw;
     text-align: center;
     color: #fff;
-    font-size: 2.5vh;
+    font-size: 5vw;
     font-family: 'Roboto Slab', serif;
     background-color: var(--green);
     border-radius: 50px;
@@ -311,7 +317,7 @@
 }
 
 #check_icon, #x_icon {
-    height: 3vh;
+    height: 6vw;
 }
 
 #check_icon {

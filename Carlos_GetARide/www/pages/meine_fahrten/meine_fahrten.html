@@ -10,7 +10,7 @@
 <body class="main-white">
     <div id="app">
         <div v-if="!isDriverDetails && !isCoDriverDetails">
-        <header title="Meine Fahrten"></header>
+        <header-title title="Meine Fahrten"></header-title>
         <img src="../../images/illustrationen/meineFahrten_forWhiteGB.svg" class="illustration_meineFahrten">
         <nav id="nav-bar">
             <div id="slider" @click="switchMenu"></div>
@@ -46,11 +46,12 @@
             </div>
 
         </section>
+            <nav-bar></nav-bar>
         </div>
 
 
         <div v-if="isDriverDetails">
-            <header-back title="Meine Fahrten" @go-back="goBack('isDriverDetails')"></header-back>
+            <header-back title="Details" @go-back="goBack('isDriverDetails')"></header-back>
 
             <section class="content-box">
 
@@ -128,7 +129,8 @@
                         </div>
                         <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
                     </li>
-                    </div>>
+                    </div>
+                </ul>
 
                 <hr />
 
@@ -145,11 +147,12 @@
                     <button v-if="indexPastRide !== -1 && listPastRides[indexPastRide].dateTime >= date" class="button-red-full" @click="deleteRide(indexPastRide, false)">Fahrt löschen</button>
 
             </section>
+            <nav-bar></nav-bar>
         </div>
 
 
         <div v-if="isCoDriverDetails">
-            <header-back title="Meine Fahrten" @go-back="goBack('isCoDriverDetails')"></header-back>
+            <header-back title="Details" @go-back="goBack('isCoDriverDetails')"></header-back>
 
             <section class="content-box bottom-padding">
 
@@ -223,6 +226,7 @@
                 <button v-if="indexPastRide !== -1 && listPastRides[indexPastRide].dateTime >= date" class="button-red-full" @click="cancelRide(indexPastRide, false)">Fahrt canceln</button>
 
             </section>
+            <nav-bar></nav-bar>
         </div>
 
     </div>
@@ -230,7 +234,7 @@
     <script src="../../scripts/index.js"></script>
     <script src="../../scripts/meine_fahrten_script.js"></script>
 
-    <script src="../scripts/components.js"></script>
+    <script src="../../scripts/components.js"></script>
 
 </body>
 </html>
