@@ -4,12 +4,12 @@ font-weight: 400;
 color: var(--grey-dark);
 }
 
-#search-results{
+/*#search-results{
     font-family: 'Roboto Slab', serif;
     color: var(--grey-dark);
     width: 75vw;
     margin:0 auto;
-}
+}*/
 
 #search-title {
     font-family: 'Roboto Slab', sans-serif;
@@ -64,18 +64,18 @@ color: var(--grey-dark);
     margin:0;
 }*/
 
-.locations{
+/*.locations{
     display:flex;
     flex-direction: row;
     align-items: center;
-}
+}*/
 
-#route-img{
+/*#route-img{
     width: 3vw;
     height:7vh;
     border: 1px solid grey;
     margin-right: 4vw;
-}
+}*/
 
 .textinput{
     color: var(--grey-light);

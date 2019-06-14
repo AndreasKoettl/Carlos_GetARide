@@ -47,19 +47,25 @@
                 <!--<input type="submit" id="searchButton" value="Suchen" @click="submitSearch" />-->
             </form>
         </div>
-        <div id="search-results" v-else>
+        <!--<div id="search-results" v-else>-->
+            <div class="content-box-90" v-else>
             <div id="results-overview" v-if="resultsOverview">
 
                 <!--<div id="driveInput">-->
                 <div class="grey-box grey-outline-box" @click="goBack()">
-                    <div class="locations">
-                        <img id="route-img" />
-                        <div>
-                            <p id="start">{{ start }}</p>
-                            <p id="end">{{ end }}</p>
+                    <!--<div class="locations">-->
+                        <div class="row">
+                        <!--<img id="route-img" />-->
+                        <img src="../../images/icons/Verbindung.svg" class="icon-route" />
+                        <div class="col box-route">
+                            <!--<p id="start">{{ start }}</p>
+                            <p id="end">{{ end }}</p>-->
+                            <p class="drive-details-h2">{{ start }}</p>
+                            <p class="drive-details-h2">{{ end }}</p>
                         </div>
                     </div>
-                    <p class="date-time">{{date}}{{time}}</p>
+                    <!--<p class="date-time">{{date}}{{time}}</p>-->
+                    <p class="drive-details-h3">{{date}}{{time}}</p>
                 </div>
 
                 <div class="grey-box" v-for="(item, index) in searchData" @click="showDetails(index)">
