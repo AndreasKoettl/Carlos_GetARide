@@ -21,7 +21,7 @@
         </nav>
 
             <h6 class="special-heading">Kommende Fahrten</h6>
-            <div v-if="listUpcomingRides.length !== 0" id="rides-upcoming" class="list_meineFahrten">
+            <div v-if="listUpcomingRides.length !== 0">
                 <a v-for="(ride, index) in listUpcomingRides" @click="showDetails(index, true)">
                     <div class="grey-box">
                         <div class="row-no-padding">
@@ -33,7 +33,7 @@
                 </a>
             </div>
             <h6 class="special-heading">Vergangene Fahrten</h6>
-            <div v-if="listPastRides.length !== 0" id="rides_past" class="list_meineFahrten">
+            <div v-if="listPastRides.length !== 0">
                 <a v-for="(ride, index) in listPastRides" @click="showDetails(index, false)">
                     <div class="box-meine-fahrten">
                         <div class="row-no-padding">
@@ -52,7 +52,7 @@
 
         <div v-if="isDriverDetails">
             <header-back title="Details" @go-back="goBack('isDriverDetails')"></header-back>
-            <section class="content-box-75">
+            <section class="content-box-90">
 
                 <div class="row-h1">
                     <div class="col">
@@ -152,7 +152,7 @@
         <div v-if="isCoDriverDetails">
             <header-back title="Details" @go-back="goBack('isCoDriverDetails')"></header-back>
 
-            <section class="content-box-75">
+            <section class="content-box-90">
 
                 <div class="row-h1">
                     <div class="col">
