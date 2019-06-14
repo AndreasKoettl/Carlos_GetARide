@@ -19,34 +19,14 @@ color: var(--grey-dark);
     margin: 0 auto;
 }
 
-/*#searchButton {
-    margin: 2vh 0;
-    border: 1px solid var(--red);
-    background-color: var(--red);
-    color: white;
-}*/
-
-/*#driveInput{
-    border: 2px solid var(--grey-extralight);
-    border-radius: 15px;
-    font-size: 1.8vh;
-    color: var(--grey-light);
-    font-family: Montserrat, sans-serif;
-    padding: 6vw;
-    margin: 5vh auto 5vh auto;
-}*/
+#inputForm {
+   padding: 2vw;
+}
 
 .date-time{
     margin: 2vh 0 0 0;  
 }
 
-/*.result {
-    background-color: var(--grey-extralight);
-    border-radius: 15px;
-    font-size: 1.8vh;
-    padding: 6vw;
-    margin: 2vh auto 2vh auto;
-}*/
 
 #searchContent #start, #searchContent #end{
     color: var(--grey-dark);
@@ -55,14 +35,6 @@ color: var(--grey-dark);
     hyphens: none;
 }
 
-/*.destination{
-    font-size: 2.5vh;
-    color: var(--red);
-}
-
-.destination, .time{
-    margin:0;
-}*/
 
 .locations{
     display:flex;

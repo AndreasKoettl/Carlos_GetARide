@@ -156,7 +156,7 @@ input:focus {
 }
 
 
-p {
+#repeating p {
     font-family: Montserrat, sans-serif;
     font-size: 3vw;
     color: var(--grey-light);

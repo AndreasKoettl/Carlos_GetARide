@@ -63,7 +63,9 @@ new Vue({
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     console.log(data);
-                    appAccess.profile = true;    
+                    appAccess.profile = true;
+                    appAccess.$el.querySelector('#settings-icon').classList.remove('hide');
+                    appAccess.$el.querySelector('#backbutton').classList.add('hide'); 
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");

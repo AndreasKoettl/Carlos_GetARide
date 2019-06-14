@@ -22,10 +22,13 @@
     --grey-extralight: #EAEAEA;
 }
 
+body{
+    font-family: "Roboto Slab", serif;
+}
 
 .main-illustration {
     width: 60vw;
-    margin: 10vw auto;
+    margin: 0 auto 10vw auto;
     position: relative;
     display: block;
 }
