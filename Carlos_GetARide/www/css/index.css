@@ -37,14 +37,6 @@ a {
     text-decoration: none;
 }
 
-.content-box-75 {
-    width: 75vw;
-    box-sizing: border-box;
-    margin: 0 auto;
-    padding: 0;
-    padding-bottom: 10vw;
-}
-
 .content-box-90 {
     width: 90vw;
     box-sizing: border-box;
