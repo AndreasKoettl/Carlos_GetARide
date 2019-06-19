@@ -42,9 +42,16 @@ function loginUser() {
     });
 }
 
+
+function goToRegister() {
+    redirectUser("pages/login/register.html");
+
+}
+
 $(document).ready(function () {
     // User an die Startseite weiterleiten, wenn dieser bereits eingeloggt ist.
     redirectAuthUser("index.html");
 
     $("#login-form").submit(loginUser);
+    $("#register-button").click(goToRegister);
 });
