@@ -36,7 +36,7 @@
 
             <div v-if="listPastRides.length !== 0">
                 <a v-for="(ride, index) in listPastRides" @click="showDetails(index, false)">
-                    <div class="box-meine-fahrten">
+                    <div class="grey-box">
                         <div class="row-no-padding">
                             <p class="overview-h1">{{ride.routeStart}} - {{ride.routeEnd}}</p>
                             <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
@@ -99,8 +99,6 @@
 
                 <h6 class="special-heading">Anfragen</h6>
                 <ul class="list">
-
-
                     <div v-for="(coDriver, index) in listNotAccepted">
                         <li class="row-bottom-padding">
                             <img src="../../images/icons/user_colored.svg" class="icon-request" />
@@ -114,7 +112,6 @@
                             <img src="../../images/icons/speech-bubble.svg" class="icon-request" />
                         </li>
                     </div>
-
                 </ul>
 
                 <h6 class="special-heading">Zusagen</h6>
