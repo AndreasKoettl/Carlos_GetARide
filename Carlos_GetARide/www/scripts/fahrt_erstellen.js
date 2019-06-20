@@ -12,7 +12,7 @@ carlos.app = new Vue({
         destinationValue: "",
         dateValue: "",
         timeValue: "",
-        weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],
+        weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],        
         passengersValue: "",
         licensePlateValue: "",
         carDetailsValue: "",
@@ -190,14 +190,14 @@ carlos.app = new Vue({
             }
 
             if (this.process[this.index] == 'route') {
-                this.driveData['start-city'] = sessionStorage.getItem('start-city');
-                this.driveData['destination-city'] = sessionStorage.getItem('destination-city');
+                this.driveData['cityStart'] = this.start.dataset.city;
+                this.driveData['cityEnd'] = this.destination.dataset.city;                
             } else if (this.process[this.index] == 'price') {
                 this.submitForm();
             } else if (this.process[this.index] == 'dateTime' && this.driveData['repeating']) {
                 let weekdays = {};
                 for (let i = 0; i < this.daysSelected.length; i++) {
-                    weekdays[i] = this.daysSelected[i].innerHTML;                    
+                    weekdays[i] = this.daysSelected[i].innerHTML;   
                 }
                 this.driveData['weekdays'] = weekdays;                
             }
@@ -209,7 +209,7 @@ carlos.app = new Vue({
             this.complete = false;
         },
 
-        submitForm: function () {
+        submitForm: function () {            
             let driveData = JSON.stringify(this.driveData);
             $.post({
                 async: true,
@@ -249,8 +249,7 @@ carlos.app = new Vue({
                 activeCircle[0].classList.remove("circle-active");
             }
             document.querySelector('#circle-' + this.process[this.index]).className += (' circle-active');
-
-            // loadData for page repeating
+            
             if (this.driveData['repeating'] != null && this.process[this.index] == "repeating") {
                 if (this.driveData['repeating']) {
                     this.clickYes();
@@ -264,10 +263,11 @@ carlos.app = new Vue({
                     document.getElementById(id).classList.add('active-weekday');
                 }
             }
-
         },
     },
     mounted: function () {
+        let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
+        this.driveData["iduser"] = iduser;
         this.init();
     },
     updated: function () {
