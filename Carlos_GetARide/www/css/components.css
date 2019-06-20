@@ -136,12 +136,21 @@ header a img {
 
 .clear-icon {
     position: relative;
-    margin-top: -5.2vh;
+    margin-top: -7vw;
     right: 3vw;
     float: right;
     width: 5vw;
     height: 5vw;
 }
+
+.placeInput {
+    background-image: url('../images/icons/place.svg');    
+    background-size: 5.5vw 5.5vw;       
+    background-position: 2.5vw 2.5vw;       
+    background-repeat:no-repeat;    
+    padding-left: 10vw;
+}
+
 
 .hide{
     visibility: hidden;

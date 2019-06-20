@@ -92,15 +92,11 @@ Vue.component('header-fahrt-erstellen', {
 * disables and hides all other elements on the page
 * emits: searchbox-enter, searchbox-leave
 */
-Vue.component('place-input', {
-    data: function () {
-        return {                           
-        }
-    },
+Vue.component('place-input', {    
     props: ['id', 'placeholder', 'clearid', 'loadvalue'],
-    template: `<div><input v-bind:value="loadvalue" v-on:click="placeInputClicked()" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder" v-on:keyup="return autoCompleteListener(event.target, event);"/>
+    template: `<div><input class="placeInput textinput" v-bind:value="loadvalue" v-on:click="placeInputClicked()" type="text" v-bind:id="id" v-bind:placeholder="placeholder" v-on:keyup="return autoCompleteListener(event.target, event);"/>
 <img src="/carlos/Carlos_GetARide/www/images/icons/x_ohne_kreis.svg" v-bind:id="clearid" class="clear-icon displayNone" v-on:click="clearInput()"/></div>`,
-    methods: {      
+    methods: {
         placeInputClicked: function () {
             this.inputField = event.target;
             this.inputField.classList.add("placeInputActive");                                    
@@ -177,11 +173,18 @@ Vue.component('place-input', {
 
                 let matchlevel = data['matchLevel'];
                 if (matchlevel == 'city') {
-                    suggestion.innerHTML = data['address']['city'] + ", " + data['address']['country'];
+                    if (data['address']['state'] != undefined) {
+                        suggestion.innerHTML = data['address']['city'] + ", " + data['address']['state'];
+                    } else {
+                        suggestion.innerHTML = data['address']['city'] + ", " + data['address']['country'];
+                    }                    
+                    suggestion.dataset.city = data['address']['city'];
                 } else if (matchlevel == 'street') {
                     suggestion.innerHTML = data['address']['street'] + ", " + data['address']['city'];
+                    suggestion.dataset.city = data['address']['city'];
                 } else if (matchlevel == 'houseNumber') {
                     suggestion.innerHTML = data['address']['street'] + " " + data['address']['houseNumber'] + ", " + data['address']['city'];
+                    suggestion.dataset.city = data['address']['city'];
                 } else if (matchlevel == 'district') {
                     continue;                    
                 } else if (matchlevel == 'state') {
@@ -190,10 +193,10 @@ Vue.component('place-input', {
                     continue;
                 } else if (matchlevel == 'country') {
                     continue;
-                } else {
-                    console.log(matchlevel);
+                } else {                    
                     suggestion.innerHTML = data['label'];
                 }
+
                 if (this.suggestionsContainer.childNodes.length < 5) {
                     this.suggestionsContainer.appendChild(suggestion);
                     suggestion.addEventListener("click", this.placePicked);
@@ -211,6 +214,7 @@ Vue.component('place-input', {
 
             // set input-value to selected place
             this.inputField.value = event.target.innerHTML;
+            this.inputField.dataset.city = event.target.dataset.city;
 
             // hide and empty suggestionBox
             this.suggestionsContainer.classList.add('displayNone');
