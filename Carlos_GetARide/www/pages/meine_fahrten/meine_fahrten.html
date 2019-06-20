@@ -9,7 +9,8 @@
 </head>
 <body class="main-white">
     <div id="app">
-        <div v-if="!isDriverDetails && !isCoDriverDetails">
+        <template v-if="!isDriverDetails && !isCoDriverDetails">
+            <div>
             <header-title title="Meine Fahrten"></header-title>
             <section class="content-box-90">
 
@@ -48,10 +49,12 @@
                 </div>
 
             </section>
-        </div>
+            </div>
+        </template>
 
 
-        <div v-if="isDriverDetails">
+        <template v-if="isDriverDetails">
+            <div>
             <header-back title="Details" @go-back="goBack('isDriverDetails')"></header-back>
             <section class="content-box-90">
 
@@ -144,10 +147,12 @@
                     <button v-if="indexPastRide !== -1 && listPastRides[indexPastRide].dateTime >= date" class="red-button" @click="deleteRide(indexPastRide, false)">Fahrt löschen</button>
 
             </section>
-        </div>
+            </div>
+        </template>
 
 
-        <div v-if="isCoDriverDetails">
+        <template v-if="isCoDriverDetails">
+            <div>
             <header-back title="Details" @go-back="goBack('isCoDriverDetails')"></header-back>
 
             <section class="content-box-90">
@@ -222,7 +227,8 @@
                 <button v-if="indexPastRide !== -1 && listPastRides[indexPastRide].dateTime >= date" class="red-button" @click="cancelRide(indexPastRide, false)">Fahrt canceln</button>
 
             </section>
-        </div>
+            </div>
+        </template>
 
         <nav-bar></nav-bar>
 

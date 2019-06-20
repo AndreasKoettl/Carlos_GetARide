@@ -22,7 +22,8 @@
 
     <div id="app">
         <header-back title="Fahrt suchen" @go-back="goBack()"></header-back>
-        <div id="inputForm" v-if="inputForm">
+        <template v-if="inputForm">
+        <div id="inputForm">
             <img class="main-illustration" src="../../images/illustrationen/fahrt-suchen.png" />
             <h1 id="search-title">Finde eine passende Fahrt!</h1>
             <form action="" id="search-form" method="get">
@@ -47,8 +48,10 @@
                 <!--<input type="submit" id="searchButton" value="Suchen" @click="submitSearch" />-->
             </form>
         </div>
+        </template>
         <!--<div id="search-results" v-else>-->
-            <div class="content-box-90" v-else>
+        <template v-else>
+            <div class="content-box-90">
             <div id="results-overview" v-if="resultsOverview">
 
                 <!--<div id="driveInput">-->
@@ -137,6 +140,7 @@
               
             </div>
         </div>
+        </template>
         <nav-bar></nav-bar>
     </div>
     <script src="../../scripts/components.js"></script>
