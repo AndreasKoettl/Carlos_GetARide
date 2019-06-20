@@ -177,11 +177,18 @@ Vue.component('place-input', {
 
                 let matchlevel = data['matchLevel'];
                 if (matchlevel == 'city') {
-                    suggestion.innerHTML = data['address']['city'] + ", " + data['address']['country'];
+                    if (data['address']['state'] != undefined) {
+                        suggestion.innerHTML = data['address']['city'] + ", " + data['address']['state'];
+                    } else {
+                        suggestion.innerHTML = data['address']['city'] + ", " + data['address']['country'];
+                    }                    
+                    suggestion.dataset.city = data['address']['city'];
                 } else if (matchlevel == 'street') {
                     suggestion.innerHTML = data['address']['street'] + ", " + data['address']['city'];
+                    suggestion.dataset.city = data['address']['city'];
                 } else if (matchlevel == 'houseNumber') {
                     suggestion.innerHTML = data['address']['street'] + " " + data['address']['houseNumber'] + ", " + data['address']['city'];
+                    suggestion.dataset.city = data['address']['city'];
                 } else if (matchlevel == 'district') {
                     continue;                    
                 } else if (matchlevel == 'state') {
@@ -190,10 +197,10 @@ Vue.component('place-input', {
                     continue;
                 } else if (matchlevel == 'country') {
                     continue;
-                } else {
-                    console.log(matchlevel);
+                } else {                    
                     suggestion.innerHTML = data['label'];
                 }
+
                 if (this.suggestionsContainer.childNodes.length < 5) {
                     this.suggestionsContainer.appendChild(suggestion);
                     suggestion.addEventListener("click", this.placePicked);
@@ -211,6 +218,7 @@ Vue.component('place-input', {
 
             // set input-value to selected place
             this.inputField.value = event.target.innerHTML;
+            this.inputField.dataset.city = event.target.dataset.city;
 
             // hide and empty suggestionBox
             this.suggestionsContainer.classList.add('displayNone');
