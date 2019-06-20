@@ -12,7 +12,7 @@ carlos.app = new Vue({
         destinationValue: "",
         dateValue: "",
         timeValue: "",
-        weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],        
+        weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],
         passengersValue: "",
         licensePlateValue: "",
         carDetailsValue: "",
@@ -111,7 +111,7 @@ carlos.app = new Vue({
                     break;
                 case 'dateTime':
                     if (this.driveData["repeating"]) {
-                        if (this.daysSelected.length > 0 && this.time.value != "") {
+                        if (this.daysSelected.length > 0 && this.time.value != "" && this.startDate.value != "" && this.endDate.value != "") {
                             document.querySelector('#submitDateTimeRepeating').classList.remove('disabled');
                             this.complete = true;
                         } else {
@@ -191,25 +191,26 @@ carlos.app = new Vue({
 
             if (this.process[this.index] == 'route') {
                 this.driveData['cityStart'] = this.start.dataset.city;
-                this.driveData['cityEnd'] = this.destination.dataset.city;                
+                this.driveData['cityEnd'] = this.destination.dataset.city;
             } else if (this.process[this.index] == 'price') {
                 this.submitForm();
             } else if (this.process[this.index] == 'dateTime' && this.driveData['repeating']) {
                 let weekdays = {};
                 for (let i = 0; i < this.daysSelected.length; i++) {
-                    weekdays[i] = this.daysSelected[i].innerHTML;   
+                    weekdays[i] = this.daysSelected[i].innerHTML;
                 }
-                this.driveData['weekdays'] = weekdays;                
+                this.driveData['weekdays'] = weekdays;
             }
 
             this.slide = "slide";
             this.$nextTick(function () {
                 this.index++;
-            })
+            });
             this.complete = false;
+
         },
 
-        submitForm: function () {            
+        submitForm: function () {
             let driveData = JSON.stringify(this.driveData);
             $.post({
                 async: true,
@@ -230,6 +231,8 @@ carlos.app = new Vue({
             this.destination = document.querySelector('#destination');
             this.date = document.querySelector('#date');
             this.time = document.querySelector('#time');
+            this.startDate = document.querySelector('#startDate');
+            this.endDate = document.querySelector('#endDate');
             this.daysSelected = document.getElementsByClassName('active-weekday');
             this.passengers = document.querySelector('#numPassengers');
             this.licensePlate = document.querySelector('#licensePlate');
@@ -249,14 +252,14 @@ carlos.app = new Vue({
                 activeCircle[0].classList.remove("circle-active");
             }
             document.querySelector('#circle-' + this.process[this.index]).className += (' circle-active');
-            
+
             if (this.driveData['repeating'] != null && this.process[this.index] == "repeating") {
                 if (this.driveData['repeating']) {
                     this.clickYes();
                 } else {
                     this.clickNo();
                 }
-            } else if (this.process[this.index] == "dateTime" && this.driveData['repeating'] && this.driveData['weekdays'] != undefined) {                
+            } else if (this.process[this.index] == "dateTime" && this.driveData['repeating'] && this.driveData['weekdays'] != undefined) {
                 let indices = Object.keys(this.driveData['weekdays']);
                 for (let i = 0; i < indices.length; i++) {
                     let id = this.driveData['weekdays'][i];
@@ -273,6 +276,6 @@ carlos.app = new Vue({
     updated: function () {
         this.init();
         this.checkIfComplete();
-        this.back = false;        
+        this.back = false;
     }
 });

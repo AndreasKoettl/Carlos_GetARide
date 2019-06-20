@@ -92,15 +92,11 @@ Vue.component('header-fahrt-erstellen', {
 * disables and hides all other elements on the page
 * emits: searchbox-enter, searchbox-leave
 */
-Vue.component('place-input', {
-    data: function () {
-        return {                           
-        }
-    },
+Vue.component('place-input', {    
     props: ['id', 'placeholder', 'clearid', 'loadvalue'],
-    template: `<div><input v-bind:value="loadvalue" v-on:click="placeInputClicked()" class="textinput" type="text" v-bind:id="id" v-bind:placeholder="placeholder" v-on:keyup="return autoCompleteListener(event.target, event);"/>
+    template: `<div><input class="placeInput textinput" v-bind:value="loadvalue" v-on:click="placeInputClicked()" type="text" v-bind:id="id" v-bind:placeholder="placeholder" v-on:keyup="return autoCompleteListener(event.target, event);"/>
 <img src="/carlos/Carlos_GetARide/www/images/icons/x_ohne_kreis.svg" v-bind:id="clearid" class="clear-icon displayNone" v-on:click="clearInput()"/></div>`,
-    methods: {      
+    methods: {
         placeInputClicked: function () {
             this.inputField = event.target;
             this.inputField.classList.add("placeInputActive");                                    

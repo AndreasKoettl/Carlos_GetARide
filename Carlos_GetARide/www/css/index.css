@@ -6,7 +6,7 @@
 @import url(profile.css);
 @import url(meine_fahrten.css);
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
-@import url('https://fonts.googleapis.com/css?family=Montserrat:600,700,800');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800');
 
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
