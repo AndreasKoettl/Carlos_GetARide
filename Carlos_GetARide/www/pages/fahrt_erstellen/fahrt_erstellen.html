@@ -15,7 +15,8 @@
         <header-fahrt-erstellen title="Fahrt erstellen" @go-back="goBack()"></header-fahrt-erstellen>
         <transition :name="slide">
             <!-- ROUTE -->
-            <div id="route" class="process-page" v-if="process[index] == 'route'">
+            <template  v-if="process[index] == 'route'">
+            <div id="route" class="process-page">
                 <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
                 <div class="form-wrapper">
                     <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
@@ -34,11 +35,13 @@
 
                 </div>
             </div>
+            </template>
         </transition>
 
         <transition :name="slide">
             <!-- REPEATING -->
-            <div id="repeating" class="process-page" v-if="process[index] == 'repeating'">
+            <template  v-if="process[index] == 'repeating'">
+            <div id="repeating" class="process-page">
                 <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
                 <div class="form-wrapper lift-form">
                     <h1 class="fahrt-erstellen-heading">Fährst du regelmäßig?</h1>
@@ -52,11 +55,13 @@
                     </form>
                 </div>
             </div>
+            </template>
         </transition>
 
         <!-- DATETIME -->
         <transition :name="slide">
-            <div id="dateTime" class="process-page" v-if="process[index] == 'dateTime'">
+            <template  v-if="process[index] == 'dateTime'">
+            <div id="dateTime" class="process-page">
                 <img src="../../images/illustrationen/fahrt-anbieten_zeit.jpg" class="illustration-big" />
                 <h1 class="fahrt-erstellen-heading">Wann fährst du?</h1>
                 <div class="form-wrapper" v-if="!driveData['repeating']">                    
@@ -77,11 +82,13 @@
                     </div>
                 </div>
             </div>
+            </template>
         </transition>
 
         <transition :name="slide">
             <!-- PASSENGERS -->
-            <div id="passengers" class="process-page" v-if="process[index] == 'passengers'">
+            <template  v-if="process[index] == 'passengers'">
+            <div id="passengers" class="process-page">
                 <img src="../../images/illustrationen/fahrt-anbieten_personen.jpg" class="illustration-big" />
                 <div class="form-wrapper">
                     <h1 class="fahrt-erstellen-heading">Wieviele Personen kannst du mitnehmen?</h1>
@@ -91,11 +98,13 @@
                     </form>
                 </div>
             </div>
+            </template>
         </transition>
 
         <transition :name="slide">
             <!-- DETAILS -->
-            <div id="details" class="process-page" v-if="process[index] == 'details'">
+            <template  v-if="process[index] == 'details'">
+            <div id="details" class="process-page">
                 <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
                 <form id="detailsForm" class="lift-form">
                     <h1 class="fahrt-erstellen-heading">Wie sieht dein Auto aus? (optional)</h1>
@@ -104,11 +113,13 @@
                     <button type="button" class="red-button disabled" id="submitDetails" v-on:click="complete ? submitData(['licensePlate', 'carDetails']) : false">Weiter</button>
                 </form>
             </div>
+            </template>
         </transition>
 
         <transition :name="slide">
             <!-- PRICE -->
-            <div id="price" class="process-page" v-if="process[index] == 'price'">
+            <template  v-if="process[index] == 'price'">
+            <div id="price" class="process-page">
                 <img src="../../images/illustrationen/fahrt-anbieten_preis.jpg" class="illustration-big" />
                 <div class="priceForm">
                     <h1 class="fahrt-erstellen-heading">Wieviel soll die Fahrt kosten?</h1>
@@ -118,6 +129,7 @@
                     </form>
                 </div>
             </div>
+            </template>
         </transition>
         <nav-bar></nav-bar>
     </div>
