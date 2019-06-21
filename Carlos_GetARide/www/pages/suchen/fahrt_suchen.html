@@ -23,123 +23,121 @@
     <div id="app">
         <header-back title="Fahrt suchen" @go-back="goBack()"></header-back>
         <template v-if="inputForm">
-        <div id="inputForm">
-            <img class="main-illustration" src="../../images/illustrationen/fahrt-suchen.png" />
-            <h1 id="search-title">Finde eine passende Fahrt!</h1>
-            <form action="" id="search-form" method="get">
-                <div class="textinput">
-                    <!--<div style="width:90vw; margin:5vh auto; z-index:0;">
-         <place-input id="start" clearid="clear-start" placeholder="Start" @searchbox-enter="" @searchbox-leave=""></place-input>
-         <ul id="suggestions" class="displayNone"></ul>
-     </div> -->
-                    <input type="text" id="locationStart" name="locationStart" placeholder="Startort" />
-                </div>
-                <div class="textinput">
-                    <input type="text" id="locationEnd" name="locationEnd" placeholder="Zielort" />
-                </div>
-                <div class="textinput">
-                    <input type="date" id="dateDrive" name="dateDrive" />
-                </div>
-                <div class="textinput">
-                    <input type="time" id="timeDrive" name="timeDrive" placeholder="Uhrzeit" />
-                </div>
-                <input type="datetime-local" id="dateDriveInput" name="dateDriveInput" hidden />
-                <button class="red-button" @click="submitSearch">Suchen</button>
-                <!--<input type="submit" id="searchButton" value="Suchen" @click="submitSearch" />-->
-            </form>
-        </div>
+            <div id="inputForm">
+                <img class="main-illustration" src="../../images/illustrationen/fahrt-suchen.png" />
+                <h1 id="search-title">Finde eine passende Fahrt!</h1>
+                <form action="" id="search-form" method="get">
+                    <place-input id="start" clearid="clear-start" placeholder="Start" @searchbox-enter="" @searchbox-leave=""></place-input>
+                    <place-input id="end" clearid="clear-end" placeholder="Ziel" @searchbox-enter="" @searchbox-leave=""></place-input>
+                    <ul id="suggestions" class="displayNone"></ul>
+                    <div class="textinput">
+                        <input type="date" id="dateDrive" name="dateDrive" />
+                    </div>
+                    <div class="textinput">
+                        <input type="time" id="timeDrive" name="timeDrive" placeholder="Uhrzeit" />
+                    </div>
+                    <input type="datetime-local" id="dateDriveInput" name="dateDriveInput" hidden />
+                    <button class="red-button" @click="submitSearch">Suchen</button>
+                    <!--<input type="submit" id="searchButton" value="Suchen" @click="submitSearch" />-->
+                </form>
+            </div>
         </template>
         <!--<div id="search-results" v-else>-->
         <template v-else>
             <div class="content-box-90">
-            <div id="results-overview" v-if="resultsOverview">
+                <div id="results-overview" v-if="resultsOverview">
 
-                <!--<div id="driveInput">-->
-                <div class="grey-box grey-outline-box" @click="goBack()">
-                    <!--<div class="locations">-->
+                    <!--<div id="driveInput">-->
+                    <div class="grey-box grey-outline-box" @click="goBack()">
+                        <!--<div class="locations">-->
                         <div class="row">
-                        <!--<img id="route-img" />-->
+                            <!--<img id="route-img" />-->
+                            <img src="../../images/icons/Verbindung.svg" class="icon-route" />
+                            <div class="col box-route">
+                                ox
+                                >
+                                <!--<p id="start">{{ start }}</p>
+                                <p id="end">{{ end }}</p>-->
+                                <p class="drive-details-h2">{{ start }}</p>
+                                <p class="drive-details-h2">{{ end }}</p>
+                            </div>
+                            /d
+                        </div>
+                        iv
+                          <!--<p class="date-time">{{date}}{{time}}</p>-->
+                        <p class="drive-details-h3">{{date}}{{time}}</p>
+                    </div>
+
+                    <div class="grey-box" v-for="(item, index) in searchData" @click="showDetails(index)">
+                        <p class="overview-h1">{{item.locationStart}} - {{item.locationEnd}}</p>
+                        <p class="overview-h2">{{item.day}} {{item.formatDate}}, {{item.formatTime}} Uhr</p>
+                    </div>
+                </div>
+                <div id="results-detail" v-else>
+                    <div class="row-h1">
+                        <div class="col">
+                            <h6 class="drive-details-h1">{{searchData[index].day}}, {{searchData[index].formatDate}}</h6>
+                            <p class="drive-details-h2">{{searchData[index].formatTime}} Uhr</p>
+                        </div>
+                        <img src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
                         <img src="../../images/icons/Verbindung.svg" class="icon-route" />
-                        <div class="col box-route">
-                            <!--<p id="start">{{ start }}</p>
-                            <p id="end">{{ end }}</p>-->
-                            <p class="drive-details-h2">{{ start }}</p>
-                            <p class="drive-details-h2">{{ end }}</p>
-                        </div>
-                    </div>
-                    <!--<p class="date-time">{{date}}{{time}}</p>-->
-                    <p class="drive-details-h3">{{date}}{{time}}</p>
-                </div>
+                        <div class="col box_route">
+                            <div>
 
-                <div class="grey-box" v-for="(item, index) in searchData" @click="showDetails(index)">
-                    <p class="overview-h1">{{item.locationStart}} - {{item.locationEnd}}</p>
-                    <p class="overview-h2">{{item.day}} {{item.formatDate}}, {{item.formatTime}} Uhr</p>
-                </div>
-            </div>
-            <div id="results-detail" v-else>
-                <div class="row-h1">
-                    <div class="col">
-                        <h6 class="drive-details-h1">{{searchData[index].day}}, {{searchData[index].formatDate}}</h6>
-                        <p class="drive-details-h2">{{searchData[index].formatTime}} Uhr</p>
-                    </div>
-                    <img src="../../images/icons/Einzelfahrt_Icon.svg" class="icon-repeating" />
-                </div>
-
-                <hr />
-
-                <div class="row">
-                    <img src="../../images/icons/Verbindung.svg" class="icon-route" />
-                    <div class="col box_route">
-                        <div>
                             <!--<p class="drive-details-h3">{{searchData[index].formatTime}} Uhr</p>-->
-                            <h6 class="drive-details-h2">{{searchData[index].locationStart}}</h6>
-                        </div>
-                        <div>
-                            <h6 class="drive-details-h2">{{searchData[index].locationEnd}}</h6>
+                                <h6 class="drive-details-h2">{{searchData[index].locationStart}}</h6>
+                            </div>
+                            <div>
+                                <h6 class="drive-details-h2">{{searchData[index].locationEnd}}</h6>
+                            </div>
                         </div>
                     </div>
+
+                    <hr />
+
+                    <h6 class="special-heading padding-top">Fahrer</h6>
+                    <ul class="list">
+
+                        <li class="row-bottom-padding">
+                            <img src="../../images/icons/user_colored.svg" class="icon-request" />
+                            <div class="request-data">
+                                <h6 class="drive-details-h2">{{searchData[index].fullname}}</h6>
+                            </div>
+                            <img src="../../images/icons/speech-bubble.svg" class="icon-request-end" />
+                        </li>
+
+                        <li class="row-bottom-padding" v-if="((searchData[index].licensePlate) !== null) || ((searchData[index].details) !== null)">
+                            <img src="../../images/icons/car_info.svg" class="icon-request" />
+                            <div class="request_data col">
+                                <h6 class="drive-details-h2" v-if="(searchData[index].licensePlate) !== null">{{searchData[index].licensePlate}}</h6>
+                                <h6 class="drive-details-h3" v-if="(searchData[index].details) !== null">{{searchData[index].details}}</h6>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="drive-detail-half-page">
+                            <h6 class="drive-details-h2">{{searchData[index].price}} €</h6>
+                            <p class="drive-details-h3">pro Person</p>
+                        </div>
+
+                        <div class="drive-detail-half-page">
+                            <h6 class="drive-details-h2">{{searchData[index].maxPassengers}} Plätze</h6>
+                            <p class="drive-details-h3">verfügbar</p>
+                        </div>
+                    </div>
+                    <button v-bind:class="{'green-button':!resultsOverview, disabled:disable }" id="ride-along" @click="rideAlong()">Mitfahren</button>
+
                 </div>
-
-                <hr />
-
-                <h6 class="special-heading padding-top">Fahrer</h6>
-                <ul class="list">
-
-                    <li class="row-bottom-padding">
-                        <img src="../../images/icons/user_colored.svg" class="icon-request" />
-                        <div class="request-data">
-                            <h6 class="drive-details-h2">{{searchData[index].fullname}}</h6>
-                        </div>
-                        <img src="../../images/icons/speech-bubble.svg" class="icon-request-end" />
-                    </li>
-
-                    <li class="row-bottom-padding" v-if="((searchData[index].licensePlate) !== null) || ((searchData[index].details) !== null)">
-                        <img src="../../images/icons/car_info.svg" class="icon-request" />
-                        <div class="request_data col">
-                            <h6 class="drive-details-h2" v-if="(searchData[index].licensePlate) !== null">{{searchData[index].licensePlate}}</h6>
-                            <h6 class="drive-details-h3" v-if="(searchData[index].details) !== null">{{searchData[index].details}}</h6>
-                        </div>
-                    </li>
-
-                </ul>
-
-                <hr />
-
-                <div class="row">
-                    <div class="drive-detail-half-page">
-                        <h6 class="drive-details-h2">{{searchData[index].price}} €</h6>
-                        <p class="drive-details-h3">pro Person</p>
-                    </div>
-
-                    <div class="drive-detail-half-page">
-                        <h6 class="drive-details-h2">{{searchData[index].maxPassengers}} Plätze</h6>
-                        <p class="drive-details-h3">verfügbar</p>
-                    </div>
-                </div>
-                 <button v-bind:class="{'green-button':!resultsOverview, disabled:disable }" id="ride-along" @click="rideAlong()">Mitfahren</button>
-              
             </div>
-        </div>
         </template>
         <nav-bar></nav-bar>
     </div>
