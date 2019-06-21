@@ -45,7 +45,6 @@ function loginUser() {
 
 function goToRegister() {
     redirectUser("pages/login/register.html");
-
 }
 
 $(document).ready(function () {
