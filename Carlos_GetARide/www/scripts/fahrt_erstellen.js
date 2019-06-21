@@ -23,77 +23,19 @@ carlos.app = new Vue({
     methods: {
         // This method is called when a user clicks the back-button        
         goBack: function () {
-            // check if the back button has been hit on a place-input-page
-            // or on a normal page
-            if (document.getElementsByClassName('placeInputActive')[0] != null) {
-                this.searchBoxLeave('back-button');
-            } else {
+            if (document.querySelector('.placeActive') == undefined) {
                 this.slide = "reverse-slide";
                 this.$nextTick(function () {
                     this.index--;
                 })
-            }
-        },
-
-        // This method is called when a user clicks the place-input field
-        // CSS-changes for a specific page should be made here
-        searchBoxEnter: function () {
-            // unhide back-button
-            document.querySelector('#processHeader').classList.remove("backButtonInvisible");
-
-            document.getElementsByClassName('placeInputActive')[0].classList.add('placeInputActiveChanges');
-
-            // hide all unnecessary elements
-            document.querySelectorAll('.illustration-big')[0].classList.add('displayNone');
-            document.querySelectorAll('h1')[0].classList.add('displayNone');
-            let button = document.getElementsByClassName('red-button');
-            button[0].classList.add('displayNone');
-
-            // hide all fields of the form, except active            
-            let children = document.getElementsByClassName('textinput');
-            for (let i = 0; i < children.length; i++) {
-                if (!children[i].className.includes('placeInputActive')) {
-                    children[i].classList.add('displayNone');
-                }
-            }
+            }            
         },
 
         // This method is called when a user leaves the place-input field
         // can be when he picks a place or when he hits the back-button
         // CSS-changes for a specific page should be made here
-        searchBoxLeave: function (leaveMethod) {
-            document.getElementsByClassName('placeInputActiveChanges')[0].classList.remove('placeInputActiveChanges');
-
-            // changes for going back from place-input with the back-button
-            if (leaveMethod == 'back-button') {
-                // remove active and content from place-input
-                this.inputField = document.getElementsByClassName('placeInputActive')[0];
-                this.inputField.classList.remove('placeInputActive');
-                this.inputField.value = "";
-
-                document.getElementById('suggestions').classList.add('displayNone');
-                this.clearIcon = document.getElementById('clear-' + this.inputField.id);
-                this.clearIcon.classList.add('displayNone');
-
-                // hide and empty suggestionBox
-                this.suggestionsContainer = document.getElementById('suggestions');
-                this.suggestionsContainer.classList.add('displayNone');
-                this.suggestionsContainer.innerHTML = "";
-                this.clearIcon.classList.add('displayNone');
-            }
-
-            // changes for going back from place-input in general
-            // display all hidden elements again
-            let hiddenElements = document.querySelectorAll('.displayNone');
-            for (let i = 0; i < hiddenElements.length; i++) {
-                if (!hiddenElements[i].classList.contains('clear-icon')) {
-                    hiddenElements[i].classList.remove('displayNone');
-                }
-            }
-
+        searchBoxLeave: function () {
             this.checkIfComplete();
-
-            document.querySelector('#processHeader').classList.add("backButtonInvisible");
         },
 
         // checks if all the data has been entered for the different pages
@@ -241,9 +183,9 @@ carlos.app = new Vue({
 
             // deactivate back-button on first page of the process
             if (this.process[this.index] == 'route') {
-                document.querySelector('#processHeader').classList.add("backButtonInvisible");
+                document.querySelector('#backbutton').classList.add("hide");
             } else {
-                document.querySelector('#processHeader').classList.remove("backButtonInvisible");
+                document.querySelector('#backbutton').classList.remove("hide");
             }
 
             // activate the right circle
@@ -251,7 +193,7 @@ carlos.app = new Vue({
             if (activeCircle[0] != undefined) {
                 activeCircle[0].classList.remove("circle-active");
             }
-            document.querySelector('#circle-' + this.process[this.index]).className += (' circle-active');
+            document.querySelector('#circle-' + this.process[this.index]).classList.add('circle-active');
 
             if (this.driveData['repeating'] != null && this.process[this.index] == "repeating") {
                 if (this.driveData['repeating']) {
