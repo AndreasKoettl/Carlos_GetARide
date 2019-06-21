@@ -116,6 +116,26 @@ new Vue({
             this.settings = false;
             this.$el.querySelector('#settings-icon').classList.add('hide');
             this.$el.querySelector('#backbutton').classList.remove('hide');   
+        },
+
+        logout: function () {
+            $.post({
+                accepts: "application/json",
+                dataType: "json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "../../php/auth.php?/logoutUser",
+                success: function (data) {
+                    //console.log(JSON.stringify(data["data"][0]));
+                    console.log(data);
+                    localStorage.removeItem(STORAGE_KEY);
+                    redirectUser("./pages/login/login.html");
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
         }
     },
 

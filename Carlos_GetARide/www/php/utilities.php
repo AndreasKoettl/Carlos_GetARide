@@ -36,7 +36,7 @@ function getUserByMail($email): array {
     $dbConnection = new DatabaseAccess;
 
     // Die Userdaten aus der Datenbank holen.
-    $dbConnection->prepareStatement("SELECT * FROM users WHERE email = :email AND active = '1'");
+    $dbConnection->prepareStatement("SELECT * FROM users WHERE email = :email");
     $dbConnection->bindParam(":email", htmlentities($email, ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
@@ -62,7 +62,11 @@ function userExists($email): bool {
  * @return bool
  */
 function verifyUser($userData, $password): bool {
-    return (isset($userData) && isset($password) && count($userData["data"]) > 0 && password_verify($password, $userData["data"][0]["password"]));
+    return (isset($userData) &&
+            isset($password) &&
+            count($userData["data"]) > 0 &&
+            $userData["data"][0]["active"] == 1 &&
+            password_verify($password, $userData["data"][0]["password"]));
 }
 
 /**
