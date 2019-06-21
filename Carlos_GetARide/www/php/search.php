@@ -24,12 +24,12 @@ dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 
 				if (hasValue($start))
 				{
-				  $query .= " WHERE locationStart = '$start'";
+				  $query .= " WHERE cityStart = '$start'";
 				  $set = TRUE;
 				}
 			    if (hasValue($end))
 			    {
-				  $query .= ($set===TRUE ? " AND" : " WHERE") . " locationEnd = '$end'";
+				  $query .= ($set===TRUE ? " AND" : " WHERE") . " cityEnd = '$end'";
 				  $set = TRUE;
 			    }
 	

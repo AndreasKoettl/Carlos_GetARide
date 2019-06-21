@@ -22,6 +22,7 @@
 
 body{
     font-family: "Roboto Slab", serif;
+    overflow: scroll;
     color: var(--grey-dark);
 }
 

@@ -80,6 +80,8 @@ carlos_meineFahrten.app = new Vue({
                                     iddrive: result["data"][i]["iddrives"],
                                     routeStart: result["data"][i]["locationStart"],
                                     routeEnd: result["data"][i]["locationEnd"],
+                                    cityStart: result["data"][i]["cityStart"],
+                                    cityEnd: result["data"][i]["cityEnd"],
                                     date: appAccess.formatDate(new Date(result["data"][i]["driveDate"])),
                                     time: appAccess.formatTime(new Date(result["data"][i]["driveDate"])),
                                     dateTime: new Date(result["data"][i]["driveDate"]),
@@ -183,6 +185,8 @@ carlos_meineFahrten.app = new Vue({
                                 iddrive: result["data"][i][0]["iddrives"],
                                 routeStart: result["data"][i][0]["locationStart"],
                                 routeEnd: result["data"][i][0]["locationEnd"],
+                                cityStart: result["data"][i][0]["cityStart"],
+                                cityEnd: result["data"][i][0]["cityEnd"],
                                 date: appAccess.formatDate(new Date(result["data"][i][0]["driveDate"])),
                                 time: appAccess.formatTime(new Date(result["data"][i][0]["driveDate"])),
                                 dateTime: new Date(result["data"][i][0]["driveDate"]),
@@ -269,11 +273,13 @@ carlos_meineFahrten.app = new Vue({
 
         setAcceptedCss: function () {
             for (let i = 0; i < this.listUpcomingRides.length; i++) {
+                document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
                 if (this.listUpcomingRides[i].accepted == 0) {
                     document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
                 }
             }
             for (let i = 0; i < this.listPastRides.length; i++) {
+                document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
                 if (this.listPastRides[i].accepted == 0) {
                     document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
                 }
@@ -333,7 +339,6 @@ carlos_meineFahrten.app = new Vue({
                 else if (list[index].repeating === 2) {
                     for (let i = 0; i < list.length; i++) {
                         if (list[i].initialDriveId === list[index].initialDriveId) {
-                            this.removeRepetitionCss();
                             if (i !== index) {
                                 list.splice(i, 1);
                                 i--;
@@ -341,6 +346,8 @@ carlos_meineFahrten.app = new Vue({
                         }
                     }
                     list[index].repeating = 1;
+                    this.removeRepetitionCss(index, isUpcoming);
+                    this.setAcceptedCss();
                 }
                 else if (list[index].repeating === 0 || list[index].repeating === 3) {
                     if (isUpcoming) {
@@ -359,8 +366,8 @@ carlos_meineFahrten.app = new Vue({
                         await (this.isCoDriverDetails = true);
                         if (list[index].accepted == 0) {
                             document.getElementsByTagName('button')[0].innerHTML = "Anfrage löschen";
-                            this.getDriversName(list[index].idDriver, isUpcoming);
                         }
+                        this.getDriversName(list[index].idDriver, isUpcoming);
                     }
                 }
 
@@ -368,23 +375,26 @@ carlos_meineFahrten.app = new Vue({
 
         setRepetitionCss: function () {
             for (let i = 0; i < this.listUpcomingRides.length; i++) {
+                document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
                 if (this.listUpcomingRides[i].repeating === 3) {
                     document.getElementsByClassName("grey-box")[i].classList.add("grey-outline-box");
                 }
             }
             for (let i = 0; i < this.listPastRides.length; i++) {
+                document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
                 if (this.listPastRides[i].repeating === 3) {
                     document.getElementsByClassName("grey-box")[i].classList.add("grey-outline-box");
                 }
             }
         },
 
-        removeRepetitionCss: function () {
-            for (let i = 0; i < this.listUpcomingRides.length; i++) {
-                document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
-            }
-            for (let i = 0; i < this.listPastRides.length; i++) {
-                document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
+        removeRepetitionCss: function (index, isUpcoming) {
+            let list;
+            isUpcoming? list = this.listUpcomingRides : list = this.listPastRides;
+            for (let i = 0; i < list.length; i++) {
+                if (this.listUpcomingRides[i].repeating !== 3) {
+                    document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
+                }
             }
         },
 
@@ -443,6 +453,8 @@ carlos_meineFahrten.app = new Vue({
                                 iddrive: result["data"][i]["iddrives"],
                                 routeStart: result["data"][i]["locationStart"],
                                 routeEnd: result["data"][i]["locationEnd"],
+                                cityStart: result["data"][i]["cityStart"],
+                                cityEnd: result["data"][i]["cityEnd"],
                                 date: appAccess.formatDate(new Date(result["data"][i]["driveDate"])),
                                 time: appAccess.formatTime(new Date(result["data"][i]["driveDate"])),
                                 dateTime: new Date(result["data"][i]["driveDate"]),
@@ -540,6 +552,8 @@ carlos_meineFahrten.app = new Vue({
                                 iddrive: reversedResult[i][0]["iddrives"],
                                 routeStart: reversedResult[i][0]["locationStart"],
                                 routeEnd: reversedResult[i][0]["locationEnd"],
+                                cityStart: reversedResult[i][0]["cityStart"],
+                                cityEnd: reversedResult[i][0]["cityEnd"],
                                 date: appAccess.formatDate(new Date(reversedResult[i][0]["driveDate"])),
                                 time: appAccess.formatTime(new Date(reversedResult[i][0]["driveDate"])),
                                 dateTime: new Date(reversedResult[i][0]["driveDate"]),
