@@ -4,23 +4,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" type="text/css" href="../../css/index.css" />
     <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../lib/vue/vue.min.js"></script>
     <script src="../../scripts/index.js"></script>
-    <script src="../../scripts/login.js"></script>
     <title>Login</title>
 </head>
 <body>
     <h1 id="h1">Login</h1>
-    <form id="login-form">
-        <div id="error-message"></div>
-        <div>
-            <label for="email">E-Mail:</label>
-            <input id="email" type="email" name="email" value="" placeholder="E-Mail" />
-        </div>
-        <div>
-            <label for="password">Passwort:</label>
-            <input type="password" name="password" id="password" value="" placeholder="Passwort" />
-        </div>
-        <input type="submit" class="red-button" id="login-button" value="Log-In" />
-    </form>
+    <div id="app">
+        <form v-on:submit="loginUser">
+            <div>
+                <ul>
+                    <li v-for="error in errors">{{ error }}</li>
+                </ul>
+            </div>
+            <div>
+                <label for="email">E-Mail:</label>
+                <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required/>
+            </div>
+            <div>
+                <label for="password">Passwort:</label>
+                <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required/>
+            </div>
+            <input type="submit" class="green-button" value="Log-In" />
+            <input type="button" class="red-button" v-on:click='redirectToRegister' value="Registrieren" />
+        </form>
+    </div>
+
+    <script src="../../scripts/login.js"></script>
 </body>
 </html>

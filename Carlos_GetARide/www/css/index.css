@@ -3,8 +3,6 @@
 @import url('meine_fahrten.css');
 @import url(fahrt_erstellen.css);
 @import url(components.css);
-@import url(profile.css);
-@import url(meine_fahrten.css);
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800');
 
@@ -17,13 +15,15 @@
     --blue-dark: #3B4275;
     --blue-light: #F0F4F6;
     --green: #A5C03C;
-    --grey-dark: #707070;
+    --grey-dark: #606060;
     --grey-light: #C3C3C3;
     --grey-extralight: #EAEAEA;
 }
 
 body{
     font-family: "Roboto Slab", serif;
+    overflow: scroll;
+    color: var(--grey-dark);
 }
 
 .main-illustration {
