@@ -58,4 +58,5 @@ new Vue({
     mounted: function() {
         redirectAuthUser("index.html");
     }
+
 });
