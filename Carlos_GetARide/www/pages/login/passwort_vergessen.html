@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="../../css/index.css" />
+    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../lib/vue/vue.min.js"></script>
+    <script src="../../scripts/index.js"></script>
+    <script src="../../scripts/logout.js"></script>
+    <title>Passwort vergessen</title>
+</head>
+<body>
+    <h1 id="h1">Passwort vergessen</h1>
+    <div id="app">
+        <form v-if="!succeeded" v-on:submit="forgotPassword">
+            <div>
+                <ul>
+                    <li v-for="error in errors">{{ error }}</li>
+                </ul>
+            </div>
+            <div>
+                <label for="email">Passwort:</label>
+                <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required />
+            </div>
+            <input type="submit" class="red-button" value="Passwort zurücksetzen" />
+            <input type="button" class="red-button" v-on:click="redirectToLogin" value="Zurück zum Login" />
+        </form>
+        <div v-else>
+            <p>Es wurde Ihnen eine Email Zum zurücksenden Ihres Passworts zugesendet.</p>
+            <p>Bitte überprüfen Sie auch Ihren Spam Ordner.</p>
+        </div>
+    </div>
+    <script src="../../scripts/passwort_vergessen.js"></script>
+</body>
+</html>

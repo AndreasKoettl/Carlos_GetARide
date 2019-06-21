@@ -1,50 +1,73 @@
 /**
  * Entfernt den User aus der Datenbank, meldet ihn ab, und leitet ihn an die Login Seite weiter.
  */
-function deleteUser() {
-    event.preventDefault();
+/**
+ * Registiert den User in der Datenbank.
+ * Wenn alle Daten richtig eingegeben wurden, wird der User an die Login Seite weitergeleitet,
+ * ansonsten wird eine entsprechende Fehlermeldung angezeigt.
+ */
+new Vue({
+    el: "#app",
 
-    // User Daten aus dem local storage holen.
-    let userData = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
-    // Eingegebene Formulardaten holen.
-    let formData = new FormData($("#profil-entfernen-form")[0]);
-
-    // Email des Users an die Formulardaten anhängen.
-    formData.append("email", userData["email"]);
-
-    // AJAX-Post Request starten.
-    $.post({
-        accepts: "application/json",
-        dataType: "json",
-        async: true,
-        contentType: false,
-        processData: false,
-        url: getAbsPath("php/auth.php?/deleteUser"),
-        data: formData,
-        success: function (data) {
-            // Prüfen ob das Profil entfernt wurde.
-            if (data["status"] === "success") {
-                // User Daten aus dem local storage löschen.
-                localStorage.removeItem(STORAGE_KEY);
-
-                // User an die Login Seite weiterleiten.
-                redirectUser("pages/login/login.html");
-            } else {
-                // Fehlermeldung ausgeben, wenn das Profil nicht entfernt werden konnte.
-                $("#error-message").text("Profil entfernen fehlgeschlagen: " + data["statusmessage"]);
-                $("#password").val("");
-            }
-        },
-        error: function () {
-            $("#error-message").text("Server Verbindung fehlgeschlagen");
+    data: {
+        errors: [],
+        succeeded: false,
+        formData: {
+            email: "",
+            password: ""
         }
-    });
-}
+    },
+    methods: {
+        deleteUser: function() {
+            event.preventDefault();
 
-$(document).ready(function () {
-    // User an die Login Seite weiterleiten, wenn dieser nicht eingeloggt ist.
-    redirectNotAuthUser("pages/login/login.html");
+            // User Daten aus dem local storage holen und an Formulardaten anhängen
+            let userData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            this.formData.email = userData["email"];
 
-    $("#profil-entfernen-form").submit(deleteUser);
+            // Alle Fehlermeldungen löschen.
+            this.errors = [];
+            // Vue Objekt innerhalb Callback Funktionen verfügbar machen.
+            let vueObject = this;
+            // Post Request starten.
+            var postRequest = $.post(getAbsPath("php/auth.php?/deleteUser"), this.formData, null, "json");
+
+            // Callback Funktionen wenn Request erfolgreich war.
+            postRequest.done(function(data) {
+                // Prüfen ob das Profil entfernen erfolgreich war.
+                if (succeeded(data)) {
+                    // User Daten aus dem local storage löschen.
+                    localStorage.removeItem(STORAGE_KEY);
+
+                    vueObject.succeeded = true;
+                }
+                else {
+                    // Fehlermeldung hinzufügen.
+                    vueObject.errors.push("Profil entfernen fehlgeschlagen: " + data["statusmessage"]);
+                    // Passwort Eingabefelder leeren.
+                    vueObject.formData.password = "";
+                }
+            });
+
+            // Callback Funktionen wenn der Request fehlerhaft war.
+            postRequest.fail(function(data) {
+                // Fehlermeldung hinzufügen.
+                vueObject.errors.push("Server Verbindung fehlgeschlagen.");
+                // Passwort Eingabefeld leeren.
+                vueObject.formData.password = "";
+            });
+        },
+        redirectToHome: function() {
+            redirectUser("index.html");
+        },
+        redirectToLogin: function() {
+            redirectUser("pages/login/login.html");
+        },
+        redirectToRegister: function() {
+            redirectUser("pages/login/register.html");
+        }
+    },
+    mounted: function() {
+        redirectNotAuthUser("pages/login/login.html");
+    }
 });

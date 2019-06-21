@@ -4,50 +4,71 @@
  * und muss sich neu anmelden.
  * Ansonsten wird eine entsprechende Fehlermeldung angezeigt.
  */
-function changePassword() {
-    event.preventDefault();
+new Vue({
+    el: "#app",
 
-    // User Daten aus dem local storage holen.
-    let userData = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
-    // Eingegebene Formulardaten holen.
-    let formData = new FormData($("#change-password-form")[0]);
-
-    // Email des Users an die Formulardaten anhängen.
-    formData.append("email", userData["email"]);
-
-    // AJAX-Post Request starten.
-    $.post({
-        accepts: "application/json",
-        dataType: "json",
-        async: true,
-        contentType: false,
-        processData: false,
-        url: getAbsPath("php/auth.php?/changePassword"),
-        data: formData,
-        success: function (data) {
-            // Prüfen ob das Passwort erfolgreich geändert wurde.
-            if (data["status"] === "success") {
-                // User ausloggen.
-                logoutUser();
-            }
-            else {
-                // Fehlermeldung ausgeben, wenn die Registrierung nicht erfolgreich war.
-                $("#error-message").text("Passwort ändern fehlgeschlagen: " + data["statusmessage"]);
-                $("#password-old").val("");
-                $("#password").val("");
-                $("#password-repeat").val("");
-            }
-        },
-        error: function () {
-            $("#error-message").text("Server Verbindung fehlgeschlagen.");
+    data: {
+        errors: [],
+        succeeded: false,
+        formData: {
+            email: "",
+            passwordOld: "",
+            password: "",
+            passwordRepeat: ""
         }
-    });
-}
+    },
+    methods: {
+        changePassword: function() {
+            event.preventDefault();
 
-$(document).ready(function () {
-    // User an die Startseite weiterleiten, wenn dieser bereits eingeloggt ist.
-    redirectNotAuthUser("pages/login/login.html");
+            // User Daten aus dem local storage holen und an Formulardaten anhängen
+            let userData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            this.formData.email = userData["email"];
 
-    $("#change-password-form").submit(changePassword);
+            // Alle Fehlermeldungen löschen.
+            this.errors = [];
+            // Vue Objekt innerhalb Callback Funktionen verfügbar machen.
+            let vueObject = this;
+            // Post Request starten.
+            var postRequest = $.post(getAbsPath("php/auth.php?/changePassword"), this.formData, null, "json");
+
+            // Callback Funktionen wenn Request erfolgreich war.
+            postRequest.done(function(data) {
+                // Prüfen ob das Passwort ändern erfolgreich war.
+                if (succeeded(data)) {
+                    // User ausloggen.
+                    logoutUser();
+
+                    vueObject.succeeded = true;
+                }
+                else {
+                    // Fehlermeldung hinzufügen.
+                    vueObject.errors.push("Passwort ändern fehlgeschlagen: " + data["statusmessage"]);
+                    // Passwort Eingabefelder leeren.
+                    vueObject.formData.passwordOld = "";
+                    vueObject.formData.password = "";
+                    vueObject.formData.passwordRepeat = "";
+                }
+            });
+
+            // Callback Funktionen wenn der Request fehlerhaft war.
+            postRequest.fail(function(data) {
+                // Fehlermeldung hinzufügen.
+                vueObject.errors.push("Server Verbindung fehlgeschlagen.");
+                // Passwort Eingabefelder leeren.
+                vueObject.formData.passwordOld = "";
+                vueObject.formData.password = "";
+                vueObject.formData.passwordRepeat = "";
+            });
+        },
+        redirectToHome: function() {
+            redirectUser("index.html");
+        },
+        redirectToLogin: function() {
+            redirectUser("pages/login/login.html");
+        }
+    },
+    mounted: function() {
+        redirectNotAuthUser("pages/login/login.html");
+    }
 });

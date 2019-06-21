@@ -28,7 +28,6 @@
     function onResume() {
         // TODO: Diese Anwendung wurde erneut aktiviert. Stellen Sie hier den Anwendungszustand wieder her.
     };
-<<<<<<< HEAD
 
 } )();
 =======
@@ -93,3 +92,10 @@ function redirectAuthUser(websitePath) {
     }
 }
 
+function succeeded(resultArray) {
+    return resultArray["status"] === "success";
+}
+
+function failed(resultArray) {
+    return resultArray["status"] === "error";
+}
