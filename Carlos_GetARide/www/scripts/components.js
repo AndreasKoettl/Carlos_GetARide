@@ -19,7 +19,7 @@ Vue.component('nav-bar', {
     <div id="menu">
     <a href="/carlos/Carlos_GetARide/www/pages/meine_fahrten/meine_fahrten.html" class="menu-item" id="meine-fahrten" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/hakerl_icon.svg" /></a>
     <a href="/carlos/Carlos_GetARide/www/pages/suchen/fahrt_suchen.html" class="menu-item" id="fahrt-suchen" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/magnifying-glass.svg" /></a>
-    <a href="/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen.html" v-on:click="clickMenu" id="fahrt_erstellen" class="menu-item"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/plus-button.svg" /></a>
+    <a href="/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen.html" v-on:click="clickMenu" id="fahrt-erstellen" class="menu-item"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/plus-button.svg" /></a>
     <a href="/carlos/Carlos_GetARide/www/pages/chat/chat.html" class="menu-item" v-on:click="clickMenu"><img class="icon chat-icon" id="chat" src="/carlos/Carlos_GetARide/www/images/icons/speech-bubble.svg" /></a>
     <a href="/carlos/Carlos_GetARide/www/pages/profil/profil.html" class="menu-item" id="profil" v-on:click="clickMenu"><img class="icon" src="/carlos/Carlos_GetARide/www/images/icons/user_colored.svg" /></a>
     </div >
@@ -95,7 +95,8 @@ Vue.component('header-fahrt-erstellen', {
 Vue.component('place-input', {
     data: function () {
         return {
-            clickCount: 0
+            clickCount: 0,
+            formattedPlace:false
         }
     },
     props: ['id', 'placeholder', 'clearid', 'loadvalue'],
@@ -177,7 +178,8 @@ Vue.component('place-input', {
                         'query=' + encodeURIComponent(textBox.value) +
                         '&maxresults=10' +
                         '&language=de' +
-                        '&mapview=48.316731, 16.490108;47.221794, 13.228341' +                       
+                        '&country=AUT' +
+                        //'&mapview=48.217489, 16.049675;47.221794, 13.228341' +                       
                         '&app_id=' + this.APPLICATION_ID +
                         '&app_code=' + this.APPLICATION_CODE;
                     this.ajaxRequest.open('GET', this.AUTOCOMPLETION_URL + params);
@@ -222,21 +224,26 @@ Vue.component('place-input', {
                     continue;
                 } else if (matchlevel == 'country') {
                     continue;
-                } else {                    
-                    suggestion.innerHTML = data['label'];
-                }
+                } 
 
-                if (this.suggestionsContainer.childNodes.length < 5) {
+                if (this.suggestionsContainer.childElementCount < 5) {
                     this.suggestionsContainer.appendChild(suggestion);
                     suggestion.addEventListener("click", this.placePicked);
                 } else {
                     break;
                 }                
             }
+
+            if (this.suggestionsContainer.childElementCount == 0) {
+                let emptySuggestionError = document.createElement('p');
+                emptySuggestionError.innerHTML = "Es konnte leider kein Ort gefunden werden."
+                this.suggestionsContainer.appendChild(emptySuggestionError);
+            }
         },
 
         placePicked: function () {
-            this.clickCount=0;
+            this.clickCount = 0;
+            this.formattedPlace = true;
 
             // remove class of active place-input
             this.inputField.classList.remove("placeActive");            
@@ -266,15 +273,19 @@ Vue.component('place-input', {
         },
 
         clearInput: function () {
+            this.formattedPlace = false;
             document.getElementsByClassName('placeActive')[0].value = "";
             document.getElementById('suggestions').innerHTML = "";
         },
 
         placeGoBack: function () {
-            // remove active and content from place-input           
-            this.inputField.classList.remove('placeActive');
-            this.inputField.value = "";
+            if (!this.formattedPlace) {
+                // remove active and content from place-input           
+                this.inputField.classList.remove('placeActive');
+                this.inputField.value = "";
 
+            }
+            
             // display all hidden elements again
             let hiddenElements = document.querySelectorAll('.displayNone');
             for (let i = 0; i < hiddenElements.length; i++) {
@@ -294,6 +305,7 @@ Vue.component('place-input', {
             // hide back-button, change back-event
             this.backbutton.classList.add("hide");
             this.backbutton.removeEventListener('click', this.placeGoBack);
+            this.$emit('searchbox-leave');
         }
     }
 });
