@@ -27,12 +27,10 @@
                         <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
                         <form id="routeForm">
                             <place-input id="start" clearid="clear-start"
-                                         placeholder="Start" :loadvalue="driveData['start']"
-                                         @searchbox-enter="searchBoxEnter()"
+                                         placeholder="Start" :loadvalue="driveData['start']"                                         
                                          @searchbox-leave="searchBoxLeave('pick')"></place-input>
                             <place-input id="destination" clearid="clear-destination"
-                                         placeholder="Ziel" :loadvalue="driveData['destination']"
-                                         @searchbox-enter="searchBoxEnter()"
+                                         placeholder="Ziel" :loadvalue="driveData['destination']"                                         
                                          @searchbox-leave="searchBoxLeave('pick')"></place-input>
                             <ul id="suggestions" class="displayNone"></ul>
                             <button type="button" class="red-button disabled" id="submitRoute" v-on:click="complete ? submitData(['start', 'destination']) : false">Weiter</button>

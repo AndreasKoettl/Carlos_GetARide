@@ -32,8 +32,7 @@ carlos.app = new Vue({
         },
 
         // This method is called when a user leaves the place-input field
-        // can be when he picks a place or when he hits the back-button
-        // CSS-changes for a specific page should be made here
+        // can be when he picks a place or when he hits the back-button        
         searchBoxLeave: function () {
             this.checkIfComplete();
         },

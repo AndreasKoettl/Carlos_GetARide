@@ -90,7 +90,7 @@ Vue.component('header-fahrt-erstellen', {
 /**
 * Input field for Place-Autocomplete
 * disables and hides all other elements on the page
-* emits: searchbox-enter, searchbox-leave
+* emits: searchbox-leave
 */
 Vue.component('place-input', {
     data: function () {
