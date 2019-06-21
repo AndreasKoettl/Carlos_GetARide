@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script type="text/javascript" src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../lib/vue/vue.min.js"></script>    
+</head>
+<body>
+    <div id="app">
+        <place-input id="start" clearid="clear-start" placeholder="Start"></place-input>
+        <ul id="suggestions" class="displayNone"></ul>
+        <div id="success">
+            <div class="form-wrapper">
+                <img src="../../images/icons/check.svg" class="illustration-small"/>
+                <h1>Geschafft!</h1>
+                <p>Deine Fahrt wurde soeben erstellt.</p> <br />
+                <p>Hier kannst du Mitfahrer akzeptieren oder ablehnen:</p>
+                <a href="meine_fahrten/meine_fahrten.html">Meine Fahrten</a>
+            </div>
+        </div>
+        <nav-bar></nav-bar>
+    </div>
+
+    <script src="../../scripts/components.js"></script>
+    <script src="../../scripts/fahrt_erstellen.js"></script>
+</body>
+</html>

@@ -1,24 +1,75 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src *; media-src *; font-src *">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script type="text/javascript" src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../lib/vue/vue.min.js"></script>
     <title>Profil</title>
 </head>
-<body id="profile-content">
-        <img class="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture"/>
-        <div class="data">
-            <h2 class="name">Max Muster</h2>
-            <p class="mail">max.muster@hotmail.com</p>
-        </div>
+<body>
+    <div id="profilec">
+        <header-back title="Profil" @go-back="goBack()" @go-there="goToSettings()"></header-back>
+        <template v-if="profile">
+        <div>
+            <img class="main-illustration" id="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
+            <div class="data">
+                <h2 class="name">{{firstname}} {{lastname}}</h2>
+                <p class="mail">{{email}}</p>
+            </div>
 
-        <div class="options">
-            <a><img src="../../images/icons/edit.svg"/>Profil bearbeiten</a>
-            <a><img src="../../images/icons/logout.svg"/>Abmelden</a>
-        </div>  
+            <div class="profile-options">
+                <a @click="goToEdit()"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
+                <a ><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
+            </div>
+            <br />
+            <!--<a href="../../index.html" ><p>Back to home</p></a>-->
+        </div>
+        </template>
+
+        <template v-else>
+        <div class="content-box-90">
+            <div v-if="settings">
+                <img class="main-illustration" src="../../images/illustrationen/undraw_settings_ii2j.svg" alt="settings-picture" title="settings-picture" />
+                <div class="settings">
+                    <p>Benachrichtigungen</p>
+                    <div><img v-bind:class="{'red-filter':hasNotifications,  yes:settings}" @click="changeNotifications(1)" src="../../images/icons/hakerl_icon.svg" /><img v-bind:class="{'red-filter':!hasNotifications,  no:settings}" src="../../images/icons/x_icon_neu.svg" @click="changeNotifications(0)" /></div>
+                </div>
+                <button class="red-button"> Account löschen</button>
+            </div>
+
+            <div v-else>
+                <img class="edit-picture" src="../../images/illustrationen/profile_edit.svg" alt="edit-picture" title="edit-picture" />
+                <form method="post" id="edit-profile-form">
+                    <div class="textinput">
+                        <label for="username">Vorname</label>
+                        <input type="text" id="firstname" name="firstname" v-model="firstname">
+                    </div>
+                    <div class="textinput">
+                        <label for="strasse">Nachname</label>
+                        <input type="text" id="lastname" name="lastname" v-model="lastname">
+                    </div>
+                    <div class="textinput">
+                        <label for="email">E-Mail</label>
+                        <input type="email" id="email" name="email" v-model="email">
+                    </div>
+                    <button class="red-button" @click="saveNewData">Speichern</button>
+                </form>
+                
+            </div>
+        </div>
+        </template>
+        <nav-bar></nav-bar>
+    </div>
+
+    <script src="../../scripts/components.js"></script>
+    <script type="text/javascript" src="../../scripts/profile.js"></script>
+    <script type="text/javascript" src="../../scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="../../scripts/index.js"></script>
+
 </body>
 </html>

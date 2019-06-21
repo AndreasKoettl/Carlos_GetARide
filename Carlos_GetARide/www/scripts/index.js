@@ -18,6 +18,7 @@
         var receivedElement = parentElement.querySelector('.received');
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
+
     };
 
     function onPause() {
@@ -27,6 +28,9 @@
     function onResume() {
         // TODO: Diese Anwendung wurde erneut aktiviert. Stellen Sie hier den Anwendungszustand wieder her.
     };
+
+} )();
+=======
 } )();*/
 
 /**

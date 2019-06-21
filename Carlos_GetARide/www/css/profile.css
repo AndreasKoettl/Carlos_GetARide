@@ -1,5 +1,5 @@
-﻿#profile-content {
-    background-color: var(--blue-light);
+﻿
+#profile-content {
     font-family: 'Roboto Slab', serif;
     font-weight: 400;
     color: var(--grey-dark);
@@ -11,70 +11,99 @@
     color: var(--grey-dark);
 }
 
-.settings{
-    width: 70vw;
-    margin: 10vh auto 0 auto;
+.settings {
+    width: 88vw;
+    margin: 15% auto 15% auto;
 }
 
-h2{
-    font-size: 5vw;
+.settings p{
+    font-size:6.5vw;
+    margin: 4vh 0 2vh 0;
     font-weight: 400;
 }
 
-.yes, .no, .garbage-icon{
-    height: 6vw;
+
+.yes, .no, .garbage-icon {
+    height: 9vw;
 }
 
-.yes{
+.yes {
     margin-right: 3vw;
 }
-
-.profile-picture, .settings-picture, .edit-picture{
-    display:block;
+/*
+.profile-picture, .settings-picture, .search-picture {
+    display: block;
     width: 60vw;
-    margin:10vw auto;
-}
-
-.options img{
-    width: 6vw;
-    margin: 0 4vw 0;
     position: relative;
-    top: 0.6vh;
+    margin: 0 auto 10vw auto;
+}*/
+
+.edit-picture {
+    display: block;
+    width: 60vw;
+    margin: 0 auto 10vw auto;
 }
 
-.options a{
-    display:block;
-    font-size:2.5vh;
+.profile-options {
+    width: 90vw;
+    margin: 15% auto 0 auto;
 }
 
-.options a:first-of-type{
-    margin-bottom: 3vh;
+.profile-options img {
+    height: auto;
+    width: 7vw;
+    margin: 0 5vw 0 auto;
+    position: relative;
 }
 
-.data{
+.profile-options a {
+    border: 2px solid var(--grey-extralight);
+    border-radius: 50px;
+    display: block;
+    font-size: 5vw;
+    color: var(--grey-dark);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.profile-options a:first-of-type {
+    margin-bottom: 4vw;
+}
+
+.profile-options p {
+    text-align: left;
+    font-size: 4.5vw;
+    color: var(--grey-dark);
+    font-family: 'Roboto Slab', serif;
+    margin: 2.6vw 0 2.6vw 5vw;
+    width: 70vw;
+}
+
+.data {
     margin: 0 auto;
     text-align: center;
+    font-family: Roboto Slab, serif;
 }
 
-.name{
-    font-size: 10vw;
-    margin:0 auto;
-    font-weight:400;
+
+.name {
+    font-size: 8vw;
+    margin: 0 auto;
+    font-weight: 400;
 }
-.mail{
+
+.mail {
     color: var(--grey-light);
-    font-size: 5vw;
-    margin:0 auto;
+    font-size: 5.5vw;
+    font-family: 'Roboto Slab', serif;
+    display:block;
+    margin: 2vw auto 0 auto;
 }
 
-.options {
-    background-color: #FFF;
-    border-radius: 15px;
-    color: var(--red);
-
-    box-sizing:border-box;
-    width: 70vw;
-    margin: 7vh auto 0 auto;
-    padding: 6vw;
+.red-filter {
+    filter: invert(44%) sepia(41%) saturate(1373%) hue-rotate(325deg) brightness(75%) contrast(93%);
 }
-

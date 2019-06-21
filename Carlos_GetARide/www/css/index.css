@@ -1,8 +1,12 @@
-
-/*@import url('profile.css');*/
+@import url('profile.css');
+@import url('suchen.css');
 @import url('meine_fahrten.css');
+@import url(fahrt_erstellen.css);
+@import url(components.css);
+@import url(profile.css);
+@import url(meine_fahrten.css);
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
-@import url('https://fonts.googleapis.com/css?family=Montserrat:600,700,800');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800');
 
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -14,22 +18,31 @@
     --blue-light: #F0F4F6;
     --green: #A5C03C;
     --grey-dark: #707070;
-	--grey: #858585;
     --grey-light: #C3C3C3;
     --grey-extralight: #EAEAEA;
 }
 
-.main {
-    background-color: var(--blue-light);
+body{
+    font-family: "Roboto Slab", serif;
 }
 
-.main-heading {
-    padding-top: 3vh;
-    padding-bottom: 3vh;
+.main-illustration {
+    width: 60vw;
+    margin: 0 auto 10vw auto;
+    position: relative;
+    display: block;
 }
 
 a {
     text-decoration: none;
+}
+
+.content-box-90 {
+    width: 90vw;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0;
+    padding-bottom: 10vw;
 }
 
 h1 {
@@ -46,38 +59,185 @@ label {
     display: block;
     margin: 3vh 1vw 1vh 1vw;
     color: var(--grey-light);
-    font-size: 4vw;
+    font-size: 5vw;
     font-weight: 400;
 }
 
 input {
     border: 2px solid var(--grey-extralight);
     border-radius: 50px;
-    padding: 2vw 3.5vw;
+    font-size: 4vw;
+    font-family: Montserrat, sans-serif;
+    color: var(--grey-dark);
+    padding: 2.6vw 5vw;
     box-sizing: border-box;
     width: 100%;
+    background-color: #FFF;
 }
 
-input:active, input:focus{
-    outline:none;
+input:active, input:focus {
+    outline: none;
 }
 
 form {
     margin: 0 auto;
-    width: 80vw;
+    width: 90vw;
 }
 
 .textinput {
-    margin: 2vh 0 0 0;
+    margin: 4vw 0 0 0;
 }
 
-.red-button {
-    width: 80vw;
-    height: 7vw;
-    margin: 3vh auto;
+.red-button { 
+    width: 100%;
+    display: block;
+    margin: 4vw 0;
     font-size: 4vw;
-    font-family: 'Roboto Slab', serif;
+    padding: 2.1vw 5vw;
+    font-family: Montserrat, sans-serif;
     color: #fff;
     background-color: var(--red);
     border-radius: 50px;
+    border: 1px solid var(--red);
+}
+
+.green-button {
+    width: 100%;
+    display: block;
+    margin: 4vw 0;
+    font-size: 4vw;
+    padding: 2.1vw 5vw;
+    font-family: Montserrat, sans-serif;
+    color: #fff;
+    background-color: var(--green);
+    border-radius: 50px;
+    border: 1px solid var(--green);
+}
+
+.buttonEnabled {
+    background-color: green;
+}
+
+button:focus, button:active{
+    outline:none;   
+}
+
+.grey-box {
+    box-sizing: border-box;
+    margin: 5vw auto 5vw auto;
+    background-color: var(--grey-extralight);
+    border-radius: 15px;
+    padding: 6vw;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.grey-outline-box {
+    background-color: white;
+    border: 2px solid var(--grey-extralight);
+}
+
+.red-outline-box {
+    background-color: white;
+    border: 2px solid var(--red);
+}
+
+.overview-h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 5.5vw;
+    color: var(--red);
+    font-weight: 900;
+    padding: 0;
+    margin: 0;
+    width: 90%;
+    text-align: left;
+    float: left;
+}
+
+.overview-h2 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 4vw;
+    color: var(--grey-dark);
+    padding: 0;
+    margin: 0;
+    margin-top:2vw;
+    text-align: left;
+}
+
+.drive-details-h1 {
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: 6vw;
+    color: var(--grey-dark);
+    font-weight: 700;
+    z-index: 400;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.drive-details-h2 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 4vw;
+    color: var(--grey-dark);
+    font-weight: 900;
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.drive-details-h3 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 3.5vw;
+    color: var(--grey-light);
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    margin-top: 1px;
+    text-align: left;
+    width: 100%;
+}
+
+.codriver-acceptance {
+    font-family: Montserrat, sans-serif;
+    font-size: 3vw;
+    text-transform: uppercase;
+    color: var(--grey-light);
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    text-align: left;
+}
+
+.special-heading {
+    font-family: Montserrat, sans-serif;
+    font-size: 3.5vw;
+    text-transform: uppercase;
+    color: var(--red);
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 4vw;
+    text-align: left;
+}
+
+.padding-top {
+    padding-top: 6vw;
+}
+
+.box-route {
+    height: 20vw;
+    width: 90vw;
+}
+
+.icon-route {
+    height: 20vw;
+    margin: 0 5.5vw 0 2vw;
+}
+
+.drive-detail-half-page {
+    width: 50%;
 }

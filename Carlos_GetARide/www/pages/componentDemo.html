@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <script src="../lib/vue/vue.min.js"></script>
+
+    <!-- include for place-input -->
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+</head>
+<body>
+    <div id="app">        
+        <!-- every custom function can be used @go-back -->
+        <header-back title="Demo" @go-back="window.history.back()"></header-back>           
+        <h1 class="fahrt-erstellen-heading" style="margin-top: 10vh;">Component Demo</h1>
+        <div style="width:85vw; margin:5vh auto; z-index:0;">
+            <!-- clearid should always start with 'clear-' and end with the id -->
+            <place-input id="start" clearid="clear-start" placeholder="Start" @searchbox-enter="" @searchbox-leave=""></place-input>
+            <ul id="suggestions" class="displayNone"></ul>
+        </div>
+        <nav-bar></nav-bar>
+    </div>
+    
+    <script src="../scripts/components.js"></script>  
+    <!-- there always has to be a Vue instance for the components to work! -->
+    <script src="../scripts/componentDemo.js"></script>    
+      
+</body>
+</html>

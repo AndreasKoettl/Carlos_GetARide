@@ -1,31 +1,28 @@
-.illustration_meineFahrten {
-    width: 80vw;
-    margin: 5vh auto;
-    display: flex;
+#app{
+    height:100%;
 }
-
-.bottom-padding {
-    padding-bottom: 3vh;
+.main-white {
+    background-color: white;
 }
 
 #nav-bar {
-    width: 80vw;
-    height: 6vh;
-    margin: 0 auto;
+    height: 10vw;
+    margin: 0 auto 10vw 0;
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: #fff;
+    color: var(--grey-extralight);
     background-color: var(--red);
     border-radius: 50px;
+    border: 1px solid var(--red);
 }
 
-.menu {
+.slider-menu {
     width: 50%;
-    margin: 0 auto;
+    margin: auto auto;
     text-align: center;
-    font-size: 2.7vh;
+    font-size: 5vw;
     z-index: 100;
     font-family: 'Roboto Slab', serif;
 }
@@ -35,68 +32,41 @@
 }
 
 #slider {
-    background-color: #fff;
+    background-color: var(--grey-extralight);
     color: var(--red);
+    border: 1px solid var(--grey-extralight);
     border-radius: 50px;
     position: absolute;
     left: 0vw;
-    height: 6vh;
+    height: 10vw;
     width: 50%;
     z-index: 0;
     transition-duration: 400ms;
-}
-
-.timing-meine-Fahrten {
-    width: 80vw;
-    font-family: Montserrat, sans-serif;
-    font-size: 3vw;
-    font-weight: 100;
-    color: var(--red);
-    text-transform: uppercase;
-    margin: 5vw auto;
 }
 
 .list {
     padding: 0px;
 }
 
-.box-meine-fahrten {
-    width: 80vw;
-    box-sizing: border-box;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 35px;
-    padding: 3vh 3vh;
-    list-style: none;
-}
-
-.start-destination {
-    font-family: Montserrat, sans-serif;
-    font-size: 5vw;
-    color: var(--red);
-    font-weight: 900;
-    padding: 0px;
-    margin: 0px;
-}
-
-.datetime {
-    font-family: Montserrat, sans-serif;
-    font-size: 3.5vw;
-    color: var(--grey-light);
-    padding: 0px;
-    margin: 0px;
-    margin-top:2vw;
-}
-
 .row {
     display: flex;
+    justify-content: flex-start;
+    margin: 0;
+    padding-top: 6vw;
+    padding-bottom: 6vw;
+}
+
+.row-h1 {
+    display: flex;
     justify-content: space-between;
-    padding-top: 3vh;
-    padding-bottom: 3vh;
+    align-items: center;
+    padding-top: 6vw;
+    padding-bottom: 6vw;
 }
 
 .col {
     display: flex;
+    width: 62vw;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -108,88 +78,11 @@
 
 .row-bottom-padding {
     display: flex;
-    justify-content: space-between;
-    padding-bottom: 2vh;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 4vw;
     list-style: none;
-}
-
-.header-icon {
-    width: 3.5vw;
-    margin-left: 3.5vh;
-    z-index: 0;
-    position: absolute;
-}
-
-.content-box {
-    width: 70vw;
-    box-sizing: border-box;
-    margin: 0 auto;
-    padding: 0;
-    padding-bottom: 3vh;
-}
-
-.details-h1 {
-    font-family: Montserrat, sans-serif;
-    font-size: 6vw;
-    color: var(--grey);
-    font-weight: 900;
-    z-index: 100;
-    padding: 0;
-    margin: 0;
-}
-
-.details-h2 {
-    font-family: Montserrat, sans-serif;
-    font-size: 4vw;
-    color: var(--grey);
-    font-weight: 900;
-    z-index: 100;
-    padding: 0;
-    margin: 0;
-}
-
-.details-h3 {
-    font-family: 'Roboto Slab', serif;
-    font-size: 3vw;
-    color: var(--grey-light);
-    z-index: 100;
-    padding: 0;
-    margin: 0;
-}
-
-.details-h4 {
-    font-family: 'Roboto Slab', serif;
-    font-size: 3vw;
-    text-transform: uppercase;
-    color: var(--red);
-    z-index: 100;
-    padding: 0;
-    margin: 0;
-   margin-bottom: 2vh;
-}
-
-.details-h4-padding-top {
-    font-family: 'Roboto Slab', serif;
-    font-size: 3vw;
-    text-transform: uppercase;
-    color: var(--red);
-    z-index: 100;
-    padding: 0;
-    padding-top: 3vh;
-    margin: 0;
-    margin-bottom: 2vh;
-}
-
-.details-h5 {
-    font-family: 'Roboto Slab', serif;
-    font-size: 2.5vw;
-    text-transform: uppercase;
-    color: var(--grey-light);
-    z-index: 100;
-    padding: 0;
-    margin: 0;
-    padding-top: 0.5vh;
-    padding-bottom: 0.5vh;
 }
 
 .icon-repeating {
@@ -198,72 +91,20 @@
     z-index: 0;
     padding: 0;
     margin: 0;
-}
-
-.icon-route {
-    height: 15vh;
+    float: right;
 }
 
 .icon-request {
-    height: 4vh;
+    height: 6vw;
+    margin: auto 5vw auto 0;
+}
+
+.icon-request-end {
+    height: 6vw;
     margin: auto 0;
-}
-
-.box-route {
-    height: 15vh;
-    width: 80%;
-}
-
-.price {
-    width: 40%;
-}
-
-.seats {
-    width: 60%;
 }
 
 .request-data {
-    width: 50%;
-    margin-left: -10%;
+    width:75%;
 }
 
-.button-red-full {
-    margin: 1vh auto 0 auto;
-    width: 100%;
-    height: 5vh;
-    text-align: center;
-    color: #fff;
-    font-size: 2.5vh;
-    font-family: 'Roboto Slab', serif;
-    background-color: var(--red);
-    border-radius: 50px;
-}
-
-.edit-content {
-    font-family: 'Roboto Slab', serif;
-    font-weight: 400;
-    color: var(--grey-dark);
-}
-
-.repeating-label {
-    width: 65%;
-}
-
-.repeating-options {
-    width: 25%;
-    box-sizing: border-box;
-    margin: auto 0;
-    padding-left: 8%;
-}
-
-#check_icon, #x_icon {
-    height: 3vh;
-}
-
-#check_icon {
-    filter: brightness(0) invert(36%) sepia(27%) saturate(2113%) hue-rotate(327deg) brightness(93%) contrast(87%);
-}
-
-#x_icon {
-    filter: brightness(0) invert(47%) sepia(25%) saturate(0%) hue-rotate(155deg) brightness(87%) contrast(87%);
-}
