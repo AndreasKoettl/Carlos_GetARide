@@ -23,7 +23,7 @@
     margin: auto auto;
     text-align: center;
     font-size: 5vw;
-    z-index: 100;
+    z-index: 5;
     font-family: 'Roboto Slab', serif;
 }
 
@@ -106,5 +106,6 @@
 
 .request-data {
     width:75%;
+    margin-right: 5vw;
 }
 

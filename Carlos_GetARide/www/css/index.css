@@ -24,6 +24,7 @@
 
 body{
     font-family: "Roboto Slab", serif;
+    overflow: scroll;
 }
 
 .main-illustration {
