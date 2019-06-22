@@ -243,3 +243,14 @@ button:focus, button:active{
 .drive-detail-half-page {
     width: 50%;
 }
+
+.statusmessage{
+    font-size: 4vw;
+    color: var(--grey-dark);
+}
+
+.statusmessage2{
+    font-size: 5vw;
+    color: var(--grey-dark);
+    text-align: center;
+}

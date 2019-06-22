@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -10,26 +10,30 @@
     <title>Passwort vergessen</title>
 </head>
 <body>
-    <h1 id="h1">Passwort vergessen</h1>
     <div id="app">
-        <form v-if="!succeeded" v-on:submit="forgotPassword">
+        <header-back title="Passwort vergessen" @go-back="redirectToLogin()"></header-back>
+        <form v-if="!succeeded" v-on:submit="forgotPassword" id="forgotPwForm">
             <div>
-                <ul>
-                    <li v-for="error in errors">{{ error }}</li>
-                </ul>
+                <div>
+                        <p class="statusmessage" v-for="error in errors">{{ error }}</p>
+                </div>
+                <div>
+                    <label for="email">E-Mail:</label>
+                    <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required />
+                </div>
             </div>
-            <div>
-                <label for="email">Passwort:</label>
-                <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required />
+            <div id="theButtons">
+                <button type="submit" class="red-button" value="Passwort zurücksetzen">Passwort zurücksetzen</button>
             </div>
-            <input type="submit" class="red-button" value="Passwort zurücksetzen" />
-            <input type="button" class="red-button" v-on:click="redirectToLogin" value="Zurück zum Login" />
-        </form>
-        <div v-else>
-            <p>Es wurde Ihnen eine Email Zum zurücksenden Ihres Passworts zugesendet.</p>
-            <p>Bitte überprüfen Sie auch Ihren Spam Ordner.</p>
-        </div>
+        </form> 
+        <template v-else>
+            <div id="mailSent">
+                <img src="../../images/icons/check.svg" class="illustration-small" />
+                <p class="statusmessage2">Es wurde Ihnen eine Email Zum zurücksenden Ihres Passworts zugesendet. Bitte überprüfen Sie auch Ihren Spam Ordner.</p>
+            </div>
+        </template>
     </div>
+    <script src="../../scripts/components.js"></script>
     <script src="../../scripts/passwort_vergessen.js"></script>
 </body>
 </html>

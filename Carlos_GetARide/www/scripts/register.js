@@ -34,7 +34,7 @@ new Vue({
                 if (succeeded(data)) {
                     // User an die Login Seite weiterleiten.
                     //redirectUser("pages/login/login.html");
-
+                    vueObject.$el.querySelector('#backbutton').classList.add('hide');
                     vueObject.succeeded = true;
                 }
                 else {

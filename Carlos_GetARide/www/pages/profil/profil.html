@@ -9,56 +9,57 @@
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
     <script type="text/javascript" src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <script src="../../lib/vue/vue.min.js"></script>
+    <script type="text/javascript" src="../../scripts/index.js"></script>
     <title>Profil</title>
 </head>
 <body>
     <div id="profilec">
         <header-back title="Profil" :scrolling="isScrolling" @go-back="goBack()" @go-there="goToSettings()"></header-back>
         <template v-if="profile">
-        <div class="content-box-90">
-            <img class="main-illustration" id="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
-            <div class="data">
-                <h2 class="name">{{firstname}} {{lastname}}</h2>
-                <p class="mail">{{email}}</p>
-            </div>
+            <div class="content-box-90">
+                <img class="main-illustration" id="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
+                <div class="data">
+                    <h2 class="name">{{firstname}} {{lastname}}</h2>
+                    <p class="mail">{{email}}</p>
+                </div>
 
-            <div class="profile-options">
-                <a @click="goToEdit()"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
-                <a @click="changePw()"><p>Passwort ändern</p><img src="../../images/icons/key_red.svg" /></a>
-                <a @click="logout()"><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
+                <div class="profile-options">
+                    <a @click="goToEdit()"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
+                    <a @click="changePw()"><p>Passwort ändern</p><img src="../../images/icons/key_red.svg" /></a>
+                    <a @click="logout()"><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
+                </div>
+                <br />
+                <!--<a href="../../index.html" ><p>Back to home</p></a>-->
             </div>
-            <br />
-            <!--<a href="../../index.html" ><p>Back to home</p></a>-->
-        </div>
         </template>
 
         <template v-else>
-        <div class="content-box-90">
-            <div v-if="settings">
-                <img class="main-illustration" src="../../images/illustrationen/undraw_settings_ii2j.svg" alt="settings-picture" title="settings-picture" />
-                <div class="settings">
-                    <p>Benachrichtigungen</p>
-                    <div><img v-bind:class="{'red-filter':hasNotifications,  yes:settings}" @click="changeNotifications(1)" src="../../images/icons/hakerl_icon.svg" /><img v-bind:class="{'red-filter':!hasNotifications,  no:settings}" src="../../images/icons/x_icon_neu.svg" @click="changeNotifications(0)" /></div>
-                </div>
-                <button class="red-button"> Account löschen</button>
-            </div>
+            <div class="content-box-90">
+                <template v-if="settings">                  
+                        <img class="main-illustration" src="../../images/illustrationen/undraw_settings_ii2j.svg" alt="settings-picture" title="settings-picture" />
+                        <div class="settings">
+                            <p>Benachrichtigungen</p>
+                            <div><img v-bind:class="{'red-filter':hasNotifications,  yes:settings}" @click="changeNotifications(1)" src="../../images/icons/hakerl_icon.svg" /><img v-bind:class="{'red-filter':!hasNotifications,  no:settings}" src="../../images/icons/x_icon_neu.svg" @click="changeNotifications(0)" /></div>
+                        </div>
+                        <button class="red-button" @click="deleteAccount"> Account löschen</button>                
+                </template>
 
-            <div v-else>
-                <img class="edit-picture" src="../../images/illustrationen/profile_edit.svg" alt="edit-picture" title="edit-picture" />
-                <form method="post" id="edit-profile-form">
-                    <div class="textinput">
-                        <label for="username">Vorname</label>
-                        <input type="text" id="firstname" name="firstname" v-model="firstname">
-                    </div>
-                    <div class="textinput">
-                        <label for="strasse">Nachname</label>
-                        <input type="text" id="lastname" name="lastname" v-model="lastname">
-                    </div>
-                    <button class="red-button" @click="saveNewData">Speichern</button>
-                </form>
-                
+                <template v-else>
+                    <img class="edit-picture" src="../../images/illustrationen/profile_edit.svg" alt="edit-picture" title="edit-picture" />
+                    <form method="post" id="edit-profile-form">
+                        <div class="textinput">
+                            <label for="username">Vorname</label>
+                            <input type="text" id="firstname" name="firstname" v-model="firstname">
+                        </div>
+                        <div class="textinput">
+                            <label for="strasse">Nachname</label>
+                            <input type="text" id="lastname" name="lastname" v-model="lastname">
+                        </div>
+                        <button class="red-button" @click="saveNewData">Speichern</button>
+                    </form>
+
+                </template>
             </div>
-        </div>
         </template>
         <nav-bar></nav-bar>
     </div>
@@ -66,7 +67,7 @@
     <script src="../../scripts/components.js"></script>
     <script type="text/javascript" src="../../scripts/profile.js"></script>
     <script type="text/javascript" src="../../scripts/platformOverrides.js"></script>
-    <script type="text/javascript" src="../../scripts/index.js"></script>
+
 
 </body>
 </html>

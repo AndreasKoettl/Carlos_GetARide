@@ -269,8 +269,10 @@ input:focus {
 }
 
 .illustration-small {
-    width:100%;
-    height:auto;
+    width: 20vw;
+    height: auto;
+    margin: 4vw auto;
+    display: block;
 }
 
 .main-option {    

@@ -53,6 +53,9 @@ new Vue({
         },
         redirectToRegister: function() {
             redirectUser("pages/login/register.html");
+        },
+        redirectForgotPw: function () {
+            redirectUser("pages/login/passwort_vergessen.html")
         }
     },
     mounted: function () {

@@ -39,7 +39,7 @@ new Vue({
                 if (succeeded(data)) {
                     // User ausloggen.
                     logoutUser();
-
+                    vueObject.$el.querySelector('#backbutton').classList.add('hide');
                     vueObject.succeeded = true;
                 }
                 else {

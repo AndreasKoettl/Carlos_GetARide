@@ -135,6 +135,14 @@ new Vue({
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
+        },
+
+        changePw: function () {
+            redirectUser("pages/login/passwort_aendern.html");
+        },
+
+        deleteAccount: function () {
+            redirectUser("pages/profil/entfernen.html")
         }
     },
 
@@ -143,6 +151,7 @@ new Vue({
     },
 
     mounted: function () {
+        redirectNotAuthUser("pages/login/login.html");
         this.$el.querySelector('#settings-icon').classList.remove('hide');
         this.$el.querySelector('#backbutton').classList.add('hide');
 
