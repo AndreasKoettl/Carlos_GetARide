@@ -2,6 +2,11 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://* data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src * 'unsafe-inline';  media-src *; font-src *">
+   
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <title></title>
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
     <script type="text/javascript" src="../../lib/jquery/jquery-3.3.1.min.js"></script>
@@ -16,19 +21,18 @@
         <transition :name="slide">
             <!-- ROUTE -->
             <template v-if="process[index] == 'route'">
+
                 <div id="route" class="process-page content-box-90">
-                    <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
-                    <div class="form-wrapper">
+                    <div id="inputForm">
+                        <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
                         <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
                         <form id="routeForm">
                             <place-input id="start" clearid="clear-start"
-                                         placeholder="Start" :loadvalue="driveData['start']"
-                                         @searchbox-enter="searchBoxEnter()"
+                                         placeholder="Start" :loadvalue="driveData['start']"                                         
                                          @searchbox-leave="searchBoxLeave('pick')"></place-input>
                             <place-input id="destination" clearid="clear-destination"
-                                         placeholder="Ziel" :loadvalue="driveData['destination']"
-                                         @searchbox-enter="searchBoxEnter()"
-                                         @searchbox-leave="searchBoxLeave('pick')"></place-input>                            
+                                         placeholder="Ziel" :loadvalue="driveData['destination']"                                         
+                                         @searchbox-leave="searchBoxLeave('pick')"></place-input>
                             <ul id="suggestions" class="displayNone"></ul>
                             <button type="button" class="red-button disabled" id="submitRoute" v-on:click="complete ? submitData(['start', 'destination']) : false">Weiter</button>
                         </form>
@@ -42,7 +46,7 @@
             <template v-if="process[index] == 'repeating'">
                 <div id="repeating" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
-                    <div class="form-wrapper lift-form">
+                    <div class="lift-form">
                         <h1 class="fahrt-erstellen-heading">Fährst du regelmäßig?</h1>
                         <p>zum Beispiel wöchentlich am selben Tag und circa zur selben Zeit</p>
                         <form id="repeatingForm">
