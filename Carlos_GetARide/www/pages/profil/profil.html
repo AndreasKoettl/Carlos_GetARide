@@ -52,11 +52,12 @@
 
             <div v-else>
                 <form method="post" id="edit-profile-form">
-                    <div>
-                        <label for="profile-picture-upload">
-                            <img class="edit-picture" v-bind:src="profilePicture" alt="edit-picture" title="edit-picture"/>
-                        </label>
-                        <input class="fileinput" type="file" id="profile-picture-upload" name="profile-picture-upload">
+                    <div id="profile-picture-form" class="main-illustration">
+                        <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture"/>
+                            <label for="profile-picture-upload">
+                                <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_edit_icon.svg" alt="edit-profile-picture" title="edit-profile-picture"/>
+                            </label>
+                            <input class="fileinput" type="file" id="profile-picture-upload" name="profile-picture-upload">
                     </div>
                     <div class="textinput">
                         <label for="username">Vorname</label>
