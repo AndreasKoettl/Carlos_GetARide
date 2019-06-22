@@ -11,6 +11,8 @@ new Vue({
         firstname: "",
         lastname: "",
         email: "",
+        defaultProfilePicture: "../../images/illustrationen/profile_default.svg",
+        profilePicture: "",
         isScrolling: false
     },
 
@@ -36,6 +38,12 @@ new Vue({
                         appAccess.lastname = data["data"][0]["lastname"];
                         appAccess.email = data["data"][0]["email"];
                         appAccess.hasNotifications = (data["data"][0]["notifications"] == 0) ? false : true;
+
+                        if (data["data"][0]["profileImageUrl"] != null) {
+                            appAccess.profilePicture = data["data"][0]["profileImageUrl"];
+                        } else {
+                            appAccess.profilePicture = appAccess.defaultProfilePicture;
+                        }
                        
                     }
                 },
@@ -48,7 +56,7 @@ new Vue({
         saveNewData: function () {
             event.preventDefault();
             let iduser = JSON.parse(localStorage.getItem("carlosUser"))["idusers"];
-            let formData = new FormData($("#edit-profile-form")[0]);
+            let formData = new FormData($("edit-profile-form")[0]);
             var appAccess = this;
             console.log(this.lastname);
             console.log(iduser);

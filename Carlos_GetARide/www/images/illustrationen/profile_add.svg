@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="_x34_57bf273-24a3-4fd8-a857-e9b918267d6a"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 698 698"
 	 style="enable-background:new 0 0 698 698;" xml:space="preserve">
@@ -17,7 +17,7 @@
 <title>profile pic</title>
 <g class="st0">
 	
-		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="349" y1="842" x2="349" y2="144" gradientTransform="matrix(1 0 0 1 0 -144)">
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="349" y1="-144" x2="349" y2="554" gradientTransform="matrix(1 0 0 -1 0 554)">
 		<stop  offset="0" style="stop-color:#808080;stop-opacity:0.25"/>
 		<stop  offset="0.54" style="stop-color:#808080;stop-opacity:0.12"/>
 		<stop  offset="1" style="stop-color:#808080;stop-opacity:0.1"/>
@@ -44,11 +44,11 @@
 <circle class="st7" cx="593.9" cy="61.8" r="56.9"/>
 <g>
 	<g>
-		<path class="st8" d="M617.3,66.6h-44.2c-1.8,0-3.2-1.4-3.2-3.2c0-1.8,1.4-3.2,3.2-3.2h44.2c1.8,0,3.2,1.4,3.2,3.2
+		<path class="st8" d="M617.3,66.6h-44.2c-1.8,0-3.2-1.4-3.2-3.2s1.4-3.2,3.2-3.2h44.2c1.8,0,3.2,1.4,3.2,3.2
 			C620.5,65.1,619.1,66.6,617.3,66.6z"/>
 	</g>
 	<g>
-		<path class="st8" d="M595.2,88.7c-1.8,0-3.2-1.4-3.2-3.2V41.3c0-1.8,1.4-3.2,3.2-3.2c1.8,0,3.2,1.4,3.2,3.2v44.2
+		<path class="st8" d="M595.2,88.7c-1.8,0-3.2-1.4-3.2-3.2V41.3c0-1.8,1.4-3.2,3.2-3.2s3.2,1.4,3.2,3.2v44.2
 			C598.4,87.2,597,88.7,595.2,88.7z"/>
 	</g>
 </g>

@@ -16,7 +16,15 @@
         <header-back title="Profil" :scrolling="isScrolling" @go-back="goBack()" @go-there="goToSettings()"></header-back>
         <template v-if="profile">
         <div class="content-box-90">
-            <img class="main-illustration" id="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
+            <div id="profile-picture-form" class="main-illustration">
+                <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture"/>
+                <form method="post" v-if="profilePicture === defaultProfilePicture">
+                    <label for="profile-picture-upload">
+                        <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_add_icon.svg" alt="add-profile-picture" title="add-profile-picture"/>
+                    </label>
+                    <input class="fileinput" type="file" id="profile-picture-upload" name="profile-picture-upload">
+                </form>
+            </div>
             <div class="data">
                 <h2 class="name">{{firstname}} {{lastname}}</h2>
                 <p class="mail">{{email}}</p>
@@ -43,8 +51,13 @@
             </div>
 
             <div v-else>
-                <img class="edit-picture" src="../../images/illustrationen/profile_edit.svg" alt="edit-picture" title="edit-picture" />
                 <form method="post" id="edit-profile-form">
+                    <div>
+                        <label for="profile-picture-upload">
+                            <img class="edit-picture" v-bind:src="profilePicture" alt="edit-picture" title="edit-picture"/>
+                        </label>
+                        <input class="fileinput" type="file" id="profile-picture-upload" name="profile-picture-upload">
+                    </div>
                     <div class="textinput">
                         <label for="username">Vorname</label>
                         <input type="text" id="firstname" name="firstname" v-model="firstname">
