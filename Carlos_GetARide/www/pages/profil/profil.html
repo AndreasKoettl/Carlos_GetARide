@@ -13,9 +13,9 @@
 </head>
 <body>
     <div id="profilec">
-        <header-back title="Profil" @go-back="goBack()" @go-there="goToSettings()"></header-back>
+        <header-back title="Profil" :scrolling="isScrolling" @go-back="goBack()" @go-there="goToSettings()"></header-back>
         <template v-if="profile">
-        <div>
+        <div class="content-box-90">
             <img class="main-illustration" id="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
             <div class="data">
                 <h2 class="name">{{firstname}} {{lastname}}</h2>

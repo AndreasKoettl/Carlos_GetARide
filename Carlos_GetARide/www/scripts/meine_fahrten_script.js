@@ -18,7 +18,8 @@ carlos_meineFahrten.app = new Vue({
         isCoDriverDetails: false,
         indexUpcomingRide: -1,
         indexPastRide: -1,
-        date: new Date()
+        date: new Date(),
+        isScrolling: false
     },
 
     methods: {
@@ -893,5 +894,16 @@ carlos_meineFahrten.app = new Vue({
 
     mounted: function () {
         this.loadDriversRides();
+
+        // activate scrolling shadow
+        let self = this;
+        let scrollPosition = 0;
+        document.addEventListener("scroll", function () {
+            self.isScrolling = true;
+            scrollPosition = window.scrollY;
+            if (scrollPosition === 0) {
+                self.isScrolling = false;
+            }
+        });
     }
 });

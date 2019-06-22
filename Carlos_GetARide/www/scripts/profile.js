@@ -10,7 +10,8 @@ new Vue({
         hasNotifications: true,
         firstname: "",
         lastname: "",
-        email: ""
+        email: "",
+        isScrolling: false
     },
 
     methods: {
@@ -146,6 +147,18 @@ new Vue({
     mounted: function () {
         this.$el.querySelector('#settings-icon').classList.remove('hide');
         this.$el.querySelector('#backbutton').classList.add('hide');
+
+
+        // activate scrolling shadow
+        let self = this;
+        let scrollPosition = 0;
+        document.addEventListener("scroll", function () {
+            self.isScrolling = true;
+            scrollPosition = window.scrollY;
+            if (scrollPosition === 0) {
+                self.isScrolling = false;
+            }
+        });
     }
 
 });

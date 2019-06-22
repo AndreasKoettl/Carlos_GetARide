@@ -21,9 +21,9 @@
 <body id="search-content">
 
     <div id="app">
-        <header-back title="Fahrt suchen" @go-back="goBack()"></header-back>
+        <header-back title="Fahrt suchen" :scrolling="isScrolling" @go-back="goBack()"></header-back>
         <template v-if="inputForm">
-            <div id="inputForm">
+            <div id="inputForm content-box-90">
                 <img class="main-illustration" src="../../images/illustrationen/fahrt-suchen.png" />
                 <h1 id="search-title">Finde eine passende Fahrt!</h1>
                 <form action="" id="search-form" method="get">
@@ -55,7 +55,8 @@
                             <img src="../../images/icons/Verbindung.svg" class="icon-route" />
                             <div class="col box-route">
                                 ox
-                                >
+                                >
+
                                 <!--<p id="start">{{ start }}</p>
                                 <p id="end">{{ end }}</p>-->
                                 <p class="drive-details-h2">{{ start }}</p>

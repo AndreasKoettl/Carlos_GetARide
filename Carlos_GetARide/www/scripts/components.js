@@ -47,18 +47,18 @@ Vue.component('nav-bar', {
 });
 
 Vue.component('header-title', {
-    props: ['title'],
+    props: ['title', 'scrolling'],
     template: `
-    <header>
+    <header v-bind:class="{'header-scroll-shadow': scrolling}">
        <h1 class="mainHeading">{{title}}</h1>
     </header>
 `
 });
 
 Vue.component('header-back', {
-    props: ['title'],
+    props: ['title', 'scrolling'],
     template: `
-    <header>
+    <header v-bind:class="{'header-scroll-shadow': scrolling}">
         <a id="backbutton" @click="$emit('go-back', $event.target.value)"><img src="/carlos/Carlos_GetARide/www/images/icons/back.svg" class="header_icon"></a>
         <div><h1>{{title}}</h1></div>
         <a @click="$emit('go-there', $event.target.value)"><img src="/carlos/Carlos_GetARide/www/images/icons/settings.svg" id="settings-icon" class="header_icon hide"></a>
@@ -68,9 +68,9 @@ Vue.component('header-back', {
 
 // Header with the process bar for "fahrt-erstellen"
 Vue.component('header-fahrt-erstellen', {
-    props: ['title'],
+    props: ['title', 'scrolling'],
     template: `
-    <header id="processHeader">
+    <header id="processHeader" v-bind:class="{'header-scroll-shadow': scrolling}">
     <a @click="$emit('go-back', $event.target.value)" id="backbutton"><img src="/carlos/Carlos_GetARide/www/images/icons/back.svg"/></a>
     <div>
         <h3>{{title}}</h3>

@@ -15,7 +15,8 @@ mtd280.app = new Vue({
         date: "",
         time: "",
         fullname: "",
-        disable: false
+        disable: false,
+        isScrolling: false
     },
 
     methods: {
@@ -211,6 +212,17 @@ mtd280.app = new Vue({
     },
 
     mounted: function () {
-        this.$el.querySelector('#backbutton').classList.add('hide'); 
+        this.$el.querySelector('#backbutton').classList.add('hide');
+
+        // activate scrolling shadow
+        let self = this;
+        let scrollPosition = 0;
+        document.addEventListener("scroll", function () {
+            self.isScrolling = true;
+            scrollPosition = window.scrollY;
+            if (scrollPosition === 0) {
+                self.isScrolling = false;
+            }
+        });
     }
 });

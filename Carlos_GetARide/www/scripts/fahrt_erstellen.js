@@ -18,7 +18,8 @@ carlos.app = new Vue({
         carDetailsValue: "",
         priceValue: "",
         slide: "slide",
-        complete: false
+        complete: false,
+        isScrolling: false
     },
     methods: {
         // This method is called when a user clicks the back-button        
@@ -213,6 +214,17 @@ carlos.app = new Vue({
         let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
         this.driveData["iduser"] = iduser;
         this.init();
+
+        // activate scrolling shadow
+        let self = this;
+        let scrollPosition = 0;
+        document.addEventListener("scroll", function () {
+            self.isScrolling = true;
+            scrollPosition = window.scrollY;
+            if (scrollPosition === 0) {
+                self.isScrolling = false;
+            }
+        });
     },
     updated: function () {
         this.init();
