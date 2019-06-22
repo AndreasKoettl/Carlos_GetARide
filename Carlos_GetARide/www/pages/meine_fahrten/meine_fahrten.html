@@ -11,7 +11,7 @@
     <div id="app">
         <template v-if="!isDriverDetails && !isCoDriverDetails">
             <div>
-            <header-title title="Meine Fahrten"></header-title>
+            <header-title :scrolling="isScrolling" title="Meine Fahrten"></header-title>
             <section class="content-box-90">
 
         <img src="../../images/illustrationen/meineFahrten_forWhiteGB.svg" class="main-illustration">
@@ -55,7 +55,7 @@
 
         <template v-if="isDriverDetails">
             <div>
-            <header-back title="Details" @go-back="goBack('isDriverDetails')"></header-back>
+            <header-back title="Details" :scrolling="isScrolling" @go-back="goBack('isDriverDetails')"></header-back>
             <section class="content-box-90">
 
                 <div class="row-h1">
@@ -153,7 +153,7 @@
 
         <template v-if="isCoDriverDetails">
             <div>
-            <header-back title="Details" @go-back="goBack('isCoDriverDetails')"></header-back>
+            <header-back title="Details" :scrolling="isScrolling" @go-back="goBack('isCoDriverDetails')"></header-back>
 
             <section class="content-box-90">
 

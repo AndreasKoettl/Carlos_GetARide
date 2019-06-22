@@ -22,7 +22,7 @@
 
 body{
     font-family: "Roboto Slab", serif;
-    overflow: scroll;
+    overflow: scroll !important;
     color: var(--grey-dark);
 }
 
@@ -42,7 +42,7 @@ a {
     box-sizing: border-box;
     margin: 0 auto;
     padding: 0;
-    padding-bottom: 10vw;
+    padding-bottom: 20vw !important;
 }
 
 h1 {
@@ -170,7 +170,7 @@ button:focus, button:active{
     font-size: 6vw;
     color: var(--grey-dark);
     font-weight: 700;
-    z-index: 400;
+    z-index: 60;
     padding: 0;
     margin: 0;
     text-align: left;
@@ -181,7 +181,7 @@ button:focus, button:active{
     font-size: 4vw;
     color: var(--grey-dark);
     font-weight: 900;
-    z-index: 100;
+    z-index: 50;
     padding: 0;
     margin: 0;
     text-align: left;
@@ -191,7 +191,7 @@ button:focus, button:active{
     font-family: 'Roboto Slab', serif;
     font-size: 3.5vw;
     color: var(--grey-light);
-    z-index: 100;
+    z-index: 50;
     padding: 0;
     margin: 0;
     margin-top: 1px;
@@ -204,7 +204,7 @@ button:focus, button:active{
     font-size: 3vw;
     text-transform: uppercase;
     color: var(--grey-light);
-    z-index: 100;
+    z-index: 50;
     padding: 0;
     margin: 0;
     padding-top: 1vw;
@@ -217,7 +217,7 @@ button:focus, button:active{
     font-size: 3.5vw;
     text-transform: uppercase;
     color: var(--red);
-    z-index: 100;
+    z-index: 50;
     padding: 0;
     margin: 0;
     margin-bottom: 4vw;

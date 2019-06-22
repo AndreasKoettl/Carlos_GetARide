@@ -12,11 +12,11 @@
 </head>
 <body>
     <div id="app">
-        <header-fahrt-erstellen title="Fahrt erstellen" @go-back="goBack()"></header-fahrt-erstellen>
+        <header-fahrt-erstellen title="Fahrt erstellen" :scrolling="isScrolling" @go-back="goBack()"></header-fahrt-erstellen>
         <transition :name="slide">
             <!-- ROUTE -->
             <template v-if="process[index] == 'route'">
-                <div id="route" class="process-page">
+                <div id="route" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
                     <div class="form-wrapper">
                         <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
@@ -40,7 +40,7 @@
         <transition :name="slide">
             <!-- REPEATING -->
             <template v-if="process[index] == 'repeating'">
-                <div id="repeating" class="process-page">
+                <div id="repeating" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
                     <div class="form-wrapper lift-form">
                         <h1 class="fahrt-erstellen-heading">Fährst du regelmäßig?</h1>
@@ -60,7 +60,7 @@
         <!-- DATETIME -->
         <transition :name="slide">
             <template v-if="process[index] == 'dateTime'">
-                <div id="dateTime" class="process-page">
+                <div id="dateTime" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_zeit.jpg" class="illustration-big" />
                     <h1 class="fahrt-erstellen-heading">Wann fährst du?</h1>
                     <div class="form-wrapper" v-if="!driveData['repeating']">
@@ -90,7 +90,7 @@
         <transition :name="slide">
             <!-- PASSENGERS -->
             <template v-if="process[index] == 'passengers'">
-                <div id="passengers" class="process-page">
+                <div id="passengers" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_personen.jpg" class="illustration-big" />
                     <div class="form-wrapper">
                         <h1 class="fahrt-erstellen-heading">Wieviele Personen kannst du mitnehmen?</h1>
@@ -106,7 +106,7 @@
         <transition :name="slide">
             <!-- DETAILS -->
             <template v-if="process[index] == 'details'">
-                <div id="details" class="process-page">
+                <div id="details" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
                     <form id="detailsForm" class="lift-form">
                         <h1 class="fahrt-erstellen-heading">Wie sieht dein Auto aus? (optional)</h1>
@@ -121,7 +121,7 @@
         <transition :name="slide">
             <!-- PRICE -->
             <template v-if="process[index] == 'price'">
-                <div id="price" class="process-page">
+                <div id="price" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_preis.jpg" class="illustration-big" />
                     <div class="priceForm">
                         <h1 class="fahrt-erstellen-heading">Wieviel soll die Fahrt kosten?</h1>
