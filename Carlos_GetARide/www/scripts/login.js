@@ -55,7 +55,8 @@ new Vue({
             redirectUser("pages/login/register.html");
         }
     },
-    mounted: function() {
+    mounted: function () {
+        this.$el.querySelector('#backbutton').classList.add('hide');
         redirectAuthUser("index.html");
     }
 

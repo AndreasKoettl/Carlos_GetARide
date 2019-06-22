@@ -259,11 +259,13 @@ input:focus {
     margin:0;
 }
 
-.illustration-small-container{
-    width:45vw;
-    height:100%;
+.illustration-small-container {
+    width: 45vw;
+    height: 100%;
     margin-right: 3vw;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .illustration-small {

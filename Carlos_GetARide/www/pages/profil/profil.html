@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src *; media-src *; font-src *">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://* data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src * 'unsafe-inline';  media-src *; font-src *">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
@@ -24,6 +24,7 @@
 
             <div class="profile-options">
                 <a @click="goToEdit()"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
+                <a @click="changePw()"><p>Passwort ändern</p><img src="../../images/icons/key_red.svg" /></a>
                 <a @click="logout()"><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
             </div>
             <br />
@@ -52,10 +53,6 @@
                     <div class="textinput">
                         <label for="strasse">Nachname</label>
                         <input type="text" id="lastname" name="lastname" v-model="lastname">
-                    </div>
-                    <div class="textinput">
-                        <label for="email">E-Mail</label>
-                        <input type="email" id="email" name="email" v-model="email">
                     </div>
                     <button class="red-button" @click="saveNewData">Speichern</button>
                 </form>

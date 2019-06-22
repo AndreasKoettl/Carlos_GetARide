@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -10,8 +10,8 @@
     <title>Passwort ändern</title>
 </head>
 <body>
-    <h1 id="h1">Passwort ändern</h1>
     <div id="app">
+        <header-back title="Passwort ändern" :scrolling="isScrolling" @go-back="redirectToProfile()"></header-back>
         <form v-if="!succeeded" v-on:submit="changePassword">
             <div>
                 <ul>
@@ -19,18 +19,18 @@
                 </ul>
             </div>
             <div>
-                <label for="password-old">Passwort:</label>
-                <input type="password" name="password-old" id="password-old" v-model="formData.passwordOld" placeholder="Altes Passwort" required />
+                <label for="password-old">Altes Passwort:</label>
+                <input type="password" name="password-old" id="password-old" v-model="formData.passwordOld" required />
             </div>
             <div>
-                <label for="password">Passwort:</label>
-                <input type="password" name="password" id="password" v-model="formData.password" placeholder="Neues Passwort" required />
+                <label for="password">Neues Passwort:</label>
+                <input type="password" name="password" id="password" v-model="formData.password" required />
             </div>
             <div>
-                <label for="password-repeat">Passwort:</label>
-                <input type="password" name="password-repeat" id="password-repeat" v-model="formData.passwordRepeat" placeholder="Neues Passwort wiederholen" required />
+                <label for="password-repeat">Passwort wiederholen:</label>
+                <input type="password" name="password-repeat" id="password-repeat" v-model="formData.passwordRepeat" required />
             </div>
-            <input type="submit" class="red-button" value="Passwort ändern"/>
+            <input type="submit" class="green-button" value="Passwort ändern" />
             <input type="button" class="red-button" v-on:click="redirectToHome" value="Abbrechen" />
         </form>
         <div v-else>
@@ -38,6 +38,9 @@
             <input type="button" class="red-button" v-on:click="redirectToLogin" value="Weiter zum Login" />
         </div>
     </div>
+    <nav-bar></nav-bar>
+    <script src="../../scripts/components.js"></script>
     <script src="../../scripts/passwort_aendern.js"></script>
+
 </body>
 </html>

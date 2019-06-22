@@ -9,27 +9,31 @@
     <title>Login</title>
 </head>
 <body>
-    <h1 id="h1">Login</h1>
     <div id="app">
-        <form v-on:submit="loginUser">
-            <div>
-                <ul>
-                    <li v-for="error in errors">{{ error }}</li>
-                </ul>
+        <header-back title="Login"></header-back>
+        <form v-on:submit="loginUser" id="loginForm">
+            <div id="userInput">
+                <div>
+                    <ul>
+                        <li v-for="error in errors">{{ error }}</li>
+                    </ul>
+                </div>
+                <div>
+                    <label for="email">E-Mail:</label>
+                    <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required />
+                </div>
+                <div>
+                    <label for="password">Passwort:</label>
+                    <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required />
+                </div>
             </div>
-            <div>
-                <label for="email">E-Mail:</label>
-                <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required/>
+            <div id="theButtons">
+                <input type="submit" class="green-button" value="Login" />
+                <input type="button" class="red-button" v-on:click='redirectToRegister' value="Registrieren" />
             </div>
-            <div>
-                <label for="password">Passwort:</label>
-                <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required/>
-            </div>
-            <input type="submit" class="green-button" value="Log-In" />
-            <input type="button" class="red-button" v-on:click='redirectToRegister' value="Registrieren" />
         </form>
     </div>
-
+    <script src="../../scripts/components.js"></script>
     <script src="../../scripts/login.js"></script>
 </body>
 </html>

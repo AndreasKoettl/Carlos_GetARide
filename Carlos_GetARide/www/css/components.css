@@ -109,6 +109,7 @@ header a img {
 
 /* SEARCHBOX - place-input component */
 #suggestions {
+    font-weight:600;
     width: 86vw;
     margin: auto;
     padding: 0;

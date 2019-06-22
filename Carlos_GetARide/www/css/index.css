@@ -1,4 +1,5 @@
 @import url('profile.css');
+@import url('login.css');
 @import url('suchen.css');
 @import url('meine_fahrten.css');
 @import url(fahrt_erstellen.css);
@@ -47,7 +48,7 @@ a {
 
 h1 {
     font-family: Roboto Slab, serif;
-    font-size: 3vh;
+    font-size: 6vw;
     font-weight: normal;
     color: var(--red);
     margin: 0 auto;
@@ -57,7 +58,7 @@ h1 {
 
 label {
     display: block;
-    margin: 3vh 1vw 1vh 1vw;
+    margin: 6vw 1vw 2vw 1vw;
     color: var(--grey-light);
     font-size: 5vw;
     font-weight: 400;
@@ -68,11 +69,12 @@ input {
     border-radius: 50px;
     font-size: 4vw;
     font-family: Montserrat, sans-serif;
+    font-weight: 600;
     color: var(--grey-dark);
     padding: 2.6vw 5vw;
     box-sizing: border-box;
     width: 100%;
-    background-color: #FFF;
+    background: none;
 }
 
 input:active, input:focus {
@@ -92,9 +94,9 @@ form {
     width: 100%;
     display: block;
     margin: 4vw 0;
-    font-size: 4vw;
-    padding: 2.1vw 5vw;
-    font-family: Montserrat, sans-serif;
+    font-size: 5vw;
+    padding: 1.6vw 5vw;
+    font-family: Roboto Slab, serif;
     color: #fff;
     background-color: var(--red);
     border-radius: 50px;
@@ -105,9 +107,9 @@ form {
     width: 100%;
     display: block;
     margin: 4vw 0;
-    font-size: 4vw;
-    padding: 2.1vw 5vw;
-    font-family: Montserrat, sans-serif;
+    font-size: 5vw;
+    padding: 1.6vw 5vw;
+    font-family: Roboto Slab, serif;
     color: #fff;
     background-color: var(--green);
     border-radius: 50px;

@@ -19,10 +19,6 @@ color: var(--grey-dark);
     margin: 0 auto;
 }
 
-#inputForm {
-   padding: 2vw;
-}
-
 .date-time{
     margin: 2vh 0 0 0;  
 }

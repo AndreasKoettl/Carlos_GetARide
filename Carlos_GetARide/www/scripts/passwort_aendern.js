@@ -15,7 +15,8 @@ new Vue({
             passwordOld: "",
             password: "",
             passwordRepeat: ""
-        }
+        },
+        isScrolling: false
     },
     methods: {
         changePassword: function() {
@@ -66,9 +67,23 @@ new Vue({
         },
         redirectToLogin: function() {
             redirectUser("pages/login/login.html");
+        },
+        redirectToProfile: function () {
+            redirectUser("pages/profil/profil.html")
         }
     },
     mounted: function() {
         redirectNotAuthUser("pages/login/login.html");
+
+        // activate scrolling shadow
+        let self = this;
+        let scrollPosition = 0;
+        document.addEventListener("scroll", function () {
+            self.isScrolling = true;
+            scrollPosition = window.scrollY;
+            if (scrollPosition === 0) {
+                self.isScrolling = false;
+            }
+        });
     }
 });

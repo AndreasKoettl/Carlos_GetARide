@@ -50,8 +50,6 @@ new Vue({
             let iduser = JSON.parse(localStorage.getItem("carlosUser"))["idusers"];
             let formData = new FormData($("#edit-profile-form")[0]);
             var appAccess = this;
-            console.log(this.lastname);
-            console.log(iduser);
             
             $.post({
                 accepts: "application/json",
@@ -59,7 +57,7 @@ new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/profil.php?/saveUserData/" + iduser + "/" + this.firstname + "/" + this.lastname + "/" + this.email,
+                url: "../../php/profil.php?/saveUserData/" + iduser + "/" + this.firstname + "/" + this.lastname,
                 data: formData,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
