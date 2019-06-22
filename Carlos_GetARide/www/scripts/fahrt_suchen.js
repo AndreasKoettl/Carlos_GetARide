@@ -21,11 +21,11 @@ mtd280.app = new Vue({
 
     methods: {
         submitSearch: function () {
-            let tmp = this.$el.querySelector('#locationStart').value;
+            let tmp = this.$el.querySelector('#start').value;
             if (tmp !== "") {
                 this.start = this.toUcFirst(tmp);
             }
-            tmp = this.$el.querySelector('#locationEnd').value;
+            tmp = this.$el.querySelector('#end').value;
             if (tmp !== "") {
                 this.end = this.toUcFirst(tmp);
             }
@@ -44,8 +44,8 @@ mtd280.app = new Vue({
                 }
             }        
 
-            let locationStart = this.$el.querySelector('#locationStart').value || null;
-            let locationEnd = this.$el.querySelector('#locationEnd').value || null;
+            let locationStart = this.$el.querySelector('#start').value || null;
+            let locationEnd = this.$el.querySelector('#end').value || null;
             let dateDrive = this.$el.querySelector('#dateDrive').value || null;
             let timeDrive = this.$el.querySelector('#timeDrive').value || null;
             var appAccess = this;
