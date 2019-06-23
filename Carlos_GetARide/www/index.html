@@ -19,48 +19,48 @@
 
     <title>CarlosGetARide</title>
 </head>
-    <body>
-        <div id="app">
-            <div id="start-screen">
-                <div id="welcome-header">
-                    <img src="images/logo/logo_small.png" />
-                    <div id="welcome-text">
-                        <h2>Willkommen!</h2>
-                        <p>Wonach suchst du?</p>
-                    </div>
+<body>
+    <div id="app">
+        <div id="start-screen">
+            <div id="welcome-header">
+                <img src="images/logo/logo_small.png" />
+                <div id="welcome-text">
+                    <h2>Willkommen!</h2>
+                    <p>Wonach suchst du?</p>
                 </div>
-
-                <div @click="loadFahrtSuchen">
-                    <div class="main-option">
-                        <div id="main-option-text-container">
-                            <img src="images/icons/magnifying-glass.svg" class="icon" />
-                            <h3>Fahrt<br />suchen</h3>
-                        </div>
-                        <div class="illustration-small-container">
-                            <img src="images/illustrationen/fahrt-suchen.png" class="illustration-small" />
-                        </div>
-                        </div>
-                </div>
-
-                <a href="pages/fahrt_erstellen/fahrt_erstellen.html">
-                    <div class="main-option">
-                        <div id="main-option-text-container">
-                            <img src="images/icons/plus-button.svg" class="icon" />
-                            <h3>Fahrt<br />anbieten</h3>
-                        </div>
-                        <div class="illustration-small-container">
-                            <img src="images/illustrationen/fahrt-anbieten.png" class="illustration-small" />
-                        </div>
-                    </div>
-                </a>
             </div>
-            <nav-bar></nav-bar>
-        </div>       
 
-        <script type="text/javascript" src="scripts/components.js"></script>
-        <script type="text/javascript" src="scripts/mainPage.js"></script>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+            <div @click="loadFahrtSuchen">
+                <div class="main-option">
+                    <div id="main-option-text-container">
+                        <img src="images/icons/magnifying-glass.svg" class="icon" />
+                        <h3>Fahrt<br />suchen</h3>
+                    </div>
+                    <div class="illustration-small-container">
+                        <img src="images/illustrationen/fahrt-suchen.png" class="illustration-small" />
+                    </div>
+                </div>
+            </div>
 
-    </body>
+            <div @click="loadFahrtErstellen">
+                <div class="main-option">
+                    <div id="main-option-text-container">
+                        <img src="images/icons/plus-button.svg" class="icon" />
+                        <h3>Fahrt<br />anbieten</h3>
+                    </div>
+                    <div class="illustration-small-container">
+                        <img src="images/illustrationen/fahrt-anbieten.png" class="illustration-small" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav-bar></nav-bar>
+    </div>
+
+    <script type="text/javascript" src="scripts/components.js"></script>
+    <script type="text/javascript" src="scripts/mainPage.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+
+</body>
 </html>
