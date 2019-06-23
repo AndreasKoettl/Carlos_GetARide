@@ -50,7 +50,7 @@ Vue.component('header-title', {
     props: ['title', 'scrolling'],
     template: `
     <header v-bind:class="{'header-scroll-shadow': scrolling}">
-       <h1 class="mainHeading">{{title}}</h1>
+       <h1>{{title}}</h1>
     </header>
 `
 });

@@ -44,6 +44,28 @@
     margin: 0 auto 10vw auto;
 }
 
+#profile-picture, #add-edit-profile-picture {
+    position: absolute;
+}
+
+#profile-picture {
+    border-radius:50% 50% 50% 50%;
+    width: 60vw;
+    height: 60vw;
+    object-fit: cover;
+}
+
+#add-edit-profile-picture {
+    width: 12vw;
+    right: 10px;
+}
+
+#profile-picture-form {
+    height: 60vw;
+    margin-top: 10vw;
+    margin-bottom: 10vw;
+}
+
 .profile-options {
     width: 90vw;
     margin: 15% auto 0 auto;

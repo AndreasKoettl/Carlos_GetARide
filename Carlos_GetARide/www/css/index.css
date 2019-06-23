@@ -90,6 +90,10 @@ form {
     margin: 4vw 0 0 0;
 }
 
+.fileinput {
+    display: none;
+}
+
 .red-button { 
     width: 100%;
     display: block;

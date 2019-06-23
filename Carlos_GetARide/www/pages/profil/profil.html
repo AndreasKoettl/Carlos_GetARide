@@ -16,12 +16,21 @@
     <div id="profilec">
         <header-back title="Profil" :scrolling="isScrolling" @go-back="goBack()" @go-there="goToSettings()"></header-back>
         <template v-if="profile">
-            <div class="content-box-90">
-                <img class="main-illustration" id="profile-picture" src="../../images/illustrationen/profile_add.svg" alt="profile-picture" title="profile-picture" />
-                <div class="data">
-                    <h2 class="name">{{firstname}} {{lastname}}</h2>
-                    <p class="mail">{{email}}</p>
+        <div class="content-box-90">
+            <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
+                <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture"/>
+                <div v-if="profilePicture === defaultProfilePicture">
+                    <label for="profile-picture-upload">
+                        <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_add_icon.svg" alt="add-profile-picture" title="add-profile-picture"/>
+                    </label>
+                    <input type="file" class="fileinput" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
+                    <input type="hidden" name="iduser" :value="iduser">
                 </div>
+            </form>
+            <div class="data">
+                <h2 class="name">{{firstname}} {{lastname}}</h2>
+                <p class="mail">{{email}}</p>
+            </div>
 
                 <div class="profile-options">
                     <a @click="goToEdit()"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
@@ -58,7 +67,31 @@
                         <button class="red-button" @click="saveNewData">Speichern</button>
                     </form>
 
-                </template>
+            <div v-else>
+
+                    <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
+                        <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture"/>
+                            <label for="profile-picture-upload">
+                                <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_edit_icon.svg" alt="edit-profile-picture" title="edit-profile-picture"/>
+                            </label>
+                        <input type="file" class="fileinput" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
+                        <input type="hidden" name="iduser" :value="iduser">
+                    </form>
+                <form method="post" id="edit-profile-form">
+                    <div class="textinput">
+                        <label for="firstname">Vorname</label>
+                        <input type="text" id="firstname" name="firstname" v-model="firstname">
+                    </div>
+                    <div class="textinput">
+                        <label for="lastname">Nachname</label>
+                        <input type="text" id="lastname" name="lastname" v-model="lastname">
+                    </div>
+                    <div class="textinput">
+                        <label for="email">E-Mail</label>
+                        <input type="email" id="email" name="email" v-model="email">
+                    </div>
+                    <button class="red-button" @click="saveNewData">Speichern</button>
+                </form>
             </div>
         </template>
         <nav-bar></nav-bar>

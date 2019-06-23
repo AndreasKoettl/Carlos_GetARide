@@ -12,42 +12,42 @@
     <div id="app">
         <template v-if="!isDriverDetails && !isCoDriverDetails">
             <div>
-                <header-title :scrolling="isScrolling" title="Meine Fahrten"></header-title>
-                <section class="content-box-90">
+              
+            <header-title :scrolling="isScrolling" title="Meine Fahrten"></header-title>
+            <section class="content-box-90">
 
-                    <img src="../../images/illustrationen/meineFahrten_forWhiteGB.svg" class="main-illustration">
-                    <nav id="nav-bar">
-                        <div id="slider" @click="switchMenu"></div>
-                        <p id="driver" class="slider-menu active_menu" @click="switchMenu">Fahrer</p>
-                        <p id="codriver" class="slider-menu" @click="switchMenu">Mitfahrer</p>
-                    </nav>
+        <img src="../../images/illustrationen/meineFahrten_forWhiteGB.svg" alt="my-rides-picture" class="main-illustration">
+        <nav id="nav-bar">
+            <div id="slider" @click="switchMenu"></div>
+            <p id="driver" class="slider-menu active_menu" @click="switchMenu">Fahrer</p>
+            <p id="codriver" class="slider-menu" @click="switchMenu">Mitfahrer</p>
+        </nav>
 
-                    <h6 class="special-heading">Kommende Fahrten</h6>
-                    <div v-if="listUpcomingRides.length !== 0">
-                        <a v-for="(ride, index) in listUpcomingRides" @click="showDetails(index, true)">
-                            <div class="grey-box">
-                                <div class="row-no-padding">
-                                    <p class="overview-h1">{{ride.routeStart}} - {{ride.routeEnd}}</p>
-                                    <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
-                                </div>
-                                <p class="overview-h2">{{ride.date}}, {{ride.time}}</p>
-                            </div>
-                        </a>
+            <h6 class="special-heading">Kommende Fahrten</h6>
+            <div v-if="listUpcomingRides.length !== 0">
+                <a v-for="(ride, index) in listUpcomingRides" @click="showDetails(index, true)">
+                    <div class="grey-box">
+                        <div class="row-no-padding">
+                            <p class="overview-h1">{{ride.routeStart}} - {{ride.routeEnd}}</p>
+                            <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
+                        </div>
+                        <p class="overview-h2">{{ride.date}}, {{ride.time}}</p>
                     </div>
-                    <h6 class="special-heading">Vergangene Fahrten</h6>
-
-                    <div v-if="listPastRides.length !== 0">
-                        <a v-for="(ride, index) in listPastRides" @click="showDetails(index, false)">
-                            <div class="grey-box">
-                                <div class="row-no-padding">
-                                    <p class="overview-h1">{{ride.routeStart}} - {{ride.routeEnd}}</p>
-                                    <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
-                                </div>
-                                <p class="overview-h2">{{ride.date}}, {{ride.time}}</p>
-
-                            </div>
-                        </a>
-                    </div>
+                </a>
+            </div>
+              
+            <h6 class="special-heading">Vergangene Fahrten</h6>
+            <div v-if="listPastRides.length !== 0">
+                <a v-for="(ride, index) in listPastRides" @click="showDetails(index, false)">
+                    <div class="grey-box">
+                        <div class="row-no-padding">
+                            <p class="overview-h1">{{ride.routeStart}} - {{ride.routeEnd}}</p>
+                            <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
+                        </div>
+                        <p class="overview-h2">{{ride.date}}, {{ride.time}}</p>
+                     </div>
+                </a>
+            </div>
 
                 </section>
             </div>

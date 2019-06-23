@@ -13,7 +13,9 @@ header {
 }
 
 .header-scroll-shadow {
-    box-shadow: 0 0.5vw 5vw rgba(0,0,0,0.15);
+    -webkit-box-shadow: 0 0.5vw 3vw rgba(0,0,0,0.15);
+    -moz-box-shadow: 0 0.5vw 3vw rgba(0,0,0,0.15);
+    box-shadow: 0 0.5vw 3vw rgba(0,0,0,0.15);
 }
 
 header > div {

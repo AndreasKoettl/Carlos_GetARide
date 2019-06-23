@@ -11,6 +11,10 @@ new Vue({
         firstname: "",
         lastname: "",
         email: "",
+        profilePicture: "../../images/illustrationen/profile_default.svg",
+        defaultProfilePicture: "../../images/illustrationen/profile_default.svg",
+        iduser: "",
+        newProfilePicture: false,
         isScrolling: false
     },
 
@@ -19,6 +23,7 @@ new Vue({
      
             var appAccess = this;
             let iduser = JSON.parse(localStorage.getItem("carlosUser"))["idusers"];
+            this.iduser = iduser;
             $.ajax({
                 accepts: "application/json",
                 dataType: "json",
@@ -36,7 +41,10 @@ new Vue({
                         appAccess.lastname = data["data"][0]["lastname"];
                         appAccess.email = data["data"][0]["email"];
                         appAccess.hasNotifications = (data["data"][0]["notifications"] == 0) ? false : true;
-                       
+
+                        if (data["data"][0]["profileImageUrl"] != null) {
+                            appAccess.profilePicture = data["data"][0]["profileImageUrl"];
+                        }
                     }
                 },
                 error: function () {
@@ -48,9 +56,11 @@ new Vue({
         saveNewData: function () {
             event.preventDefault();
             let iduser = JSON.parse(localStorage.getItem("carlosUser"))["idusers"];
-            let formData = new FormData($("#edit-profile-form")[0]);
-            var appAccess = this;
-            
+            let formData = new FormData($("edit-profile-form")[0]);
+            let appAccess = this;
+            console.log(this.lastname);
+            console.log(iduser);
+          
             $.post({
                 accepts: "application/json",
                 dataType: "json",
@@ -60,16 +70,23 @@ new Vue({
                 url: "../../php/profil.php?/saveUserData/" + iduser + "/" + this.firstname + "/" + this.lastname,
                 data: formData,
                 success: function (data) {
-                    //console.log(JSON.stringify(data["data"][0]));
+
                     console.log(data);
-                    appAccess.profile = true;
-                    appAccess.$el.querySelector('#settings-icon').classList.remove('hide');
-                    appAccess.$el.querySelector('#backbutton').classList.add('hide'); 
+                    if (appAccess.newProfilePicture) {
+                        document.getElementsByTagName("form")[0].submit();
+                    }
+                    else {
+                        appAccess.profile = true;
+                        appAccess.$el.querySelector('#settings-icon').classList.remove('hide');
+                        appAccess.$el.querySelector('#backbutton').classList.add('hide');
+                    }
+
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
+
         },
 
         changeNotifications: function (setTo) {
@@ -86,13 +103,32 @@ new Vue({
                 processData: false,
                 url: "../../php/profil.php?/changeNotifications/" + iduser + "/" + this.hasNotifications,
                 success: function (data) {
-                    //console.log(JSON.stringify(data["data"][0]));
                     console.log(data);
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
+        },
+
+        loadProfilePicture: function () {
+            this.newProfilePicture = true;
+            let file    = document.querySelector('input[type=file]').files[0];
+            let reader  = new FileReader();
+            let appAccess = this;
+
+            reader.addEventListener("load", function () {
+                appAccess.profilePicture = reader.result;
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+
+            if (this.newProfilePicture && this.profile) {
+                document.getElementsByTagName("form")[0].submit();
+                this.newProfilePicture = false;
+            }
         },
 
         goBack: function () {

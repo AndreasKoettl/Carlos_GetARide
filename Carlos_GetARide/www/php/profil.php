@@ -10,7 +10,7 @@ dispatch_post('/changeNotifications/:iduser/:setNotification', 'toggleNotificati
 function loadUserData(){
 
 		$dbConnection = new DatabaseAccess;
-		$dbConnection->prepareStatement("SELECT firstname, lastname, email, notifications FROM users WHERE idusers = :iduser");
+		$dbConnection->prepareStatement("SELECT firstname, lastname, email, notifications, profileImageUrl FROM users WHERE idusers = :iduser");
 		$dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
 		$dbConnection->executeStatement();
 		$result = $dbConnection->fetchAll();
