@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -9,27 +9,30 @@
     <title>Profil entfernen</title>
 </head>
 <body>
-    <h1 id="h1">Profil entfernen</h1>
+
     <div id="app">
+        <header-back title="Account löschen" @go-back="redirectToProfile()"></header-back>
         <form v-if="!succeeded" v-on:submit="deleteUser">
-            <div>
-                <ul>
-                    <li v-for="error in errors">{{ error }}</li>
-                </ul>
-            </div>
+                <p class="statusmessage" v-for="error in errors">{{ error }}</p>
             <div>
                 <label for="password">Passwort:</label>
-                <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required/>
+                <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required />
             </div>
-            <input type="submit" class="red-button" value="Profil entfernen"/>
-            <input type="button" class="red-button" v-on:click="redirectToHome" value="Abbrechen"/>
+            <input type="submit" class="red-button" value="Profil entfernen" />
+            <input type="button" class="red-button" v-on:click="redirectToHome" value="Abbrechen" />
         </form>
-        <div v-else>
-            <p>Profil wurde erfolgreich gelöscht.</p>
-            <input type="button" class="red-button" v-on:click="redirectToLogin" value="Weiter zum Login" />
-            <input type="button" class="red-button" v-on:click="redirectToRegister" value="Weiter zur Registrierung" />
-        </div>
+        <template v-else>
+            <div id="deleteForm">
+                <img src="../../images/icons/check.svg" class="illustration-small" />
+                <p class="statusmessage2">Profil wurde erfolgreich gelöscht.</p>
+                <input type="button" class="red-button" v-on:click="redirectToLogin" value="Weiter zum Login" />
+                <input type="button" class="red-button" v-on:click="redirectToRegister" value="Weiter zur Registrierung" />
+            </div>
+        </template>
+        <nav-bar></nav-bar>
     </div>
+    <script src="../../scripts/components.js"></script>
     <script src="../../scripts/profil_entfernen.js"></script>
+
 </body>
 </html>

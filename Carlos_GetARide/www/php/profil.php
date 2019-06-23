@@ -4,7 +4,7 @@ require_once 'utilities.php';
 
 
 dispatch('/loadUserData/:iduser', 'loadUserData');
-dispatch_post('/saveUserData/:iduser/:firstname/:lastname/:email', 'saveUserData');
+dispatch_post('/saveUserData/:iduser/:firstname/:lastname', 'saveUserData');
 dispatch_post('/changeNotifications/:iduser/:setNotification', 'toggleNotifications');
 
 function loadUserData(){
@@ -33,12 +33,11 @@ function saveUserData(){
 		$result = array();
 
 		$dbConnection = new DatabaseAccess;
-		$dbConnection->prepareStatement("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email WHERE idusers = :iduser");
+		$dbConnection->prepareStatement("UPDATE users SET firstname = :firstname, lastname = :lastname WHERE idusers = :iduser");
 		
 		$dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
 		$dbConnection->bindParam(":firstname", htmlentities(params("firstname"), ENT_QUOTES));
 		$dbConnection->bindParam(":lastname", htmlentities(params("lastname"), ENT_QUOTES));
-		$dbConnection->bindParam(":email", htmlentities(params("email"), ENT_QUOTES));
 		$dbConnection->executeStatement();
 
 		$result = setSuccessMessage($result, "Daten erfolgreich aktualisiert.");

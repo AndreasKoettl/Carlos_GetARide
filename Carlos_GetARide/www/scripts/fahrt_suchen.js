@@ -212,8 +212,9 @@ mtd280.app = new Vue({
     },
 
     mounted: function () {
+        redirectNotAuthUser("pages/login/login.html");
         this.$el.querySelector('#backbutton').classList.add('hide');
-
+                
         // activate scrolling shadow
         let self = this;
         let scrollPosition = 0;

@@ -259,16 +259,20 @@ input:focus {
     margin:0;
 }
 
-.illustration-small-container{
-    width:45vw;
-    height:100%;
+.illustration-small-container {
+    width: 45vw;
+    height: 100%;
     margin-right: 3vw;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .illustration-small {
-    width:100%;
-    height:auto;
+    width: 20vw;
+    height: auto;
+    margin: 4vw auto;
+    display: block;
 }
 
 .main-option {    

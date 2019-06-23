@@ -16,6 +16,7 @@ new Vue({
             email: "",
             password: ""
         }
+
     },
     methods: {
         deleteUser: function() {
@@ -38,7 +39,7 @@ new Vue({
                 if (succeeded(data)) {
                     // User Daten aus dem local storage löschen.
                     localStorage.removeItem(STORAGE_KEY);
-
+                    vueObject.$el.querySelector('#backbutton').classList.add('hide');
                     vueObject.succeeded = true;
                 }
                 else {
@@ -65,6 +66,9 @@ new Vue({
         },
         redirectToRegister: function() {
             redirectUser("pages/login/register.html");
+        },
+        redirectToProfile: function () {
+            redirectUser("pages/profil/profil.html");
         }
     },
     mounted: function() {

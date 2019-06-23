@@ -13,5 +13,9 @@ carlos.app = new Vue({
             sessionStorage.setItem('active', 'fahrt_erstellen');
             window.location.href = "pages/fahrt_erstellen/fahrt_erstellen.html";
         }
+    },
+
+    mounted: function () {
+        redirectNotAuthUser("pages/login/login.html");
     }
 });

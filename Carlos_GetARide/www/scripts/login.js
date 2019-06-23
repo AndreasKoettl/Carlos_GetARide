@@ -53,9 +53,13 @@ new Vue({
         },
         redirectToRegister: function() {
             redirectUser("pages/login/register.html");
+        },
+        redirectForgotPw: function () {
+            redirectUser("pages/login/passwort_vergessen.html")
         }
     },
-    mounted: function() {
+    mounted: function () {
+        this.$el.querySelector('#backbutton').classList.add('hide');
         redirectAuthUser("index.html");
     }
 

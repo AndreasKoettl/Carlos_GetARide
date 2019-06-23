@@ -83,10 +83,13 @@ carlos.app = new Vue({
                 case 'price':
                     if (this.price.value != "" && this.price.value > 0) {
                         document.querySelector('#submitDriveData').classList.remove('disabled');
-                        document.querySelector('#submitDriveData').classList.add('active-green');
+                        document.querySelector('#submitDriveData').classList.remove('red-button');
+                        document.querySelector('#submitDriveData').classList.add('green-button');
+               
                         this.complete = true;
                     } else {
                         document.querySelector('#submitDriveData').classList.add('disabled');
+                        document.querySelector('#submitDriveData').classList.add('red-button');
                         document.querySelector('#submitDriveData').classList.remove('active-green');
                         this.complete = false;
                     }
@@ -211,6 +214,7 @@ carlos.app = new Vue({
         },
     },
     mounted: function () {
+        redirectNotAuthUser("pages/login/login.html");
         let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
         this.driveData["iduser"] = iduser;
         this.init();

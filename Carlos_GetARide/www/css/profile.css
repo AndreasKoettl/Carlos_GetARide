@@ -88,12 +88,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 4vw;
 }
 
 
 
-.profile-options a:first-of-type {
-    margin-bottom: 4vw;
+.profile-options a:last-of-type {
+    margin-bottom: 0;
 }
 
 .profile-options p {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -10,34 +10,41 @@
     <title>Passwort ändern</title>
 </head>
 <body>
-    <h1 id="h1">Passwort ändern</h1>
     <div id="app">
-        <form v-if="!succeeded" v-on:submit="changePassword">
+        <header-back title="Passwort ändern" :scrolling="isScrolling" @go-back="redirectToProfile()"></header-back>
+        <form v-if="!succeeded" v-on:submit="changePassword" id="changePwForm">
             <div>
-                <ul>
-                    <li v-for="error in errors">{{ errors }}</li>
-                </ul>
+                <div>
+                   <p class="statusmessage" v-for="error in errors">{{ errors }}</p>
+                </div>
+                <div>
+                    <label for="password-old">Altes Passwort:</label>
+                    <input type="password" name="password-old" id="password-old" v-model="formData.passwordOld" required />
+                </div>
+                <div>
+                    <label for="password">Neues Passwort:</label>
+                    <input type="password" name="password" id="password" v-model="formData.password" required />
+                </div>
+                <div>
+                    <label for="password-repeat">Passwort wiederholen:</label>
+                    <input type="password" name="password-repeat" id="password-repeat" v-model="formData.passwordRepeat" required />
+                </div>
             </div>
             <div>
-                <label for="password-old">Passwort:</label>
-                <input type="password" name="password-old" id="password-old" v-model="formData.passwordOld" placeholder="Altes Passwort" required />
+                <button type="submit" class="green-button">Passwort ändern</button>
             </div>
-            <div>
-                <label for="password">Passwort:</label>
-                <input type="password" name="password" id="password" v-model="formData.password" placeholder="Neues Passwort" required />
-            </div>
-            <div>
-                <label for="password-repeat">Passwort:</label>
-                <input type="password" name="password-repeat" id="password-repeat" v-model="formData.passwordRepeat" placeholder="Neues Passwort wiederholen" required />
-            </div>
-            <input type="submit" class="red-button" value="Passwort ändern"/>
-            <input type="button" class="red-button" v-on:click="redirectToHome" value="Abbrechen" />
         </form>
-        <div v-else>
-            <p>Passwort wurde erfolgreich geändert, Sie müssen sich erneut anmelden.</p>
-            <input type="button" class="red-button" v-on:click="redirectToLogin" value="Weiter zum Login" />
-        </div>
+        <template v-else>
+            <div id="successChangePw">
+                <img src="../../images/icons/check.svg" class="illustration-small" />
+                <p class="statusmessage2">Passwort wurde erfolgreich geändert, Sie müssen sich erneut anmelden.</p>
+                <button type="button" class="red-button" v-on:click="redirectToLogin">Weiter zum Login</button>
+            </div>
+        </template>
+        <nav-bar></nav-bar>
     </div>
+    <script src="../../scripts/components.js"></script>
     <script src="../../scripts/passwort_aendern.js"></script>
+
 </body>
 </html>

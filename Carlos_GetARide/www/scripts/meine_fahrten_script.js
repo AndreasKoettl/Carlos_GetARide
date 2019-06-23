@@ -893,6 +893,7 @@ carlos_meineFahrten.app = new Vue({
 
 
     mounted: function () {
+        redirectNotAuthUser("pages/login/login.html");
         this.loadDriversRides();
 
         // activate scrolling shadow
