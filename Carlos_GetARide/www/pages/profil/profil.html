@@ -16,15 +16,16 @@
         <header-back title="Profil" :scrolling="isScrolling" @go-back="goBack()" @go-there="goToSettings()"></header-back>
         <template v-if="profile">
         <div class="content-box-90">
-            <div id="profile-picture-form" class="main-illustration">
+            <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
                 <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture"/>
-                <form method="post" v-if="profilePicture === defaultProfilePicture">
+                <div v-if="profilePicture === defaultProfilePicture">
                     <label for="profile-picture-upload">
                         <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_add_icon.svg" alt="add-profile-picture" title="add-profile-picture"/>
                     </label>
-                    <input class="fileinput" type="file" id="profile-picture-upload" name="profile-picture-upload">
-                </form>
-            </div>
+                    <input type="file" class="fileinput" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
+                    <input type="hidden" name="iduser" :value="iduser">
+                </div>
+            </form>
             <div class="data">
                 <h2 class="name">{{firstname}} {{lastname}}</h2>
                 <p class="mail">{{email}}</p>
@@ -51,20 +52,22 @@
             </div>
 
             <div v-else>
-                <form method="post" id="edit-profile-form">
-                    <div id="profile-picture-form" class="main-illustration">
+
+                    <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
                         <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture"/>
                             <label for="profile-picture-upload">
                                 <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_edit_icon.svg" alt="edit-profile-picture" title="edit-profile-picture"/>
                             </label>
-                            <input class="fileinput" type="file" id="profile-picture-upload" name="profile-picture-upload">
-                    </div>
+                        <input type="file" class="fileinput" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
+                        <input type="hidden" name="iduser" :value="iduser">
+                    </form>
+                <form method="post" id="edit-profile-form">
                     <div class="textinput">
-                        <label for="username">Vorname</label>
+                        <label for="firstname">Vorname</label>
                         <input type="text" id="firstname" name="firstname" v-model="firstname">
                     </div>
                     <div class="textinput">
-                        <label for="strasse">Nachname</label>
+                        <label for="lastname">Nachname</label>
                         <input type="text" id="lastname" name="lastname" v-model="lastname">
                     </div>
                     <div class="textinput">

@@ -48,6 +48,13 @@
     position: absolute;
 }
 
+#profile-picture {
+    border-radius:50% 50% 50% 50%;
+    width: 60vw;
+    height: 60vw;
+    object-fit: cover;
+}
+
 #add-edit-profile-picture {
     width: 12vw;
     right: 10px;
