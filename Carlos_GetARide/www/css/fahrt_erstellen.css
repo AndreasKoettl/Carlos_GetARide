@@ -204,14 +204,20 @@ input:focus {
 .textarea {
     font-family: Montserrat, sans-serif;
     font-weight:500;
+    color:var(--grey-dark);
     border: 2px solid var(--grey-extralight);
-    border-radius: 50px;
+    border-radius: 15px;
     padding: 2vw 3.5vw;
     box-sizing: border-box;
     width: 100%;
     height: 10vh;
     font-size: 4vw;
-    margin-top:2vh;
+    margin-top: 4vw;
+    resize:none;
+}
+
+.textarea:active, .textarea:focus{
+    outline: none;
 }
 
 .checkBox {
@@ -327,13 +333,18 @@ input:disabled::placeholder {
     margin:0;
 }
 
-.illustration-small-container {
+.illustration-index-container {
     width: 45vw;
     height: 100%;
     margin-right: 3vw;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.illustration-index{
+    width: 40vw;
+    height: auto;
 }
 
 .illustration-small {

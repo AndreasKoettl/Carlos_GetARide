@@ -3,7 +3,7 @@ require_once '../lib/limonade-master/lib/limonade.php';
 require_once 'utilities.php';
 
 
-dispatch('/searchRide/:start/:end/:date/:time', 'searchRide');
+dispatch('/searchRide/:start/:end/:date/:time/:iduser', 'searchRide');
 dispatch('/getUser/:iduser', 'getUserById');
 dispatch_post('/addRequest/:iduser/:iddrives', 'addRequest');
 dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
@@ -16,7 +16,7 @@ dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 			$end = (params('end') == "null") ? "" : params('end');
 			$date = (params('date') == "null") ? "" : params('date');
 			$time = (params('time') == "null") ? "" : params('time');
-
+			$iduser = params('iduser');
 				
 			if(hasValue($start) || hasValue($end)){
 				$set = FALSE;
@@ -55,8 +55,18 @@ dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 						$datetime .= " ".$time.":00";
 					} 
 				}
-					
-				$query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate >= '$datetime' AND passengers < maxPassengers";
+				
+				$now = new DateTime();
+				$now = $now->format('Y-m-d H:i:s');
+
+				if($now > $datetime){
+					$datetime = $now;
+				}
+
+			//	var_dump($now > $datetime);
+
+
+				$query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate >= '$datetime' AND passengers < maxPassengers AND (users_idusers != '$iduser')";
 
 				$query .= " ORDER BY driveDate ASC";
 
@@ -103,11 +113,12 @@ dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 			$dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
 			$dbConnection->executeStatement();
 
-			$result = setSuccessMessage($result, "Anfrage gesendet.");
+			//$result = setSuccessMessage($result, "Anfrage gesendet.");
+			$result='Anfrage zum Mitfahren gesendet';
 			return json_encode($result);
 		}
 
-			function checkIfCoDriver(){
+		function checkIfCoDriver(){
 			$dbConnection = new DatabaseAccess;
 			$dbConnection->prepareStatement("SELECT * FROM requests WHERE drives_iddrives = :iddrives AND users_idusers = :iduser");
 			$dbConnection->bindParam(":iddrives", htmlentities(params("iddrives"), ENT_QUOTES));
