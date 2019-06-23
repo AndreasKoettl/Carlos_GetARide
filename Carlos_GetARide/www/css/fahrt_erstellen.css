@@ -202,16 +202,84 @@ input:focus {
 }
 
 .textarea {
-    font-family: Arial, sans-serif;
-    font-weight:normal;
+    font-family: Montserrat, sans-serif;
+    font-weight:500;
     border: 2px solid var(--grey-extralight);
     border-radius: 50px;
     padding: 2vw 3.5vw;
     box-sizing: border-box;
     width: 100%;
     height: 10vh;
-    font-size: 2vh;
+    font-size: 4vw;
     margin-top:2vh;
+}
+
+.checkBox {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.checkBox img {
+    width: 7vw;
+    height: 7vw;
+    padding: 2vw;
+    filter: brightness(0) invert(93%) sepia(6%) saturate(4%) hue-rotate(48deg) brightness(88%) contrast(81%);
+}
+
+.checkBox p {
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    font-size: 4vw;
+    color: var(--grey-light);
+}
+
+.checkBox img.active {
+    filter: brightness(0) invert(74%) sepia(55%) saturate(521%) hue-rotate(25deg) brightness(91%) contrast(84%);
+}
+
+.checkBox p.active {
+    filter:unset;
+    color: var(--grey);
+}
+
+input:disabled {
+    color: var(--grey-light);
+}
+
+
+input:disabled::placeholder {
+    color: var(--grey-light);
+}
+
+#success {
+    width: 90vw;
+    margin: auto;
+    padding-top: 20vh;
+    overflow:hidden;
+}
+
+#success p {
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    font-size: 4vw;
+    color: var(--grey-light);
+    text-align:center;
+}
+
+#success a img {
+    width: 6vw;
+    height: 6vw;
+    padding-right: 2vw;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7488%) hue-rotate(259deg) brightness(97%) contrast(104%);
+}
+
+#success a {
+    width: 50vw !important;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -310,6 +378,7 @@ input:focus {
 
 .active-green{
     background: var(--green) !important;
+    border: 1px solid var(--green) !important;
 }
 
  .displayNone {

@@ -7,7 +7,7 @@ carlos.app = new Vue({
     data: {
         driveData: {},
         process: ['route', 'repeating', 'dateTime', 'details', 'passengers', 'price'],
-        index: 0,
+        index: 5,
         startValue: "",
         destinationValue: "",
         dateValue: "",
@@ -16,6 +16,7 @@ carlos.app = new Vue({
         passengersValue: "",
         licensePlateValue: "",
         carDetailsValue: "",
+        freeDrive:false,
         priceValue: "",
         slide: "slide",
         complete: false,
@@ -81,7 +82,7 @@ carlos.app = new Vue({
                     this.complete = true;
                     break;
                 case 'price':
-                    if (this.price.value != "" && this.price.value > 0) {
+                    if (this.price.value != "" && this.price.value > 0 || this.freeDrive) {
                         document.querySelector('#submitDriveData').classList.remove('disabled');
                         document.querySelector('#submitDriveData').classList.remove('red-button');
                         document.querySelector('#submitDriveData').classList.add('green-button');
@@ -122,6 +123,15 @@ carlos.app = new Vue({
             this.checkIfComplete();
         },
 
+        freeDriveClicked: function () {
+            this.freeDrive = !this.freeDrive;
+            let container = document.getElementById('freeDrive');
+            container.querySelector('img').classList.toggle('active');
+            container.querySelector('p').classList.toggle('active');
+            this.price.disabled = !this.price.disabled;            
+            this.checkIfComplete();
+        },
+
         submitData: function (data) {
             event.preventDefault();
             // automatically save the different drive-data depending on the values of the paramater
@@ -138,6 +148,9 @@ carlos.app = new Vue({
                 this.driveData['cityStart'] = this.start.dataset.city;
                 this.driveData['cityEnd'] = this.destination.dataset.city;
             } else if (this.process[this.index] == 'price') {
+                if (this.freeDrive) {
+                    this.driveData['price'] = 0;
+                }
                 this.submitForm();
             } else if (this.process[this.index] == 'dateTime' && this.driveData['repeating']) {
                 let weekdays = {};
@@ -161,9 +174,8 @@ carlos.app = new Vue({
                 async: true,
                 url: "/carlos/Carlos_GetARide/www/php/saveRide.php?/saveRide",
                 data: { driveData: driveData },
-                success: function (data) {
-                    console.log(data);
-                    //window.location = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen_success.html";
+                success: function (data) {                    
+                    window.location = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen_success.html";
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
