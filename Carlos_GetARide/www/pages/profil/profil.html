@@ -53,21 +53,7 @@
                         <button class="red-button" @click="deleteAccount"> Account löschen</button>                
                 </template>
 
-                <template v-else>
-                    <img class="edit-picture" src="../../images/illustrationen/profile_edit.svg" alt="edit-picture" title="edit-picture" />
-                    <form method="post" id="edit-profile-form">
-                        <div class="textinput">
-                            <label for="username">Vorname</label>
-                            <input type="text" id="firstname" name="firstname" v-model="firstname">
-                        </div>
-                        <div class="textinput">
-                            <label for="strasse">Nachname</label>
-                            <input type="text" id="lastname" name="lastname" v-model="lastname">
-                        </div>
-                        <button class="red-button" @click="saveNewData">Speichern</button>
-                    </form>
-
-            <div v-else>
+            <template v-else>
 
                     <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
                         <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture"/>
@@ -86,16 +72,13 @@
                         <label for="lastname">Nachname</label>
                         <input type="text" id="lastname" name="lastname" v-model="lastname">
                     </div>
-                    <div class="textinput">
-                        <label for="email">E-Mail</label>
-                        <input type="email" id="email" name="email" v-model="email">
-                    </div>
                     <button class="red-button" @click="saveNewData">Speichern</button>
                 </form>
+            </template>
             </div>
         </template>
+
         <nav-bar></nav-bar>
-    </div>
 
     <script src="../../scripts/components.js"></script>
     <script type="text/javascript" src="../../scripts/profile.js"></script>
