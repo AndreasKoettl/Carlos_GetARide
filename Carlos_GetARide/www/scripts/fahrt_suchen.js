@@ -1,5 +1,8 @@
 ﻿"use strict";
 
+const NO_START = "Startort nicht angegeben";
+const NO_END = "Zielort nicht angegeben";
+
 var mtd280 = mtd280 || {};
 
 mtd280.app = new Vue({ 
@@ -10,8 +13,10 @@ mtd280.app = new Vue({
         resultsOverview: true,
         searchData: [],
         index: 0,
-        start: "Startort nicht angegeben",
-        end: "Zielort nicht angegeben",
+        start: NO_START,
+        cityStart: null,
+        end: NO_END,
+        cityEnd: null,
         date: "",
         time: "",
         fullname: "",
@@ -44,8 +49,9 @@ mtd280.app = new Vue({
                 }
             }        
 
-            let locationStart = this.$el.querySelector('#start').value || null;
-            let locationEnd = this.$el.querySelector('#end').value || null;
+            let iduser = JSON.parse(localStorage.getItem("carlosUser"))["idusers"];
+            this.cityStart = this.$el.querySelector('#start').dataset.city || this.cityStart;
+            this.cityEnd = this.$el.querySelector('#end').dataset.city || this.cityEnd;
             let dateDrive = this.$el.querySelector('#dateDrive').value || null;
             let timeDrive = this.$el.querySelector('#timeDrive').value || null;
             var appAccess = this;
@@ -57,17 +63,19 @@ mtd280.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/search.php?/searchRide/" + locationStart + "/" + locationEnd + "/" + dateDrive + "/" + timeDrive,
+                url: "../../php/search.php?/searchRide/" + this.cityStart + "/" + this.cityEnd + "/" + dateDrive + "/" + timeDrive+ "/" + iduser,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     if (data === false) {
                         console.log("Bitte geben Sie einen Startort oder einen Zielort an.");
                     } else {
-                        console.log(data["data"]);
+                        console.log(data);
                         appAccess.searchData = data["data"];
                         for (let i = 0; i < appAccess.searchData.length; i++) {
+                            //calculate remaining passengers
                             let current = appAccess.searchData[i];
                             current["passengersAvailable"] = current["maxPassengers"] - current["passengers"];
+                            //generate a readable Time and Date (Format)
                             let datetime = current["driveDate"];
                             datetime = datetime.split(" ");
                             current["formatDate"] = datetime[0].substring(8, 10) + "." + datetime[0].substring(5, 7) + "." + datetime[0].substring(0, 4) ;
@@ -98,7 +106,6 @@ mtd280.app = new Vue({
                                     day = "Sa";
                                     break;
                             }
-
                             current["day"] = day;                      
                         }
                         appAccess.inputForm = false;
@@ -136,7 +143,7 @@ mtd280.app = new Vue({
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     if (data === false) {
-                        console.log("Bitte geben Sie einen Startort oder einen Zielort an.");
+                        console.log("User nicht gefunden");
                     } else {
                         console.log(data["data"]);
                         let thename = data["data"][0]["firstname"] + " " + data["data"][0]["lastname"];
@@ -155,13 +162,36 @@ mtd280.app = new Vue({
         goBack: function () {
             if (this.resultsOverview) {
                 this.inputForm = true;
-                this.$el.querySelector('#backbutton').classList.add('hide');    
+                this.$el.querySelector('#backbutton').classList.add('hide');   
+
+                if (this.start != NO_START) {
+                    this.$nextTick(function () {
+                        this.$el.querySelector('#start').value = this.start;
+                    })              
+                }
+                if (this.end != NO_END) {
+                    this.$nextTick(function () {
+                        this.$el.querySelector('#end').value = this.end;
+                    })
+                }
+                if (this.date != "kein Datum/Uhrzeit angegeben") {
+                    this.$nextTick(function () {
+                        this.$el.querySelector('#dateDrive').value = this.date;
+                    })
+                }
+                if (this.time != "") {
+                    this.$nextTick(function () {
+                        this.$el.querySelector('#timeDrive').value = this.time;
+                    })
+                }
+
             } else {           
                 this.resultsOverview = true;
             }
         },
 
         rideAlong: function () {
+            var appAccess = this;
             let iduser = JSON.parse(localStorage.getItem("carlosUser"))["idusers"];
             let iddrives = this.searchData[this.index]["iddrives"];
             console.log("inside ride");
@@ -174,7 +204,9 @@ mtd280.app = new Vue({
                 url: "../../php/search.php?/addRequest/" + iduser + "/" + iddrives,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
-                    console.log(data + " Anfrage zum Mitfahren gesendet");
+                    appAccess.disable = true;
+                    appAccess.$el.querySelector('#ride-along').disabled = true;
+                    console.log(data);
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
@@ -196,25 +228,46 @@ mtd280.app = new Vue({
                     //console.log(JSON.stringify(data["data"][0]));
                 
                     if (data["data"][0]) {
-                        appAccess.disable = true;
+                        appAccess.disable = true;                                               
                     } else {
-                        appAccess.disable = false;
+                        appAccess.disable = false;                       
                     }
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
                 }
             });
+        },
+
+        searchBoxLeave: function (param) {
+            this.checkStartOrEnd();
+            if(param == 'start'){
+                this.cityStart = this.$el.querySelector('#start').dataset.city || null;
+                this.start = this.$el.querySelector('#start').value || NO_START;
+            } else if (param == 'end') {
+                this.cityEnd = this.$el.querySelector('#end').dataset.city || null;
+                this.end = this.$el.querySelector('#end').value || NO_END;
+            }              
+        },
+
+        checkStartOrEnd: function () {
+            let tmpStart = this.$el.querySelector('#start').value;
+            let tmpEnd = this.$el.querySelector('#end').value;
+            console.log('tmpStart ' + tmpStart);
+            if (tmpStart != "" || tmpEnd != "") {
+                this.$el.querySelector('#searchButton').classList.remove('disabled');   
+            } else {
+                this.$el.querySelector('#searchButton').classList.add('disabled');   
+            }
         }
-
-
 
     },
 
     mounted: function () {
         redirectNotAuthUser("pages/login/login.html");
         this.$el.querySelector('#backbutton').classList.add('hide');
-                
+        this.$el.querySelector('#dateDrive').min = new Date().toISOString().split("T")[0];
+
         // activate scrolling shadow
         let self = this;
         let scrollPosition = 0;
@@ -225,5 +278,16 @@ mtd280.app = new Vue({
                 self.isScrolling = false;
             }
         });
+    },
+
+    updated: function () {
+        console.log('updated');
+        this.$nextTick(function () {
+            if (this.inputForm) {
+                console.log('check');
+                this.checkStartOrEnd();
+            }  
+        })
+             
     }
 });

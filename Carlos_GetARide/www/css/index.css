@@ -180,9 +180,9 @@ button:focus, button:active{
 
 .drive-details-h2 {
     font-family: 'Roboto Slab', serif;
-    font-size: 4vw;
+    font-size: 5vw;
     color: var(--grey-dark);
-    font-weight: 900;
+    font-weight: 400;
     z-index: 50;
     padding: 0;
     margin: 0;
@@ -217,6 +217,7 @@ button:focus, button:active{
 .special-heading {
     font-family: Montserrat, sans-serif;
     font-size: 3.5vw;
+    font-weight:600;
     text-transform: uppercase;
     color: var(--red);
     z-index: 50;
@@ -231,8 +232,12 @@ button:focus, button:active{
 }
 
 .box-route {
-    height: 20vw;
+    height: auto;
     width: 90vw;
+}
+
+.box-route div:first-of-type{
+    margin-bottom: 4vh;
 }
 
 .icon-route {
@@ -253,4 +258,10 @@ button:focus, button:active{
     font-size: 5vw;
     color: var(--grey-dark);
     text-align: center;
+}
+
+hr {
+    border: none;
+    height: 0.4vw;
+    background-color: var(--grey-extralight);
 }

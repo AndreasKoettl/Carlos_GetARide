@@ -28,8 +28,8 @@
                 <img class="main-illustration" src="../../images/illustrationen/fahrt-suchen.png" />
                 <h1 id="search-title">Finde eine passende Fahrt!</h1>
                 <form action="" id="search-form" method="get">
-                    <place-input id="start" clearid="clear-start" placeholder="Start" @searchbox-enter="" @searchbox-leave=""></place-input>
-                    <place-input id="end" clearid="clear-end" placeholder="Ziel" @searchbox-enter="" @searchbox-leave=""></place-input>
+                    <place-input id="start" clearid="clear-start" placeholder="Start" @searchbox-enter="" @searchbox-leave="searchBoxLeave('start')"></place-input>
+                    <place-input id="end" clearid="clear-end" placeholder="Ziel" @searchbox-enter="" @searchbox-leave="searchBoxLeave('end')"></place-input>
                     <ul id="suggestions" class="displayNone"></ul>
                     <div class="textinput">
                         <input type="date" id="dateDrive" name="dateDrive" />
@@ -38,8 +38,7 @@
                         <input type="time" id="timeDrive" name="timeDrive" placeholder="Uhrzeit" />
                     </div>
                     <input type="datetime-local" id="dateDriveInput" name="dateDriveInput" hidden />
-                    <button class="red-button" @click="submitSearch">Suchen</button>
-                    <!--<input type="submit" id="searchButton" value="Suchen" @click="submitSearch" />-->
+                    <button class="red-button disabled" @click="submitSearch" id="searchButton">Suchen</button>
                 </form>
             </div>
         </template>
@@ -49,9 +48,9 @@
                 <div id="results-overview" v-if="resultsOverview">
 
                     <!--<div id="driveInput">-->
-                    <div class="grey-box grey-outline-box" @click="goBack()">
+                    <div class="grey-box-search grey-outline-box" @click="goBack()">
                         <!--<div class="locations">-->
-                        <div class="row">
+                        <div class="row-search">
                             <!--<img id="route-img" />-->
                             <img src="../../images/icons/Verbindung.svg" class="icon-route" />
                             <div class="col box-route">
@@ -132,7 +131,7 @@
                             <p class="drive-details-h3">verfügbar</p>
                         </div>
                     </div>
-                    <button v-bind:class="{'green-button':!resultsOverview, disabled:disable }" id="ride-along" @click="rideAlong()">Mitfahren</button>
+                    <button v-bind:class="{'green-button':!resultsOverview, disabled:disable }" id="ride-along" @click="rideAlong()" :disabled="disable">Mitfahren</button>
 
                 </div>
             </div>
