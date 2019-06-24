@@ -46,7 +46,7 @@
             <!-- REPEATING -->
             <template v-if="process[index] == 'repeating'">
                 <div id="repeating" class="process-page content-box-90">
-                    <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
+                    <img src="../../images/illustrationen/fahrt-anbieten_wiederholend.jpg" class="illustration-big" />
                     <div class="lift-form">
                         <h1 class="fahrt-erstellen-heading">Fährst du regelmäßig?</h1>
                         <p>zum Beispiel wöchentlich am selben Tag und circa zur selben Zeit</p>
@@ -67,25 +67,27 @@
             <template v-if="process[index] == 'dateTime'">
                 <div id="dateTime" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_zeit.jpg" class="illustration-big" />
-                    <h1 class="fahrt-erstellen-heading">Wann fährst du?</h1>
-                    <div class="form-wrapper" v-if="!driveData['repeating']">
-                        <form id="dateTimeForm">
-                            <input type="date" class="dateInput textinput" id="date" v-on:input="checkIfComplete()" :value="driveData['date']" />
-                            <input type="time" class="timeInput textinput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />
-                            <button type="button" class="disabled red-button" v-on:click="complete ? submitData(['date', 'time']) : false" id="submitDateTime">Weiter</button>
-                        </form>
-                    </div>
-                    <div v-else>
-                        <div class="form-wrapper">
-                            <div id="weekday-wrapper">
-                                <span v-for="day in weekdays" :id="day" @click="weekdayChoosen()" class="weekday">{{day}}</span>
+                    <div class="lift-form">
+                        <h1 class="fahrt-erstellen-heading">Wann fährst du?</h1>
+                        <div class="form-wrapper" v-if="!driveData['repeating']">
+                            <form id="dateTimeForm">
+                                <input type="date" class="dateInput textinput" id="date" v-on:input="checkIfComplete()" :value="driveData['date']" />
+                                <input type="time" class="timeInput textinput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />
+                                <button type="button" class="disabled red-button" v-on:click="complete ? submitData(['date', 'time']) : false" id="submitDateTime">Weiter</button>
+                            </form>
+                        </div>
+                        <div v-else>
+                            <div class="form-wrapper">
+                                <div id="weekday-wrapper">
+                                    <span v-for="day in weekdays" :id="day" @click="weekdayChoosen()" class="weekday">{{day}}</span>
+                                </div>
+                                <input type="time" class="textinput timeInput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />
+                                <div class="timespan">
+                                    <input type="date" placeholder="von" class="textinput dateInput" id="startDate" v-on:input="checkIfComplete()" :value="driveData['startDate']" />
+                                    <input type="date" class="textinput dateInput" id="endDate" v-on:input="checkIfComplete()" :value="driveData['endDate']" />
+                                </div>
+                                <button type="button" class="disabled red-button" v-on:click="complete ? submitData(['time','startDate', 'endDate']) : false" id="submitDateTimeRepeating">Weiter</button>
                             </div>
-                            <input type="time" class="textinput timeInput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />
-                            <div class="timespan">
-                                <input type="date" placeholder="von" class="textinput dateInput" id="startDate" v-on:input="checkIfComplete()" :value="driveData['startDate']" />
-                                <input type="date" class="textinput dateInput" id="endDate" v-on:input="checkIfComplete()" :value="driveData['endDate']" />
-                            </div>
-                            <button type="button" class="disabled red-button" v-on:click="complete ? submitData(['time','startDate', 'endDate']) : false" id="submitDateTimeRepeating">Weiter</button>
                         </div>
                     </div>
                 </div>
@@ -97,9 +99,10 @@
             <template v-if="process[index] == 'passengers'">
                 <div id="passengers" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_personen.jpg" class="illustration-big" />
-                    <div class="form-wrapper">
+                    <div class="form-wrapper lift-form">
                         <h1 class="fahrt-erstellen-heading">Wieviele Personen kannst du mitnehmen?</h1>
-                        <form id="personenForm">
+                        <p>ohne dich selbst zu zählen</p>
+                        <form id="personenForm" class="textinput">
                             <input type="number" id="numPassengers" :value="driveData['passengers']" v-on:input="checkIfComplete()" />
                             <button type="button" class="red-button disabled" id="submitPassengers" v-on:click="complete ? submitData(['passengers']) : false">Weiter</button>
                         </form>
@@ -114,9 +117,9 @@
                 <div id="details" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
                     <form id="detailsForm" class="lift-form">
-                        <h1 class="fahrt-erstellen-heading">Wie sieht dein Auto aus? (optional)</h1>
-                        <input placeholder="Kennzeichen" id="licensePlate" :value="driveData['licensePlate']" />
-                        <textarea class="textarea" placeholder="Sonstige Merkmale wie Automarke, -farbe" :value="driveData['carDetails']" id="carDetails"></textarea>
+                        <h1 class="fahrt-erstellen-heading">Wie können Mitfahrer dein Auto erkennen?</h1>                        
+                        <input placeholder="Kennzeichen" id="licensePlate" :value="driveData['licensePlate']"/>
+                        <textarea class="textarea" placeholder="Sonstige Merkmale wie z.B.: Automarke oder Farbe" :value="driveData['carDetails']" id="carDetails"></textarea>
                         <button type="button" class="red-button disabled" id="submitDetails" v-on:click="complete ? submitData(['licensePlate', 'carDetails']) : false">Weiter</button>
                     </form>
                 </div>
@@ -128,8 +131,8 @@
             <template v-if="process[index] == 'price'">
                 <div id="price" class="process-page content-box-90">
                     <img src="../../images/illustrationen/fahrt-anbieten_preis.jpg" class="illustration-big" />
-                    <div class="priceForm">
-                        <h1 class="fahrt-erstellen-heading">Wieviel soll die Fahrt kosten?</h1>
+                    <div class="lift-form">
+                        <h1 class="fahrt-erstellen-heading">Wieviel soll diese Fahrt kosten?</h1>
                         <form id="routeForm">
                             <div @click="freeDriveClicked" id="freeDrive" class="checkBox">
                                 <img src="../../images/icons/check.svg" />

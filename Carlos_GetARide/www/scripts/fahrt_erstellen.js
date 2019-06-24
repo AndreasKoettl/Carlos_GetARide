@@ -6,7 +6,7 @@ carlos.app = new Vue({
     el: "#app",
     data: {
         driveData: {},
-        process: ['route', 'repeating', 'dateTime', 'details', 'passengers', 'price'],
+        process: ['route', 'repeating', 'dateTime', 'passengers', 'details', 'price'],
         index: 0,
         startValue: "",
         destinationValue: "",
