@@ -136,7 +136,8 @@
                     <hr />
 
                     <div class="row">
-                        <div class="drive-detail-half-page">
+                        <img src="../../images/icons/car_info.svg" class="icon-request" />
+                        <div class="request_data col">
                             <h6 v-if="indexUpcomingRide !== -1" class="drive-details-h2">{{listUpcomingRides[indexUpcomingRide].licensePlate}}</h6>
                             <h6 v-if="indexPastRide !== -1" class="drive-details-h2">{{listPastRides[indexPastRide].licensePlate}}</h6>
                             <p v-if="indexUpcomingRide !== -1" class="drive-details-h3">{{listUpcomingRides[indexUpcomingRide].details}}</p>
