@@ -31,20 +31,19 @@ color: var(--grey-dark);
     hyphens: none;
 }
 
-
-/*.locations{
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-}*/
-
-/*#route-img{
-    width: 3vw;
-    height:7vh;
-    border: 1px solid grey;
-    margin-right: 4vw;
-}*/
-
 .textinput{
     color: var(--grey-light);
+}
+
+.row-search {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+    padding-bottom: 4vw;
+}
+
+.grey-box-search {
+    margin: 0vw auto 5vw auto;
+    border-radius: 15px;
+    padding: 5vw;
 }

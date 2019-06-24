@@ -163,6 +163,13 @@ carlos.app = new Vue({
             this.slide = "slide";
             this.$nextTick(function () {
                 this.index++;
+
+                if (this.index == 2) {
+                    this.$nextTick(function () {
+                        this.$el.querySelector('#date').min = new Date().toISOString().split("T")[0];
+                    })                 
+                }
+
             });
             this.complete = false;
 

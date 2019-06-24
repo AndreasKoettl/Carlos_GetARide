@@ -10,12 +10,14 @@ carlos.app = new Vue({
             window.location.href = "pages/suchen/fahrt_suchen.html";
         },
         loadFahrtErstellen: function () {
-            sessionStorage.setItem('active', 'fahrt_erstellen');
+            sessionStorage.setItem('active', 'fahrt-erstellen');
             window.location.href = "pages/fahrt_erstellen/fahrt_erstellen.html";
         }
     },
-
-    mounted: function () {
+    created: function () {
+        sessionStorage.setItem('active', '');
+    },
+    mounted: function () {        
         redirectNotAuthUser("pages/login/login.html");
     }
 });
