@@ -195,7 +195,7 @@ button:focus, button:active{
 
 .drive-details-h3 {
     font-family: 'Roboto Slab', serif;
-    font-size: 3.5vw;
+    font-size: 4vw;
     color: var(--grey-light);
     z-index: 50;
     padding: 0;
