@@ -1,21 +1,21 @@
 body {
     background: #fff;
     margin:0;
-    height: 100vh;
-    overflow: hidden;
+    height: 100vh;    
+    width:100vw;
 }
 
 .illustration-big{
     width:100vw;   
     height:auto;
-    margin-top:-15vw;
+    margin-bottom: 10vw;
 }
 
 .fahrt-erstellen-heading {
     color: var(--grey-dark);
     font-size: 7vw;
     width: 80vw;
-    margin:auto;
+    margin:0 auto 5vw;
 }
 
 .form-wrapper {
@@ -169,7 +169,7 @@ input:focus {
 /* YES-NO Buttons */
 #wrapper-yes-no{
     width: 50vw;
-    margin:5vh auto 2vh auto;
+    margin:5vw auto;
     display:flex;
     justify-content:space-around;
     align-content:center;
@@ -192,13 +192,18 @@ input:focus {
 }
 
 
-#repeating p {
+#repeating p, #passengers p, #dateTime p {
     font-family: Montserrat, sans-serif;
+    font-weight:500;
     font-size: 4vw;
     color: var(--grey-light);
     text-align:center;
-    width: 60vw;
+    width: 90vw;
     margin:auto;
+}
+
+#dateTime p {
+    margin-top: 3vw;
 }
 
 .textarea {
@@ -206,6 +211,8 @@ input:focus {
     font-weight:500;
     color:var(--grey-dark);
     border: 2px solid var(--grey-extralight);
+    border-radius: 20px;
+    padding: 3vw 5vw;
     border-radius: 15px;
     padding: 2vw 3.5vw;
     box-sizing: border-box;
