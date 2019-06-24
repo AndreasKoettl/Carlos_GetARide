@@ -62,13 +62,13 @@
 
 #profile-picture-form {
     height: 60vw;
-    margin-top: 10vw;
-    margin-bottom: 10vw;
+    margin-top: 0;
+    margin-bottom: 5vw;
 }
 
 .profile-options {
     width: 90vw;
-    margin: 15% auto 0 auto;
+    margin: 8% auto 0 auto;
 }
 
 .profile-options img {

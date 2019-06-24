@@ -69,7 +69,7 @@ input {
     border-radius: 50px;
     font-size: 4vw;
     font-family: Montserrat, sans-serif;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--grey-dark);
     padding: 2.6vw 5vw;
     box-sizing: border-box;
@@ -151,7 +151,7 @@ button:focus, button:active{
 
 .overview-h1 {
     font-family: 'Roboto Slab', serif;
-    font-size: 5.5vw;
+    font-size: 5vw;
     color: var(--red);
     font-weight: 900;
     padding: 0;
