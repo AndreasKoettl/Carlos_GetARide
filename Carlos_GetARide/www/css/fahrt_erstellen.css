@@ -1,8 +1,8 @@
 body {
     background: #fff;
     margin:0;
-    height: 100vh;
-    overflow: hidden;
+    height: 100vh;    
+    width:100vw;
 }
 
 .illustration-big{
@@ -192,7 +192,7 @@ input:focus {
 }
 
 
-#repeating p, #passengers p, #details p {
+#repeating p, #passengers p, #dateTime p {
     font-family: Montserrat, sans-serif;
     font-weight:500;
     font-size: 4vw;
@@ -202,18 +202,19 @@ input:focus {
     margin:auto;
 }
 
+#dateTime p {
+    margin-top: 3vw;
+}
+
 .textarea {
     font-family: Montserrat, sans-serif;
     font-weight:500;
     color:var(--grey-dark);
     border: 2px solid var(--grey-extralight);
-<<<<<<< HEAD
     border-radius: 20px;
     padding: 3vw 5vw;
-=======
     border-radius: 15px;
     padding: 2vw 3.5vw;
->>>>>>> develop
     box-sizing: border-box;
     width: 100%;
     height: 10vh;

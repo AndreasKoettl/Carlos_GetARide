@@ -7,17 +7,9 @@ carlos.app = new Vue({
     data: {
         driveData: {},
         process: ['route', 'repeating', 'dateTime', 'passengers', 'details', 'price'],
-        index: 0,
-        startValue: "",
-        destinationValue: "",
-        dateValue: "",
-        timeValue: "",
-        weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],
-        passengersValue: "",
-        licensePlateValue: "",
-        carDetailsValue: "",
-        freeDrive:false,
-        priceValue: "",
+        index: 0,        
+        weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],        
+        freeDrive:false,        
         slide: "slide",
         complete: false,
         isScrolling: false
@@ -132,12 +124,11 @@ carlos.app = new Vue({
             this.checkIfComplete();
         },
 
-        submitData: function (data) {
-            event.preventDefault();
+        submitData: function (data) {            
             // automatically save the different drive-data depending on the values of the paramater
             for (let i = 0; i < data.length; i++) {
                 let element = this[data[i]];
-                if (element.nodeName == 'INPUT') {
+                if (element.nodeName == 'INPUT' || element.nodeName == 'TEXTAREA') {
                     this.driveData[data[i]] = element.value;
                 } else if (typeof (element) == 'boolean') {
                     this.driveData[data[i]] = element;
@@ -166,8 +157,13 @@ carlos.app = new Vue({
 
                 if (this.index == 2) {
                     this.$nextTick(function () {
-                        this.$el.querySelector('#date').min = new Date().toISOString().split("T")[0];
-                    })                 
+                        if (this.driveData['repeating']) {
+                            this.$el.querySelector('#startDate').min = new Date().toISOString().split("T")[0];
+                            this.$el.querySelector('#endDate').min = new Date().toISOString().split("T")[0];
+                        } else {
+                            this.$el.querySelector('#date').min = new Date().toISOString().split("T")[0];
+                        }                        
+                    })  
                 }
 
             });
@@ -191,17 +187,17 @@ carlos.app = new Vue({
         },
 
         init: function () {
-            this.start = document.querySelector('#start');
-            this.destination = document.querySelector('#destination');
-            this.date = document.querySelector('#date');
-            this.time = document.querySelector('#time');
-            this.startDate = document.querySelector('#startDate');
-            this.endDate = document.querySelector('#endDate');
-            this.daysSelected = document.getElementsByClassName('active-weekday');
-            this.passengers = document.querySelector('#numPassengers');
-            this.licensePlate = document.querySelector('#licensePlate');
-            this.carDetails = document.querySelector('#carDetails');
-            this.price = document.querySelector('#priceValue');
+            this.start = this.$el.querySelector('#start');
+            this.destination = this.$el.querySelector('#destination');
+            this.date = this.$el.querySelector('#date');
+            this.time = this.$el.querySelector('#time');
+            this.startDate = this.$el.querySelector('#startDate');
+            this.endDate = this.$el.querySelector('#endDate');
+            this.daysSelected = this.$el.getElementsByClassName('active-weekday');
+            this.passengers = this.$el.querySelector('#numPassengers');
+            this.licensePlate = this.$el.querySelector('#licensePlate');
+            this.carDetails = this.$el.querySelector('#carDetails');
+            this.price = this.$el.querySelector('#priceValue');
 
             // deactivate back-button on first page of the process
             if (this.process[this.index] == 'route') {
