@@ -269,3 +269,73 @@ hr {
     height: 0.4vw;
     background-color: var(--grey-extralight);
 }
+
+
+
+/* Start screen css */
+
+#start-screen {    
+    width: 90vw;
+    margin:auto;
+}
+
+#logoMainPage {
+    width: 80%;
+    margin: auto !important;
+    padding-top: 10vw;
+    display: block;
+}
+
+.illustration-index-container {
+    width: 45vw;
+    height: 100%;
+    margin-right: 3vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.illustration-index {
+    width: 40vw;
+    height: auto;
+}
+
+.illustration-small {
+    width: 20vw;
+    height: auto;
+    margin: 4vw auto;
+    display: block;
+}
+
+.main-option {
+    border-radius: 30px;
+    background: var(--blue-light);
+    height: 28vh;
+    width: 100%;
+    margin: 3vh auto;
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+}
+
+#main-option-text-container {
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 4vw;
+}
+
+#main-option-text-container img {
+    width: 8vw;
+    height: 8vw;
+    filter: brightness(0) invert(36%) sepia(27%) saturate(2113%) hue-rotate(327deg) brightness(93%) contrast(87%);
+}
+
+.main-option h3 {
+    font-family: Roboto Slab, serif;
+    font-weight: normal;
+    color: var(--grey-dark);
+    font-size: 7vw;
+    margin: 2vh 0;
+}

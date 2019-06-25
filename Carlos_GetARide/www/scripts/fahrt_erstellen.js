@@ -178,7 +178,7 @@ carlos.app = new Vue({
                 url: "/carlos/Carlos_GetARide/www/php/saveRide.php?/saveRide",
                 data: { driveData: driveData },
                 success: function (data) {                    
-                    window.location = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen_success.html";
+                    //window.location = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen_success.html";
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");

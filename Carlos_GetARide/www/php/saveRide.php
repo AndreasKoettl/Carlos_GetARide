@@ -18,8 +18,10 @@ function saveRide(){
 		$weekdays = $driveData['weekdays'];				
 		$weekdaysEngl = array("MO" => "Mon", "DI" => "THU", "MI" => "Wed", "DO" => "Thu", "FR" => "Fri", "SA" => "Sat", "SO" => "Sun");			
 		for($i=0; $i < sizeof($weekdays); $i++){
+			$driveData['weekdaysString'] .= " " . $weekdays[$i];		
 			$weekdays[$i]=$weekdaysEngl[$weekdays[$i]];			
 		}
+		var_dump($driveData['weekdaysString']);
 
 		// create repeating drives
 		$isInitialDrive = true;
@@ -62,8 +64,8 @@ function saveRide(){
 
 function insertDrive($dbConnection, $driveData){
 // insert driveData into table drives
-	$query="INSERT INTO `drives` (`locationStart`, `locationEnd`, `cityStart`, `cityEnd`, `driveDate`, `passengers`, `maxPassengers`, `dateAdded`, `dateChanged`, `price`, `licensePlate`, `details`, `initialDriveId`, `users_idusers`) 
-	VALUES (:start, :destination, :cityStart, :cityEnd, :datetime, '0', :maxPassengers, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, :price, :licensePlate, :carDetails, :initialDriveId, :iduser);";	
+	$query="INSERT INTO `drives` (`locationStart`, `locationEnd`, `cityStart`, `cityEnd`, `driveDate`, `passengers`, `maxPassengers`, `dateAdded`, `dateChanged`, `weekDays`, `price`, `licensePlate`, `details`, `initialDriveId`, `users_idusers`) 
+	VALUES (:start, :destination, :cityStart, :cityEnd, :datetime, '0', :maxPassengers, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, :weekdays, :price, :licensePlate, :carDetails, :initialDriveId, :iduser);";	
 	$dbConnection->prepareStatement($query);
 	$dbConnection->bindParam(":price", $driveData["price"]);
 	$dbConnection->bindParam(":start", $driveData["start"]);
@@ -72,9 +74,11 @@ function insertDrive($dbConnection, $driveData){
 	$dbConnection->bindParam(":cityEnd", $driveData["cityEnd"]);
 	$dbConnection->bindParam(":maxPassengers", $driveData["passengers"]);		
 	$dbConnection->bindParam(":datetime", $driveData["datetime"]);
-	$licensePlate= isset($driveData["licensePlate"]) ? $driveData["licensePlate"] : NULL;			
+	$weekdays = isset($driveData["weekdaysString"]) ? $driveData["weekdaysString"] : NULL;			
+	$dbConnection->bindParam(":weekdays", $weekdays);
+	$licensePlate = isset($driveData["licensePlate"]) ? $driveData["licensePlate"] : NULL;			
 	$dbConnection->bindParam(":licensePlate", $licensePlate);
-	$carDetails= isset($driveData["carDetails"]) ? $driveData["carDetails"] : NULL;			
+	$carDetails = isset($driveData["carDetails"]) ? $driveData["carDetails"] : NULL;			
 	$dbConnection->bindParam(":carDetails", $carDetails);
 	$dbConnection->bindParam(":iduser", $driveData["iduser"]);
 	$initialDriveId = isset($driveData["initialDriveId"]) ? $driveData["initialDriveId"] : NULL;
