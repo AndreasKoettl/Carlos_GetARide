@@ -11,9 +11,9 @@ dispatch('/coDriverNames/:iddrive', 'loadCoDriverNames');
 dispatch('/initialDriveId/:iddrive', 'getInitialDriveId');
 dispatch('/cancelRide/:iddrive/:iduser', 'cancelRide');
 dispatch('/deleteRide/:iddrive', 'deleteRide');
-dispatch('/declineRide/:iddrive/:firstname/:lastname', 'declineRide');
-dispatch('/reducePassengers/:iddrive/:firstname/:lastname', 'reducePassengers');
-dispatch('/confirmRequest/:iddrive/:firstname/:lastname', 'confirmRequest');
+dispatch('/declineRide/:iddrive/:iduser', 'declineRide');
+dispatch('/reducePassengers/:iddrive/:iduser', 'reducePassengers');
+dispatch('/confirmRequest/:iddrive/:iduser', 'confirmRequest');
 
 function loadDriversRides()
 {
@@ -288,26 +288,10 @@ function declineRide()
     $dbConnection = new DatabaseAccess;
 
     $result = array();
-    // Vor- und Nachname decoden
-    $lastname = htmlentities(params("lastname"), ENT_QUOTES);
-    if (strpos($lastname, '&')) {
-        $lastname = substr($lastname, 0, sizeof($lastname)-7);
-    }
-    $firstname = htmlentities(params("firstname"), ENT_QUOTES);
-    if (strpos($firstname, '&')) {
-        $firstname = substr($firstname, 0, sizeof($firstname)-7);
-    }
-
-    // Userdaten mit first- und lastname auslesen
-    $dbConnection->prepareStatement("SELECT * FROM users WHERE firstname = :firstname AND lastname = :lastname");
-    $dbConnection->bindParam(":firstname", $firstname);
-    $dbConnection->bindParam(":lastname", $lastname);
-    $dbConnection->executeStatement();
-    $user = $dbConnection->fetchAll();
 
     // Anfrage von User mit gefundener Id bei gegebener Fahrt löschen
     $dbConnection->prepareStatement("DELETE FROM requests WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
-    $dbConnection->bindParam(":iduser", $user["data"][0]["idusers"]);
+    $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
@@ -332,26 +316,10 @@ function reducePassengers()
     $dbConnection = new DatabaseAccess;
 
     $result = array();
-    // Vor- und Nachname decoden
-    $lastname = htmlentities(params("lastname"), ENT_QUOTES);
-    if (strpos($lastname, '&')) {
-        $lastname = substr($lastname, 0, sizeof($lastname)-7);
-    }
-    $firstname = htmlentities(params("firstname"), ENT_QUOTES);
-    if (strpos($firstname, '&')) {
-        $firstname = substr($firstname, 0, sizeof($firstname)-7);
-    }
-
-    // Userdaten mit first- und lastname auslesen
-    $dbConnection->prepareStatement("SELECT * FROM users WHERE firstname = :firstname AND lastname = :lastname");
-    $dbConnection->bindParam(":firstname", $firstname);
-    $dbConnection->bindParam(":lastname", $lastname);
-    $dbConnection->executeStatement();
-    $user = $dbConnection->fetchAll();
 
     // Anfrage von User mit gefundener Id bei gegebener Fahrt löschen
     $dbConnection->prepareStatement("DELETE FROM requests WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
-    $dbConnection->bindParam(":iduser", $user["data"][0]["idusers"]);
+    $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $request = $dbConnection->fetchAll();
@@ -381,15 +349,6 @@ function confirmRequest()
     $dbConnection = new DatabaseAccess;
 
     $result = array();
-    // Vor- und Nachname decoden
-    $lastname = htmlentities(params("lastname"), ENT_QUOTES);
-    if (strpos($lastname, '&')) {
-        $lastname = substr($lastname, 0, sizeof($lastname)-7);
-    }
-    $firstname = htmlentities(params("firstname"), ENT_QUOTES);
-    if (strpos($firstname, '&')) {
-        $firstname = substr($firstname, 0, sizeof($firstname)-7);
-    }
 
     // Details zu gegebener Fahrt auslesen
     $dbConnection->prepareStatement("SELECT * FROM drives WHERE iddrives = :iddrive");
@@ -400,16 +359,9 @@ function confirmRequest()
     // wenn maxPassengers noch nicht erreicht ist
     if ($drive["data"][0]["passengers"] < $drive["data"][0]["maxPassengers"]) {
 
-        // Userdaten mit first- und lastname auslesen
-        $dbConnection->prepareStatement("SELECT * FROM users WHERE firstname = :firstname AND lastname = :lastname");
-        $dbConnection->bindParam(":firstname", htmlentities(params("firstname"), ENT_QUOTES));
-        $dbConnection->bindParam(":lastname", $lastname);
-        $dbConnection->executeStatement();
-        $user = $dbConnection->fetchAll();
-
         // accepted bei gegebener Fahrt und gegebenen User auf 1 setzen
         $dbConnection->prepareStatement("UPDATE requests SET accepted = 1 WHERE users_idusers = :iduser AND drives_iddrives = :iddrive");
-        $dbConnection->bindParam(":iduser", $user["data"][0]["idusers"]);
+        $dbConnection->bindParam(":iduser", htmlentities(params("iduser"), ENT_QUOTES));
         $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
         $dbConnection->executeStatement();
         $request = $dbConnection->fetchAll();
@@ -426,7 +378,7 @@ function confirmRequest()
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Die maximale Anzahl an Mitfahrern ist bereits erreicht.");
+        $result = setErrorMessage($result, "Die maximale Anzahl an Mitfahrern ist bereits erreicht." . $lastname);
     }
 
 
