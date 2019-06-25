@@ -1,19 +1,29 @@
 {
-    "name": "Carlos_GetARide",
-    "version": "1.0.0",
-    "private": true,
-    "dependencies": {
-        "cordova-plugin-datetimepicker": "1.1.2",
-        "cordova-plugin-splashscreen": "^5.0.2",
-        "html-entities": "^1.2.1"
+  "name": "Carlos_GetARide",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "cordova-plugin-datetimepicker": "1.1.2",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "html-entities": "^1.2.1",
+    "cordova-android": "8.0.0",
+    "cordova-ios": "4.2.0",
+    "cordova-windows": "4.4.2"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-datetimepicker": {},
+      "cordova-plugin-whitelist": {}
     },
-    "cordova": {
-        "plugins": {
-            "cordova-plugin-splashscreen": {},
-            "cordova-plugin-datetimepicker": {}
-        }
-    },
-    "devDependencies": {
-        "babel-cli": "^6.26.0"
-    }
+    "platforms": [
+      "android",
+      "ios",
+      "windows"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "cordova-plugin-whitelist": "1.2.2"
+  }
 }
