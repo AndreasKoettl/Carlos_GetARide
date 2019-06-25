@@ -159,6 +159,7 @@ button:focus, button:active{
     width: 90%;
     text-align: left;
     float: left;
+    margin-bottom: 2vw;
 }
 
 .overview-h2 {
@@ -167,7 +168,6 @@ button:focus, button:active{
     color: var(--grey-dark);
     padding: 0;
     margin: 0;
-    margin-top:2vw;
     text-align: left;
 }
 
@@ -229,6 +229,10 @@ button:focus, button:active{
     margin: 0;
     margin-bottom: 4vw;
     text-align: left;
+}
+
+.center-text {
+    text-align: center;
 }
 
 .padding-top {

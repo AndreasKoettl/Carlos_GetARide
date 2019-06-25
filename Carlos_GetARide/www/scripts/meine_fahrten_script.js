@@ -872,6 +872,10 @@ carlos_meineFahrten.app = new Vue({
 
         },
 
+        deletePastRides: function() {
+            this.listPastRides = [];
+        },
+
         goBack: async function (val) {
             (val === "isDriverDetails") ? this.isDriverDetails = false : this.isCoDriverDetails = false;
             this.listUpcomingRides = [];
