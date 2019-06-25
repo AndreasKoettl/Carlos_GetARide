@@ -206,6 +206,7 @@ mtd280.app = new Vue({
                     //console.log(JSON.stringify(data["data"][0]));
                     appAccess.disable = true;
                     appAccess.$el.querySelector('#ride-along').disabled = true;
+                    redirectUser("pages/suchen/fahrt_suchen_success.html");
                     console.log(data);
                 },
                 error: function () {
