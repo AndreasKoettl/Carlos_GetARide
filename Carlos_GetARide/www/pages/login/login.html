@@ -10,25 +10,27 @@
 </head>
 <body>
     <div id="app">
-        <header-back title="Login"></header-back>
-        <form v-on:submit="loginUser" id="loginForm">
-            <div id="userInput">
-                <div>                   
+        <template>
+            <header-back title="Login"></header-back>
+            <form v-on:submit="loginUser" id="loginForm" class="wrapper-content-no-tab">
+                <div id="userInput">
+                    <div>
                         <p class="statusmessage" v-for="error in errors">{{ error }}</p>
+                    </div>
+                    <div class="loginDiv">
+                        <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required />
+                    </div>
+                    <div class="loginDiv">
+                        <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required />
+                    </div>
+                    <p class="forgotPw" @click="redirectForgotPw">Passwort vergessen?</p>
                 </div>
-                <div class="loginDiv">
-                    <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required />
+                <div id="theButtons">
+                    <button type="submit" class="green-button">Login</button>
+                    <button type="button" class="green-button" v-on:click='redirectToRegister'> Registrieren</button>
                 </div>
-                <div class="loginDiv">
-                    <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required />
-                </div>
-                <p class="forgotPw" @click="redirectForgotPw">Passwort vergessen?</p>
-            </div>
-            <div id="theButtons">
-                <button type="submit" class="green-button" >Login</button>
-                <button type="button" class="green-button" v-on:click='redirectToRegister'> Registrieren</button>
-            </div>
-        </form>
+            </form>
+        </template>
     </div>
     <script src="../../scripts/components.js"></script>
     <script src="../../scripts/login.js"></script>

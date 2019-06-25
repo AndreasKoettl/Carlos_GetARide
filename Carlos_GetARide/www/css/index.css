@@ -23,7 +23,6 @@
 
 body{
     font-family: "Roboto Slab", serif;
-    overflow: scroll !important;
     color: var(--grey-dark);
 }
 
@@ -38,13 +37,12 @@ a {
     text-decoration: none;
 }
 
-.content-box-90 {
+/*.content-box-90 {
     width: 90vw;
     box-sizing: border-box;
     margin: 0 auto;
     padding: 0;
-    padding-bottom: 20vw !important;
-}
+}*/
 
 h1 {
     font-family: Roboto Slab, serif;
@@ -73,7 +71,7 @@ input {
     color: var(--grey-dark);
     padding: 2.6vw 5vw;
     box-sizing: border-box;
-    width: 100%;
+    width: 90vw;
     background: none;
 }
 
@@ -81,13 +79,8 @@ input:active, input:focus {
     outline: none;
 }
 
-form {
-    margin: 0 auto;
-    width: 90vw;
-}
-
 .textinput {
-    margin: 4vw 0 0 0;
+    margin: 4vw auto 0 auto;
 }
 
 .fileinput {
@@ -95,7 +88,7 @@ form {
 }
 
 .red-button { 
-    width: 100%;
+    width: 90vw;
     display: block;
     margin: 4vw 0;
     font-size: 5vw;
@@ -108,7 +101,7 @@ form {
 }
 
 .green-button {
-    width: 100%;
+    width: 90vw;
     display: block;
     margin: 4vw 0;
     font-size: 5vw;
@@ -129,6 +122,7 @@ button:focus, button:active{
 }
 
 .grey-box {
+    width: 90vw;    
     box-sizing: border-box;
     margin: 5vw auto 5vw auto;
     background-color: var(--grey-extralight);
@@ -272,4 +266,39 @@ hr {
     border: none;
     height: 0.4vw;
     background-color: var(--grey-extralight);
+}
+
+.wrapper-content {
+    position: fixed;
+    top: 20vw;
+    bottom: 16vw;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    align-items: center;
+}
+
+.wrapper-content-no-tab {
+    position: fixed;
+    top: 20vw;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow: auto;
+}
+
+.content-flex{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.width-100{
+    width:100%;
 }

@@ -16,7 +16,7 @@
     <div id="profilec">
         <header-back title="Profil" :scrolling="isScrolling" @go-back="goBack()" @go-there="goToSettings()"></header-back>
         <template v-if="profile">
-        <div class="content-box-90">
+        <div class="wrapper-content">
             <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
                 <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture"/>
                 <div v-if="profilePicture === defaultProfilePicture">
@@ -43,38 +43,48 @@
         </template>
 
         <template v-else>
-            <div class="content-box-90">
-                <template v-if="settings">                  
-                        <img class="main-illustration" src="../../images/illustrationen/undraw_settings_ii2j.svg" alt="settings-picture" title="settings-picture" />
+            <div class="wrapper-content">
+                <template v-if="settings">      
+                    <div class="content-flex">
+                        
+                       
                         <div class="settings">
+                            <img class="main-illustration" src="../../images/illustrationen/undraw_settings_ii2j.svg" alt="settings-picture" title="settings-picture" />
                             <p>Benachrichtigungen</p>
                             <div><img v-bind:class="{'red-filter':hasNotifications,  yes:settings}" @click="changeNotifications(1)" src="../../images/icons/hakerl_icon.svg" /><img v-bind:class="{'red-filter':!hasNotifications,  no:settings}" src="../../images/icons/x_icon_neu.svg" @click="changeNotifications(0)" /></div>
                         </div>
-                        <button class="red-button" @click="deleteAccount"> Account löschen</button>                
+                        <button class="red-button" @click="deleteAccount"> Account löschen</button>
+                    </div>
                 </template>
 
-            <template v-else>
+                <template v-else>
+                    <div class="content-flex">
+                        <div>
+                            <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
+                                <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture" />
+                                <label for="profile-picture-upload">
+                                    <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_edit_icon.svg" alt="edit-profile-picture" title="edit-profile-picture" />
+                                </label>
+                                <input type="file" class="fileinput" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
+                                <input type="hidden" name="iduser" :value="iduser">
+                            </form>
+                            <form method="post" id="edit-profile-form">
 
-                    <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
-                        <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture"/>
-                            <label for="profile-picture-upload">
-                                <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_edit_icon.svg" alt="edit-profile-picture" title="edit-profile-picture"/>
-                            </label>
-                        <input type="file" class="fileinput" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
-                        <input type="hidden" name="iduser" :value="iduser">
-                    </form>
-                <form method="post" id="edit-profile-form">
-                    <div class="textinput">
-                        <label for="firstname">Vorname</label>
-                        <input type="text" id="firstname" name="firstname" v-model="firstname">
+                                <div class="textinput">
+                                    <label for="firstname">Vorname</label>
+                                    <input type="text" id="firstname" name="firstname" v-model="firstname">
+                                </div>
+                                <div class="textinput">
+                                    <label for="lastname">Nachname</label>
+                                    <input type="text" id="lastname" name="lastname" v-model="lastname">
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <button class="red-button" @click="saveNewData">Speichern</button>
                     </div>
-                    <div class="textinput">
-                        <label for="lastname">Nachname</label>
-                        <input type="text" id="lastname" name="lastname" v-model="lastname">
-                    </div>
-                    <button class="red-button" @click="saveNewData">Speichern</button>
-                </form>
-            </template>
+                </template>
             </div>
         </template>
 

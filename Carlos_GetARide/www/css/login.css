@@ -1,12 +1,6 @@
 ﻿#userInput{
+    width: 90vw;
     height: auto;
-}
-
-#loginForm, #registerForm, #successRegister {
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 85vh;
 }
 
 #successRegister, #successChangePw, #deleteForm, #changePwSuccess {

@@ -8,7 +8,6 @@ body {
 .illustration-big{
     width:100vw;   
     height:auto;
-    margin-bottom: 10vw;
 }
 
 .fahrt-erstellen-heading {
@@ -19,15 +18,16 @@ body {
 }
 
 .form-wrapper {
-    width: 90vw;
-    margin:auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .lift-form{
     margin-top:-5vh;
 }
 #weekday-wrapper{
-    width:100%;   
+    width:90vw;   
     display:flex;
 }
 .weekday {
@@ -211,12 +211,10 @@ input:focus {
     font-weight:500;
     color:var(--grey-dark);
     border: 2px solid var(--grey-extralight);
-    border-radius: 20px;
-    padding: 3vw 5vw;
     border-radius: 15px;
     padding: 2vw 3.5vw;
     box-sizing: border-box;
-    width: 100%;
+    width: 90vw;
     height: 10vh;
     font-size: 4vw;
     margin-top: 4vw;

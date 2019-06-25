@@ -10,43 +10,45 @@
 </head>
 <body>
     <div id="app">
-        <header-back title="Registrieren" @go-back="redirectToLogin()"></header-back>
-        <form v-if="!succeeded" v-on:submit="registerUser" id="registerForm">
-            <div id="userInput">
-                <div>
-                     <p class="statusmessage" v-for="error in errors">{{ error }}</p>
+        <template>
+            <header-back title="Registrieren" @go-back="redirectToLogin()"></header-back>
+            <form v-if="!succeeded" v-on:submit="registerUser" id="registerForm" class="wrapper-content-no-tab">
+                <div id="userInput">
+                    <div>
+                        <p class="statusmessage" v-for="error in errors">{{ error }}</p>
+                    </div>
+                    <div>
+                        <label for="firstname">Vorname:</label>
+                        <input type="text" name="firstname" id="firstname" v-model="formData.firstname" placeholder="Vorname" required />
+                    </div>
+                    <div>
+                        <label for="lastname">Nachname:</label>
+                        <input type="text" name="lastname" id="lastname" v-model="formData.lastname" placeholder="Nachname" required />
+                    </div>
+                    <div>
+                        <label for="email">E-Mail:</label>
+                        <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required />
+                    </div>
+                    <div>
+                        <label for="password">Passwort:</label>
+                        <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required />
+                    </div>
+                    <div>
+                        <label for="password-repeat">Passwort wiederholen:</label>
+                        <input type="password" name="password-repeat" id="password-repeat" v-model="formData.passwordRepeat" placeholder="Passwort" required />
+                    </div>
                 </div>
-                <div>
-                    <label for="firstname">Vorname:</label>
-                    <input type="text" name="firstname" id="firstname" v-model="formData.firstname" placeholder="Vorname" required />
+                <button type="submit" class="green-button">Registrieren</button>
+            </form>
+            <template v-else>
+                <div id="successRegister">
+                    <div>
+                        <img src="../../images/icons/check.svg" class="illustration-small" />
+                        <p class="statusmessage2">Registrierung erfolgreich, Sie erhalten in Kürze eine Bestätigungsmail.</p>
+                    </div>
+                    <button type="button" class="red-button" v-on:click="redirectToLogin"> Weiter zum Login</button>
                 </div>
-                <div>
-                    <label for="lastname">Nachname:</label>
-                    <input type="text" name="lastname" id="lastname" v-model="formData.lastname" placeholder="Nachname" required />
-                </div>
-                <div>
-                    <label for="email">E-Mail:</label>
-                    <input type="email" name="email" id="email" v-model="formData.email" placeholder="E-Mail" required />
-                </div>
-                <div>
-                    <label for="password">Passwort:</label>
-                    <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required />
-                </div>
-                <div>
-                    <label for="password-repeat">Passwort wiederholen:</label>
-                    <input type="password" name="password-repeat" id="password-repeat" v-model="formData.passwordRepeat" placeholder="Passwort" required />
-                </div>
-            </div>
-            <button type="submit" class="green-button">Registrieren</button>
-        </form>
-        <template  v-else>
-            <div id="successRegister">
-                <div>
-                    <img src="../../images/icons/check.svg" class="illustration-small" />
-                    <p class="statusmessage2">Registrierung erfolgreich, Sie erhalten in Kürze eine Bestätigungsmail.</p>
-                </div>
-                <button type="button" class="red-button" v-on:click="redirectToLogin"> Weiter zum Login</button>
-            </div>
+            </template>
         </template>
     </div>
     <script src="../../scripts/components.js"></script>
