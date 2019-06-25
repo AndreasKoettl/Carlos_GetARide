@@ -153,9 +153,11 @@ carlos_meineFahrten.app = new Vue({
                                     }
                             }
                             for (let i = 0; i < appAccess.allUpcomingDriverRides.length; i++) {
-                                appAccess.getCoDriversNames(i, true);
+                                appAccess.getCoDriversNames(i, true, 2);
                             }
-                            console.log(appAccess.listUpcomingRides);
+                            for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
+                                appAccess.getCoDriversNames(i, true, 1);
+                            }
                         }
 
                         else {
@@ -375,7 +377,7 @@ carlos_meineFahrten.app = new Vue({
                         await (this.isDriverDetails = true);
                         this.listAccepted = [];
                         this.listNotAccepted = [];
-                        this.getCoDriversNames(index, isUpcoming);
+                        this.getCoDriversNames(index, isUpcoming, 0);
                     } else {
                         await (this.isCoDriverDetails = true);
                         if (list[index].accepted == 0) {
@@ -514,7 +516,7 @@ carlos_meineFahrten.app = new Vue({
                             }
                         }
                         for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
-                            appAccess.getCoDriversNames(i, true);
+                            appAccess.getCoDriversNames(i, true, 1);
                         }
                     }
 
@@ -675,12 +677,12 @@ carlos_meineFahrten.app = new Vue({
             });
         },
 
-        getCoDriversNames: async function (index, isUpcoming) {
+        getCoDriversNames: async function (index, isUpcoming, func) {
             var appAccess = this;
             let list;
             isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
             let iddrive;
-            if (this.isDriver && this.indexUpcomingRide === -1 && this.indexPastRide === -1) {
+            if (func === 2) {
                 iddrive = this.allUpcomingDriverRides[index].iddrive;
             } else {
                 iddrive = list[index].iddrive;
@@ -706,7 +708,7 @@ carlos_meineFahrten.app = new Vue({
                             let iduser = result["data"][i][0]["idusers"];
                             let accepted = result["data"][i][1][0]["accepted"];
 
-                            if (appAccess.isDriver && accepted == 0 && appAccess.indexUpcomingRide === -1 && appAccess.indexPastRide === -1) {
+                            if (func === 2 && accepted == 0) {
                                 for (let i = 0; i < appAccess.allUpcomingDriverRides.length; i++) {
                                     if (appAccess.allUpcomingDriverRides[i].iddrive === iddrive) {
                                         for (let j = 0; j < appAccess.listUpcomingRides.length; j++) {
@@ -715,14 +717,17 @@ carlos_meineFahrten.app = new Vue({
                                         }
                                     }
                                 }
-                                for (let i = 0; i < list.length; i++) {
-                                    if (list[i].iddrive === iddrive) {
-                                        list[i].allAccepted = 0;console.log("da");
-                                    }
-                                }
                             }
 
-                            else {
+                            else if (func === 1 && accepted == 0) {
+
+                                for (let i = 0; i < list.length; i++) {
+                                    if (list[i].iddrive === iddrive) {
+                                        list[i].allAccepted = 0;
+                                    }
+                                }
+
+                            } else {
 
                                 if (accepted == 0) {
                                     appAccess.listNotAccepted.push({
