@@ -131,7 +131,7 @@ button:focus, button:active{
 .grey-box {
     box-sizing: border-box;
     margin: 5vw auto 5vw auto;
-    background-color: var(--grey-extralight);
+    background-color: var(--blue-light);
     border-radius: 15px;
     padding: 6vw;
     list-style: none;
@@ -141,7 +141,7 @@ button:focus, button:active{
 
 .grey-outline-box {
     background-color: white;
-    border: 2px solid var(--grey-extralight);
+    border: 2px solid var(--blue-light);
 }
 
 .red-outline-box {

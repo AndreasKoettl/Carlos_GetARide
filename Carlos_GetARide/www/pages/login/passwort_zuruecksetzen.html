@@ -12,7 +12,8 @@
 <body>
     <div id="app">
         <header-back title="Zurücksetzen"></header-back>
-        <form v-if="!succeeded" v-on:submit="resetPassword">
+        <template v-if="!succeeded">
+        <form v-on:submit="resetPassword">
             <div>
                  <p class="statusmessage" v-for="error in errors">{{ error }}</p>
             </div>
@@ -29,6 +30,7 @@
             </div>
             <button type="submit" class="red-button" id="reset-button">Passwort ändern</button>
         </form>
+        </template>
         <template v-else>
             <div id="changePwSuccess">
                 <p class="statusmessage2">Ihr Passwort wurde erfolgreich geändert.</p>

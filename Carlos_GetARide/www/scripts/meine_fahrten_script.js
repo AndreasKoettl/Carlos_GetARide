@@ -150,8 +150,7 @@ carlos_meineFahrten.app = new Vue({
                             for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
                                 appAccess.getCoDriversNames(i, true);
                             }
-                            appAccess.listNotAccepted = [];
-                            appAccess.listAccepted = [];
+                            console.log(appAccess.listUpcomingRides);
                         }
 
                         else {
@@ -278,16 +277,18 @@ carlos_meineFahrten.app = new Vue({
         },
 
         setAcceptedCss: function () {
-            for (let i = 0; i < this.listUpcomingRides.length; i++) {
-                document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
-                if (this.listUpcomingRides[i].accepted == 0) {
-                    document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
+            if (!this.isDriver) {
+                for (let i = 0; i < this.listUpcomingRides.length; i++) {
+                    document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
+                    if (this.listUpcomingRides[i].accepted == 0) {
+                        document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
+                    }
                 }
-            }
-            for (let i = 0; i < this.listPastRides.length; i++) {
-                document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
-                if (this.listPastRides[i].accepted == 0) {
-                    document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
+                for (let i = 0; i < this.listPastRides.length; i++) {
+                    document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
+                    if (this.listPastRides[i].accepted == 0) {
+                        document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
+                    }
                 }
             }
         },
@@ -366,7 +367,9 @@ carlos_meineFahrten.app = new Vue({
                     }
 
                     if (this.isDriver) {
-                        await (this.isDriverDetails = true);    
+                        await (this.isDriverDetails = true);
+                        this.listNotAccepted = [];
+                        this.listAccepted = [];
                         this.getCoDriversNames(index, isUpcoming);
                     } else {
                         await (this.isCoDriverDetails = true);
@@ -429,12 +432,6 @@ carlos_meineFahrten.app = new Vue({
                         for (let i = 0; i < result["data"].length; i++) {
                             originalInitialDriveId = result["data"][i]["initialDriveId"];
                         }
-
-                        for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
-                            appAccess.getCoDriversNames(i, true);
-                        }
-                        appAccess.listNotAccepted = [];
-                        appAccess.listAccepted = [];
                     }
                     else {
                         // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
@@ -467,6 +464,7 @@ carlos_meineFahrten.app = new Vue({
                                 routeEnd: result["data"][i]["locationEnd"],
                                 cityStart: result["data"][i]["cityStart"],
                                 cityEnd: result["data"][i]["cityEnd"],
+                                accepted: result["data"][i]["accepted"],
                                 date: appAccess.formatDate(new Date(result["data"][i]["driveDate"])),
                                 time: appAccess.formatTime(new Date(result["data"][i]["driveDate"])),
                                 dateTime: new Date(result["data"][i]["driveDate"]),
@@ -494,6 +492,10 @@ carlos_meineFahrten.app = new Vue({
                                 }
                             }
                         }
+                        for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
+                            appAccess.getCoDriversNames(i, true);
+                        }
+                        console.log(appAccess.listUpcomingRides);
                     }
 
                     else {

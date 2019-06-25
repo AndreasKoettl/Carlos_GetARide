@@ -11,7 +11,8 @@
 <body>
     <div id="app">
         <header-back title="Registrieren" @go-back="redirectToLogin()"></header-back>
-        <form v-if="!succeeded" v-on:submit="registerUser" id="registerForm">
+        <template v-if="!succeeded">
+        <form v-on:submit="registerUser" id="registerForm">
             <div id="userInput">
                 <div>
                      <p class="statusmessage" v-for="error in errors">{{ error }}</p>
@@ -39,6 +40,7 @@
             </div>
             <button type="submit" class="green-button">Registrieren</button>
         </form>
+        </template>
         <template  v-else>
             <div id="successRegister">
                 <div>
