@@ -12,7 +12,8 @@
 <body>
     <div id="app">
         <header-back title="Passwort vergessen" @go-back="redirectToLogin()"></header-back>
-        <form v-if="!succeeded" v-on:submit="forgotPassword" id="forgotPwForm">
+        <template v-if="!succeeded">
+        <form v-on:submit="forgotPassword" id="forgotPwForm">
             <div>
                 <div>
                         <p class="statusmessage" v-for="error in errors">{{ error }}</p>
@@ -25,7 +26,8 @@
             <div id="theButtons">
                 <button type="submit" class="red-button" value="Passwort zurücksetzen">Passwort zurücksetzen</button>
             </div>
-        </form> 
+        </form>
+        </template>
         <template v-else>
             <div id="mailSent">
                 <img src="../../images/icons/check.svg" class="illustration-small" />

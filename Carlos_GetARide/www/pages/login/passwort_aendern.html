@@ -12,7 +12,8 @@
 <body>
     <div id="app">
         <header-back title="Passwort ändern" :scrolling="isScrolling" @go-back="redirectToProfile()"></header-back>
-        <form v-if="!succeeded" v-on:submit="changePassword" id="changePwForm">
+        <template v-if="!succeeded">
+        <form v-on:submit="changePassword" id="changePwForm">
             <div>
                 <div>
                    <p class="statusmessage" v-for="error in errors">{{ errors }}</p>
@@ -34,6 +35,7 @@
                 <button type="submit" class="green-button">Passwort ändern</button>
             </div>
         </form>
+        </template>
         <template v-else>
             <div id="successChangePw">
                 <img src="../../images/icons/check.svg" class="illustration-small" />

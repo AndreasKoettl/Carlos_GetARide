@@ -10,6 +10,8 @@
 </head>
 <body>
     <div id="app">
+        <template>
+            <div>
         <header-back title="Login"></header-back>
         <form v-on:submit="loginUser" id="loginForm">
             <div id="userInput">
@@ -29,6 +31,8 @@
                 <button type="button" class="green-button" v-on:click='redirectToRegister'> Registrieren</button>
             </div>
         </form>
+            </div>
+        </template>
     </div>
     <script src="../../scripts/components.js"></script>
     <script src="../../scripts/login.js"></script>

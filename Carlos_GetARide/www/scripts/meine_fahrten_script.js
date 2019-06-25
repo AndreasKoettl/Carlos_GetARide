@@ -11,6 +11,7 @@ carlos_meineFahrten.app = new Vue({
     data: {
         listUpcomingRides: [],
         listPastRides: [],
+        allUpcomingDriverRides: [],
         listAccepted: [],
         listNotAccepted: [],
         isDriver: true,
@@ -87,7 +88,8 @@ carlos_meineFahrten.app = new Vue({
                                     time: appAccess.formatTime(new Date(result["data"][i]["driveDate"])),
                                     dateTime: new Date(result["data"][i]["driveDate"]),
                                     initialDriveId: result["data"][i]["initialDriveId"],
-                                    accepted: result["data"][i]["accepted"],
+                                    allAccepted: 1,
+                                    childrenAccepted: 1,
                                     price: result["data"][i]["price"],
                                     passengersAvailable: result["data"][i]["maxPassengers"] - result["data"][i]["passengers"],
                                     licensePlate: result["data"][i]["licensePlate"],
@@ -97,6 +99,9 @@ carlos_meineFahrten.app = new Vue({
                                 let currentDate = new Date();
 
                                 if (currentDate <= drive.dateTime) {
+
+                                    appAccess.allUpcomingDriverRides.push(drive);
+
                                         if (drive.iddrive === drive.initialDriveId) {
                                             drive.repeating = 1;
                                             appAccess.listUpcomingRides.push(drive);
@@ -147,11 +152,10 @@ carlos_meineFahrten.app = new Vue({
                                         }
                                     }
                             }
-                            for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
+                            for (let i = 0; i < appAccess.allUpcomingDriverRides.length; i++) {
                                 appAccess.getCoDriversNames(i, true);
                             }
-                            appAccess.listNotAccepted = [];
-                            appAccess.listAccepted = [];
+                            console.log(appAccess.listUpcomingRides);
                         }
 
                         else {
@@ -278,16 +282,18 @@ carlos_meineFahrten.app = new Vue({
         },
 
         setAcceptedCss: function () {
-            for (let i = 0; i < this.listUpcomingRides.length; i++) {
-                document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
-                if (this.listUpcomingRides[i].accepted == 0) {
-                    document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
+            if (!this.isDriver) {
+                for (let i = 0; i < this.listUpcomingRides.length; i++) {
+                    document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
+                    if (this.listUpcomingRides[i].accepted == 0) {
+                        document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
+                    }
                 }
-            }
-            for (let i = 0; i < this.listPastRides.length; i++) {
-                document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
-                if (this.listPastRides[i].accepted == 0) {
-                    document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
+                for (let i = 0; i < this.listPastRides.length; i++) {
+                    document.getElementsByClassName("grey-box")[i].classList.remove("red-outline-box");
+                    if (this.listPastRides[i].accepted == 0) {
+                        document.getElementsByClassName("grey-box")[i].classList.add("red-outline-box");
+                    }
                 }
             }
         },
@@ -339,7 +345,7 @@ carlos_meineFahrten.app = new Vue({
                         await this.loadCoDriversRepetitions(index, isUpcoming);
                     }
                     list[index].repeating = 2;
-                    this.setRepetitionCss();
+                    this.setRepetitionCss(index, isUpcoming);
                     this.setAcceptedCss();
                 }
                 else if (list[index].repeating === 2) {
@@ -366,40 +372,58 @@ carlos_meineFahrten.app = new Vue({
                     }
 
                     if (this.isDriver) {
-                        await (this.isDriverDetails = true);    
+                        await (this.isDriverDetails = true);
+                        this.listAccepted = [];
+                        this.listNotAccepted = [];
                         this.getCoDriversNames(index, isUpcoming);
                     } else {
                         await (this.isCoDriverDetails = true);
                         if (list[index].accepted == 0) {
                             document.getElementsByTagName('button')[0].innerHTML = "Anfrage löschen";
                         }
+                        this.listAccepted = [];
+                        this.listNotAccepted = [];
                         this.getDriversName(list[index].idDriver, isUpcoming);
                     }
                 }
 
         },
 
-        setRepetitionCss: function () {
-            for (let i = 0; i < this.listUpcomingRides.length; i++) {
-                document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
-                if (this.listUpcomingRides[i].repeating === 3) {
-                    document.getElementsByClassName("grey-box")[i].classList.add("grey-outline-box");
+        setRepetitionCss: function (index, isUpcoming) {
+            if (isUpcoming) {
+                for (let i = index+1; i < this.listUpcomingRides.length; i++) {
+                    document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
+                    if (this.listUpcomingRides[i].repeating === 3) {
+                        document.getElementsByClassName("grey-box")[i].classList.add("grey-outline-box");
+                    }
                 }
-            }
-            for (let i = 0; i < this.listPastRides.length; i++) {
-                document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
-                if (this.listPastRides[i].repeating === 3) {
-                    document.getElementsByClassName("grey-box")[i].classList.add("grey-outline-box");
+            } else {
+                let pos = this.listUpcomingRides.length+index+1;
+                for (let i = 1; i < this.listPastRides.length; i++) {
+                    document.getElementsByClassName("grey-box")[pos].classList.remove("grey-outline-box");
+                    if (this.listPastRides[i].repeating === 3) {
+                        document.getElementsByClassName("grey-box")[pos].classList.add("grey-outline-box");
+                    }
+                    pos++;
                 }
+
             }
         },
 
         removeRepetitionCss: function (index, isUpcoming) {
-            let list;
-            isUpcoming? list = this.listUpcomingRides : list = this.listPastRides;
-            for (let i = 0; i < list.length; i++) {
-                if (this.listUpcomingRides[i].repeating !== 3) {
-                    document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
+            if (isUpcoming) {
+                for (let i = index+1; i < this.listUpcomingRides.length; i++) {
+                    if (this.listUpcomingRides[i].repeating !== 3) {
+                        document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
+                    }
+                }
+            } else {
+                let pos = this.listUpcomingRides.length + index + 1;
+                for (let i = 1; i < this.listPastRides.length; i++) {
+                    if (this.listPastRides[i].repeating !== 3) {
+                        document.getElementsByClassName("grey-box")[pos].classList.remove("grey-outline-box");
+                    }
+                    pos++;
                 }
             }
         },
@@ -429,12 +453,6 @@ carlos_meineFahrten.app = new Vue({
                         for (let i = 0; i < result["data"].length; i++) {
                             originalInitialDriveId = result["data"][i]["initialDriveId"];
                         }
-
-                        for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
-                            appAccess.getCoDriversNames(i, true);
-                        }
-                        appAccess.listNotAccepted = [];
-                        appAccess.listAccepted = [];
                     }
                     else {
                         // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
@@ -467,6 +485,7 @@ carlos_meineFahrten.app = new Vue({
                                 routeEnd: result["data"][i]["locationEnd"],
                                 cityStart: result["data"][i]["cityStart"],
                                 cityEnd: result["data"][i]["cityEnd"],
+                                allAccepted: 1,
                                 date: appAccess.formatDate(new Date(result["data"][i]["driveDate"])),
                                 time: appAccess.formatTime(new Date(result["data"][i]["driveDate"])),
                                 dateTime: new Date(result["data"][i]["driveDate"]),
@@ -493,6 +512,9 @@ carlos_meineFahrten.app = new Vue({
                                     list.splice(index + 1, 0, drive);
                                 }
                             }
+                        }
+                        for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
+                            appAccess.getCoDriversNames(i, true);
                         }
                     }
 
@@ -657,7 +679,12 @@ carlos_meineFahrten.app = new Vue({
             var appAccess = this;
             let list;
             isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
-            let iddrive = list[index].iddrive;
+            let iddrive;
+            if (this.isDriver && this.indexUpcomingRide === -1 && this.indexPastRide === -1) {
+                iddrive = this.allUpcomingDriverRides[index].iddrive;
+            } else {
+                iddrive = list[index].iddrive;
+            }
 
             let ajaxRequest = await $.ajax({
                 accepts: "application/json",
@@ -676,24 +703,44 @@ carlos_meineFahrten.app = new Vue({
 
                             let firstName = result["data"][i][0]["firstname"];
                             let lastName = result["data"][i][0]["lastname"];
+                            let iduser = result["data"][i][0]["idusers"];
                             let accepted = result["data"][i][1][0]["accepted"];
 
-                            if (accepted == 0) {
-                                appAccess.listNotAccepted.push({
-                                    firstName: firstName,
-                                    lastName: lastName,
-                                    iddrive: iddrive
-                                });
-                                list[index].accepted = accepted;
-                            }
-                            else {
-                                appAccess.listAccepted.push({
-                                    firstName: firstName,
-                                    lastName: lastName,
-                                    iddrive: iddrive
-                                });
+                            if (appAccess.isDriver && accepted == 0 && appAccess.indexUpcomingRide === -1 && appAccess.indexPastRide === -1) {
+                                for (let i = 0; i < appAccess.allUpcomingDriverRides.length; i++) {
+                                    if (appAccess.allUpcomingDriverRides[i].iddrive === iddrive) {
+                                        for (let j = 0; j < appAccess.listUpcomingRides.length; j++) {
+                                            if (appAccess.allUpcomingDriverRides[i].initialDriveId === appAccess.listUpcomingRides[j].iddrive)
+                                                list[j].childrenAccepted = 0;
+                                        }
+                                    }
+                                }
+                                for (let i = 0; i < list.length; i++) {
+                                    if (list[i].iddrive === iddrive) {
+                                        list[i].allAccepted = 0;console.log("da");
+                                    }
+                                }
                             }
 
+                            else {
+
+                                if (accepted == 0) {
+                                    appAccess.listNotAccepted.push({
+                                        firstName: firstName,
+                                        lastName: lastName,
+                                        iduser: iduser,
+                                        iddrive: iddrive
+                                    });
+                                }
+                                else {
+                                    appAccess.listAccepted.push({
+                                        firstName: firstName,
+                                        lastName: lastName,
+                                        iduser: iduser,
+                                        iddrive: iddrive
+                                    });
+                                }
+                            }
                         }
                     }
 
@@ -784,13 +831,15 @@ carlos_meineFahrten.app = new Vue({
             let iddrive = this.listNotAccepted[index].iddrive;
             let firstname = this.listNotAccepted[index].firstName;
             let lastname = this.listNotAccepted[index].lastName;
+            let iduser = this.listNotAccepted[index].iduser;
+
             await $.ajax({
                 accepts: "application/json",
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/declineRide/" + iddrive + "/" + firstname + "/" + lastname,
-                data: iddrive, firstname, lastname,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/declineRide/" + iddrive + "/" + iduser,
+                data: iddrive, iduser,
                 success: async function (data) {
                     let result = JSON.parse(data);
 
@@ -816,6 +865,7 @@ carlos_meineFahrten.app = new Vue({
             let iddrive = this.listAccepted[index].iddrive;
             let firstname = this.listAccepted[index].firstName;
             let lastname = this.listAccepted[index].lastName;
+            let iduser = this.listAccepted[index].iduser;
             let appAccess = this;
 
             await $.ajax({
@@ -823,8 +873,8 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/reducePassengers/" + iddrive + "/" + firstname + "/" + lastname,
-                data: iddrive, firstname, lastname,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/reducePassengers/" + iddrive + "/" + iduser,
+                data: iddrive, iduser,
                 success: async function (data) {
                     let result = JSON.parse(data);
 
@@ -850,6 +900,7 @@ carlos_meineFahrten.app = new Vue({
             let iddrive = this.listNotAccepted[index].iddrive;
             let firstname = this.listNotAccepted[index].firstName;
             let lastname = this.listNotAccepted[index].lastName;
+            let iduser = this.listNotAccepted[index].iduser;
             let appAccess = this;
 
             await $.ajax({
@@ -857,8 +908,8 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/confirmRequest/" + iddrive + "/" + firstname + "/" + lastname,
-                data: iddrive, firstname, lastname,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/confirmRequest/" + iddrive + "/" + iduser,
+                data: iddrive, iduser,
                 success: async function (data) {
                     let result = JSON.parse(data);
 
@@ -894,6 +945,8 @@ carlos_meineFahrten.app = new Vue({
             this.listPastRides = [];
             this.listAccepted = [];
             this.listNotAccepted = [];
+            this.indexUpcomingRide = -1;
+            this.indexPastRide = -1;
 
             if (val === "isDriverDetails") {
                 this.loadDriversRides();

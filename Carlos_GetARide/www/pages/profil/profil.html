@@ -23,7 +23,7 @@
                     <label for="profile-picture-upload">
                         <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_add_icon.svg" alt="add-profile-picture" title="add-profile-picture"/>
                     </label>
-                    <input type="file" class="fileinput" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
+                    <input type="file" class="fileinput" accept="image/*" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
                     <input type="hidden" name="iduser" :value="iduser">
                 </div>
             </form>
@@ -60,7 +60,7 @@
                             <label for="profile-picture-upload">
                                 <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_edit_icon.svg" alt="edit-profile-picture" title="edit-profile-picture"/>
                             </label>
-                        <input type="file" class="fileinput" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
+                        <input type="file" class="fileinput" accept="image/*" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
                         <input type="hidden" name="iduser" :value="iduser">
                     </form>
                 <form method="post" id="edit-profile-form">
