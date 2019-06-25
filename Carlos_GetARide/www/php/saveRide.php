@@ -10,11 +10,12 @@ function saveRide(){
 	//Decode the JSON string and convert it into a PHP associative array.
 	$driveData = json_decode($data, true);		
 	$dbConnection = new DatabaseAccess;
-	$result=insertDrive($dbConnection, $driveData);
-	var_dump($result);
+	$result=insertDrive($dbConnection, $driveData);	
 		
 	if($driveData["repeating"]){				
 		// replace German weekdays with English
+		$driveData['weekdaysString']="";
+		$driveData['datetime']="";
 		$weekdays = $driveData['weekdays'];				
 		$weekdaysEngl = array("MO" => "Mon", "DI" => "THU", "MI" => "Wed", "DO" => "Thu", "FR" => "Fri", "SA" => "Sat", "SO" => "Sun");			
 		for($i=0; $i < sizeof($weekdays); $i++){
@@ -50,7 +51,6 @@ function saveRide(){
 						$dbConnection->prepareStatement($query);
 						$dbConnection->bindParam(":initialDriveId", $initialDriveId);
 						$dbConnection->executeStatement();	
-
 						$isInitialDrive=false;
 					}
 				}
@@ -59,7 +59,7 @@ function saveRide(){
 	} else {
 		$driveData["datetime"]= $driveData['date'] . " " . $driveData["time"] . ":00";	
 		insertDrive($dbConnection, $driveData);
-	}	
+	}
 }
 
 function insertDrive($dbConnection, $driveData){
@@ -72,7 +72,7 @@ function insertDrive($dbConnection, $driveData){
 	$dbConnection->bindParam(":cityStart", $driveData["cityStart"]);
 	$dbConnection->bindParam(":destination", $driveData["destination"]);
 	$dbConnection->bindParam(":cityEnd", $driveData["cityEnd"]);
-	$dbConnection->bindParam(":maxPassengers", $driveData["passengers"]);		
+	$dbConnection->bindParam(":maxPassengers", $driveData["passengers"]);	
 	$dbConnection->bindParam(":datetime", $driveData["datetime"]);
 	$weekdays = isset($driveData["weekdaysString"]) ? $driveData["weekdaysString"] : NULL;			
 	$dbConnection->bindParam(":weekdays", $weekdays);

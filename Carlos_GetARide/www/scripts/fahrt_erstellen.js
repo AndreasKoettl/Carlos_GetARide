@@ -177,7 +177,8 @@ carlos.app = new Vue({
                 async: true,
                 url: "/carlos/Carlos_GetARide/www/php/saveRide.php?/saveRide",
                 data: { driveData: driveData },
-                success: function (data) {                    
+                success: function (data) {
+                    console.log(data);
                     //window.location = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen_success.html";
                 },
                 error: function () {
