@@ -91,7 +91,7 @@ carlos_meineFahrten.app = new Vue({
                                     price: result["data"][i]["price"],
                                     passengersAvailable: result["data"][i]["maxPassengers"] - result["data"][i]["passengers"],
                                     licensePlate: result["data"][i]["licensePlate"],
-                                    details: result["data"][i]["details"]
+                                    details: result["data"][i]["details"],
                                 };
 
                                 let currentDate = new Date();
@@ -147,6 +147,11 @@ carlos_meineFahrten.app = new Vue({
                                         }
                                     }
                             }
+                            for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
+                                appAccess.getCoDriversNames(i, true);
+                            }
+                            appAccess.listNotAccepted = [];
+                            appAccess.listAccepted = [];
                         }
 
                         else {
@@ -424,6 +429,12 @@ carlos_meineFahrten.app = new Vue({
                         for (let i = 0; i < result["data"].length; i++) {
                             originalInitialDriveId = result["data"][i]["initialDriveId"];
                         }
+
+                        for (let i = 0; i < appAccess.listUpcomingRides.length; i++) {
+                            appAccess.getCoDriversNames(i, true);
+                        }
+                        appAccess.listNotAccepted = [];
+                        appAccess.listAccepted = [];
                     }
                     else {
                         // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
@@ -673,6 +684,7 @@ carlos_meineFahrten.app = new Vue({
                                     lastName: lastName,
                                     iddrive: iddrive
                                 });
+                                list[index].accepted = accepted;
                             }
                             else {
                                 appAccess.listAccepted.push({
@@ -870,6 +882,10 @@ carlos_meineFahrten.app = new Vue({
                 }
             });
 
+        },
+
+        deletePastRides: function() {
+            this.listPastRides = [];
         },
 
         goBack: async function (val) {
