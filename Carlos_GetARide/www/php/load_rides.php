@@ -301,12 +301,13 @@ function deleteRide()
         $dbConnection->executeStatement();
         $newParentDrive = $dbConnection->fetchAll();
 
-        $dbConnection->prepareStatement("UPDATE drives SET initialDriveId = :newId WHERE initialDriveId = :initialDriveId");
-        $dbConnection->bindParam(":newId", $newParentDrive["data"][1]["iddrives"]);
-        $dbConnection->bindParam(":initialDriveId", $drive["data"][0]["initialDriveId"]);
-        $dbConnection->executeStatement();
-        $newDrives = $dbConnection->fetchAll();
-
+        if (sizeof($newParentDrive["data"]) > 1) {
+            $dbConnection->prepareStatement("UPDATE drives SET initialDriveId = :newId WHERE initialDriveId = :initialDriveId");
+            $dbConnection->bindParam(":newId", $newParentDrive["data"][1]["iddrives"]);
+            $dbConnection->bindParam(":initialDriveId", $drive["data"][0]["initialDriveId"]);
+            $dbConnection->executeStatement();
+            $newDrives = $dbConnection->fetchAll();
+        }
     }
 
     // die gegebene Fahrt selbst löschen
