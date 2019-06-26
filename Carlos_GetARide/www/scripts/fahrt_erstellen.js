@@ -7,7 +7,7 @@ carlos.app = new Vue({
     data: {
         driveData: {},
         process: ['route', 'repeating', 'dateTime', 'passengers', 'details', 'price'],
-        index: 0,        
+        index: 1,        
         weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],        
         freeDrive:false,        
         slide: "slide",
@@ -18,6 +18,7 @@ carlos.app = new Vue({
         // This method is called when a user clicks the back-button        
         goBack: function () {
             if (document.querySelector('.placeActive') == undefined) {
+                this.$el.querySelectorAll('.process-page')[0].scrollTo(0, 0);                
                 this.slide = "reverse-slide";
                 this.$nextTick(function () {
                     this.index--;
@@ -151,7 +152,8 @@ carlos.app = new Vue({
                 this.driveData['weekdays'] = weekdays;
             }
 
-            this.slide = "slide";
+            this.$el.querySelectorAll('.process-page')[0].scrollTo(0, 0);
+            this.slide = "slide";            
             this.$nextTick(function () {
                 this.index++;
 
@@ -247,7 +249,7 @@ carlos.app = new Vue({
             }
         });
     },
-    updated: function () {
+    updated: function () {        
         this.init();
         this.checkIfComplete();
         this.back = false;
