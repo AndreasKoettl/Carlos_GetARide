@@ -20,7 +20,8 @@ carlos_meineFahrten.app = new Vue({
         indexUpcomingRide: -1,
         indexPastRide: -1,
         date: new Date(),
-        isScrolling: false
+        isScrolling: false,
+        acceptDeclineRequest: false
     },
 
     methods: {
@@ -881,6 +882,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
+                      
                         await appAccess.listNotAccepted.splice(index, 1);
                     }
 
@@ -938,6 +940,8 @@ carlos_meineFahrten.app = new Vue({
             let lastname = this.listNotAccepted[index].lastName;
             let iduser = this.listNotAccepted[index].iduser;
             let appAccess = this;
+            console.log("index");
+            console.log(index);
 
             await $.ajax({
                 accepts: "application/json",
@@ -947,10 +951,13 @@ carlos_meineFahrten.app = new Vue({
                 url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/confirmRequest/" + iddrive + "/" + iduser,
                 data: iddrive, iduser,
                 success: async function (data) {
+                    console.log(data);
                     let result = JSON.parse(data);
+            
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
+                        appAccess.acceptDeclineRequest = false;
                         let request = appAccess.listNotAccepted[index];
                         await appAccess.listNotAccepted.splice(index, 1);
                         await appAccess.listAccepted.push(request);
@@ -1034,6 +1041,19 @@ carlos_meineFahrten.app = new Vue({
                 this.switchMenu();
             }
             this.setAcceptedCss();
+        },
+
+        openModal: function() {
+            this.acceptDeclineRequest = true;
+        },
+
+        dontChangeCommitment: function () {
+            console.log("decline");
+            this.acceptDeclineRequest = false;
+            this.$nextTick(function(){
+                console.log("wow");
+            })
+          
         }
 
     },
