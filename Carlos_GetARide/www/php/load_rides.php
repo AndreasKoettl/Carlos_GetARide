@@ -12,6 +12,7 @@ dispatch('/loadRequests', 'loadRequests');
 dispatch('/initialDriveId/:iddrive', 'getInitialDriveId');
 dispatch('/cancelRide/:iddrive/:iduser', 'cancelRide');
 dispatch('/deleteRide/:iddrive', 'deleteRide');
+dispatch('/deleteSingleRide/:iddrive', 'deleteSingleRide');
 dispatch('/declineRide/:iddrive/:iduser', 'declineRide');
 dispatch('/reducePassengers/:iddrive/:iduser', 'reducePassengers');
 dispatch('/confirmRequest/:iddrive/:iduser', 'confirmRequest');
@@ -329,6 +330,38 @@ function deleteRide()
 
 }
 
+function deleteSingleRide()
+{
+    // Datenbankverbindung aufbauen.
+    $dbConnection = new DatabaseAccess;
+
+    $result = array();
+
+    // alle Anfragen für gegebene Fahrt löschen
+    $dbConnection->prepareStatement("DELETE FROM requests WHERE drives_iddrives = :iddrive");
+    $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+    $dbConnection->executeStatement();
+    $deletedRequests = $dbConnection->fetchAll();
+
+    // die gegebene Fahrt selbst löschen
+    $dbConnection->prepareStatement("DELETE FROM drives WHERE iddrives = :iddrive");
+    $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+    $dbConnection->executeStatement();
+    $result = $dbConnection->fetchAll();
+
+    if ($dbConnection->getRowCount() > 0) {
+
+        $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
+    }
+    else {
+        $result = setErrorMessage($result, "Keine Fahrt vorhanden.");
+    }
+
+
+    return json_encode($result);
+
+}
+
 function declineRide()
 {
     // Datenbankverbindung aufbauen.
@@ -418,6 +451,11 @@ function confirmRequest()
         $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
         $dbConnection->executeStatement();
         $result = $dbConnection->fetchAll();
+/*
+        $title = "Zusage";
+        $body = "Deine Anfrage wurde bestätigt.";
+        $idusers = htmlentities(params("iduser"), ENT_QUOTES);
+        sendNotification($idusers, $title, $body, "pages/fahrt_erstellen/meine_fahrten.html");*/
     }
 
     if (sizeof($result) > 0) {

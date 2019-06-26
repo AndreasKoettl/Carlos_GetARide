@@ -972,7 +972,9 @@ carlos_meineFahrten.app = new Vue({
         },
 
         deletePastRides: async function() {
+            let appAccess = this;
             let indizes = [];
+            let list = this.listPastRides;
             for (let i = 0; i < this.listPastRides.length; i++) {
                 if (this.listPastRides[i].iddrive === this.listPastRides[i].initialDriveId) {
                     indizes.push(i);
@@ -983,10 +985,35 @@ carlos_meineFahrten.app = new Vue({
             }
             let currentDate = new Date();
             for (let i = 0; i < this.listPastRides.length; i++) {
+                let iddrive = this.listPastRides[i].iddrive;
+                console.log(this.listPastRides.length);
                 if (this.listPastRides[i].dateTime < currentDate) {
-                    this.deleteRide(i, false);
-                    this.listPastRides.splice(i, 1);
-                    i--;
+                    Vue.set(this.listPastRides, i, 0);
+
+                    await $.ajax({
+                        accepts: "application/json",
+                        async: true,
+                        contentType: false,
+                        processData: false,
+                        url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/deleteSingleRide/" + iddrive,
+                        data: iddrive,
+                        success: function (data) {
+                            let result = JSON.parse(data);
+
+                            // Prüfen ob das Laden erfolgreich war.
+                            if (result["status"] === "success") {
+                                appAccess.goBack('isDriverDetails');
+                            }
+
+                            else {
+                                // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                                console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                            }
+                        },
+                        error: function () {
+                            console.log("Server Verbindung fehlgeschlagen.");
+                        }
+                    });
                 }
             }
         },
