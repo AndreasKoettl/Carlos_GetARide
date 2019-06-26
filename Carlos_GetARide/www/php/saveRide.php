@@ -3,6 +3,8 @@ require_once '../lib/limonade-master/lib/limonade.php';
 require_once 'DatabaseAccess.php';
 require_once 'utilities.php';
 
+header("Access-Control-Allow-Origin: *");
+
 dispatch_post('/saveRide', 'saveRide');
 
 function saveRide(){
