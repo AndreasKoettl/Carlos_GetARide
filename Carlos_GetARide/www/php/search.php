@@ -96,6 +96,11 @@ dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 			$dbConnection->executeStatement();
 			$result = $dbConnection->fetchAll();
 
+            for ($i = 0; $i < sizeof($result["data"]); $i++) {
+                $result["data"][$i]["firstname"] = html_entity_decode($result["data"][$i]["firstname"]);
+                $result["data"][$i]["lastname"] = html_entity_decode($result["data"][$i]["lastname"]);
+            }
+
 			if ($dbConnection->getRowCount() > 0) {
 				$result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
 			}
