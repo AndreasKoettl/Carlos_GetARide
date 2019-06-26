@@ -40,7 +40,10 @@
                             </div>
                         </div>
                         <p v-if="ride.repeating !== 1 && ride.repeating !== 2" class="overview-h2">{{ride.date}}, {{ride.time}}</p>
-                        <p v-if="ride.repeating === 1 || ride.repeating === 2" class="overview-h2">{{ride.weekDays}}</p>
+                        <div v-if="ride.repeating === 1 || ride.repeating === 2" class="row-no-padding-left">
+                            <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/calendar_weekdays.svg" class="icon-calendar">
+                            <p class="overview-h2">{{ride.weekDays}}</p>
+                        </div>
                     </div>
 
                     <div v-if="ride.repeating === 3" class="grey-box">
@@ -62,7 +65,10 @@
                             <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
                         </div>
                         <p v-if="ride.repeating !== 1 && ride.repeating !== 2" class="overview-h2">{{ride.date}}, {{ride.time}}</p>
-                        <p v-if="ride.repeating === 1 || ride.repeating === 2" class="overview-h2">{{ride.weekDays}}</p>
+                        <div v-if="ride.repeating === 1 || ride.repeating === 2" class="row-no-padding-left">
+                            <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/calendar_weekdays.svg" class="icon-calendar">
+                            <p class="overview-h2">{{ride.weekDays}}</p>
+                        </div>
                      </div>
                 </a>
                 <h6 v-if="isDriver" class="codriver-acceptance center-text" @click="deletePastRides">Vergangene Fahrten löschen</h6>
