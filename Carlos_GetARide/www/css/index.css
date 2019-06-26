@@ -244,7 +244,9 @@ button:focus, button:active{
 }
 
 .box-route div:first-of-type{
-    margin-bottom: 4vh;
+    height: 14.5vw;
+    position: relative;
+    top: -1vh;
 }
 
 .icon-route {
