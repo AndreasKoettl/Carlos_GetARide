@@ -882,7 +882,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
-                        document.getElementsByClassName('displayModal')[index].classList.add("displayNone");
+                        appAccess.$refs.m1[index].classList.add('displayNone');
                         await appAccess.listNotAccepted.splice(index, 1);
                     }
 
@@ -918,7 +918,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
-                        document.getElementsByClassName('displayModal2')[index].classList.add("displayNone");
+                        appAccess.$refs.m2[index].classList.add('displayNone');
                         await appAccess.listAccepted.splice(index, 1);
                     }
 
@@ -958,7 +958,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
-                        document.getElementsByClassName('displayModal')[index].classList.add("displayNone");
+                        appAccess.$refs.m1[index].classList.add('displayNone');
                         let request = appAccess.listNotAccepted[index];
                         await appAccess.listNotAccepted.splice(index, 1);
                         await appAccess.listAccepted.push(request);
@@ -1045,16 +1045,15 @@ carlos_meineFahrten.app = new Vue({
         },
 
         openModal: function (index) {
-            document.getElementsByClassName('displayModal')[index].classList.remove("displayNone");
+            this.$refs.m1[index].classList.remove('displayNone');
         },
 
         openModal2: function (index) {
-            console.log(index);
-            document.getElementsByClassName('displayModal2')[index].classList.remove("displayNone");
+            this.$refs.m2[index].classList.remove('displayNone');
         },
 
         dontChangeCommitment: function (index) {
-            document.getElementsByClassName('displayModal2')[index].classList.add("displayNone");
+            this.$refs.m2[index].classList.add('displayNone');
         }
 
     },
