@@ -118,6 +118,7 @@ Vue.component('place-input', {
                 this.clearIcon.classList.remove('hide');
                 this.clearIcon.classList.remove('displayNone');
 
+                document.getElementById('menu').classList.add('displayNone');
 
                 // unhide back-button if not visible
                 this.backbutton.classList.remove("hide");
