@@ -43,6 +43,8 @@ color: var(--grey-dark);
 }
 
 .grey-box-search {
+    width: 90vw;
+    box-sizing: border-box;
     margin: 0vw auto 5vw auto;
     border-radius: 15px;
     padding: 5vw;

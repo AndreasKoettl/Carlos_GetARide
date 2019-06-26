@@ -1,39 +1,46 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" type="text/css" href="../../css/index.css" />
-    <script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
-    <script src="../../lib/vue/vue.min.js"></script>
-    <script src="../../scripts/index.js"></script>
-    <script src="../../scripts/logout.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://* data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src * 'unsafe-inline';  media-src *; font-src *">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <title>Passwort zurücksetzen</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script type="text/javascript" src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../lib/vue/vue.min.js"></script>
+    <script type="text/javascript" src="../../scripts/index.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
 </head>
 <body>
     <div id="app">
         <header-back title="Zurücksetzen"></header-back>
         <template v-if="!succeeded">
-        <form v-on:submit="resetPassword">
-            <div>
-                 <p class="statusmessage" v-for="error in errors">{{ error }}</p>
-            </div>
-            <div>
-                <input type="hidden" name="email" id="email" v-model="formData.email" />
-            </div>
-            <div>
-                <label for="password">Passwort:</label>
-                <input type="password" name="password" id="password" v-model="formData.password" placeholder="Neues Passwort" required />
-            </div>
-            <div>
-                <label for="password-repeat">Passwort wiederholen:</label>
-                <input type="password" name="password-repeat" id="password-repeat" v-model="formData.passwordRepeat" placeholder="Neues Passwort wiederholen" required />
-            </div>
-            <button type="submit" class="red-button" id="reset-button">Passwort ändern</button>
-        </form>
+            <form v-on:submit="resetPassword" class="wrapper-content-no-tab">
+                <div>
+                    <div>
+                        <p class="statusmessage" v-for="error in errors">{{ error }}</p>
+                    </div>
+                    <div>
+                        <input type="hidden" name="email" id="email" v-model="formData.email" />
+                    </div>
+                    <div>
+                        <label for="password">Passwort:</label>
+                        <input type="password" name="password" id="password" v-model="formData.password" placeholder="Neues Passwort" required />
+                    </div>
+                    <div>
+                        <label for="password-repeat">Passwort wiederholen:</label>
+                        <input type="password" name="password-repeat" id="password-repeat" v-model="formData.passwordRepeat" placeholder="Neues Passwort wiederholen" required />
+                    </div>
+                </div>
+                <button type="submit" class="red-button" id="reset-button">Passwort ändern</button>
+            </form>
         </template>
         <template v-else>
-            <div id="changePwSuccess">
-                <p class="statusmessage2">Ihr Passwort wurde erfolgreich geändert.</p>
+            <div id="changePwSuccess" class="wrapper-content-no-tab">
+                <p class="statusmessage2 width-90">Ihr Passwort wurde erfolgreich geändert.</p>
                 <button type="button" class="red-button" v-on:click="redirectToLogin">Weiter zum Login</button>
             </div>
         </template>

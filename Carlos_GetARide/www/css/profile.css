@@ -22,6 +22,12 @@
     font-weight: 400;
 }
 
+.edit-profile-flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
 
 .yes, .no, .garbage-icon {
     height: 9vw;
@@ -58,6 +64,7 @@
 #add-edit-profile-picture {
     width: 12vw;
     right: 10px;
+    top:0;
 }
 
 #profile-picture-form {

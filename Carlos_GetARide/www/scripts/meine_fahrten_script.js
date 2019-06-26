@@ -381,7 +381,7 @@ carlos_meineFahrten.app = new Vue({
                         await (this.isDriverDetails = true);
                         this.listAccepted = [];
                         this.listNotAccepted = [];
-                        this.getCoDriversNames(index, isUpcoming);
+                        this.getCoDriversNames(index, isUpcoming, 0);
                     } else {
                         await (this.isCoDriverDetails = true);
                         if (list[index].accepted == 0) {
@@ -729,7 +729,6 @@ carlos_meineFahrten.app = new Vue({
 
                         }
                     }
-
                     else {
                         // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
                         console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
