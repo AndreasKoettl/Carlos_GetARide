@@ -30,7 +30,7 @@ new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/profil.php?/loadUserData/" + iduser,
+                url: getAbsPath("php/profil.php?/loadUserData/") + iduser,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     console.log(data);
@@ -67,7 +67,7 @@ new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/profil.php?/saveUserData/" + iduser + "/" + this.firstname + "/" + this.lastname,
+                url: getAbsPath("php/profil.php?/saveUserData/") + iduser + "/" + this.firstname + "/" + this.lastname,
                 data: formData,
                 success: function (data) {
 
@@ -101,7 +101,7 @@ new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/profil.php?/changeNotifications/" + iduser + "/" + this.hasNotifications,
+                url: getAbsPath("php/profil.php?/changeNotifications/") + iduser + "/" + this.hasNotifications,
                 success: function (data) {
                     console.log(data);
                 },
@@ -160,7 +160,7 @@ new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/auth.php?/logoutUser",
+                url: getAbsPath("php/auth.php?/logoutUser"),
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     console.log(data);

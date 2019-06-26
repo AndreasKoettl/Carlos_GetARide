@@ -72,7 +72,7 @@ carlos_meineFahrten.app = new Vue({
                     async: true,
                     contentType: false,
                     processData: false,
-                    url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/driver/" + iduser,
+                    url: getAbsPath("php/load_rides.php?/driver/") + iduser,
                     data: iduser,
                     success: function (data) {
                         let result = JSON.parse(data);
@@ -186,7 +186,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/codriver/" + iduser,
+                url: getAbsPath("php/load_rides.php?/codriver/") + iduser,
                 data: iduser,
                 success: function (data) {
                     let result = JSON.parse(data);
@@ -448,7 +448,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/initialDriveId/" + iddrive,
+                url: getAbsPath("php/load_rides.php?/initialDriveId/") + iddrive,
                 data: iddrive,
                 success: function (data) {
                     let result = JSON.parse(data);
@@ -475,7 +475,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/driverRepeating/" + originalInitialDriveId,
+                url: getAbsPath("php/load_rides.php?/driverRepeating/") + originalInitialDriveId,
                 data: originalInitialDriveId,
                 success: function (data) {
                     let result = JSON.parse(data);
@@ -551,7 +551,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/initialDriveId/" + iddrive,
+                url: getAbsPath("php/load_rides.php?/initialDriveId/") + iddrive,
                 data: iddrive,
                 success: function (data) {
                     let result = JSON.parse(data);
@@ -578,7 +578,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/codriver/" + iduser,
+                url: getAbsPath("php/load_rides.php?/codriver/") + iduser,
                 data: iduser,
                 success: function (data) {
                     let result = JSON.parse(data);
@@ -650,7 +650,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/driverName/" + iddriver,
+                url: getAbsPath("php/load_rides.php?/driverName/") + iddriver,
                 data: iddriver,
                 success: function (data) {
                     let result = JSON.parse(data);
@@ -694,7 +694,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/coDriverNames/" + iddrive,
+                url: getAbsPath("php/load_rides.php?/coDriverNames/") + iddrive,
                 data: iddrive,
                 success: function (data) {
                     let result = JSON.parse(data);
@@ -747,7 +747,7 @@ carlos_meineFahrten.app = new Vue({
                         async: true,
                         contentType: false,
                         processData: false,
-                        url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/loadRequests",
+                        url: getAbsPath("php/load_rides.php?/loadRequests"),
                         success: function (data) {
                             let result = JSON.parse(data);
 
@@ -807,7 +807,7 @@ carlos_meineFahrten.app = new Vue({
                     async: true,
                     contentType: false,
                     processData: false,
-                    url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/cancelRide/" + iddrive + "/" + iduser,
+                    url: getAbsPath("php/load_rides.php?/cancelRide/") + iddrive + "/" + iduser,
                     data: iddrive, iduser,
                     success: function (data) {
                         let result = JSON.parse(data);
@@ -841,7 +841,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/deleteRide/" + iddrive,
+                url: getAbsPath("php/load_rides.php?/deleteRide/") + iddrive,
                 data: iddrive,
                 success: function (data) {
                     let result = JSON.parse(data);
@@ -876,7 +876,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/declineRide/" + iddrive + "/" + iduser,
+                url: getAbsPath("php/load_rides.php?/declineRide/") + iddrive + "/" + iduser,
                 data: iddrive, iduser,
                 success: async function (data) {
                     let result = JSON.parse(data);
@@ -911,7 +911,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/reducePassengers/" + iddrive + "/" + iduser,
+                url: getAbsPath("php/load_rides.php?/reducePassengers/") + iddrive + "/" + iduser,
                 data: iddrive, iduser,
                 success: async function (data) {
                     let result = JSON.parse(data);
@@ -946,7 +946,7 @@ carlos_meineFahrten.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/confirmRequest/" + iddrive + "/" + iduser,
+                url: getAbsPath("php/load_rides.php?/confirmRequest/") + iddrive + "/" + iduser,
                 data: iddrive, iduser,
                 success: async function (data) {
                     let result = JSON.parse(data);
@@ -997,7 +997,7 @@ carlos_meineFahrten.app = new Vue({
                         async: true,
                         contentType: false,
                         processData: false,
-                        url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/deleteSingleRide/" + iddrive,
+                        url: getAbsPath("php/load_rides.php?/deleteSingleRide/") + iddrive,
                         data: iddrive,
                         success: function (data) {
                             let result = JSON.parse(data);

@@ -7,9 +7,9 @@ carlos.app = new Vue({
     data: {
         driveData: {},
         process: ['route', 'repeating', 'dateTime', 'passengers', 'details', 'price'],
-        index: 0,        
-        weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],        
-        freeDrive:false,        
+        index: 0,
+        weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],
+        freeDrive: false,
         slide: "slide",
         complete: false,
         isScrolling: false
@@ -18,12 +18,12 @@ carlos.app = new Vue({
         // This method is called when a user clicks the back-button        
         goBack: function () {
             if (document.querySelector('.placeActive') == undefined) {
-                this.$el.querySelectorAll('.process-page')[0].scrollTo(0, 0);                
+                this.$el.querySelectorAll('.process-page')[0].scrollTo(0, 0);
                 this.slide = "reverse-slide";
                 this.$nextTick(function () {
                     this.index--;
                 })
-            }            
+            }
         },
 
         // This method is called when a user leaves the place-input field
@@ -79,7 +79,7 @@ carlos.app = new Vue({
                         document.querySelector('#submitDriveData').classList.remove('disabled');
                         document.querySelector('#submitDriveData').classList.remove('red-button');
                         document.querySelector('#submitDriveData').classList.add('green-button');
-               
+
                         this.complete = true;
                     } else {
                         document.querySelector('#submitDriveData').classList.add('disabled');
@@ -121,11 +121,11 @@ carlos.app = new Vue({
             let container = document.getElementById('freeDrive');
             container.querySelector('img').classList.toggle('active');
             container.querySelector('p').classList.toggle('active');
-            this.price.disabled = !this.price.disabled;            
+            this.price.disabled = !this.price.disabled;
             this.checkIfComplete();
         },
 
-        submitData: function (data) {            
+        submitData: function (data) {
             // automatically save the different drive-data depending on the values of the paramater
             for (let i = 0; i < data.length; i++) {
                 let element = this[data[i]];
@@ -153,7 +153,7 @@ carlos.app = new Vue({
             }
 
             this.$el.querySelectorAll('.process-page')[0].scrollTo(0, 0);
-            this.slide = "slide";            
+            this.slide = "slide";
             this.$nextTick(function () {
                 this.index++;
 
@@ -164,8 +164,8 @@ carlos.app = new Vue({
                             this.$el.querySelector('#endDate').min = new Date().toISOString().split("T")[0];
                         } else {
                             this.$el.querySelector('#date').min = new Date().toISOString().split("T")[0];
-                        }                        
-                    })  
+                        }
+                    })
                 }
 
             });
@@ -178,14 +178,13 @@ carlos.app = new Vue({
             let driveData = JSON.stringify(this.driveData);
             $.post({
                 async: true,
-                url: "/carlos/Carlos_GetARide/www/php/saveRide.php?/saveRide",
+                url: getAbsPath("php/saveRide.php?/saveRide"),
                 data: { driveData: driveData },
-                success: function (data) {         
-                  
-                   window.location = "/carlos/Carlos_GetARide/www/pages/fahrt_erstellen/fahrt_erstellen_success.html";
+                success: function (data) {
+                    window.location = getAbsPath("pages/fahrt_erstellen/fahrt_erstellen_success.html");
                 },
                 error: function () {
-                    console.log("Server Verbindung fehlgeschlagen.");
+
                 }
             });
         },
@@ -249,7 +248,7 @@ carlos.app = new Vue({
             }
         });
     },
-    updated: function () {        
+    updated: function () {
         this.init();
         this.checkIfComplete();
         this.back = false;

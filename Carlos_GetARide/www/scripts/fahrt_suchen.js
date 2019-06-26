@@ -63,7 +63,7 @@ mtd280.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/search.php?/searchRide/" + this.cityStart + "/" + this.cityEnd + "/" + dateDrive + "/" + timeDrive+ "/" + iduser,
+                url: getAbsPath("php/search.php?/searchRide/") + this.cityStart + "/" + this.cityEnd + "/" + dateDrive + "/" + timeDrive+ "/" + iduser,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     if (data === false) {
@@ -139,7 +139,7 @@ mtd280.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/search.php?/getUser/"+iduser,
+                url: getAbsPath("php/search.php?/getUser/")+iduser,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     if (data === false) {
@@ -201,12 +201,12 @@ mtd280.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/search.php?/addRequest/" + iduser + "/" + iddrives,
+                url: getAbsPath("php/search.php?/addRequest/") + iduser + "/" + iddrives,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                     appAccess.disable = true;
                     appAccess.$el.querySelector('#ride-along').disabled = true;
-                    redirectUser("pages/suchen/fahrt_suchen_success.html");
+                    redirectUser(getAbsPath("pages/suchen/fahrt_suchen_success.html"));
                     console.log(data);
                 },
                 error: function () {
@@ -224,7 +224,7 @@ mtd280.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "../../php/search.php?/checkIfCoDriver/" + iduser + "/" + iddrives,
+                url: getAbsPath("php/search.php?/checkIfCoDriver/") + iduser + "/" + iddrives,
                 success: function (data) {
                     //console.log(JSON.stringify(data["data"][0]));
                 
