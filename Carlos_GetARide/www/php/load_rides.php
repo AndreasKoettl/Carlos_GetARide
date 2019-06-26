@@ -289,6 +289,26 @@ function deleteRide()
     $dbConnection->executeStatement();
     $deletedRequests = $dbConnection->fetchAll();
 
+    $dbConnection->prepareStatement("SELECT initialDriveId FROM drives WHERE iddrives = :iddrive");
+    $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+    $dbConnection->executeStatement();
+    $drive = $dbConnection->fetchAll();
+
+    if ($drive["data"][0]["initialDriveId"] === htmlentities(params("iddrive"), ENT_QUOTES)) {
+
+        $dbConnection->prepareStatement("SELECT iddrives FROM drives WHERE initialDriveId = :initialDriveId");
+        $dbConnection->bindParam(":initialDriveId", $drive["data"][0]["initialDriveId"]);
+        $dbConnection->executeStatement();
+        $newParentDrive = $dbConnection->fetchAll();
+
+        $dbConnection->prepareStatement("UPDATE drives SET initialDriveId = :newId WHERE initialDriveId = :initialDriveId");
+        $dbConnection->bindParam(":newId", $newParentDrive["data"][1]["iddrives"]);
+        $dbConnection->bindParam(":initialDriveId", $drive["data"][0]["initialDriveId"]);
+        $dbConnection->executeStatement();
+        $newDrives = $dbConnection->fetchAll();
+
+    }
+
     // die gegebene Fahrt selbst löschen
     $dbConnection->prepareStatement("DELETE FROM drives WHERE iddrives = :iddrive");
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));

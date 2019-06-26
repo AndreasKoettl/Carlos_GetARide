@@ -980,12 +980,14 @@ carlos_meineFahrten.app = new Vue({
                 }
             }
             for (let i = 0; i < indizes.length; i++) {
-                await this.loadDriversRepetitions(i, false);
+                await this.loadDriversRepetitions(indizes[i], false);
             }
             let currentDate = new Date();
             for (let i = 0; i < this.listPastRides.length; i++) {
                 if (this.listPastRides[i].dateTime < currentDate) {
                     this.deleteRide(i, false);
+                    this.listPastRides.splice(i, 1);
+                    i--;
                 }
             }
         },
