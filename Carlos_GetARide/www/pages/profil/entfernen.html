@@ -12,21 +12,33 @@
 
     <div id="app">
         <header-back title="Account löschen" @go-back="redirectToProfile()"></header-back>
-        <form v-if="!succeeded" v-on:submit="deleteUser">
-                <p class="statusmessage" v-for="error in errors">{{ error }}</p>
-            <div>
-                <label for="password">Passwort:</label>
-                <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required />
+        <form v-if="!succeeded" v-on:submit="deleteUser" class="wrapper-content">
+            <div class="content-flex">
+                <div>
+                    <p class="statusmessage" v-for="error in errors">{{ error }}</p>
+                    <div>
+                        <label for="password">Passwort:</label>
+                        <input type="password" name="password" id="password" v-model="formData.password" placeholder="Passwort" required />
+                    </div>
+                </div>
+                <div>
+                    <input type="submit" class="red-button" value="Profil entfernen" />
+                    <input type="button" class="red-button" v-on:click="redirectToHome" value="Abbrechen" />
+                </div>
             </div>
-            <input type="submit" class="red-button" value="Profil entfernen" />
-            <input type="button" class="red-button" v-on:click="redirectToHome" value="Abbrechen" />
         </form>
         <template v-else>
-            <div id="deleteForm">
-                <img src="../../images/icons/check.svg" class="illustration-small" />
-                <p class="statusmessage2">Profil wurde erfolgreich gelöscht.</p>
-                <input type="button" class="red-button" v-on:click="redirectToLogin" value="Weiter zum Login" />
-                <input type="button" class="red-button" v-on:click="redirectToRegister" value="Weiter zur Registrierung" />
+            <div id="deleteForm" class="wrapper-content">
+                <div class="content-flex">
+                    <div>
+                        <img src="../../images/icons/check.svg" class="illustration-small" />
+                        <p class="statusmessage2">Profil wurde erfolgreich gelöscht.</p>
+                    </div>
+                    <div>
+                        <input type="button" class="red-button" v-on:click="redirectToLogin" value="Weiter zum Login" />
+                        <input type="button" class="red-button" v-on:click="redirectToRegister" value="Weiter zur Registrierung" />
+                    </div>
+                </div>
             </div>
         </template>
         <nav-bar></nav-bar>

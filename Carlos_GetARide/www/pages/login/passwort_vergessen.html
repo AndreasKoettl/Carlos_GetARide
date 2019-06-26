@@ -17,7 +17,7 @@
     <div id="app">
         <header-back title="Passwort vergessen" @go-back="redirectToLogin()"></header-back>
         <template v-if="!succeeded">
-        <form v-on:submit="forgotPassword" id="forgotPwForm">
+        <form v-on:submit="forgotPassword" id="forgotPwForm" class="wrapper-content-no-tab">
             <div>
                 <div>
                         <p class="statusmessage" v-for="error in errors">{{ error }}</p>

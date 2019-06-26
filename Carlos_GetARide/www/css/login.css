@@ -1,17 +1,6 @@
 ﻿#userInput{
-    height: auto;
-}
-
-#loginForm, #registerForm, #successRegister {
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 85vh;
-}
-
-#successRegister, #successChangePw, #deleteForm, #changePwSuccess {
     width: 90vw;
-    margin: 0 auto;
+    height: auto;
 }
 
 .loginDiv, .registerDiv{
@@ -24,8 +13,9 @@
     color: var(--red);
 }
 
-#mailSent{
-    height:100%;
-    width: 90vw;
-    margin: 40% auto 0 auto;
+#mailSent {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

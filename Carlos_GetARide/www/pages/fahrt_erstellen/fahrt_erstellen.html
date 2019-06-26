@@ -6,7 +6,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <title></title>
+    <title>Fahrt erstellen</title>
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
     <script type="text/javascript" src="../../lib/jquery/jquery-3.3.1.min.js"></script>
     <script src="../../lib/vue/vue.min.js"></script>
@@ -22,21 +22,23 @@
             <!-- ROUTE -->
             <template v-if="process[index] == 'route'">
 
-                <div id="route" class="process-page content-box-90">
-                    <div id="inputForm">
-                        <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
-                        <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
-                        <form id="routeForm">
-                            <place-input id="start" clearid="clear-start"
-                                         placeholder="Start" :loadvalue="driveData['start']"                                         
-                                         @searchbox-leave="searchBoxLeave('pick')"></place-input>
-                            <place-input id="destination" clearid="clear-destination"
-                                         placeholder="Ziel" :loadvalue="driveData['destination']"                                         
-                                         @searchbox-leave="searchBoxLeave('pick')"></place-input>
-                            <ul id="suggestions" class="displayNone"></ul>
+                <div id="route" class="process-page wrapper-content ">
+                                  
+                        <form id="inputForm"  class="content-flex">
+                            <div>
+                                <img src="../../images/illustrationen/fahrt-anbieten_wohin.jpg" class="illustration-big" />
+                                <h1 class="fahrt-erstellen-heading">Wohin fährst du?</h1>
+                                <place-input id="start" clearid="clear-start"
+                                             placeholder="Start" :loadvalue="driveData['start']"
+                                             @searchbox-leave="searchBoxLeave('pick')"></place-input>
+                                <place-input id="destination" clearid="clear-destination"
+                                             placeholder="Ziel" :loadvalue="driveData['destination']"
+                                             @searchbox-leave="searchBoxLeave('pick')"></place-input>
+                                <ul id="suggestions" class="displayNone"></ul>
+                            </div>
                             <button type="button" class="red-button disabled" id="submitRoute" v-on:click="complete ? submitData(['start', 'destination']) : false">Weiter</button>
                         </form>
-                    </div>
+                 
                 </div>
             </template>
         </transition>
@@ -44,19 +46,19 @@
         <transition :name="slide">
             <!-- REPEATING -->
             <template v-if="process[index] == 'repeating'">
-                <div id="repeating" class="process-page content-box-90">
-                    <img src="../../images/illustrationen/fahrt-anbieten_wiederholend.jpg" class="illustration-big" />
-                    <div class="lift-form">
-                        <h1 class="fahrt-erstellen-heading">Fährst du regelmäßig?</h1>
-                        <p>zum Beispiel wöchentlich am selben Tag und circa zur selben Zeit</p>
-                        <form id="repeatingForm">
-                            <div id="wrapper-yes-no">
-                                <img src="../../images/icons/hakerl_icon.svg" class="icon-yes-no" id="yes" @click="clickYes" />
-                                <img src="../../images/icons/x_icon_neu.svg" class="icon-yes-no" id="no" @click="clickNo" />
+                <div id="repeating" class="process-page wrapper-content">           
+                        <form id="repeatingForm" class="content-flex">
+                            <div>
+                                <img src="../../images/illustrationen/fahrt-anbieten_wiederholend.jpg" class="illustration-big" />
+                                <h1 class="fahrt-erstellen-heading">Fährst du regelmäßig?</h1>
+                                <p>zum Beispiel wöchentlich am selben Tag und circa zur selben Zeit</p>
+                                <div id="wrapper-yes-no">
+                                    <img src="../../images/icons/hakerl_icon.svg" class="icon-yes-no" id="yes" @click="clickYes" />
+                                    <img src="../../images/icons/x_icon_neu.svg" class="icon-yes-no" id="no" @click="clickNo" />
+                                </div>
                             </div>
                             <button type="button" class="disabled red-button " v-on:click="complete ? submitData(['repeating']) : false" id="submitRepeating">Weiter</button>
-                        </form>
-                    </div>
+                        </form>                 
                 </div>
             </template>
         </transition>
@@ -64,31 +66,34 @@
         <!-- DATETIME -->
         <transition :name="slide">
             <template v-if="process[index] == 'dateTime'">
-                <div id="dateTime" class="process-page content-box-90">
-                    <img src="../../images/illustrationen/fahrt-anbieten_zeit.jpg" class="illustration-big" />
-                    <div class="lift-form">
-                        <h1 class="fahrt-erstellen-heading">Wann fährst du?</h1>
-                        <div class="form-wrapper" v-if="!driveData['repeating']">
-                            <form id="dateTimeForm">
-                                <input type="date" class="dateInput textinput" id="date" v-on:input="checkIfComplete()" :value="driveData['date']" />
-                                <input type="time" class="timeInput textinput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />
+                <div id="dateTime" class="process-page wrapper-content">         
+         
+                            <form  v-if="!driveData['repeating']" id="dateTimeForm" class="content-flex">
+                                <div class="form-wrapper">
+                                    <img src="../../images/illustrationen/fahrt-anbieten_zeit.jpg" class="illustration-big" />
+                                    <h1 class="fahrt-erstellen-heading">Wann fährst du?</h1>
+                                    <input type="date" class="dateInput textinput" id="date" v-on:input="checkIfComplete()" :value="driveData['date']" />
+                                    <input type="time" class="timeInput textinput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />
+                                </div>
                                 <button type="button" class="disabled red-button" v-on:click="complete ? submitData(['date', 'time']) : false" id="submitDateTime">Weiter</button>
                             </form>
-                        </div>
-                        <div v-else>
-                            <div class="form-wrapper">
-                                <div id="weekday-wrapper">
-                                    <span v-for="day in weekdays" :id="day" @click="weekdayChoosen()" class="weekday">{{day}}</span>
-                                </div>
-                                <input type="time" class="textinput timeInput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />                                
-                                <div class="timespan">
-                                    <input type="text" onfocus="(this.type='date')" placeholder="von" class="textinput dateInput" id="startDate" v-on:input="checkIfComplete()" :value="driveData['startDate']" />
-                                    <input type="text" onfocus="(this.type='date')" placeholder="bis" class="textinput dateInput" id="endDate" v-on:input="checkIfComplete()" :value="driveData['endDate']" />
+                            <div class="content-flex" v-else>
+                                <div class="form-wrapper">
+                                    <img src="../../images/illustrationen/fahrt-anbieten_zeit.jpg" class="illustration-big" />
+                                    <h1 class="fahrt-erstellen-heading">Wann fährst du?</h1>
+                                    <div id="weekday-wrapper">
+                                        <span v-for="day in weekdays" :id="day" @click="weekdayChoosen()" class="weekday">{{day}}</span>
+                                    </div>
+                                    <input type="time" class="textinput timeInput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />
+                                    <label>Zeitraum:</label>
+                                    <div class="timespan">
+                                        <input type="text" onfocus="(this.type='date')" placeholder="von" class="textinput dateInput" id="startDate" v-on:input="checkIfComplete()" :value="driveData['startDate']" />
+                                        <input type="text" onfocus="(this.type='date')" placeholder="bis" class="textinput dateInput" id="endDate" v-on:input="checkIfComplete()" :value="driveData['endDate']" />
+                                    </div>
                                 </div>
                                 <button type="button" class="disabled red-button" v-on:click="complete ? submitData(['time','startDate', 'endDate']) : false" id="submitDateTimeRepeating">Weiter</button>
                             </div>
-                        </div>
-                    </div>
+                             
                 </div>
             </template>
         </transition>
@@ -96,16 +101,16 @@
         <transition :name="slide">
             <!-- PASSENGERS -->
             <template v-if="process[index] == 'passengers'">
-                <div id="passengers" class="process-page content-box-90">
-                    <img src="../../images/illustrationen/fahrt-anbieten_personen.jpg" class="illustration-big" />
-                    <div class="form-wrapper lift-form">
-                        <h1 class="fahrt-erstellen-heading">Wieviele Personen kannst du mitnehmen?</h1>
-                        <p>ohne dich selbst zu zählen</p>
-                        <form id="personenForm" class="textinput">
-                            <input type="number" id="numPassengers" :value="driveData['passengers']" v-on:input="checkIfComplete()" />
+                <div id="passengers" class="process-page wrapper-content">                  
+                        <form id="personenForm" class="content-flex">
+                            <div class="form-wrapper">
+                                <img src="../../images/illustrationen/fahrt-anbieten_personen.jpg" class="illustration-big" />
+                                <h1 class="fahrt-erstellen-heading">Wieviele Personen kannst du mitnehmen?</h1>
+                                <p>ohne dich selbst zu zählen</p>
+                                <input type="number" id="numPassengers" :value="driveData['passengers']" v-on:input="checkIfComplete()" />
+                            </div>
                             <button type="button" class="red-button disabled" id="submitPassengers" v-on:click="complete ? submitData(['passengers']) : false">Weiter</button>
-                        </form>
-                    </div>
+                        </form>                  
                 </div>
             </template>
         </transition>
@@ -113,12 +118,16 @@
         <transition :name="slide">
             <!-- DETAILS -->
             <template v-if="process[index] == 'details'">
-                <div id="details" class="process-page content-box-90">
-                    <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
-                    <form id="detailsForm" class="lift-form">
-                        <h1 class="fahrt-erstellen-heading">Wie können Mitfahrer dein Auto erkennen?</h1>                        
-                        <input placeholder="Kennzeichen" id="licensePlate" :value="driveData['licensePlate']"/>
-                        <textarea class="textarea" placeholder="Sonstige Merkmale wie z.B.: Automarke oder Farbe" :value="driveData['carDetails']" id="carDetails"></textarea>
+                <div id="details" class="process-page  wrapper-content">                    
+                    <form id="detailsForm" class="content-flex">
+                        <div>
+                            <img src="../../images/illustrationen/fahrt-anbieten_merkmale.jpg" class="illustration-big" />
+                            <div class="lift-form form-wrapper">
+                                <h1 class="fahrt-erstellen-heading">Wie können Mitfahrer dein Auto erkennen?</h1>
+                                <input placeholder="Kennzeichen" id="licensePlate" :value="driveData['licensePlate']" />
+                                <textarea class="textarea" placeholder="Sonstige Merkmale wie z.B.: Automarke oder Farbe" :value="driveData['carDetails']" id="carDetails"></textarea>
+                            </div>
+                        </div>
                         <button type="button" class="red-button disabled" id="submitDetails" v-on:click="complete ? submitData(['licensePlate', 'carDetails']) : false">Weiter</button>
                     </form>
                 </div>
@@ -128,19 +137,20 @@
         <transition :name="slide">
             <!-- PRICE -->
             <template v-if="process[index] == 'price'">
-                <div id="price" class="process-page content-box-90">
-                    <img src="../../images/illustrationen/fahrt-anbieten_preis.jpg" class="illustration-big" />
-                    <div class="lift-form">
-                        <h1 class="fahrt-erstellen-heading">Wieviel soll diese Fahrt kosten?</h1>
-                        <form id="routeForm">
+                <div id="price" class="process-page wrapper-content">              
+                    <form id="routeForm"  class="content-flex">
+                        <div class="form-wrapper">
+                            <img src="../../images/illustrationen/fahrt-anbieten_preis.jpg" class="illustration-big" />
+                            <h1 class="fahrt-erstellen-heading">Wieviel soll diese Fahrt kosten?</h1>
                             <div @click="freeDriveClicked" id="freeDrive" class="checkBox">
                                 <img src="../../images/icons/check.svg" />
                                 <p>diese Fahrt ist kostenlos.</p>
                             </div>
                             <input type="number" id="priceValue" :value="driveData['price']" placeholder="Preis" v-on:input="checkIfComplete()" />
-                            <button type="button" class="red-button disabled" id="submitDriveData" v-on:click="complete ? submitData(['price']) : false">Fahrt erstellen</button>
-                        </form>
-                    </div>
+                        </div>
+                        <button type="button" class="red-button disabled" id="submitDriveData" v-on:click="complete ? submitData(['price']) : false">Fahrt erstellen</button>
+                    </form>
+              
                 </div>
             </template>
         </transition>
