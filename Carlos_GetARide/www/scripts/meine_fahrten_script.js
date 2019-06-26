@@ -753,14 +753,16 @@ carlos_meineFahrten.app = new Vue({
 
                             // Prüfen ob das Laden erfolgreich war.
                             if (result["status"] === "success") {
+
                                 for (let i = 0; i < result["data"].length; i++) {
                                     if (result["data"][i]["accepted"] == 0) {
 
                                         if (func === 2) {
                                             for (let n = 0; n < appAccess.allUpcomingDriverRides.length; n++) {
                                                 if (appAccess.allUpcomingDriverRides[n].iddrive == result["data"][i]["drives_iddrives"]) {
+                                                    
                                                     for (let j = 0; j < appAccess.listUpcomingRides.length; j++) {
-                                                        if (appAccess.allUpcomingDriverRides[n].repeating == 0) {
+                                                        if (appAccess.allUpcomingDriverRides[n].iddrive === appAccess.listUpcomingRides[j].iddrive && appAccess.allUpcomingDriverRides[n].repeating == 0) {
                                                             appAccess.listUpcomingRides[j].allAccepted = 0;
                                                             j = appAccess.listUpcomingRides.length;
                                                         } else if (appAccess.allUpcomingDriverRides[n].initialDriveId === appAccess.listUpcomingRides[j].iddrive)
