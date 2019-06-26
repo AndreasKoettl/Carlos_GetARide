@@ -21,7 +21,7 @@ carlos_meineFahrten.app = new Vue({
         indexPastRide: -1,
         date: new Date(),
         isScrolling: false,
-        acceptDeclineRequest: false
+        acceptDR: false
     },
 
     methods: {
@@ -882,7 +882,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
-
+                        document.getElementsByClassName('displayModal')[index].classList.add("displayNone");
                         await appAccess.listNotAccepted.splice(index, 1);
                     }
 
@@ -918,6 +918,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
+                        document.getElementsByClassName('displayModal2')[index].classList.add("displayNone");
                         await appAccess.listAccepted.splice(index, 1);
                     }
 
@@ -957,7 +958,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
-                        appAccess.acceptDeclineRequest = false;
+                        document.getElementsByClassName('displayModal')[index].classList.add("displayNone");
                         let request = appAccess.listNotAccepted[index];
                         await appAccess.listNotAccepted.splice(index, 1);
                         await appAccess.listAccepted.push(request);
@@ -1043,17 +1044,17 @@ carlos_meineFahrten.app = new Vue({
             this.setAcceptedCss();
         },
 
-        openModal: function () {
-            this.acceptDeclineRequest = true;
+        openModal: function (index) {
+            document.getElementsByClassName('displayModal')[index].classList.remove("displayNone");
         },
 
-        dontChangeCommitment: function () {
-            console.log("decline");
-            this.acceptDeclineRequest = false;
-            this.$nextTick(function () {
-                console.log("wow");
-            })
+        openModal2: function (index) {
+            console.log(index);
+            document.getElementsByClassName('displayModal2')[index].classList.remove("displayNone");
+        },
 
+        dontChangeCommitment: function (index) {
+            document.getElementsByClassName('displayModal2')[index].classList.add("displayNone");
         }
 
     },
