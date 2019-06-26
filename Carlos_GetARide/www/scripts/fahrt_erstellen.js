@@ -7,7 +7,7 @@ carlos.app = new Vue({
     data: {
         driveData: {},
         process: ['route', 'repeating', 'dateTime', 'passengers', 'details', 'price'],
-        index: 1,        
+        index: 0,        
         weekdays: ["MO", "DI", "MI", "DO", "FR", "SA", "SO"],        
         freeDrive:false,        
         slide: "slide",
