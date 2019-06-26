@@ -8,6 +8,7 @@ body {
 .illustration-big{
     width:100vw;   
     height:auto;
+    margin-bottom: 2vw;
 }
 
 .fahrt-erstellen-heading {
@@ -61,7 +62,7 @@ body {
     width: 48%;
 }
 .timeInput, .dateInput {
-    padding: 2vw 3vw;
+    padding: 2vw 5vw;
     color:var(--grey-dark);
 }
 
@@ -76,16 +77,17 @@ body {
     filter: brightness(0) invert(93%) sepia(6%) saturate(4%) hue-rotate(48deg) brightness(88%) contrast(81%);
 }
 
-.dateInput:before {
-    background-image: url('../images/icons/calendar.svg');
-    background-size: 5.5vw 5.5vw;
-    display: inline-block;
-    width: 5.5vw;
-    height: 5.5vw;
-    margin-right: 5%;
-    content: "";
-    filter: brightness(0) invert(93%) sepia(6%) saturate(4%) hue-rotate(48deg) brightness(88%) contrast(81%);
-}
+    .dateInput:before {
+        background-image: url('../images/icons/calendar.svg');
+        background-size: 5.5vw 5.5vw;
+        display: inline-block;
+        width: 5.5vw;
+        height: 5.5vw;
+        margin-right: 5%;
+        content: "";
+        filter: brightness(0) invert(93%) sepia(6%) saturate(4%) hue-rotate(48deg) brightness(88%) contrast(81%);
+    }
+
 
 
 input:focus {
@@ -98,6 +100,7 @@ input:focus {
     top: 20vw;
     z-index: 0;
     width: 100vw !important;
+    scroll-behavior: smooth;
 }
 
 @keyframes slide-in {
@@ -112,7 +115,7 @@ input:focus {
 
 .slide-enter-active {    
     animation-name: slide-in;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
     animation-timing-function:ease-in-out;
 }
 
@@ -126,10 +129,10 @@ input:focus {
 }
 
 
-.slide-leave-active {    
+.slide-leave-active {
     animation-name: slide-leave;
     animation-timing-function: ease-in-out;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
 }
 
 
@@ -155,13 +158,13 @@ input:focus {
 
 .reverse-slide-enter-active {
     animation-name: reverse-enter;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
     animation-timing-function: ease-in-out;
 }
 
 .reverse-slide-leave-active {
     animation-name: reverse-leave;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
     animation-timing-function: ease-in-out;
 }
 
@@ -212,7 +215,7 @@ input:focus {
     color:var(--grey-dark);
     border: 2px solid var(--grey-extralight);
     border-radius: 15px;
-    padding: 2vw 3.5vw;
+    padding: 2vw 5vw;
     box-sizing: border-box;
     width: 90vw;
     height: 10vh;
@@ -234,7 +237,7 @@ input:focus {
 .checkBox img {
     width: 7vw;
     height: 7vw;
-    padding: 2vw;
+    padding: 0 2vw;
     filter: brightness(0) invert(93%) sepia(6%) saturate(4%) hue-rotate(48deg) brightness(88%) contrast(81%);
 }
 
@@ -243,6 +246,7 @@ input:focus {
     font-weight: 500;
     font-size: 4vw;
     color: var(--grey-light);
+    margin:0;
 }
 
 .checkBox img.active {
@@ -256,6 +260,10 @@ input:focus {
 
 input:disabled {
     color: var(--grey-light);
+}
+
+.numberinput {
+    margin: 4vw auto 0 auto;
 }
 
 
