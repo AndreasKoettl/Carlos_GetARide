@@ -8,6 +8,7 @@ dispatch('/codriver/:iduser', 'loadCodriversRides');
 dispatch('/driverRepeating/:initialDriveId', 'loadDriversRepeatingRides');
 dispatch('/driverName/:iddriver', 'loadDriversName');
 dispatch('/coDriverNames/:iddrive', 'loadCoDriverNames');
+dispatch('/loadRequests', 'loadRequests');
 dispatch('/initialDriveId/:iddrive', 'getInitialDriveId');
 dispatch('/cancelRide/:iddrive/:iduser', 'cancelRide');
 dispatch('/deleteRide/:iddrive', 'deleteRide');
@@ -190,6 +191,31 @@ function loadCoDriverNames()
     }
     else {
         $result = setErrorMessage($result, "Kein Mitfahrer gefunden.");
+    }
+
+
+    return json_encode($result);
+
+}
+
+function loadRequests()
+{
+    // Datenbankverbindung aufbauen.
+    $dbConnection = new DatabaseAccess;
+    $result = array();
+
+    // Mitfahrer von gegebener Fahrt suchen.
+    $dbConnection->prepareStatement("SELECT * FROM requests");
+    $dbConnection->executeStatement();
+    $result = $dbConnection->fetchAll();
+
+
+    if ($dbConnection->getRowCount() > 0) {
+
+        $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
+    }
+    else {
+        $result = setErrorMessage($result, "Kein Anfragen gefunden.");
     }
 
 
