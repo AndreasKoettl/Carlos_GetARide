@@ -67,60 +67,13 @@ carlos_meineFahrten.app = new Vue({
             let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
             var appAccess = this;
 
-<<<<<<< HEAD
-                // AJAX-Get Request starten.
-                $.ajax({
-                    accepts: "application/json",
-                    async: true,
-                    contentType: false,
-                    processData: false,
-                    url: getAbsPath("php/load_rides.php?/driver/") + iduser,
-                    data: iduser,
-                    success: function (data) {
-                        let result = JSON.parse(data);
-
-                        // Prüfen ob das Auslesen erfolgreich war.
-                        if (result["status"] === "success") {
-                            // Ausgabe in Box
-                            for (let i = 0; i < result["data"].length; i++) {
-                                let isInitialized = false;
-
-                                let drive = {
-                                    iddrive: result["data"][i]["iddrives"],
-                                    routeStart: result["data"][i]["locationStart"],
-                                    routeEnd: result["data"][i]["locationEnd"],
-                                    cityStart: result["data"][i]["cityStart"],
-                                    cityEnd: result["data"][i]["cityEnd"],
-                                    date: appAccess.formatDate(new Date(result["data"][i]["driveDate"])),
-                                    time: appAccess.formatTime(new Date(result["data"][i]["driveDate"])),
-                                    dateTime: new Date(result["data"][i]["driveDate"]),
-                                    initialDriveId: result["data"][i]["initialDriveId"],
-                                    allAccepted: 1,
-                                    childrenAccepted: 1,
-                                    price: result["data"][i]["price"],
-                                    passengersAvailable: result["data"][i]["maxPassengers"] - result["data"][i]["passengers"],
-                                    licensePlate: result["data"][i]["licensePlate"],
-                                    details: result["data"][i]["details"],
-                                    weekDays: result["data"][i]["weekDays"]
-                                };
-
-                                let currentDate = new Date();
-
-                                if (currentDate <= drive.dateTime) {
-
-                                    appAccess.allUpcomingDriverRides.push(drive);
-
-                                        if (drive.iddrive === drive.initialDriveId) {
-                                            drive.repeating = 1;
-                                            appAccess.listUpcomingRides.push(drive);
-=======
             // AJAX-Get Request starten.
             $.ajax({
                 accepts: "application/json",
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/driver/" + iduser,
+                url: getAbsPath("php/load_rides.php?/driver/") + iduser,
                 data: iduser,
                 success: function (data) {
                     let result = JSON.parse(data);
@@ -169,7 +122,7 @@ carlos_meineFahrten.app = new Vue({
                                     for (let j = 0; j < result["data"].length; j++) {
                                         if (result["data"][j]["iddrives"] === drive.initialDriveId) {
                                             isInitialDrive = false;
->>>>>>> workOn/requestsDesign
+
                                         }
                                     }
                                     if (isInitialDrive) {
@@ -791,41 +744,12 @@ carlos_meineFahrten.app = new Vue({
 
         loadOpenRequests: async function (func) {
             let appAccess = this;
-<<<<<<< HEAD
-                let ajaxRequest = await $.ajax({
-                        accepts: "application/json",
-                        async: true,
-                        contentType: false,
-                        processData: false,
-                        url: getAbsPath("php/load_rides.php?/loadRequests"),
-                        success: function (data) {
-                            let result = JSON.parse(data);
-
-                            // Prüfen ob das Laden erfolgreich war.
-                            if (result["status"] === "success") {
-
-                                for (let i = 0; i < result["data"].length; i++) {
-                                    if (result["data"][i]["accepted"] == 0) {
-
-                                        if (func === 2) {
-                                            for (let n = 0; n < appAccess.allUpcomingDriverRides.length; n++) {
-                                                if (appAccess.allUpcomingDriverRides[n].iddrive == result["data"][i]["drives_iddrives"]) {
-
-                                                    for (let j = 0; j < appAccess.listUpcomingRides.length; j++) {
-                                                        if (appAccess.allUpcomingDriverRides[n].iddrive === appAccess.listUpcomingRides[j].iddrive && appAccess.allUpcomingDriverRides[n].repeating == 0) {
-                                                            appAccess.listUpcomingRides[j].allAccepted = 0;
-                                                            j = appAccess.listUpcomingRides.length;
-                                                        } else if (appAccess.allUpcomingDriverRides[n].initialDriveId === appAccess.listUpcomingRides[j].iddrive)
-                                                            appAccess.listUpcomingRides[j].childrenAccepted = 0;
-                                                    }
-                                                }
-=======
             let ajaxRequest = await $.ajax({
                 accepts: "application/json",
                 async: true,
                 contentType: false,
                 processData: false,
-                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/loadRequests",
+                url: getAbsPath("php/load_rides.php?/loadRequests"),
                 success: function (data) {
                     let result = JSON.parse(data);
 
@@ -843,7 +767,6 @@ carlos_meineFahrten.app = new Vue({
                                                     j = appAccess.listUpcomingRides.length;
                                                 } else if (appAccess.allUpcomingDriverRides[n].initialDriveId === appAccess.listUpcomingRides[j].iddrive)
                                                     appAccess.listUpcomingRides[j].childrenAccepted = 0;
->>>>>>> workOn/requestsDesign
                                             }
                                         }
                                     }
