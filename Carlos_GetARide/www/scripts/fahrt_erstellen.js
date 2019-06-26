@@ -181,7 +181,9 @@ carlos.app = new Vue({
                 url: getAbsPath("php/saveRide.php?/saveRide"),
                 data: { driveData: driveData },
                 success: function (data) {
-                    window.location = getAbsPath("pages/fahrt_erstellen/fahrt_erstellen_success.html");
+                    if (data) {
+                        window.location = getAbsPath("pages/fahrt_erstellen/fahrt_erstellen_success.html");
+                    }                    
                 },
                 error: function () {
 
