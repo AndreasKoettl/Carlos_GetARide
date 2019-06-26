@@ -131,6 +131,7 @@ header a img {
 }
 
 .placeInputWrapper {
+    box-sizing: border-box;
     width: 90vw;
     border: 2px solid var(--grey-extralight);
     border-radius: 50px;

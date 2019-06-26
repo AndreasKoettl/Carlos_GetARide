@@ -3,11 +3,6 @@
     height: auto;
 }
 
-#successRegister, #successChangePw, #deleteForm, #changePwSuccess {
-    width: 90vw;
-    margin: 0 auto;
-}
-
 .loginDiv, .registerDiv{
     margin: 4vw 0;
 }
@@ -18,8 +13,9 @@
     color: var(--red);
 }
 
-#mailSent{
-    height:100%;
-    width: 90vw;
-    margin: 40% auto 0 auto;
+#mailSent {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

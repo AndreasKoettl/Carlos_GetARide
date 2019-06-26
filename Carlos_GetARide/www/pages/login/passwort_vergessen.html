@@ -12,7 +12,7 @@
 <body>
     <div id="app">
         <header-back title="Passwort vergessen" @go-back="redirectToLogin()"></header-back>
-        <form v-if="!succeeded" v-on:submit="forgotPassword" id="forgotPwForm">
+        <form v-if="!succeeded" v-on:submit="forgotPassword" id="forgotPwForm" class="wrapper-content-no-tab">
             <div>
                 <div>
                         <p class="statusmessage" v-for="error in errors">{{ error }}</p>

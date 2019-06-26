@@ -75,6 +75,10 @@ input {
     background: none;
 }
 
+#dateDrive, #timeDrive{
+    padding: 2vw 5vw;
+}
+
 input:active, input:focus {
     outline: none;
 }
@@ -227,6 +231,7 @@ button:focus, button:active{
 
 .center-text {
     text-align: center;
+    margin-bottom: 5vw;
 }
 
 .padding-top {
@@ -301,4 +306,8 @@ hr {
 
 .width-100{
     width:100%;
+}
+
+.width-90{
+    width:90vw;
 }
