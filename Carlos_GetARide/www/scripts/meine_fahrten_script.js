@@ -210,7 +210,7 @@ carlos_meineFahrten.app = new Vue({
                                 idDriver: result["data"][i][0]["users_idusers"],
                                 firstName: "Max",
                                 lastName: "Mustermann",
-                                weekDays: result["data"][i]["weekDays"]
+                                weekDays: result["data"][i][0]["weekDays"]
                             };
 
                             let currentDate = new Date();
@@ -495,7 +495,8 @@ carlos_meineFahrten.app = new Vue({
                                 price: result["data"][i]["price"],
                                 passengersAvailable: result["data"][i]["maxPassengers"] - result["data"][i]["passengers"],
                                 licensePlate: result["data"][i]["licensePlate"],
-                                details: result["data"][i]["details"]
+                                details: result["data"][i]["details"],
+                                weekDays: result["data"][i]["weekDays"]
                             };
 
                             if (drive.initialDriveId === initialDriveId) {
@@ -601,7 +602,8 @@ carlos_meineFahrten.app = new Vue({
                                 details: reversedResult[i][0]["details"],
                                 idDriver: reversedResult[i][0]["users_idusers"],
                                 firstName: "Max",
-                                lastName: "Mustermann"
+                                lastName: "Mustermann",
+                                weekDays: result["data"][i][0]["weekDays"]
                             };
 
                             if (drive.initialDriveId === initialDriveId) {
