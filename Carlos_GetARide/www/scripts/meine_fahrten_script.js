@@ -94,6 +94,7 @@ carlos_meineFahrten.app = new Vue({
                                     passengersAvailable: result["data"][i]["maxPassengers"] - result["data"][i]["passengers"],
                                     licensePlate: result["data"][i]["licensePlate"],
                                     details: result["data"][i]["details"],
+                                    weekDays: result["data"][i]["weekDays"]
                                 };
 
                                 let currentDate = new Date();
@@ -208,7 +209,8 @@ carlos_meineFahrten.app = new Vue({
                                 details: result["data"][i][0]["details"],
                                 idDriver: result["data"][i][0]["users_idusers"],
                                 firstName: "Max",
-                                lastName: "Mustermann"
+                                lastName: "Mustermann",
+                                weekDays: result["data"][i]["weekDays"]
                             };
 
                             let currentDate = new Date();
@@ -935,8 +937,22 @@ carlos_meineFahrten.app = new Vue({
 
         },
 
-        deletePastRides: function() {
-            this.listPastRides = [];
+        deletePastRides: async function() {
+            let indizes = [];
+            for (let i = 0; i < this.listPastRides.length; i++) {
+                if (this.listPastRides[i].iddrive === this.listPastRides[i].initialDriveId) {
+                    indizes.push(i);
+                }
+            }
+            for (let i = 0; i < indizes.length; i++) {
+                await this.loadDriversRepetitions(i, false);
+            }
+            let currentDate = new Date();
+            for (let i = 0; i < this.listPastRides.length; i++) {
+                if (this.listPastRides[i].dateTime < currentDate) {
+                    this.deleteRide(i, false);
+                }
+            }
         },
 
         goBack: async function (val) {

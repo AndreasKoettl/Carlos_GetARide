@@ -40,6 +40,7 @@
                             </div>
                         </div>
                         <p v-if="ride.repeating !== 1 && ride.repeating !== 2" class="overview-h2">{{ride.date}}, {{ride.time}}</p>
+                        <p v-if="ride.repeating === 1 || ride.repeating === 2" class="overview-h2">{{ride.weekDays}}</p>
                     </div>
 
                     <div v-if="ride.repeating === 3" class="grey-box">
@@ -61,9 +62,10 @@
                             <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
                         </div>
                         <p v-if="ride.repeating !== 1 && ride.repeating !== 2" class="overview-h2">{{ride.date}}, {{ride.time}}</p>
+                        <p v-if="ride.repeating === 1 || ride.repeating === 2" class="overview-h2">{{ride.weekDays}}</p>
                      </div>
                 </a>
-                <h6 class="codriver-acceptance center-text" @click="deletePastRides">Vergangene Fahrten löschen</h6>
+                <h6 v-if="isDriver" class="codriver-acceptance center-text" @click="deletePastRides">Vergangene Fahrten löschen</h6>
             </div>
 
                 </section>
