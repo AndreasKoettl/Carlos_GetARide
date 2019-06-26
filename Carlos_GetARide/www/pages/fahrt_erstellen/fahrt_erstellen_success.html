@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://* data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src * 'unsafe-inline';  media-src *; font-src *">
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script src="../../scripts/index.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../lib/vue/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul id="suggestions" class="displayNone"></ul>
+        <div id="success">
+            <img src="../../images/icons/check.svg" class="illustration-small" />
+            <h1 class="fahrt-erstellen-heading">Geschafft!</h1>
+            <p>Deine Fahrt wurde soeben erstellt.</p>
+            <p>Hier kannst du Mitfahrer akzeptieren oder ablehnen:</p> <br>
+            <a @click="sessionStorage.setItem('active', 'meine-fahrten');" href="../meine_fahrten/meine_fahrten.html"  class="red-button active-green"><img src="../../images/icons/hakerl_icon.svg"/>Meine Fahrten</a>
+        </div>
+        <nav-bar></nav-bar>
+    </div>
+
+    <script src="../../scripts/components.js"></script>
+    <script src="../../scripts/fahrt_erstellen.js"></script>
+</body>
+</html>

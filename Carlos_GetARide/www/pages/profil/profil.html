@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://* data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src * 'unsafe-inline';  media-src *; font-src *">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script type="text/javascript" src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../lib/vue/vue.min.js"></script>
+    <script type="text/javascript" src="../../scripts/index.js"></script>
+    <title>Profil</title>
+</head>
+<body>
+    <div id="profilec">
+        <header-back title="Profil" :scrolling="isScrolling" @go-back="goBack()" @go-there="goToSettings()"></header-back>
+        <template v-if="profile">
+            <div class="wrapper-content">
+                <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
+                    <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture" />
+                    <div v-if="profilePicture === defaultProfilePicture">
+                        <label for="profile-picture-upload">
+                            <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_add_icon.svg" alt="add-profile-picture" title="add-profile-picture" />
+                        </label>
+                        <input type="file" class="fileinput" accept="image/*" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
+                        <input type="hidden" name="iduser" :value="iduser">
+                    </div>
+                </form>
+                <div class="data">
+                    <h2 class="name">{{firstname}} {{lastname}}</h2>
+                    <p class="mail">{{email}}</p>
+                </div>
+
+                <div class="profile-options">
+                    <a @click="goToEdit()"><p>Profil bearbeiten</p><img src="../../images/icons/edit.svg" /></a>
+                    <a @click="changePw()"><p>Passwort ändern</p><img src="../../images/icons/key_red.svg" /></a>
+                    <a @click="logout()"><p>Abmelden</p><img src="../../images/icons/logout.svg" /></a>
+                </div>
+                <br />
+                <!--<a href="../../index.html" ><p>Back to home</p></a>-->
+            </div>
+        </template>
+
+        <template v-else>
+            <div class="wrapper-content">
+                <template v-if="settings">
+                    <div class="content-flex">
+
+
+                        <div class="settings">
+                            <img class="main-illustration" src="../../images/illustrationen/undraw_settings_ii2j.svg" alt="settings-picture" title="settings-picture" />
+                            <p>Benachrichtigungen</p>
+                            <div><img v-bind:class="{'red-filter':hasNotifications,  yes:settings}" @click="changeNotifications(1)" src="../../images/icons/hakerl_icon.svg" /><img v-bind:class="{'red-filter':!hasNotifications,  no:settings}" src="../../images/icons/x_icon_neu.svg" @click="changeNotifications(0)" /></div>
+                        </div>
+                        <button class="red-button" @click="deleteAccount"> Account löschen</button>
+                    </div>
+                </template>
+
+                <template v-else>
+                    <div class="content-flex">
+                        <div class="edit-profile-flex">
+                            <form action="../../php/store_image.php" method="post" enctype="multipart/form-data" id="profile-picture-form" class="main-illustration">
+                                <img id="profile-picture" v-bind:src="profilePicture" alt="profile-picture" title="profile-picture" />
+                                <label for="profile-picture-upload">
+                                    <img id="add-edit-profile-picture" src="../../images/illustrationen/profile_edit_icon.svg" alt="edit-profile-picture" title="edit-profile-picture" />
+                                </label>
+                                <input type="file" class="fileinput" id="profile-picture-upload" name="profile-picture-upload" v-on:change="loadProfilePicture">
+                                <input type="hidden" name="iduser" :value="iduser">
+                            </form>
+                            <form method="post" id="edit-profile-form">
+                                <div class="textinput">
+                                    <label for="firstname">Vorname</label>
+                                    <input type="text" id="firstname" name="firstname" v-model="firstname">
+                                </div>
+                                <div class="textinput">
+                                    <label for="lastname">Nachname</label>
+                                    <input type="text" id="lastname" name="lastname" v-model="lastname">
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <button class="red-button" @click="saveNewData">Speichern</button>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <nav-bar></nav-bar>
+    </div>
+    <script src="../../scripts/components.js"></script>
+    <script type="text/javascript" src="../../scripts/profile.js"></script>
+    <script type="text/javascript" src="../../scripts/platformOverrides.js"></script>
+
+
+</body>
+</html>

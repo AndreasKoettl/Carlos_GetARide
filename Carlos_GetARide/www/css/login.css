@@ -1,0 +1,21 @@
+﻿#userInput{
+    width: 90vw;
+    height: auto;
+}
+
+.loginDiv, .registerDiv{
+    margin: 4vw 0;
+}
+
+.forgotPw {
+    text-align: center;
+    font-size: 5vw;
+    color: var(--red);
+}
+
+#mailSent {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
