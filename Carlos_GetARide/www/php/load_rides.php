@@ -463,7 +463,7 @@ function confirmRequest()
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Die maximale Anzahl an Mitfahrern ist bereits erreicht." . $lastname);
+        $result = setErrorMessage($result, "Die maximale Anzahl an Mitfahrern ist bereits erreicht.");
     }
 
 

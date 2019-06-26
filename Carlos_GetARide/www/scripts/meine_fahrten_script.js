@@ -20,7 +20,8 @@ carlos_meineFahrten.app = new Vue({
         indexUpcomingRide: -1,
         indexPastRide: -1,
         date: new Date(),
-        isScrolling: false
+        isScrolling: false,
+        acceptDR: false
     },
 
     methods: {
@@ -44,7 +45,7 @@ carlos_meineFahrten.app = new Vue({
                 this.loadCodriversRides();
             }
             else {
-                setTimeout(function(){
+                setTimeout(function () {
                     appAccess.loadDriversRides();
                 }, 400);
                 slider.style.left = '0px';
@@ -59,13 +60,14 @@ carlos_meineFahrten.app = new Vue({
 
             }
         },
-        
+
         loadDriversRides: function () {
 
             // get user id
             let iduser = JSON.parse(localStorage.getItem(STORAGE_KEY))["idusers"];
             var appAccess = this;
 
+<<<<<<< HEAD
                 // AJAX-Get Request starten.
                 $.ajax({
                     accepts: "application/json",
@@ -111,67 +113,114 @@ carlos_meineFahrten.app = new Vue({
                                         if (drive.iddrive === drive.initialDriveId) {
                                             drive.repeating = 1;
                                             appAccess.listUpcomingRides.push(drive);
-                                        }
-                                        else if (drive.initialDriveId === null) {
-                                            drive.repeating = 0;
-                                            appAccess.listUpcomingRides.push(drive);
-                                        }
-                                        else if (drive.initialDriveId !== null) {
-                                            let isInitialDrive = true;
-                                            for (let j = 0; j < result["data"].length; j++) {
-                                                if (result["data"][j]["iddrives"] === drive.initialDriveId) {
-                                                    isInitialDrive = false;
-                                                }
-                                            }
-                                            if (isInitialDrive) {
-                                                if (!isInitialized) {
-                                                    drive.repeating = 1;
-                                                    appAccess.listUpcomingRides.push(drive);
-                                                    isInitialized = true;
-                                                }
-                                            }
-                                        }
+=======
+            // AJAX-Get Request starten.
+            $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/driver/" + iduser,
+                data: iduser,
+                success: function (data) {
+                    let result = JSON.parse(data);
+
+                    // Prüfen ob das Auslesen erfolgreich war.
+                    if (result["status"] === "success") {
+                        // Ausgabe in Box
+                        for (let i = 0; i < result["data"].length; i++) {
+                            let isInitialized = false;
+
+                            let drive = {
+                                iddrive: result["data"][i]["iddrives"],
+                                routeStart: result["data"][i]["locationStart"],
+                                routeEnd: result["data"][i]["locationEnd"],
+                                cityStart: result["data"][i]["cityStart"],
+                                cityEnd: result["data"][i]["cityEnd"],
+                                date: appAccess.formatDate(new Date(result["data"][i]["driveDate"])),
+                                time: appAccess.formatTime(new Date(result["data"][i]["driveDate"])),
+                                dateTime: new Date(result["data"][i]["driveDate"]),
+                                initialDriveId: result["data"][i]["initialDriveId"],
+                                allAccepted: 1,
+                                childrenAccepted: 1,
+                                price: result["data"][i]["price"],
+                                passengersAvailable: result["data"][i]["maxPassengers"] - result["data"][i]["passengers"],
+                                licensePlate: result["data"][i]["licensePlate"],
+                                details: result["data"][i]["details"],
+                                weekDays: result["data"][i]["weekDays"]
+                            };
+
+                            let currentDate = new Date();
+
+                            if (currentDate <= drive.dateTime) {
+
+                                appAccess.allUpcomingDriverRides.push(drive);
+
+                                if (drive.iddrive === drive.initialDriveId) {
+                                    drive.repeating = 1;
+                                    appAccess.listUpcomingRides.push(drive);
                                 }
-                                else {
-                                        if (drive.iddrive === drive.initialDriveId) {
-                                            drive.repeating = 1;
-                                            appAccess.listPastRides.push(drive);
-                                        }
-                                        else if (drive.initialDriveId === null) {
-                                            drive.repeating = 0;
-                                            appAccess.listPastRides.push(drive);
-                                        }
-                                        else if (drive.initialDriveId !== null) {
-                                            let isInitialDrive = true;
-                                            for (let j = 0; j < result["data"].length; j++) {
-                                                if (result["data"][j]["iddrives"] === drive.initialDriveId) {
-                                                    isInitialDrive = false;
-                                                }
-                                            }
-                                            if (isInitialDrive) {
-                                                if (!isInitialized) {
-                                                    drive.repeating = 1;
-                                                    appAccess.listPastRides.push(drive);
-                                                    isInitialized = true;
-                                                }
-                                            }
+                                else if (drive.initialDriveId === null) {
+                                    drive.repeating = 0;
+                                    appAccess.listUpcomingRides.push(drive);
+                                }
+                                else if (drive.initialDriveId !== null) {
+                                    let isInitialDrive = true;
+                                    for (let j = 0; j < result["data"].length; j++) {
+                                        if (result["data"][j]["iddrives"] === drive.initialDriveId) {
+                                            isInitialDrive = false;
+>>>>>>> workOn/requestsDesign
                                         }
                                     }
+                                    if (isInitialDrive) {
+                                        if (!isInitialized) {
+                                            drive.repeating = 1;
+                                            appAccess.listUpcomingRides.push(drive);
+                                            isInitialized = true;
+                                        }
+                                    }
+                                }
                             }
-                            for (let i = 0; i < appAccess.allUpcomingDriverRides.length; i++) {
-                                appAccess.loadOpenRequests(2);
+                            else {
+                                if (drive.iddrive === drive.initialDriveId) {
+                                    drive.repeating = 1;
+                                    appAccess.listPastRides.push(drive);
+                                }
+                                else if (drive.initialDriveId === null) {
+                                    drive.repeating = 0;
+                                    appAccess.listPastRides.push(drive);
+                                }
+                                else if (drive.initialDriveId !== null) {
+                                    let isInitialDrive = true;
+                                    for (let j = 0; j < result["data"].length; j++) {
+                                        if (result["data"][j]["iddrives"] === drive.initialDriveId) {
+                                            isInitialDrive = false;
+                                        }
+                                    }
+                                    if (isInitialDrive) {
+                                        if (!isInitialized) {
+                                            drive.repeating = 1;
+                                            appAccess.listPastRides.push(drive);
+                                            isInitialized = true;
+                                        }
+                                    }
+                                }
                             }
                         }
-
-                        else {
-                            // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
-                            console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                        for (let i = 0; i < appAccess.allUpcomingDriverRides.length; i++) {
+                            appAccess.loadOpenRequests(2);
                         }
-                    },
-                    error: function () {
-                        console.log("Server Verbindung fehlgeschlagen.");
                     }
-                });
+
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
         },
 
         loadCodriversRides: async function () {
@@ -236,11 +285,11 @@ carlos_meineFahrten.app = new Vue({
                                         }
                                     }
                                     if (isInitialDrive) {
-                                            if (!isInitialized) {
-                                                drive.repeating = 1;
-                                                appAccess.listUpcomingRides.push(drive);
-                                                isInitialized = true;
-                                            }
+                                        if (!isInitialized) {
+                                            drive.repeating = 1;
+                                            appAccess.listUpcomingRides.push(drive);
+                                            isInitialized = true;
+                                        }
                                     }
                                 }
                             }
@@ -319,7 +368,7 @@ carlos_meineFahrten.app = new Vue({
             }
 
             let dayNB = date.getDate();
-            let month = date.getMonth()+1;
+            let month = date.getMonth() + 1;
             let year = date.getFullYear();
 
 
@@ -331,11 +380,11 @@ carlos_meineFahrten.app = new Vue({
             let minutes = date.getMinutes();
 
             if (minutes < 10) {
-                minutes = "0"+minutes;
+                minutes = "0" + minutes;
             }
 
             if (hours < 10) {
-                hours = "0"+hours;
+                hours = "0" + hours;
             }
 
             return hours + ":" + minutes + " Uhr";
@@ -345,66 +394,66 @@ carlos_meineFahrten.app = new Vue({
             let list;
             isUpcoming ? list = this.listUpcomingRides : list = this.listPastRides;
             if (list[index].repeating === 1) {
-                    if (this.isDriver) {
-                        await this.loadDriversRepetitions(index, isUpcoming);
-                    } else {
-                        await this.loadCoDriversRepetitions(index, isUpcoming);
-                    }
-                    list[index].repeating = 2;
-                    this.setRepetitionCss(index, isUpcoming);
-                    this.setAcceptedCss();
+                if (this.isDriver) {
+                    await this.loadDriversRepetitions(index, isUpcoming);
+                } else {
+                    await this.loadCoDriversRepetitions(index, isUpcoming);
                 }
-                else if (list[index].repeating === 2) {
-                    for (let i = 0; i < list.length; i++) {
-                        if (list[i].initialDriveId === list[index].initialDriveId) {
-                            if (i !== index) {
-                                list.splice(i, 1);
-                                i--;
-                            }
+                list[index].repeating = 2;
+                this.setRepetitionCss(index, isUpcoming);
+                this.setAcceptedCss();
+            }
+            else if (list[index].repeating === 2) {
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i].initialDriveId === list[index].initialDriveId) {
+                        if (i !== index) {
+                            list.splice(i, 1);
+                            i--;
                         }
                     }
-                    list[index].repeating = 1;
-                    this.removeRepetitionCss(index, isUpcoming);
-                    this.setAcceptedCss();
                 }
-                else if (list[index].repeating === 0 || list[index].repeating === 3) {
-                    if (isUpcoming) {
-                        this.indexUpcomingRide = index;
-                        this.indexPastRide = -1;
-                    }
-                    else {
-                        this.indexPastRide = index;
-                        this.indexUpcomingRide = -1;
-                    }
+                list[index].repeating = 1;
+                this.removeRepetitionCss(index, isUpcoming);
+                this.setAcceptedCss();
+            }
+            else if (list[index].repeating === 0 || list[index].repeating === 3) {
+                if (isUpcoming) {
+                    this.indexUpcomingRide = index;
+                    this.indexPastRide = -1;
+                }
+                else {
+                    this.indexPastRide = index;
+                    this.indexUpcomingRide = -1;
+                }
 
-                    if (this.isDriver) {
-                        await (this.isDriverDetails = true);
-                        this.listAccepted = [];
-                        this.listNotAccepted = [];
-                        this.getCoDriversNames(index, isUpcoming, 0);
-                    } else {
-                        await (this.isCoDriverDetails = true);
-                        if (list[index].accepted == 0) {
-                            document.getElementsByTagName('button')[0].innerHTML = "Anfrage löschen";
-                        }
-                        this.listAccepted = [];
-                        this.listNotAccepted = [];
-                        this.getDriversName(list[index].idDriver, isUpcoming);
+                if (this.isDriver) {
+                    await (this.isDriverDetails = true);
+                    this.listAccepted = [];
+                    this.listNotAccepted = [];
+                    this.getCoDriversNames(index, isUpcoming, 0);
+                } else {
+                    await (this.isCoDriverDetails = true);
+                    if (list[index].accepted == 0) {
+                        document.getElementsByTagName('button')[0].innerHTML = "Anfrage löschen";
                     }
+                    this.listAccepted = [];
+                    this.listNotAccepted = [];
+                    this.getDriversName(list[index].idDriver, isUpcoming);
                 }
+            }
 
         },
 
         setRepetitionCss: function (index, isUpcoming) {
             if (isUpcoming) {
-                for (let i = index+1; i < this.listUpcomingRides.length; i++) {
+                for (let i = index + 1; i < this.listUpcomingRides.length; i++) {
                     document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
                     if (this.listUpcomingRides[i].repeating === 3) {
                         document.getElementsByClassName("grey-box")[i].classList.add("grey-outline-box");
                     }
                 }
             } else {
-                let pos = this.listUpcomingRides.length+index+1;
+                let pos = this.listUpcomingRides.length + index + 1;
                 for (let i = 1; i < this.listPastRides.length; i++) {
                     document.getElementsByClassName("grey-box")[pos].classList.remove("grey-outline-box");
                     if (this.listPastRides[i].repeating === 3) {
@@ -418,7 +467,7 @@ carlos_meineFahrten.app = new Vue({
 
         removeRepetitionCss: function (index, isUpcoming) {
             if (isUpcoming) {
-                for (let i = index+1; i < this.listUpcomingRides.length; i++) {
+                for (let i = index + 1; i < this.listUpcomingRides.length; i++) {
                     if (this.listUpcomingRides[i].repeating !== 3) {
                         document.getElementsByClassName("grey-box")[i].classList.remove("grey-outline-box");
                     }
@@ -710,22 +759,22 @@ carlos_meineFahrten.app = new Vue({
                             let accepted = result["data"][i][1][0]["accepted"];
 
 
-                                if (accepted == 0) {
-                                    appAccess.listNotAccepted.push({
-                                        firstName: firstName,
-                                        lastName: lastName,
-                                        iduser: iduser,
-                                        iddrive: iddrive
-                                    });
-                                }
-                                else {
-                                    appAccess.listAccepted.push({
-                                        firstName: firstName,
-                                        lastName: lastName,
-                                        iduser: iduser,
-                                        iddrive: iddrive
-                                    });
-                                }
+                            if (accepted == 0) {
+                                appAccess.listNotAccepted.push({
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    iduser: iduser,
+                                    iddrive: iddrive
+                                });
+                            }
+                            else {
+                                appAccess.listAccepted.push({
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    iduser: iduser,
+                                    iddrive: iddrive
+                                });
+                            }
 
                         }
                     }
@@ -742,6 +791,7 @@ carlos_meineFahrten.app = new Vue({
 
         loadOpenRequests: async function (func) {
             let appAccess = this;
+<<<<<<< HEAD
                 let ajaxRequest = await $.ajax({
                         accepts: "application/json",
                         async: true,
@@ -769,28 +819,55 @@ carlos_meineFahrten.app = new Vue({
                                                             appAccess.listUpcomingRides[j].childrenAccepted = 0;
                                                     }
                                                 }
-                                            }
-                                        }
+=======
+            let ajaxRequest = await $.ajax({
+                accepts: "application/json",
+                async: true,
+                contentType: false,
+                processData: false,
+                url: "/carlos/Carlos_GetARide/www/php/load_rides.php?/loadRequests",
+                success: function (data) {
+                    let result = JSON.parse(data);
 
-                                        else if (func === 1) {
-                                            for (let n = 0; n < appAccess.listUpcomingRides.length; n++) {
-                                                if (appAccess.listUpcomingRides[n].iddrive == result["data"][i]["drives_iddrives"]) {
-                                                    appAccess.listUpcomingRides[n].allAccepted = 0;
-                                                }
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+                        for (let i = 0; i < result["data"].length; i++) {
+                            if (result["data"][i]["accepted"] == 0) {
+
+                                if (func === 2) {
+                                    for (let n = 0; n < appAccess.allUpcomingDriverRides.length; n++) {
+                                        if (appAccess.allUpcomingDriverRides[n].iddrive == result["data"][i]["drives_iddrives"]) {
+                                            for (let j = 0; j < appAccess.listUpcomingRides.length; j++) {
+                                                if (appAccess.allUpcomingDriverRides[n].repeating == 0) {
+                                                    appAccess.listUpcomingRides[j].allAccepted = 0;
+                                                    j = appAccess.listUpcomingRides.length;
+                                                } else if (appAccess.allUpcomingDriverRides[n].initialDriveId === appAccess.listUpcomingRides[j].iddrive)
+                                                    appAccess.listUpcomingRides[j].childrenAccepted = 0;
+>>>>>>> workOn/requestsDesign
                                             }
                                         }
                                     }
                                 }
-                            }
-                            else {
-                                    // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
-                                    console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+
+                                else if (func === 1) {
+                                    for (let n = 0; n < appAccess.listUpcomingRides.length; n++) {
+                                        if (appAccess.listUpcomingRides[n].iddrive == result["data"][i]["drives_iddrives"]) {
+                                            appAccess.listUpcomingRides[n].allAccepted = 0;
+                                        }
+                                    }
                                 }
-                            },
-                            error: function () {
-                                console.log("Server Verbindung fehlgeschlagen.");
                             }
-                        });
+                        }
+                    }
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
         },
 
         cancelRide: async function (index, isUpcoming) {
@@ -802,7 +879,7 @@ carlos_meineFahrten.app = new Vue({
             let iddrive = list[index].iddrive;
             let initialDriveId = list[index].initialDriveId;
 
-                await $.ajax({
+            await $.ajax({
                     accepts: "application/json",
                     async: true,
                     contentType: false,
@@ -812,20 +889,20 @@ carlos_meineFahrten.app = new Vue({
                     success: function (data) {
                         let result = JSON.parse(data);
 
-                        // Prüfen ob das Laden erfolgreich war.
-                        if (result["status"] === "success") {
-                            appAccess.goBack('isCoDriverDetails');
-                        }
-
-                        else {
-                            // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
-                            console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
-                        }
-                    },
-                    error: function () {
-                        console.log("Server Verbindung fehlgeschlagen.");
+                    // Prüfen ob das Laden erfolgreich war.
+                    if (result["status"] === "success") {
+                        appAccess.goBack('isCoDriverDetails');
                     }
-                });
+
+                    else {
+                        // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                        console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                    }
+                },
+                error: function () {
+                    console.log("Server Verbindung fehlgeschlagen.");
+                }
+            });
 
         },
 
@@ -883,6 +960,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
+                        appAccess.$refs.m1[index].classList.add('displayNone');
                         await appAccess.listNotAccepted.splice(index, 1);
                     }
 
@@ -918,6 +996,7 @@ carlos_meineFahrten.app = new Vue({
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
+                        appAccess.$refs.m2[index].classList.add('displayNone');
                         await appAccess.listAccepted.splice(index, 1);
                     }
 
@@ -940,6 +1019,8 @@ carlos_meineFahrten.app = new Vue({
             let lastname = this.listNotAccepted[index].lastName;
             let iduser = this.listNotAccepted[index].iduser;
             let appAccess = this;
+            console.log("index");
+            console.log(index);
 
             await $.ajax({
                 accepts: "application/json",
@@ -949,10 +1030,13 @@ carlos_meineFahrten.app = new Vue({
                 url: getAbsPath("php/load_rides.php?/confirmRequest/") + iddrive + "/" + iduser,
                 data: iddrive, iduser,
                 success: async function (data) {
+                    console.log(data);
                     let result = JSON.parse(data);
+
 
                     // Prüfen ob das Laden erfolgreich war.
                     if (result["status"] === "success") {
+                        appAccess.$refs.m1[index].classList.add('displayNone');
                         let request = appAccess.listNotAccepted[index];
                         await appAccess.listNotAccepted.splice(index, 1);
                         await appAccess.listAccepted.push(request);
@@ -973,7 +1057,7 @@ carlos_meineFahrten.app = new Vue({
 
         },
 
-        deletePastRides: async function() {
+        deletePastRides: async function () {
             let appAccess = this;
             let indizes = [];
             let list = this.listPastRides;
@@ -1036,10 +1120,21 @@ carlos_meineFahrten.app = new Vue({
                 this.switchMenu();
             }
             this.setAcceptedCss();
+        },
+
+        openModal: function (index) {
+            this.$refs.m1[index].classList.remove('displayNone');
+        },
+
+        openModal2: function (index) {
+            this.$refs.m2[index].classList.remove('displayNone');
+        },
+
+        dontChangeCommitment: function (index) {
+            this.$refs.m2[index].classList.add('displayNone');
         }
 
     },
-
 
 
     mounted: function () {
