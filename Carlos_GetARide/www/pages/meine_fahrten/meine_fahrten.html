@@ -29,32 +29,48 @@
                     <h6 class="special-heading">Kommende Fahrten</h6>
                     <div v-if="listUpcomingRides.length !== 0">
                         <a v-for="(ride, index) in listUpcomingRides" @click="showDetails(index, true)">
-                            <div class="grey-box">
-                                <div class="row-no-padding">
-                                    <p v-if="ride.repeating !== 3" class="overview-h1">{{ride.routeStart}} - {{ride.routeEnd}}</p>
-                                    <div>
-                                        <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
-                                        <img v-if="isDriver && ride.accepted === 0" src="../../images/icons/user_colored.svg" class="icon-repeating" />
-                                    </div>
-                                </div>
-                                <p v-if="ride.repeating !== 1 && ride.repeating !== 2" class="overview-h2">{{ride.date}}, {{ride.time}}</p>
+                            <div v-if="ride.repeating !== 3" class="grey-box">
+                        <div class="row-no-padding">
+                            <p class="overview-h1">{{ride.cityStart}} - {{ride.cityEnd}}</p>
+                            <div>
+                                <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
+                                <img v-if="isDriver && (ride.allAccepted == 0 || ride.childrenAccepted == 0)" src="../../images/icons/user_colored.svg" class="icon-repeating" />
                             </div>
-                        </a>
+                        </div>
+                        <p v-if="ride.repeating !== 1 && ride.repeating !== 2" class="overview-h2">{{ride.date}}, {{ride.time}}</p>
+                        <div v-if="ride.repeating === 1 || ride.repeating === 2" class="row-no-padding-left">
+                            <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/calendar_weekdays.svg" class="icon-calendar">
+                            <p class="overview-h2">{{ride.weekDays}}</p>
+                        </div>
+                    </div>
+
+                    <div v-if="ride.repeating === 3" class="grey-box">
+                        <div class="row-no-padding">
+                            <p v-if="ride.repeating !== 1 && ride.repeating !== 2" class="overview-h2">{{ride.date}}, {{ride.time}}</p>
+                            <img v-if="isDriver && ride.allAccepted == 0" src="../../images/icons/user_colored.svg" class="icon-repeating" />
+                        </div>
+                    </div>
+                    </a>
                     </div>
 
                     <h6 class="special-heading">Vergangene Fahrten</h6>
                     <div v-if="listPastRides.length !== 0">
                         <a v-for="(ride, index) in listPastRides" @click="showDetails(index, false)">
                             <div class="grey-box">
-                                <div class="row-no-padding">
-                                    <p v-if="ride.repeating !== 3" class="overview-h1">{{ride.routeStart}} - {{ride.routeEnd}}</p>
-                                    <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
-                                </div>
-                                <p v-if="ride.repeating !== 1 && ride.repeating !== 2" class="overview-h2">{{ride.date}}, {{ride.time}}</p>
-                            </div>
-                        </a>
-                        <h6 class="codriver-acceptance center-text" @click="deletePastRides">Vergangene Fahrten löschen</h6>
-                    </div>
+                        <div class="row-no-padding">
+                            <p v-if="ride.repeating !== 3" class="overview-h1">{{ride.cityStart}} - {{ride.cityEnd}}</p>
+                            <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/wiederholendeFahrt_Icon.svg" class="icon-repeating">
+                        </div>
+                        <p v-if="ride.repeating !== 1 && ride.repeating !== 2" class="overview-h2">{{ride.date}}, {{ride.time}}</p>
+                        <div v-if="ride.repeating === 1 || ride.repeating === 2" class="row-no-padding-left">
+                            <img v-if="ride.repeating === 1 || ride.repeating === 2" src="../../images/icons/calendar_weekdays.svg" class="icon-calendar">
+                            <p class="overview-h2">{{ride.weekDays}}</p>
+                        </div>
+                     </div>
+                </a>
+            <h6 v-if="isDriver" class="codriver-acceptance center-text" @click="deletePastRides">Vergangene Fahrten löschen</h6>
+            </div>
+            
                 </section>
             </div>
         </template>

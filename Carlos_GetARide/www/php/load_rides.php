@@ -8,6 +8,7 @@ dispatch('/codriver/:iduser', 'loadCodriversRides');
 dispatch('/driverRepeating/:initialDriveId', 'loadDriversRepeatingRides');
 dispatch('/driverName/:iddriver', 'loadDriversName');
 dispatch('/coDriverNames/:iddrive', 'loadCoDriverNames');
+dispatch('/loadRequests', 'loadRequests');
 dispatch('/initialDriveId/:iddrive', 'getInitialDriveId');
 dispatch('/cancelRide/:iddrive/:iduser', 'cancelRide');
 dispatch('/deleteRide/:iddrive', 'deleteRide');
@@ -197,6 +198,31 @@ function loadCoDriverNames()
 
 }
 
+function loadRequests()
+{
+    // Datenbankverbindung aufbauen.
+    $dbConnection = new DatabaseAccess;
+    $result = array();
+
+    // Mitfahrer von gegebener Fahrt suchen.
+    $dbConnection->prepareStatement("SELECT * FROM requests");
+    $dbConnection->executeStatement();
+    $result = $dbConnection->fetchAll();
+
+
+    if ($dbConnection->getRowCount() > 0) {
+
+        $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
+    }
+    else {
+        $result = setErrorMessage($result, "Kein Anfragen gefunden.");
+    }
+
+
+    return json_encode($result);
+
+}
+
 function getInitialDriveId()
 {
     // Datenbankverbindung aufbauen.
@@ -262,6 +288,26 @@ function deleteRide()
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $deletedRequests = $dbConnection->fetchAll();
+
+    $dbConnection->prepareStatement("SELECT initialDriveId FROM drives WHERE iddrives = :iddrive");
+    $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
+    $dbConnection->executeStatement();
+    $drive = $dbConnection->fetchAll();
+
+    if ($drive["data"][0]["initialDriveId"] === htmlentities(params("iddrive"), ENT_QUOTES)) {
+
+        $dbConnection->prepareStatement("SELECT iddrives FROM drives WHERE initialDriveId = :initialDriveId");
+        $dbConnection->bindParam(":initialDriveId", $drive["data"][0]["initialDriveId"]);
+        $dbConnection->executeStatement();
+        $newParentDrive = $dbConnection->fetchAll();
+
+        $dbConnection->prepareStatement("UPDATE drives SET initialDriveId = :newId WHERE initialDriveId = :initialDriveId");
+        $dbConnection->bindParam(":newId", $newParentDrive["data"][1]["iddrives"]);
+        $dbConnection->bindParam(":initialDriveId", $drive["data"][0]["initialDriveId"]);
+        $dbConnection->executeStatement();
+        $newDrives = $dbConnection->fetchAll();
+
+    }
 
     // die gegebene Fahrt selbst löschen
     $dbConnection->prepareStatement("DELETE FROM drives WHERE iddrives = :iddrive");
