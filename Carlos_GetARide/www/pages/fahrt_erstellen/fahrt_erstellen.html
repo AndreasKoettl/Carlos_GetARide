@@ -84,8 +84,7 @@
                                     <div id="weekday-wrapper">
                                         <span v-for="day in weekdays" :id="day" @click="weekdayChoosen()" class="weekday">{{day}}</span>
                                     </div>
-                                    <input type="time" class="textinput timeInput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />
-                                    <label>Zeitraum:</label>
+                                    <input type="time" class="textinput timeInput" id="time" v-on:input="checkIfComplete()" :value="driveData['time']" />                                    
                                     <div class="timespan">
                                         <input type="text" onfocus="(this.type='date')" placeholder="von" class="textinput dateInput" id="startDate" v-on:input="checkIfComplete()" :value="driveData['startDate']" />
                                         <input type="text" onfocus="(this.type='date')" placeholder="bis" class="textinput dateInput" id="endDate" v-on:input="checkIfComplete()" :value="driveData['endDate']" />

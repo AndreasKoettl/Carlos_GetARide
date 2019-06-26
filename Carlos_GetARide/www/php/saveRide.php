@@ -9,13 +9,11 @@ function saveRide(){
 	$data=$_POST["driveData"];		 
 	//Decode the JSON string and convert it into a PHP associative array.
 	$driveData = json_decode($data, true);		
-	$dbConnection = new DatabaseAccess;
-	$result=insertDrive($dbConnection, $driveData);	
-		
+	$dbConnection = new DatabaseAccess;		
+	
 	if($driveData["repeating"]){				
 		// replace German weekdays with English
-		$driveData['weekdaysString']="";
-		$driveData['datetime']="";
+		$driveData['weekdaysString']="";		
 		$weekdays = $driveData['weekdays'];				
 		$weekdaysEngl = array("MO" => "Mon", "DI" => "THU", "MI" => "Wed", "DO" => "Thu", "FR" => "Fri", "SA" => "Sat", "SO" => "Sun");			
 		for($i=0; $i < sizeof($weekdays); $i++){
