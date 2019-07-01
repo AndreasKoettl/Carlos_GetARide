@@ -126,8 +126,8 @@
 
                             <h6 class="special-heading">Anfragen</h6>
                             <div class="list">
-                                <div v-for="(coDriver, index) in listNotAccepted" @click="openModal(index)">
-                                    <div class="row-bottom-padding">
+                                <div v-for="(coDriver, index) in listNotAccepted">
+                                    <div class="row-bottom-padding" @click="openModal(index)">
                                         <img src="../../images/icons/user_colored.svg" class="icon-request" />
                                         <div class="request-data col">
                                             <h6 class="drive-details-h2">{{coDriver.firstName}} {{coDriver.lastName}}</h6>
@@ -137,8 +137,8 @@
                                                 <div class="modal">
                                                     <p class="accept-decline-text">Möchtest du diesen Mitfahrer akzeptieren?</p>
                                                     <div class="accept-decline">
-                                                        <h6 class="codriver-accept-decline" @click="confirmRequest(index)"><img id="yes" class="icon-yes-no active" src="../../images/icons/hakerl_icon.svg" /></h6>
-                                                        <h6 class="codriver-accept-decline" @click="declineRequest(index)"><img id="no" class="icon-yes-no active" src="../../images/icons/x_icon_neu.svg" /></h6>
+                                                        <h6 class="codriver-accept-decline" @click.stop="confirmRequest(index)"><img id="yes" class="icon-yes-no active" src="../../images/icons/hakerl_icon.svg" /></h6>
+                                                        <h6 class="codriver-accept-decline" @click.stop="declineRequest(index)"><img id="no" class="icon-yes-no active" src="../../images/icons/x_icon_neu.svg" /></h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -151,19 +151,19 @@
                             <h6 class="special-heading">Zusagen</h6>
                             <div class="list">
 
-                                <div v-for="(coDriver, index) in listAccepted" @click="openModal2(index)">
-                                    <div class="row-bottom-padding">
+                                <div v-for="(coDriver, index) in listAccepted">
+                                    <div class="row-bottom-padding" @click="openModal2(index)">
                                         <img src="../../images/icons/user_colored.svg" class="icon-request" />
                                         <div class="request-data col">
                                             <h6 class="drive-details-h2">{{coDriver.firstName}} {{coDriver.lastName}}</h6>
-                                            <div class="row-no-padding displayNone" ref="m2">
+                                            <div class="row-no-padding displayNone" ref="m2" id="(index)">
                                                 <div class="modalbg">
                                                 </div>
                                                 <div class="modal">
                                                     <p class="accept-decline-text">Möchtest du diesen Mitfahrer ablehnen?</p>
                                                     <div class="accept-decline">
-                                                        <h6 class="codriver-accept-decline" @click="declineCommitment(index)"><img id="yes" class="icon-yes-no active" src="../../images/icons/hakerl_icon.svg" /></h6>
-                                                        <h6 class="codriver-accept-decline" @click="dontChangeCommitment(index)"><img id="no" class="icon-yes-no active" src="../../images/icons/x_icon_neu.svg" /></h6>
+                                                        <h6 class="codriver-accept-decline" @click.stop="declineCommitment(index)"><img id="yes" class="icon-yes-no active" src="../../images/icons/hakerl_icon.svg" /></h6>
+                                                        <h6 class="codriver-accept-decline" @click.stop="dontChangeCommitment(index)"><img id="no" class="icon-yes-no active" src="../../images/icons/x_icon_neu.svg" /></h6>
                                                     </div>
                                                 </div>
                                             </div>

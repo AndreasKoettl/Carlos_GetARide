@@ -21,7 +21,7 @@ carlos_meineFahrten.app = new Vue({
         indexPastRide: -1,
         date: new Date(),
         isScrolling: false,
-        acceptDR: false
+        acceptDR: false,
     },
 
     methods: {
@@ -1049,12 +1049,13 @@ carlos_meineFahrten.app = new Vue({
             this.$refs.m1[index].classList.remove('displayNone');
         },
 
-        openModal2: function (index) {
-            this.$refs.m2[index].classList.remove('displayNone');
+        openModal2: function (index) {  
+            this.$refs.m2[index].classList.remove('displayNone');   
         },
 
         dontChangeCommitment: function (index) {
             this.$refs.m2[index].classList.add('displayNone');
+         
         }
 
     },

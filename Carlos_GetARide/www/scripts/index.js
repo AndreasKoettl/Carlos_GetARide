@@ -150,13 +150,15 @@ const ABS_WEBPATH = "https://mitfahrboerse.projekte.fh-hagenberg.at/";
  * @returns {string}
  */
 function getAbsPath(websitePath) {
-    if (document.URL.indexOf('http://') !== -1 || document.URL.indexOf('https://') !== -1 || websitePath.indexOf('.php') !== -1) {
-        return ABS_WEBPATH + websitePath;
-    } else if (document.URL.indexOf('localhost') !== -1) {
-        return ABS_PATH + websitePath;
-    } else {
-        return ABS_APPPATH + websitePath;
-    }
+    //if (document.URL.indexOf('http://') !== -1 || document.URL.indexOf('https://') !== -1 || websitePath.indexOf('.php') !== -1) {
+    //    return ABS_WEBPATH + websitePath;
+    //} else if (document.URL.indexOf('localhost') !== -1) {
+    //    return ABS_PATH + websitePath;
+    //} else {
+    //    return ABS_APPPATH + websitePath;
+    //}
+
+    return ABS_PATH + websitePath;
 }
 
 /**
