@@ -29,10 +29,10 @@
     <allow-intent href="itms-apps:*" />
   </platform>
   <platform name="android">
-    <icon src="res/icons/android/carlos-app-iconldpi.png" density="ldpi" />
-    <icon src="res/icons/android/carlos-app-iconmdpi.png" density="mdpi" />
-    <icon src="res/icons/android/carlos-app-iconhdpi.png" density="hdpi" />
-    <icon src="res/icons/android/carlos-app-iconxdpi.png" density="xhdpi" />
+    <icon src="res/icons/android/carlos-app-icon-ldpi.png" density="ldpi" />
+    <icon src="res/icons/android/carlos-app-icon-mdpi.png" density="mdpi" />
+    <icon src="res/icons/android/carlos-app-icon-hdpi.png" density="hdpi" />
+    <icon src="res/icons/android/carlos-app-icon-xhdpi.png" density="xhdpi" />
   </platform>
   <platform name="ios">
     <!-- iOS 8.0+ -->
@@ -78,14 +78,14 @@
     <icon src="res/icons/windows/Wide310x150Logo.scale-240.png" width="744" height="360" />
   </platform>
   <platform name="android">
-    <splash src="res/screens/android/screen-hdpi-landscape.png" density="land-hdpi" />
-    <splash src="res/screens/android/screen-ldpi-landscape.png" density="land-ldpi" />
-    <splash src="res/screens/android/screen-mdpi-landscape.png" density="land-mdpi" />
-    <splash src="res/screens/android/screen-xhdpi-landscape.png" density="land-xhdpi" />
-    <splash src="res/screens/android/screen-hdpi-portrait.png" density="port-hdpi" />
-    <splash src="res/screens/android/screen-ldpi-portrait.png" density="port-ldpi" />
-    <splash src="res/screens/android/screen-mdpi-portrait.png" density="port-mdpi" />
-    <splash src="res/screens/android/screen-xhdpi-portrait.png" density="port-xhdpi" />
+    <splash src="res/screens/android/drawable-land-hdpi/screen.png" density="land-hdpi" />
+    <splash src="res/screens/android/drawable-land-ldpi/screen.png" density="land-ldpi" />
+    <splash src="res/screens/android/drawable-land-mdpi/screen.png" density="land-mdpi" />
+    <splash src="res/screens/android/drawable-land-xhdpi/screen.png" density="land-xhdpi" />
+    <splash src="res/screens/android/drawable-hdpi/screen.png" density="port-hdpi" />
+    <splash src="res/screens/android/drawable-ldpi/screen.png" density="port-ldpi" />
+    <splash src="res/screens/android/drawable-mdpi/screen.png" density="port-mdpi" />
+    <splash src="res/screens/android/drawable-xhdpi/screen.png" density="port-xhdpi" />
   </platform>
   <platform name="ios">
     <splash src="res/screens/ios/screen-iphone-portrait.png" width="320" height="480" />
@@ -103,7 +103,6 @@
     <splash src="res/screens/windows/SplashScreen.scale-100.png" width="620" height="300" />
     <splash src="res/screens/windows/SplashScreen.scale-240.png" width="1152" height="1920" />
     <splash src="res/screens/windows/SplashScreenPhone.scale-240.png" width="1152" height="1920" />
-  </platform>
-  <plugin name="cordova-plugin-datetimepicker" spec="~1.0.0" />
+  </platform>  
   <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
 </widget>
