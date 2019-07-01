@@ -1,6 +1,7 @@
 ﻿<?php
 require_once '../lib/limonade-master/lib/limonade.php';
 require_once 'utilities.php';
+//require_once 'notifications.php';
 
 
 dispatch('/searchRide/:start/:end/:date/:time/:iduser', 'searchRide');
@@ -120,6 +121,12 @@ dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 
 			//$result = setSuccessMessage($result, "Anfrage gesendet.");
 			$result='Anfrage zum Mitfahren gesendet';
+
+            /*$title = "Neue Anfrage";
+            $body = "Du hast eine neue Anfrage.";
+            $idusers = htmlentities(params("iduser"), ENT_QUOTES);
+            sendNotification($idusers, $title, $body, "pages/fahrt_erstellen/meine_fahrten.html");*/
+
 			return json_encode($result);
 		}
 
