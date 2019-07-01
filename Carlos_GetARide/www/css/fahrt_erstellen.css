@@ -62,7 +62,7 @@ body {
     width: 48%;
 }
 .timeInput, .dateInput {
-    padding: 2vw 5vw;
+    padding: 2vw 4vw;
     color:var(--grey-dark);
 }
 

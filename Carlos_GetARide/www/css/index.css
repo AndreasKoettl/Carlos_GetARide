@@ -76,7 +76,7 @@ input {
 }
 
 #dateDrive, #timeDrive{
-    padding: 2vw 5vw;
+    padding: 2vw 4vw;
 }
 
 input:active, input:focus {
