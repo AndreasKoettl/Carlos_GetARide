@@ -406,8 +406,9 @@ carlos_meineFahrten.app = new Vue({
                     }
                 }
             } else {
-                let pos = this.listUpcomingRides.length + index + 1;
-                for (let i = 1; i < this.listPastRides.length; i++) {
+                let pos = this.listUpcomingRides.length + index;
+                let classLength = document.getElementsByClassName("grey-box").length;
+                for (let i = index; i < this.listPastRides.length && pos < classLength; i++) {
                     document.getElementsByClassName("grey-box")[pos].classList.remove("grey-outline-box");
                     if (this.listPastRides[i].repeating === 3) {
                         document.getElementsByClassName("grey-box")[pos].classList.add("grey-outline-box");
@@ -426,8 +427,9 @@ carlos_meineFahrten.app = new Vue({
                     }
                 }
             } else {
-                let pos = this.listUpcomingRides.length + index + 1;
-                for (let i = 1; i < this.listPastRides.length; i++) {
+                let pos = this.listUpcomingRides.length + index;
+                let classLength = document.getElementsByClassName("grey-box").length;
+                for (let i = index; i < this.listPastRides.length && pos < classLength; i++) {
                     if (this.listPastRides[i].repeating !== 3) {
                         document.getElementsByClassName("grey-box")[pos].classList.remove("grey-outline-box");
                     }
