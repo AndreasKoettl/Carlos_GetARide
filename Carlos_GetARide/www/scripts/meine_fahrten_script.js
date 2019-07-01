@@ -991,42 +991,37 @@ carlos_meineFahrten.app = new Vue({
                     indizes.push(i);
                 }
             }
-            for (let i = 0; i < indizes.length; i++) {
+            for (let i = indizes.length - 1; i >= 0; i--) {
                 await this.loadDriversRepetitions(indizes[i], false);
             }
-            let currentDate = new Date();
-            for (let i = 0; i < this.listPastRides.length; i++) {
-                let iddrive = this.listPastRides[i].iddrive;
-                console.log(this.listPastRides.length);
-                if (this.listPastRides[i].dateTime < currentDate) {
-                    Vue.set(this.listPastRides, i, 0);
 
-                    await $.ajax({
-                        accepts: "application/json",
-                        async: true,
-                        contentType: false,
-                        processData: false,
-                        url: getAbsPath("php/load_rides.php?/deleteSingleRide/") + iddrive,
-                        data: iddrive,
-                        success: function (data) {
-                            let result = JSON.parse(data);
+            for (let i = 0; i < list.length; i++) {
+                await $.ajax({
+                    accepts: "application/json",
+                    async: true,
+                    contentType: false,
+                    processData: false,
+                    url: getAbsPath("php/load_rides.php?/deleteSingleRide/") + list[i].iddrive,
+                    data: list[i].iddrive,
+                    success: function (data) {
+                        let result = JSON.parse(data);
 
-                            // Prüfen ob das Laden erfolgreich war.
-                            if (result["status"] === "success") {
-                                appAccess.goBack('isDriverDetails');
-                            }
+                        // Prüfen ob das Laden erfolgreich war.
+                        if (result["status"] === "success") {
 
-                            else {
-                                // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
-                                console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
-                            }
-                        },
-                        error: function () {
-                            console.log("Server Verbindung fehlgeschlagen.");
                         }
-                    });
-                }
+
+                        else {
+                            // Fehlermeldung ausgeben, wenn die Anmeldung nicht erfolgreich war.
+                            console.log("Laden fehlgeschlagen: " + result["statusmessage"]);
+                        }
+                    },
+                    error: function () {
+                        console.log("Server Verbindung fehlgeschlagen.");
+                    }
+                });
             }
+            list.splice(0, list.length);
         },
 
         goBack: async function (val) {

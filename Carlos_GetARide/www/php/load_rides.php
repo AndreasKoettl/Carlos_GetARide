@@ -349,12 +349,12 @@ function deleteSingleRide()
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
 
-    if ($dbConnection->getRowCount() > 0) {
+    if ($dbConnection->getRowCount() === 0) {
 
         $result = setSuccessMessage($result, "Ladevorgang erfolgreich.");
     }
     else {
-        $result = setErrorMessage($result, "Keine Fahrt vorhanden.");
+        $result = setErrorMessage($result, "Löschen fehlgeschlagen.");
     }
 
 
