@@ -64,12 +64,10 @@ mtd280.app = new Vue({
                 contentType: false,
                 processData: false,
                 url: getAbsPath("php/search.php?/searchRide/") + this.cityStart + "/" + this.cityEnd + "/" + dateDrive + "/" + timeDrive+ "/" + iduser,
-                success: function (data) {
-                    //console.log(JSON.stringify(data["data"][0]));
+                success: function (data) {       
                     if (data === false) {
                         console.log("Bitte geben Sie einen Startort oder einen Zielort an.");
-                    } else {
-                        console.log(data);
+                    } else {                       
                         appAccess.searchData = data["data"];
                         for (let i = 0; i < appAccess.searchData.length; i++) {
                             //calculate remaining passengers
@@ -132,7 +130,6 @@ mtd280.app = new Vue({
 
         getUserById: function (iduser, index) {
             var appAccess = this;
-            console.log("index" + index);
             $.ajax({
                 accepts: "application/json",
                 dataType: "json",
@@ -194,6 +191,7 @@ mtd280.app = new Vue({
             var appAccess = this;
             let iduser = JSON.parse(localStorage.getItem("carlosUser"))["idusers"];
             let iddrives = this.searchData[this.index]["iddrives"];
+            let iduser_driver = this.searchData[this.index]["users_idusers"];
             console.log("inside ride");
             $.post({
                 accepts: "application/json",
@@ -201,13 +199,11 @@ mtd280.app = new Vue({
                 async: true,
                 contentType: false,
                 processData: false,
-                url: getAbsPath("php/search.php?/addRequest/") + iduser + "/" + iddrives,
+                url: getAbsPath("php/search.php?/addRequest/") + iduser + "/" + iddrives + "/" + iduser_driver,
                 success: function (data) {
-                    //console.log(JSON.stringify(data["data"][0]));
                     appAccess.disable = true;
                     appAccess.$el.querySelector('#ride-along').disabled = true;
                     redirectUser("pages/suchen/fahrt_suchen_success.html");
-                    console.log(data);
                 },
                 error: function () {
                     console.log("Server Verbindung fehlgeschlagen.");
@@ -225,9 +221,7 @@ mtd280.app = new Vue({
                 contentType: false,
                 processData: false,
                 url: getAbsPath("php/search.php?/checkIfCoDriver/") + iduser + "/" + iddrives,
-                success: function (data) {
-                    //console.log(JSON.stringify(data["data"][0]));
-                
+                success: function (data) {                 
                     if (data["data"][0]) {
                         appAccess.disable = true;                                               
                     } else {

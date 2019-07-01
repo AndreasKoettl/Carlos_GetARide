@@ -6,7 +6,7 @@ require_once 'utilities.php';
 
 dispatch('/searchRide/:start/:end/:date/:time/:iduser', 'searchRide');
 dispatch('/getUser/:iduser', 'getUserById');
-dispatch_post('/addRequest/:iduser/:iddrives', 'addRequest');
+dispatch_post('/addRequest/:iduser/:iddrives/:driver', 'addRequest');
 dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 	
         function searchRide()
@@ -64,9 +64,6 @@ dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 					$datetime = $now;
 				}
 
-			//	var_dump($now > $datetime);
-
-
 				$query .= ($set===TRUE ? " AND" : " WHERE") . " driveDate >= '$datetime' AND passengers < maxPassengers AND (users_idusers != '$iduser')";
 
 				$query .= " ORDER BY driveDate ASC";
@@ -81,11 +78,6 @@ dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 				$results = false;
 			}
 				
-
-           // if(hasValue($_POST["locationStart"]){
-			//	$result = htmlentities($_POST["locationStart"], ENT_QUOTES);
-			//}
-
 			return json_encode($results);
         }
 
@@ -124,7 +116,7 @@ dispatch('/checkIfCoDriver/:iduser/:iddrives', 'checkIfCoDriver');
 
             /*$title = "Neue Anfrage";
             $body = "Du hast eine neue Anfrage.";
-            $idusers = htmlentities(params("iduser"), ENT_QUOTES);
+            $idusers = htmlentities(params("driver"), ENT_QUOTES);
             sendNotification($idusers, $title, $body, "pages/fahrt_erstellen/meine_fahrten.html");*/
 
 			return json_encode($result);
