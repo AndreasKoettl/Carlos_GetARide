@@ -2,6 +2,7 @@
 require_once '../lib/limonade-master/lib/limonade.php';
 require_once 'DatabaseAccess.php';
 require_once 'utilities.php';
+//require_once 'notifications.php';
 
 dispatch('/driver/:iduser', 'loadDriversRides');
 dispatch('/codriver/:iduser', 'loadCodriversRides');
@@ -376,6 +377,10 @@ function declineRide()
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
 
+    /*$title = "Absage";
+    $body = "Deine Anfrage wurde abgelehnt.";
+    $idusers = htmlentities(params("iduser"), ENT_QUOTES);
+    sendNotification($idusers, $title, $body, "pages/fahrt_erstellen/meine_fahrten.html");*/
 
     if ($dbConnection->getRowCount() > 0) {
 
@@ -409,6 +414,11 @@ function reducePassengers()
     $dbConnection->bindParam(":iddrive", htmlentities(params("iddrive"), ENT_QUOTES));
     $dbConnection->executeStatement();
     $result = $dbConnection->fetchAll();
+
+    /*$title = "Absage";
+    $body = "Eine bestätigte Fahrt wurde abgesagt.";
+    $idusers = htmlentities(params("iduser"), ENT_QUOTES);
+    sendNotification($idusers, $title, $body, "pages/fahrt_erstellen/meine_fahrten.html");*/
 
     if ($dbConnection->getRowCount() > 0) {
 
